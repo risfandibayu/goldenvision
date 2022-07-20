@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/clear', function(){
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
+Route::get('/up', function(){
+    \Illuminate\Support\Facades\Artisan::call('up');
+});
+Route::get('/down', function(){
+    \Illuminate\Support\Facades\Artisan::call('down');
+});
 
 /*
 |--------------------------------------------------------------------------
