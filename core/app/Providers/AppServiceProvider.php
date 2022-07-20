@@ -82,7 +82,7 @@ class AppServiceProvider extends ServiceProvider
         if($general->force_ssl){
             \URL::forceScheme('https');
         }
-        if(config('app.env') === 'production' || config('app.env') === 'staging') {
+        if(env('APP_ENV') === 'production' || env('APP_ENV') === 'staging') {
             \URL::forceScheme('https');
         }
 
