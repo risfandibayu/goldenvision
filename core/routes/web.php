@@ -7,11 +7,9 @@ Route::get('/clear', function(){
 });
 Route::get('/up', function(){
     \Illuminate\Support\Facades\Artisan::call('up');
-    echo 'Website on Live';
 });
 Route::get('/down', function(){
     \Illuminate\Support\Facades\Artisan::call('down --secret="harrypotter"');
-    
 });
 
 /*
