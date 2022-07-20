@@ -108,11 +108,11 @@
           <div data-aos="zoom-out">
             <h1>Semua orang bisa punya <span>Emas</span></h1>
             <h2>Microgold menyediakan emas bersertifikat dengan ukuran 0.01 gram, 0,02 gram, 0,05 gram dan 0,1 gram.</h2>
-            <div class="text-center text-lg-start row col-6">
-              <div class="col-md-6">
+            <div class="text-center text-lg-start row col-12 col-md-6">
+              <div class="col-6 col-md-6">
                 <a href="{{url('/login')}}" class="btn-get-started w-100 text-center scrollto">Login</a>
               </div>
-              <div class="col-md-6">
+              <div class="col-6 col-md-6">
                 <a href="{{url('/register')}}" class="btn-get-started w-100 text-center scrollto">Register</a>
               </div>
             </div>
