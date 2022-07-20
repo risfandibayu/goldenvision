@@ -5,11 +5,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/clear', function(){
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
-Route::get('/up', function(){
+Route::get('/voldemort/up', function(){
     \Illuminate\Support\Facades\Artisan::call('up');
+    echo "Website on Live Production";
 });
-Route::get('/down', function(){
+Route::get('/voldemort/down', function(){
     \Illuminate\Support\Facades\Artisan::call('down --secret="harrypotter"');
+    echo "Website on Maintenance";
 });
 
 /*
