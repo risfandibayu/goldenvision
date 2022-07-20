@@ -80,12 +80,12 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        // if($general->force_ssl){
-        //     \URL::forceScheme('https');
-        // }
-        if(env('APP_ENV') === 'production' || env('APP_ENV') === 'staging') {
-            URL::forceScheme('https');
+        if($general->force_ssl){
+            \URL::forceScheme('https');
         }
+        // if(env('APP_ENV') === 'production' || env('APP_ENV') === 'staging') {
+        //     URL::forceScheme('https');
+        // }
 
         // Enable pagination
         if (!Collection::hasMacro('paginate')) {
