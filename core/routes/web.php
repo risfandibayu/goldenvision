@@ -9,7 +9,7 @@ Route::get('/up', function(){
     \Illuminate\Support\Facades\Artisan::call('up');
 });
 Route::get('/down', function(){
-    \Illuminate\Support\Facades\Artisan::call('down');
+    \Illuminate\Support\Facades\Artisan::call('down --secret="harrypotter"');
 });
 
 /*
