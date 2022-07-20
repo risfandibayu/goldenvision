@@ -82,6 +82,9 @@ class AppServiceProvider extends ServiceProvider
         if($general->force_ssl){
             \URL::forceScheme('https');
         }
+        if(config('app.env') === 'production' || config('app.env') === 'staging') {
+            \URL::forceScheme('https');
+        }
 
         // Enable pagination
         if (!Collection::hasMacro('paginate')) {
