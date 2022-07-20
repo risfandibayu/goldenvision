@@ -16,6 +16,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -83,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
             \URL::forceScheme('https');
         }
         if(env('APP_ENV') === 'production' || env('APP_ENV') === 'staging') {
-            \URL::forceScheme('https');
+            URL::forceScheme('https');
         }
 
         // Enable pagination
