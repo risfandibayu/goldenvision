@@ -1,8 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/mysql', function(){
+    $pdo = DB::connection('mysql');
+    dd($pdo);
+});
 Route::get('/clear', function(){
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });

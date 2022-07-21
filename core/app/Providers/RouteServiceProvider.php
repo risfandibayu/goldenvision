@@ -52,12 +52,19 @@ class RouteServiceProvider extends ServiceProvider
         });
         $url = \Request::url();
         $check = strstr($url,"http://");
+        $checklocal = strstr($url,"http://localhost");
+        
         if($check)
         {
-        $newUrl = str_replace("http","https",$url);
-        header("Location:".$newUrl);
+        
+        }else{
+            if($check)
+            {
+            $newUrl = str_replace("http","https",$url);
+            header("Location:".$newUrl);
 
-    }
+            }
+        }
     }
 
     /**

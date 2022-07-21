@@ -1882,7 +1882,7 @@ p, li, a {
 }
 
 .bg--primary {
-    background-color: #7367f0 !important;
+    background-color: #96795f !important
 }
 
 .bg--secondary {
@@ -3781,7 +3781,7 @@ table.dataTable thead tr th {
 table.table--light thead th {
     border: none;
     color: #ffffff;
-    background-color: #7367f0;
+    background-color: #96795f;
 }
 
 table.table--light.style--two thead th {
