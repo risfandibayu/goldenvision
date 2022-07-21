@@ -1,7 +1,10 @@
-<div class="sidebar {{ sidebarVariation()['selector'] }} {{ sidebarVariation()['sidebar'] }} {{ @sidebarVariation()['overlay'] }} {{ @sidebarVariation()['opacity'] }}"
-     data-background="{{getImage('assets/admin/images/sidebar/2.jpg','400x800')}}">
+{{-- <div class="sidebar {{ sidebarVariation()['selector'] }} {{ sidebarVariation()['sidebar'] }} {{ @sidebarVariation()['overlay'] }} {{ @sidebarVariation()['opacity'] }}"
+     data-background="{{getImage('assets/admin/images/sidebar/2.jpg','400x800')}}"> --}}
 
-
+<div class="sidebar capsule--rounded bg_img overlay"
+     {{-- data-background="{{asset('assets/admin/images/sidebar/2.jpg')}}" --}}
+    style="background-color: #3d312a !important;"
+     >
     <button class="res-sidebar-close-btn"><i class="las la-times"></i></button>
     <div class="sidebar__inner">
         <div class="sidebar__logo">
@@ -522,10 +525,10 @@
                     </div>
                 </li>
             </ul>
-            <div class="text-center mb-3 text-uppercase">
+            {{-- <div class="text-center mb-3 text-uppercase">
                 <span class="text--primary">{{systemDetails()['name']}}</span>
                 <span class="text--success">@lang('V'){{systemDetails()['version']}} </span>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
