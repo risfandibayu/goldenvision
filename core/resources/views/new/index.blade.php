@@ -86,7 +86,7 @@
             </ul>
           </li> --}}
           @if (!Auth::check())
-          <li><a class="nav-link scrollto" href="#contact">Login | Register</a></li>
+          <li><a class="nav-link scrollto" href="{{route('user.login')}}">Login | Register</a></li>
           @else
           
           <li><a class="nav-link scrollto" href="{{url('/user/dashboard')}}">Dashboard</a></li>
