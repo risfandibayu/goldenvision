@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @section('content')
     <div class="page-wrapper default-version">
-        <div class="form-area bg_img" data-background="{{asset('assets/admin/images/1.jpg')}}">
+        <div class="form-area bg_img" data-background="{{asset('assets/admin/images/2.jpg')}}" style="background-repeat: no-repeat;background-size:cover;">
             <div class="form-wrapper">
                 <h4 class="logo-text mb-15"><strong>@lang('Recover Account')</strong></h4>
                 <form action="{{ route('admin.password.reset') }}" method="POST" class="cmn-form mt-30">
