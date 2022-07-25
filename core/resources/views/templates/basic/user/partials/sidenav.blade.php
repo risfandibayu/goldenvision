@@ -21,7 +21,7 @@
                     </a>
                 </li>
 
-                @php
+                {{-- @php
                     $survey_notice = getContent('notice.content', true);
                     $get_survey = App\Models\Survey::where('status', 1)
                                 ->whereHas('questions')
@@ -38,7 +38,7 @@
                             <span class="menu-title">@lang('Start Survey')</span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
 
                 <li class="sidebar-menu-item {{menuActive('user.plan.index')}}">
                     <a href="{{route('user.plan.index')}}" class="nav-link ">

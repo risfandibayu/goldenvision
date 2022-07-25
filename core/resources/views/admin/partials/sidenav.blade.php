@@ -24,7 +24,7 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item sidebar-dropdown">
+                {{-- <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{menuActive('admin.survey*',3)}}">
                         <i class="menu-icon las la-tags"></i>
                         <span class="menu-title">@lang('Survey')</span>
@@ -51,7 +51,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item {{menuActive('admin.plan*')}}">
                     <a href="{{route('admin.plan')}}" class="nav-link ">
@@ -479,11 +479,11 @@
                 </li>
 
 
-                <li class="sidebar__menu-header">@lang('TEMPLATES')</li>
+                {{-- <li class="sidebar__menu-header">@lang('TEMPLATES')</li> --}}
 
 
 
-                <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
+                {{-- <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
 
                 <li class="sidebar-menu-item {{menuActive('admin.frontend.templates')}}">
                     <a href="{{route('admin.frontend.templates')}}" class="nav-link ">
@@ -523,7 +523,7 @@
 
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             </ul>
             {{-- <div class="text-center mb-3 text-uppercase">
                 <span class="text--primary">{{systemDetails()['name']}}</span>
