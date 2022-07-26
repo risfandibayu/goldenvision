@@ -46,6 +46,13 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    @media screen and (max-width: 900px) {
+      #tagline{
+        padding-top: 50px
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -126,7 +133,7 @@
       </div>
       <div data-aos="zoom-out">
         
-        <p  style="color: black;">Tabung dan tukarkan dengan emas Antam  3 gram,  5 gram, 10 gram.</p>
+        <p  style="color: black;" id="tagline">Tabung dan tukarkan dengan emas Antam  3 gram,  5 gram, 10 gram.</p>
       </div>
     </div>
 
