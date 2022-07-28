@@ -717,46 +717,69 @@ class UserController extends Controller
         $ref = user::where('id', auth::user()->id)
         ->select('users.*',db::raw("SUBSTRING(email, 1, LOCATE('@', email) - 1) AS usr"),db::raw("SUBSTRING(email, LOCATE('@', email) + 1) AS domain"))
         ->first();
+
+        $get_bv = user::where('users.id',Auth::user()->id)
+        ->join('plans','plans.id','=','users.plan_id')
+        ->select('plans.bv')
+        ->first();
+        // dd($get_bv->bv);
         $dd = array();
-        $dd2 = array();
-        $dd3 = array();
-        $dd4 = array();
-        $dd5 = array();
-        $level2 = user::where('ref_id',Auth::user()->id)->select('id')->get(); 
-        if($level2){
-            foreach ($level2 as $key => $value) {
+        // $dd2 = array();
+        // $dd3 = array();
+        // $dd4 = array();
+        // $dd5 = array();
+        $level = user::where('ref_id',Auth::user()->id)->select('id')->get(); 
+        if($level){
+            foreach ($level as $key => $value) {
                 $dd[] = $value->id;
             }
         }
-        $level3 = user::whereIn('ref_id',$dd)->select('id')->get(); 
-        if($level3){
-            foreach ($level3 as $key => $value) {
-                $dd2[] = $value->id;
+
+        // foreach ($level as $get_bv->bv => $value) {
+        for ($i=0; $i < $get_bv->bv; $i++) { 
+            # code...
+            $level[$i] = user::whereIn('ref_id',$dd)->select('id')->get(); 
+            if($level[$i]){
+                foreach ($level[$i] as $key => $value) {
+                    $dd[] = $value->id;
+                }
             }
         }
-        $level4 = user::whereIn('ref_id',$dd2)->select('id')->get(); 
-        if($level4){
-            foreach ($level4 as $key => $value) {
-                $dd3[] = $value->id;
-            }
-        }
-        $level5 = user::whereIn('ref_id',$dd3)->select('id')->get(); 
-        if($level5){
-            foreach ($level5 as $key => $value) {
-                $dd4[] = $value->id;
-            }
-        }
-        $level6 = user::whereIn('ref_id',$dd4)->select('id')->get(); 
-        if($level6){
-            foreach ($level6 as $key => $value) {
-                $dd5[] = $value->id;
-            }
-        }
+            # code...
+        // }
+        // foreach ($level3 as $key => $value) {
+        //     $level4 = user::whereIn('ref_id',$dd)->select('id')->get(); 
+        //     if($level4){
+        //         foreach ($level4 as $key => $value) {
+        //             $dd[] = $value->id;
+        //         }
+        //     }
+        //     # code...
+        // }
+        // dd($dd);
+        // $level4 = user::whereIn('ref_id',$dd2)->select('id')->get(); 
+        // if($level4){
+        //     foreach ($level4 as $key => $value) {
+        //         $dd3[] = $value->id;
+        //     }
+        // }
+        // $level5 = user::whereIn('ref_id',$dd3)->select('id')->get(); 
+        // if($level5){
+        //     foreach ($level5 as $key => $value) {
+        //         $dd4[] = $value->id;
+        //     }
+        // }
+        // $level6 = user::whereIn('ref_id',$dd4)->select('id')->get(); 
+        // if($level6){
+        //     foreach ($level6 as $key => $value) {
+        //         $dd5[] = $value->id;
+        //     }
+        // }
         $ref_user = user::whereIn('users.ref_id', $dd) //level2
-        ->orwhereIn('users.ref_id', $dd5) //level6
-        ->orwhereIn('users.ref_id', $dd4) //level5
-        ->orwhereIn('users.ref_id', $dd3) //level4
-        ->orwhereIn('users.ref_id', $dd2) //level3
+        // ->orwhereIn('users.ref_id', $dd5) //level6
+        // ->orwhereIn('users.ref_id', $dd4) //level5
+        // ->orwhereIn('users.ref_id', $dd3) //level4
+        // ->orwhereIn('users.ref_id', $dd2) //level3
         ->orwhere('users.id', auth::user()->id)//leader
         ->orwhere('users.ref_id', auth::user()->id)//level1
         ->orderby('users.pos_id',"ASC")
@@ -771,16 +794,16 @@ class UserController extends Controller
             # code...
             foreach ($reg_user as $key => $value) {
                 $reg[] = $value->email;
-                $Count++;
-                if ($Count == 8){
-                    break; //stop foreach loop after 8th loop
-                }
+                // $Count++;
+                // if ($Count == 8){
+                //     break; //stop foreach loop after 8th loop
+                // }
             }
         }
 
         // dd($reg);
         // $d = json_decode(json_encode($dd), true);
-        return view('templates.basic.user.user_boom',compact('page_title','ref','ref_user','reg'));
+        return view('templates.basic.user.user_boom',compact('page_title','ref','ref_user','reg','get_bv'));
         // $user = User::find(Auth::user()->id);
 
         // dd($level3);
@@ -908,12 +931,12 @@ class UserController extends Controller
         // dd($d);
     }
 
-    public function user1(Request $request){
+    public function user(Request $request){
         // dd($request->ref_username1);
         $gnl = GeneralSetting::first();
 
-        $userCheck = User::where('id', $request->ref_username1)->first();
-        $pos = getPosition($userCheck->id, $request->position1);
+        $userCheck = User::where('id', $request->ref_username)->first();
+        $pos = getPosition($userCheck->id, $request->position);
 
         $us = user::where('id',Auth::user()->id)->first();
         //User Create
@@ -922,10 +945,10 @@ class UserController extends Controller
         $user->pos_id       = $pos['pos_id'];
         $user->position     = $pos['position'];
         $user->firstname    = isset($us->firstname) ? $us->firstname : null;
-        $user->lastname     = isset($us->lastname) ? $us->lastname.' 1' : null;
-        $user->email        = strtolower(trim($request->email1));
+        $user->lastname     = isset($us->lastname) ? $us->lastname.' '.$request->count : null;
+        $user->email        = strtolower(trim($request->email));
         $user->password     = $us->password;
-        $user->username     = trim($request->username1);
+        $user->username     = trim($request->username);
         $user->ref_id       = $userCheck->id;
         $user->mobile       = $us->country_code . $us->mobile;
         $user->address      = $us->address;
@@ -944,221 +967,6 @@ class UserController extends Controller
         $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
         return redirect()->back()->withNotify($notify);
     }
-    public function user2(Request $request){
-        // dd($request->all);
-        $gnl = GeneralSetting::first();
-
-        $userCheck = User::where('id', $request->ref_username2)->first();
-        $pos = getPosition($userCheck->id, $request->position2);
-
-        $us = user::where('id',Auth::user()->id)->first();
-        //User Create
-        $user = new User();
-        $user->ref_id       = $userCheck->id;
-        $user->pos_id       = $pos['pos_id'];
-        $user->position     = $pos['position'];
-        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
-        $user->lastname     = isset($us->lastname) ? $us->lastname.' 2' : null;
-        $user->email        = strtolower(trim($request->email2));
-        $user->password     = $us->password;
-        $user->username     = trim($request->username2);
-        $user->ref_id       = $userCheck->id;
-        $user->mobile       = $us->country_code . $us->mobile;
-        $user->address      = $us->address;
-        $user->status = 1;
-        $user->ev = $gnl->ev ? 0 : 1;
-        $user->sv = $gnl->sv ? 0 : 1;
-        $user->ts = 0;
-        $user->tv = 1;
-        $user->save();
-
-        $user_extras = new UserExtra();
-        $user_extras->user_id = $user->id;
-        $user_extras->save();
-        updateFreeCount($user->id);
-        // dd($user);
-        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
-        return redirect()->back()->withNotify($notify);
-    }
-    public function user3(Request $request){
-        // dd($request->all);
-        $gnl = GeneralSetting::first();
-
-        $userCheck = User::where('id', $request->ref_username3)->first();
-        $pos = getPosition($userCheck->id, $request->position3);
-
-        $us = user::where('id',Auth::user()->id)->first();
-        //User Create
-        $user = new User();
-        $user->ref_id       = $userCheck->id;
-        $user->pos_id       = $pos['pos_id'];
-        $user->position     = $pos['position'];
-        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
-        $user->lastname     = isset($us->lastname) ? $us->lastname.' 3' : null;
-        $user->email        = strtolower(trim($request->email3));
-        $user->password     = $us->password;
-        $user->username     = trim($request->username3);
-        $user->ref_id       = $userCheck->id;
-        $user->mobile       = $us->country_code . $us->mobile;
-        $user->address      = $us->address;
-        $user->status = 1;
-        $user->ev = $gnl->ev ? 0 : 1;
-        $user->sv = $gnl->sv ? 0 : 1;
-        $user->ts = 0;
-        $user->tv = 1;
-        $user->save();
-
-        $user_extras = new UserExtra();
-        $user_extras->user_id = $user->id;
-        $user_extras->save();
-        updateFreeCount($user->id);
-        // dd($user);
-        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
-        return redirect()->back()->withNotify($notify);
-    }
-    public function user4(Request $request){
-        // dd($request->all);
-        $gnl = GeneralSetting::first();
-
-        $userCheck = User::where('id', $request->ref_username4)->first();
-        $pos = getPosition($userCheck->id, $request->position4);
-
-        $us = user::where('id',Auth::user()->id)->first();
-        //User Create
-        $user = new User();
-        $user->ref_id       = $userCheck->id;
-        $user->pos_id       = $pos['pos_id'];
-        $user->position     = $pos['position'];
-        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
-        $user->lastname     = isset($us->lastname) ? $us->lastname.' 4' : null;
-        $user->email        = strtolower(trim($request->email4));
-        $user->password     = $us->password;
-        $user->username     = trim($request->username4);
-        $user->ref_id       = $userCheck->id;
-        $user->mobile       = $us->country_code . $us->mobile;
-        $user->address      = $us->address;
-        $user->status = 1;
-        $user->ev = $gnl->ev ? 0 : 1;
-        $user->sv = $gnl->sv ? 0 : 1;
-        $user->ts = 0;
-        $user->tv = 1;
-        $user->save();
-
-        $user_extras = new UserExtra();
-        $user_extras->user_id = $user->id;
-        $user_extras->save();
-        updateFreeCount($user->id);
-        // dd($user);
-        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
-        return redirect()->back()->withNotify($notify);
-    }
-    public function user5(Request $request){
-        // dd($request->all);
-        $gnl = GeneralSetting::first();
-
-        $userCheck = User::where('id', $request->ref_username5)->first();
-        $pos = getPosition($userCheck->id, $request->position5);
-
-        $us = user::where('id',Auth::user()->id)->first();
-        //User Create
-        $user = new User();
-        $user->ref_id       = $userCheck->id;
-        $user->pos_id       = $pos['pos_id'];
-        $user->position     = $pos['position'];
-        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
-        $user->lastname     = isset($us->lastname) ? $us->lastname.' 5' : null;
-        $user->email        = strtolower(trim($request->email5));
-        $user->password     = $us->password;
-        $user->username     = trim($request->username5);
-        $user->ref_id       = $userCheck->id;
-        $user->mobile       = $us->country_code . $us->mobile;
-        $user->address      = $us->address;
-        $user->status = 1;
-        $user->ev = $gnl->ev ? 0 : 1;
-        $user->sv = $gnl->sv ? 0 : 1;
-        $user->ts = 0;
-        $user->tv = 1;
-        $user->save();
-
-        $user_extras = new UserExtra();
-        $user_extras->user_id = $user->id;
-        $user_extras->save();
-        updateFreeCount($user->id);
-        // dd($user);
-        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
-        return redirect()->back()->withNotify($notify);
-    }
-    public function user6(Request $request){
-        // dd($request->all);
-        $gnl = GeneralSetting::first();
-
-        $userCheck = User::where('id', $request->ref_username6)->first();
-        $pos = getPosition($userCheck->id, $request->position6);
-
-        $us = user::where('id',Auth::user()->id)->first();
-        //User Create
-        $user = new User();
-        $user->ref_id       = $userCheck->id;
-        $user->pos_id       = $pos['pos_id'];
-        $user->position     = $pos['position'];
-        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
-        $user->lastname     = isset($us->lastname) ? $us->lastname.' 6' : null;
-        $user->email        = strtolower(trim($request->email6));
-        $user->password     = $us->password;
-        $user->username     = trim($request->username6);
-        $user->ref_id       = $userCheck->id;
-        $user->mobile       = $us->country_code . $us->mobile;
-        $user->address      = $us->address;
-        $user->status = 1;
-        $user->ev = $gnl->ev ? 0 : 1;
-        $user->sv = $gnl->sv ? 0 : 1;
-        $user->ts = 0;
-        $user->tv = 1;
-        $user->save();
-
-        $user_extras = new UserExtra();
-        $user_extras->user_id = $user->id;
-        $user_extras->save();
-        updateFreeCount($user->id);
-        // dd($user);
-        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
-        return redirect()->back()->withNotify($notify);
-    }
-    public function user7(Request $request){
-        // dd($request->all);
-        $gnl = GeneralSetting::first();
-
-        $userCheck = User::where('id', $request->ref_username7)->first();
-        $pos = getPosition($userCheck->id, $request->position7);
-
-        $us = user::where('id',Auth::user()->id)->first();
-        //User Create
-        $user = new User();
-        $user->ref_id       = $userCheck->id;
-        $user->pos_id       = $pos['pos_id'];
-        $user->position     = $pos['position'];
-        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
-        $user->lastname     = isset($us->lastname) ? $us->lastname.' 7' : null;
-        $user->email        = strtolower(trim($request->email7));
-        $user->password     = $us->password;
-        $user->username     = trim($request->username7);
-        $user->ref_id       = $userCheck->id;
-        $user->mobile       = $us->country_code . $us->mobile;
-        $user->address      = $us->address;
-        $user->status = 1;
-        $user->ev = $gnl->ev ? 0 : 1;
-        $user->sv = $gnl->sv ? 0 : 1;
-        $user->ts = 0;
-        $user->tv = 1;
-        $user->save();
-
-        $user_extras = new UserExtra();
-        $user_extras->user_id = $user->id;
-        $user_extras->save();
-        updateFreeCount($user->id);
-        // dd($user);
-        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
-        return redirect()->back()->withNotify($notify);
-    }
+    
 
 }
