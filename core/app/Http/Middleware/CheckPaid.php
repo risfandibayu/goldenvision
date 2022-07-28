@@ -19,7 +19,7 @@ class CheckPaid
         if (auth()->user()->plan_id != 0) {
             return $next($request);
         }
-        $notify[] = ['error','Sorry, You have to make a subscribe membership to get boom user.'];
+        $notify[] = ['error','Sorry, You have to subscribe membership to get boom user.'];
         return redirect()->route('user.plan.index')->withNotify($notify);
     }
 }
