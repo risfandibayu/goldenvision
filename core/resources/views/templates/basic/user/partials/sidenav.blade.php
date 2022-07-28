@@ -46,7 +46,14 @@
                         <span class="menu-title">@lang('Plan')</span>
                     </a>
                 </li>
-                
+
+                <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
+                    <a href="{{route('user.user_boom')}}" class="nav-link ">
+                        <i class="menu-icon las la-users-cog"></i>
+                        <span class="menu-title">@lang('User Boom')</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-menu-item {{ menuActive('user.bv.log') }}">
                     <a href="{{ route('user.bv.log') }}" class="nav-link">
                         <i class="menu-icon las la-sitemap"></i>
