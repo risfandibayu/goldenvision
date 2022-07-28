@@ -48,14 +48,13 @@
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
-                                                - {{$refus->pos}} 
                                                 @if($refus->pos == "Leader")
-                                                 (You)
+                                                - {{$refus->pos}} (You)
                                                 @else
                                                     @if ($refus->position == 1)
-                                                        (Left)
+                                                    - Under {{$refus->usa}} (Left)
                                                     @else
-                                                        (Right)
+                                                    - Under {{$refus->usa}}  (Right)
                                                     @endif
                                                 @endif
                                             
@@ -120,14 +119,14 @@
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
-                                                - {{$refus->pos}} 
+                                                
                                                 @if($refus->pos == "Leader")
-                                                 (You)
+                                                - {{$refus->pos}} (You)
                                                 @else
                                                     @if ($refus->position == 1)
-                                                        (Left)
+                                                    - Under {{$refus->usa}} (Left)
                                                     @else
-                                                        (Right)
+                                                    - Under {{$refus->usa}}  (Right)
                                                     @endif
                                                 @endif
                                             
@@ -191,16 +190,15 @@
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
-                                                - {{$refus->pos}} 
-                                                @if($refus->pos == "Leader")
-                                                 (You)
-                                                @else
-                                                    @if ($refus->position == 1)
-                                                        (Left)
-                                                    @else
-                                                    (Right)
-                                                    @endif
-                                                @endif
+                                        @if($refus->pos == "Leader")
+                                        - {{$refus->pos}} (You)
+                                        @else
+                                            @if ($refus->position == 1)
+                                            - Under {{$refus->usa}} (Left)
+                                            @else
+                                            - Under {{$refus->usa}}  (Right)
+                                            @endif
+                                        @endif
                                             
                                         {{-- @else --}}
                                         {{-- @endif --}}
@@ -262,14 +260,13 @@
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
-                                                - {{$refus->pos}} 
                                                 @if($refus->pos == "Leader")
-                                                 (You)
+                                                - {{$refus->pos}} (You)
                                                 @else
                                                     @if ($refus->position == 1)
-                                                        (Left)
+                                                    - Under {{$refus->usa}} (Left)
                                                     @else
-                                                        (Right)
+                                                    - Under {{$refus->usa}}  (Right)
                                                     @endif
                                                 @endif
                                             
@@ -333,14 +330,13 @@
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
-                                                - {{$refus->pos}} 
                                                 @if($refus->pos == "Leader")
-                                                 (You)
+                                                - {{$refus->pos}} (You)
                                                 @else
                                                     @if ($refus->position == 1)
-                                                        (Left)
+                                                    - Under {{$refus->usa}} (Left)
                                                     @else
-                                                        (Right)
+                                                    - Under {{$refus->usa}}  (Right)
                                                     @endif
                                                 @endif
                                             
@@ -404,14 +400,13 @@
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
-                                                - {{$refus->pos}} 
                                                 @if($refus->pos == "Leader")
-                                                 (You)
+                                                - {{$refus->pos}} (You)
                                                 @else
                                                     @if ($refus->position == 1)
-                                                        (Left)
+                                                    - Under {{$refus->usa}} (Left)
                                                     @else
-                                                        (Right)
+                                                    - Under {{$refus->usa}}  (Right)
                                                     @endif
                                                 @endif
                                             
@@ -475,14 +470,13 @@
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
-                                                - {{$refus->pos}} 
                                                 @if($refus->pos == "Leader")
-                                                 (You)
+                                                - {{$refus->pos}} (You)
                                                 @else
                                                     @if ($refus->position == 1)
-                                                        (Left)
+                                                    - Under {{$refus->usa}} (Left)
                                                     @else
-                                                        (Right)
+                                                    - Under {{$refus->usa}}  (Right)
                                                     @endif
                                                 @endif
                                             
