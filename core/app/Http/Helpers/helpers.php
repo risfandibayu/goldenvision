@@ -1058,7 +1058,7 @@ function getPositionUser($id, $position)
 
 function showTreePage($id)
 {
-    $res = array_fill_keys(array('b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'), null);
+    $res = array_fill_keys(array('b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o','p','q','r','s','t','u','v','w','x','y','z','aa','ab','ac','ad','ae'), null);
     $res['a'] = User::find($id);
 
     $res['b'] = getPositionUser($id, 1);
@@ -1086,6 +1086,39 @@ function showTreePage($id)
     if ($res['g']) {
         $res['n'] = getPositionUser($res['g']->id, 1);
         $res['o'] = getPositionUser($res['g']->id, 2);
+    }
+    // $res['o'] = getPositionUser($id, 2);
+    if ($res['o']) {
+        $res['ad'] = getPositionUser($res['o']->id, 1);
+        $res['ae'] = getPositionUser($res['o']->id, 2);
+    }
+    if ($res['n']) {
+        $res['ab'] = getPositionUser($res['n']->id, 1);
+        $res['ac'] = getPositionUser($res['n']->id, 2);
+    }
+    if ($res['m']) {
+        $res['z'] = getPositionUser($res['m']->id, 1);
+        $res['aa'] = getPositionUser($res['m']->id, 2);
+    }
+    if ($res['l']) {
+        $res['x'] = getPositionUser($res['l']->id, 1);
+        $res['y'] = getPositionUser($res['l']->id, 2);
+    }
+    if ($res['k']) {
+        $res['v'] = getPositionUser($res['k']->id, 1);
+        $res['w'] = getPositionUser($res['k']->id, 2);
+    }
+    if ($res['j']) {
+        $res['t'] = getPositionUser($res['j']->id, 1);
+        $res['u'] = getPositionUser($res['j']->id, 2);
+    }
+    if ($res['i']) {
+        $res['r'] = getPositionUser($res['i']->id, 1);
+        $res['s'] = getPositionUser($res['i']->id, 2);
+    }
+    if ($res['h']) {
+        $res['p'] = getPositionUser($res['h']->id, 1);
+        $res['q'] = getPositionUser($res['h']->id, 2);
     }
     return $res;
 }

@@ -7,6 +7,11 @@
 @section('panel')
 
     <div class="card">
+        <div class=" row">
+            <div class="col-md-11 col-8"></div>
+
+            <a href="{{ url()->previous() }}" style="margin-left: -19px;margin-top:5px;" class="col-md-1 col-4 btn btn--secondary">Back</a>
+        </div>
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
             <div class="w-1">
@@ -79,6 +84,69 @@
 
 
         </div>
+        {{-- <div class="row text-center justify-content-center llll">
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['p']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['q']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['r']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['s']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['t']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['u']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['v']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['w']); @endphp
+            </div>
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['x']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['y']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['z']); @endphp
+            </div>
+            <!-- <div class="col"> -->
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['aa']); @endphp
+            </div>
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['ab']); @endphp
+            </div>
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['ac']); @endphp
+            </div>
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['ad']); @endphp
+            </div>
+            <div class="w-8">
+                @php echo showSingleUserinTree($tree['ae']); @endphp
+            </div>
+
+
+        </div> --}}
     </div>
 
 

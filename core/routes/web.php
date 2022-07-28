@@ -436,7 +436,15 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/survey/{id}/questions', 'UserController@surveyQuestions')->name('survey.questions');
             Route::post('/survey/answers', 'UserController@surveyQuestionsAnswers')->name('survey.questions.answers');
 
-
+            Route::get('/user_boom', 'UserController@user_boom')->name('user_boom');
+            Route::get('/cek_pos/{id}', 'UserController@cek_pos')->name('cek_pos');
+            Route::post('/user1', 'UserController@user1')->name('user1');
+            Route::post('/user2', 'UserController@user2')->name('user2');
+            Route::post('/user3', 'UserController@user3')->name('user3');
+            Route::post('/user4', 'UserController@user4')->name('user4');
+            Route::post('/user5', 'UserController@user5')->name('user5');
+            Route::post('/user6', 'UserController@user6')->name('user6');
+            Route::post('/user7', 'UserController@user7')->name('user7');
 
         });
     });

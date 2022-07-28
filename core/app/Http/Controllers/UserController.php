@@ -13,11 +13,13 @@ use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
 use App\Models\Survey;
 use App\Models\Answer;
+use App\Models\UserExtra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Image;
 use Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -710,5 +712,453 @@ class UserController extends Controller
         return redirect()->route('user.home')->withNotify($notify);
     }
 
+    public function user_boom(){
+        $page_title = 'User Boom';
+        $ref = user::where('id', auth::user()->id)
+        ->select('users.*',db::raw("SUBSTRING(email, 1, LOCATE('@', email) - 1) AS usr"),db::raw("SUBSTRING(email, LOCATE('@', email) + 1) AS domain"))
+        ->first();
+        $dd = array();
+        $dd2 = array();
+        $dd3 = array();
+        $dd4 = array();
+        $dd5 = array();
+        $level2 = user::where('ref_id',Auth::user()->id)->select('id')->get(); 
+        if($level2){
+            foreach ($level2 as $key => $value) {
+                $dd[] = $value->id;
+            }
+        }
+        $level3 = user::whereIn('ref_id',$dd)->select('id')->get(); 
+        if($level3){
+            foreach ($level3 as $key => $value) {
+                $dd2[] = $value->id;
+            }
+        }
+        $level4 = user::whereIn('ref_id',$dd2)->select('id')->get(); 
+        if($level4){
+            foreach ($level4 as $key => $value) {
+                $dd3[] = $value->id;
+            }
+        }
+        $level5 = user::whereIn('ref_id',$dd3)->select('id')->get(); 
+        if($level5){
+            foreach ($level5 as $key => $value) {
+                $dd4[] = $value->id;
+            }
+        }
+        $level6 = user::whereIn('ref_id',$dd4)->select('id')->get(); 
+        if($level6){
+            foreach ($level6 as $key => $value) {
+                $dd5[] = $value->id;
+            }
+        }
+        $ref_user = user::whereIn('users.ref_id', $dd) //level2
+        ->orwhereIn('users.ref_id', $dd5) //level6
+        ->orwhereIn('users.ref_id', $dd4) //level5
+        ->orwhereIn('users.ref_id', $dd3) //level4
+        ->orwhereIn('users.ref_id', $dd2) //level3
+        ->orwhere('users.id', auth::user()->id)//leader
+        ->orwhere('users.ref_id', auth::user()->id)//level1
+        ->orderby('users.pos_id',"ASC")
+        ->select('users.*',db::raw("if(users.id=".auth::user()->id.",'Leader',concat('Level ',users.pos_id-1)) as pos"),'us.username as usa')
+        ->join('users as us','us.id','=','users.pos_id')
+        ->get();
+
+        $reg = array();
+        $Count = 0;
+        $reg_user = user::select('*')->where('email', 'like', $ref->usr.'+' .'%')->get();
+        if ($reg_user) {
+            # code...
+            foreach ($reg_user as $key => $value) {
+                $reg[] = $value->email;
+                $Count++;
+                if ($Count == 8){
+                    break; //stop foreach loop after 8th loop
+                }
+            }
+        }
+
+        // dd($reg);
+        // $d = json_decode(json_encode($dd), true);
+        return view('templates.basic.user.user_boom',compact('page_title','ref','ref_user','reg'));
+        // $user = User::find(Auth::user()->id);
+
+        // dd($level3);
+        // if($level2){
+        //     dd('ok');
+        // }else{
+        //     dd('sip');
+        // }
+    }
+
+    public function cek_pos($id){
+        $user = User::where('id',$id)->first();
+        $cek_awal = User::where('pos_id',$user->id)->first();
+        $cek_awal_kiri = User::where('pos_id',$user->id)->where('position',1)->first();
+        $cek_awal_kanan = User::where('pos_id',$user->id)->where('position',2)->first();
+
+        if ($cek_awal) {
+            # code...
+            if ($cek_awal_kiri) {
+                if ($cek_awal_kanan) {
+                    echo json_encode(["response" => '3']);
+                    # code...
+                }else{
+                    echo json_encode(["response" => '2']);
+                    
+                }
+            }else{
+                if ($cek_awal_kanan) {
+                    # code...
+                    echo json_encode(["response" => '1']);
+                }else{
+                    echo json_encode(["response" => '0']);
+                }
+            }
+        }else{
+            echo json_encode(["response" => '0']);
+        }
+        // $get_kanan = getPosition($user->id, 2);
+        // $get_kiri = getPosition($user->id, 1);
+        // if ($user->pos_id = $get_kanan['pos_id']) {
+        //     # code...
+        //     echo json_encode(["response" => '2']);
+        // }elseif($user->pos_id = $get_kiri['pos_id']){
+        //     echo json_encode(["response" => '1']);
+        // }
+        // elseif($user->pos_id = $get_kiri['pos_id'] && $user->pos_id = $get_kanan['pos_id']){
+        //     echo json_encode(["response" => '3']);
+        // }
+        // else{
+        //     echo json_encode(["response" => '0']);
+        // }
+        // $cek_bawah_kanan = User::where('ref_id',$cek_awal->ref_id)->where('pos_id',$cek_awal->pos_id+1)->where('position',2)->first();
+        // $cek_bawah_kiri = User::where('ref_id',$cek_awal->ref_id)->where('pos_id',$cek_awal->pos_id+1)->where('position',1)->first();
+        
+        // $cek_bawah = User::where('pos_id',$user->pos_id+1)->where('position',2)
+        // ->orwhere('pos_id',$user->pos_id+1)->where('position',1)
+        // // ->orwhere('ref_id',$id)
+        // ->get();
+
+        // $cek_ref_bawah_kanan = user::where('ref_id',$id)->where('position',2)->first();
+        // $cek_ref_bawah_kiri = user::where('ref_id',$id)->where('position',1)->first();
+        // $cek_ref_bawah_kanan = User::where('ref_id',$id)->where('pos_id',$user->pos_id+1)->where('position',2)->first();
+        // dd($cek_ref_bawah_kanan);
+        // if($cek_awal){
+        //     $cek_bawah_kiri = User::where('pos_id',$user->pos_id+1)->where('position',1)->first();
+        //     if ($cek_bawah_kiri) {
+        //         $cek_bawah_kanan = User::where('pos_id',$user->pos_id+1)->where('position',2)->first();
+        //         if ($cek_bawah_kanan) {
+                    
+        //             // dd('Penuh');
+        //             echo json_encode(["response" => '3']);
+        //         }else{
+        //             $cek_ref_bawah_kanan = user::where('ref_id',$id)->where('position',2)->first();
+        //             if ($cek_ref_bawah_kanan) {
+        //                 # code...
+        //                 echo json_encode(["response" => '3']);
+        //             }else{
+        //                 echo json_encode(["response" => '2']);
+        //             }
+        //             // dd('Kanan Kosong');
+        //         }
+        //     }else{
+        //         // dd('Kiri Kosong');
+        //         $cek_bawah_kanan = User::where('pos_id',$user->pos_id+1)->where('position',2)->first();
+        //         if ($cek_bawah_kanan) {
+        //             // dd('Penuh');
+        //             // $cek_ref_bawah_kiri = user::where('ref_id',$id)->where('position',1)->first();
+        //             echo json_encode(["response" => '1']);
+        //         }else{
+        //             // dd('Kanan Kosong');
+        //             $cek_ref_bawah_kiri = user::where('ref_id',$id)->where('position',1)->first();
+        //             if ($cek_ref_bawah_kiri) {
+        //                 # code...
+        //                 echo json_encode(["response" => '3']);
+        //             }else{
+        //                 echo json_encode(["response" => '1']);
+        //             }
+        //             // echo json_encode(["response" => '2']);
+        //         }
+        //     }
+        // }else{
+        //     // dd('Kosong');
+        //     $cek_ref_bawah_kiri = user::where('ref_id',$id)->where('position',1)->first();
+        //     if ($cek_ref_bawah_kiri) {
+        //         $cek_ref_bawah_kanan = user::where('ref_id',$id)->where('position',2)->first();
+        //         if ($cek_ref_bawah_kanan) {
+        //             # code...
+        //             echo json_encode(["response" => '3']);
+        //         }else{
+        //             echo json_encode(["response" => '2']);
+        //         }
+                
+        //         # code...
+        //     }else{
+        //         $cek_ref_bawah_kanan = user::where('ref_id',$id)->where('position',2)->first();
+        //         if ($cek_ref_bawah_kanan) {
+        //             # code...
+        //             echo json_encode(["response" => '1']);
+        //         }else{
+        //             echo json_encode(["response" => '0']);
+        //         }
+        //     }
+        // }
+        // dd($cek_ref_bawah_kanan);
+        // dd($d);
+    }
+
+    public function user1(Request $request){
+        // dd($request->ref_username1);
+        $gnl = GeneralSetting::first();
+
+        $userCheck = User::where('id', $request->ref_username1)->first();
+        $pos = getPosition($userCheck->id, $request->position1);
+
+        $us = user::where('id',Auth::user()->id)->first();
+        //User Create
+        $user = new User();
+        $user->ref_id       = $userCheck->id;
+        $user->pos_id       = $pos['pos_id'];
+        $user->position     = $pos['position'];
+        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
+        $user->lastname     = isset($us->lastname) ? $us->lastname.' 1' : null;
+        $user->email        = strtolower(trim($request->email1));
+        $user->password     = $us->password;
+        $user->username     = trim($request->username1);
+        $user->ref_id       = $userCheck->id;
+        $user->mobile       = $us->country_code . $us->mobile;
+        $user->address      = $us->address;
+        $user->status = 1;
+        $user->ev = $gnl->ev ? 0 : 1;
+        $user->sv = $gnl->sv ? 0 : 1;
+        $user->ts = 0;
+        $user->tv = 1;
+        $user->save();
+
+        $user_extras = new UserExtra();
+        $user_extras->user_id = $user->id;
+        $user_extras->save();
+        updateFreeCount($user->id);
+        // dd($user);
+        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
+        return redirect()->back()->withNotify($notify);
+    }
+    public function user2(Request $request){
+        // dd($request->all);
+        $gnl = GeneralSetting::first();
+
+        $userCheck = User::where('id', $request->ref_username2)->first();
+        $pos = getPosition($userCheck->id, $request->position2);
+
+        $us = user::where('id',Auth::user()->id)->first();
+        //User Create
+        $user = new User();
+        $user->ref_id       = $userCheck->id;
+        $user->pos_id       = $pos['pos_id'];
+        $user->position     = $pos['position'];
+        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
+        $user->lastname     = isset($us->lastname) ? $us->lastname.' 2' : null;
+        $user->email        = strtolower(trim($request->email2));
+        $user->password     = $us->password;
+        $user->username     = trim($request->username2);
+        $user->ref_id       = $userCheck->id;
+        $user->mobile       = $us->country_code . $us->mobile;
+        $user->address      = $us->address;
+        $user->status = 1;
+        $user->ev = $gnl->ev ? 0 : 1;
+        $user->sv = $gnl->sv ? 0 : 1;
+        $user->ts = 0;
+        $user->tv = 1;
+        $user->save();
+
+        $user_extras = new UserExtra();
+        $user_extras->user_id = $user->id;
+        $user_extras->save();
+        updateFreeCount($user->id);
+        // dd($user);
+        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
+        return redirect()->back()->withNotify($notify);
+    }
+    public function user3(Request $request){
+        // dd($request->all);
+        $gnl = GeneralSetting::first();
+
+        $userCheck = User::where('id', $request->ref_username3)->first();
+        $pos = getPosition($userCheck->id, $request->position3);
+
+        $us = user::where('id',Auth::user()->id)->first();
+        //User Create
+        $user = new User();
+        $user->ref_id       = $userCheck->id;
+        $user->pos_id       = $pos['pos_id'];
+        $user->position     = $pos['position'];
+        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
+        $user->lastname     = isset($us->lastname) ? $us->lastname.' 3' : null;
+        $user->email        = strtolower(trim($request->email3));
+        $user->password     = $us->password;
+        $user->username     = trim($request->username3);
+        $user->ref_id       = $userCheck->id;
+        $user->mobile       = $us->country_code . $us->mobile;
+        $user->address      = $us->address;
+        $user->status = 1;
+        $user->ev = $gnl->ev ? 0 : 1;
+        $user->sv = $gnl->sv ? 0 : 1;
+        $user->ts = 0;
+        $user->tv = 1;
+        $user->save();
+
+        $user_extras = new UserExtra();
+        $user_extras->user_id = $user->id;
+        $user_extras->save();
+        updateFreeCount($user->id);
+        // dd($user);
+        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
+        return redirect()->back()->withNotify($notify);
+    }
+    public function user4(Request $request){
+        // dd($request->all);
+        $gnl = GeneralSetting::first();
+
+        $userCheck = User::where('id', $request->ref_username4)->first();
+        $pos = getPosition($userCheck->id, $request->position4);
+
+        $us = user::where('id',Auth::user()->id)->first();
+        //User Create
+        $user = new User();
+        $user->ref_id       = $userCheck->id;
+        $user->pos_id       = $pos['pos_id'];
+        $user->position     = $pos['position'];
+        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
+        $user->lastname     = isset($us->lastname) ? $us->lastname.' 4' : null;
+        $user->email        = strtolower(trim($request->email4));
+        $user->password     = $us->password;
+        $user->username     = trim($request->username4);
+        $user->ref_id       = $userCheck->id;
+        $user->mobile       = $us->country_code . $us->mobile;
+        $user->address      = $us->address;
+        $user->status = 1;
+        $user->ev = $gnl->ev ? 0 : 1;
+        $user->sv = $gnl->sv ? 0 : 1;
+        $user->ts = 0;
+        $user->tv = 1;
+        $user->save();
+
+        $user_extras = new UserExtra();
+        $user_extras->user_id = $user->id;
+        $user_extras->save();
+        updateFreeCount($user->id);
+        // dd($user);
+        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
+        return redirect()->back()->withNotify($notify);
+    }
+    public function user5(Request $request){
+        // dd($request->all);
+        $gnl = GeneralSetting::first();
+
+        $userCheck = User::where('id', $request->ref_username5)->first();
+        $pos = getPosition($userCheck->id, $request->position5);
+
+        $us = user::where('id',Auth::user()->id)->first();
+        //User Create
+        $user = new User();
+        $user->ref_id       = $userCheck->id;
+        $user->pos_id       = $pos['pos_id'];
+        $user->position     = $pos['position'];
+        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
+        $user->lastname     = isset($us->lastname) ? $us->lastname.' 5' : null;
+        $user->email        = strtolower(trim($request->email5));
+        $user->password     = $us->password;
+        $user->username     = trim($request->username5);
+        $user->ref_id       = $userCheck->id;
+        $user->mobile       = $us->country_code . $us->mobile;
+        $user->address      = $us->address;
+        $user->status = 1;
+        $user->ev = $gnl->ev ? 0 : 1;
+        $user->sv = $gnl->sv ? 0 : 1;
+        $user->ts = 0;
+        $user->tv = 1;
+        $user->save();
+
+        $user_extras = new UserExtra();
+        $user_extras->user_id = $user->id;
+        $user_extras->save();
+        updateFreeCount($user->id);
+        // dd($user);
+        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
+        return redirect()->back()->withNotify($notify);
+    }
+    public function user6(Request $request){
+        // dd($request->all);
+        $gnl = GeneralSetting::first();
+
+        $userCheck = User::where('id', $request->ref_username6)->first();
+        $pos = getPosition($userCheck->id, $request->position6);
+
+        $us = user::where('id',Auth::user()->id)->first();
+        //User Create
+        $user = new User();
+        $user->ref_id       = $userCheck->id;
+        $user->pos_id       = $pos['pos_id'];
+        $user->position     = $pos['position'];
+        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
+        $user->lastname     = isset($us->lastname) ? $us->lastname.' 6' : null;
+        $user->email        = strtolower(trim($request->email6));
+        $user->password     = $us->password;
+        $user->username     = trim($request->username6);
+        $user->ref_id       = $userCheck->id;
+        $user->mobile       = $us->country_code . $us->mobile;
+        $user->address      = $us->address;
+        $user->status = 1;
+        $user->ev = $gnl->ev ? 0 : 1;
+        $user->sv = $gnl->sv ? 0 : 1;
+        $user->ts = 0;
+        $user->tv = 1;
+        $user->save();
+
+        $user_extras = new UserExtra();
+        $user_extras->user_id = $user->id;
+        $user_extras->save();
+        updateFreeCount($user->id);
+        // dd($user);
+        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
+        return redirect()->back()->withNotify($notify);
+    }
+    public function user7(Request $request){
+        // dd($request->all);
+        $gnl = GeneralSetting::first();
+
+        $userCheck = User::where('id', $request->ref_username7)->first();
+        $pos = getPosition($userCheck->id, $request->position7);
+
+        $us = user::where('id',Auth::user()->id)->first();
+        //User Create
+        $user = new User();
+        $user->ref_id       = $userCheck->id;
+        $user->pos_id       = $pos['pos_id'];
+        $user->position     = $pos['position'];
+        $user->firstname    = isset($us->firstname) ? $us->firstname : null;
+        $user->lastname     = isset($us->lastname) ? $us->lastname.' 7' : null;
+        $user->email        = strtolower(trim($request->email7));
+        $user->password     = $us->password;
+        $user->username     = trim($request->username7);
+        $user->ref_id       = $userCheck->id;
+        $user->mobile       = $us->country_code . $us->mobile;
+        $user->address      = $us->address;
+        $user->status = 1;
+        $user->ev = $gnl->ev ? 0 : 1;
+        $user->sv = $gnl->sv ? 0 : 1;
+        $user->ts = 0;
+        $user->tv = 1;
+        $user->save();
+
+        $user_extras = new UserExtra();
+        $user_extras->user_id = $user->id;
+        $user_extras->save();
+        updateFreeCount($user->id);
+        // dd($user);
+        $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
+        return redirect()->back()->withNotify($notify);
+    }
 
 }

@@ -120,7 +120,7 @@ class RegisterController extends Controller
             // 'position'      => 'required|integer',
             'firstname'     => 'sometimes|required|string|max:60',
             'lastname'      => 'sometimes|required|string|max:60',
-            'email'         => 'required|string|email|max:160|unique:users',
+            'email'         => 'required|regex:/^[a-zA-Z0-9@.]+$/|string|email|max:160|unique:users',
             'mobile'        => 'required|string|max:30|unique:users',
             'password'      => 'required|string|min:6|confirmed',
             'username'      => 'required|alpha_num|unique:users|min:6',
@@ -199,7 +199,7 @@ class RegisterController extends Controller
         $user->email        = strtolower(trim($data['email']));
         $user->password     = Hash::make($data['password']);
         $user->username     = trim($data['username']);
-        $user->ref_id       = $userCheck->id;
+        // $user->ref_id       = $userCheck->id;
         $user->mobile       = $data['country_code'] . $data['mobile'];
         $user->address      = [
             'address' => '',
