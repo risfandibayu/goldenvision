@@ -1178,6 +1178,70 @@ function showSingleUserinTree($user)
     return $res;
 
 }
+function showSingleUserinTree2($user,$id)
+{
+    $res = '';
+    if ($user) {
+        // if ($user->plan_id == 0) {
+        //     $userType = "free-user";
+        //     $stShow = "Free";
+        //     $planName = '';
+        // } else {
+        //     $userType = "paid-user";
+        //     $stShow = "Paid";
+        //     $planName = $user->plan->name;
+        // }
+
+        if ($user->id == $id) {
+            $userType = "active-user";
+            $stShow = "Free";
+            $planName = '';
+        } else {
+            $userType = "free-user";
+            $stShow = "Free";
+            $planName = '';
+        }
+
+        $img = getImage('assets/images/user/profile/'. $user->image, null, true);
+
+        $refby = getUserById($user->ref_id)->fullname ?? '';
+        if (auth()->guard('admin')->user()) {
+            $hisTree = route('admin.users.other.tree', $user->username);
+        } else {
+            $hisTree = route('user.other.tree', $user->username);
+        }
+
+        $extraData = " data-name=\"$user->fullname\"";
+        $extraData .= " data-treeurl=\"$hisTree\"";
+        $extraData .= " data-status=\"$stShow\"";
+        $extraData .= " data-plan=\"$planName\"";
+        $extraData .= " data-image=\"$img\"";
+        $extraData .= " data-refby=\"$refby\"";
+        $extraData .= " data-lpaid=\"" . @$user->userExtra->paid_left . "\"";
+        $extraData .= " data-rpaid=\"" . @$user->userExtra->paid_right . "\"";
+        $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";
+        $extraData .= " data-rfree=\"" . @$user->userExtra->free_right . "\"";
+        $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
+        $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
+
+        $res .= "<div class=\"user showDetails\" $extraData>";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType\">";
+        $res .= "<p class=\"user-name\">$user->username</p>";
+
+    } else {
+        $img = getImage('assets/images/user/profile/', null, true);
+
+        $res .= "<div class=\"user\" >";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
+        $res .= "<p class=\"user-name\">BRO</p>";
+    }
+
+    $res .= " </div>";
+    $res .= " <span class=\"line\"></span>";
+
+    return $res;
+
+}
 
 /*
 ===============TREE AUTH==============

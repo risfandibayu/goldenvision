@@ -714,6 +714,7 @@ class UserController extends Controller
 
     public function user_boom(){
         $page_title = 'User Boom';
+        $tree = showTreePage(Auth::id());
         $ref = user::where('id', auth::user()->id)
         ->select('users.*',db::raw("SUBSTRING(email, 1, LOCATE('@', email) - 1) AS usr"),db::raw("SUBSTRING(email, LOCATE('@', email) + 1) AS domain"))
         ->first();
@@ -803,7 +804,7 @@ class UserController extends Controller
 
         // dd($reg);
         // $d = json_decode(json_encode($dd), true);
-        return view('templates.basic.user.user_boom',compact('page_title','ref','ref_user','reg','get_bv'));
+        return view('templates.basic.user.user_boom',compact('page_title','ref','ref_user','reg','get_bv','tree'));
         // $user = User::find(Auth::user()->id);
 
         // dd($level3);
@@ -813,33 +814,114 @@ class UserController extends Controller
         //     dd('sip');
         // }
     }
+    public function cek_tree($id){
+        $tree = showTreePage($id);
+        $response ="<div class='row text-center justify-content-center llll'>
+        <!-- <div class='col'> -->
+        <div class='w-1'>
+            ".showSingleUserinTree($tree['a'])."
+        </div>
+    </div>
+    <div class='row text-center justify-content-center llll'>
+        <!-- <div class='col'> -->
+        <div class='w-2'>
+            ".showSingleUserinTree($tree['b'])."
+        </div>
+        <!-- <div class='col'> -->
+        <div class='w-2 '>
+            ".showSingleUserinTree($tree['c'])."
+        </div>
+    </div>
+    <div class='row text-center justify-content-center llll'>
+        <!-- <div class='col'> -->
+        <div class='w-4 '>
+            ".showSingleUserinTree($tree['d'])."
+        </div>
+        <!-- <div class='col'> -->
+        <div class='w-4 '>
+            ".showSingleUserinTree($tree['e'])."
+        </div>
+        <!-- <div class='col'> -->
+        <div class='w-4 '>
+            ".showSingleUserinTree($tree['f'])."
+        </div>
+        <!-- <div class='col'> -->
+        <div class='w-4 '>
+            ".showSingleUserinTree($tree['g'])."
+        </div>
+        <!-- <div class='col'> -->
+
+    </div>";
+        // dd($tree['a']['username']);
+        // echo json_encode(["response" => $response]);
+    }
 
     public function cek_pos($id){
         $user = User::where('id',$id)->first();
+        $tree = showTreePage($id);
         $cek_awal = User::where('pos_id',$user->id)->first();
         $cek_awal_kiri = User::where('pos_id',$user->id)->where('position',1)->first();
         $cek_awal_kanan = User::where('pos_id',$user->id)->where('position',2)->first();
+
+        $response_tree ="
+        <h4 class='row text-center justify-content-center'>Preview Tree of ".$tree['a']['username']." </h4>
+        <div class='row text-center justify-content-center llll'>
+        <!-- <div class='col'> -->
+        <div class='w-1'>
+            ".showSingleUserinTree2($tree['a'],$id)."
+        </div>
+        </div>
+        <div class='row text-center justify-content-center llll'>
+            <!-- <div class='col'> -->
+            <div class='w-2'>
+                ".showSingleUserinTree2($tree['b'],$id)."
+            </div>
+            <!-- <div class='col'> -->
+            <div class='w-2 '>
+                ".showSingleUserinTree2($tree['c'],$id)."
+            </div>
+        </div>
+        <div class='row text-center justify-content-center llll'>
+            <!-- <div class='col'> -->
+            <div class='w-4 '>
+                ".showSingleUserinTree2($tree['d'],$id)."
+            </div>
+            <!-- <div class='col'> -->
+            <div class='w-4 '>
+                ".showSingleUserinTree2($tree['e'],$id)."
+            </div>
+            <!-- <div class='col'> -->
+            <div class='w-4 '>
+                ".showSingleUserinTree2($tree['f'],$id)."
+            </div>
+            <!-- <div class='col'> -->
+            <div class='w-4 '>
+                ".showSingleUserinTree2($tree['g'],$id)."
+            </div>
+            <!-- <div class='col'> -->
+
+        </div>";
 
         if ($cek_awal) {
             # code...
             if ($cek_awal_kiri) {
                 if ($cek_awal_kanan) {
-                    echo json_encode(["response" => '3']);
+                    echo json_encode(["response" => '3','tree'=>$response_tree]);
                     # code...
                 }else{
-                    echo json_encode(["response" => '2']);
+                    echo json_encode(["response" => '2','tree'=>$response_tree]);
                     
                 }
             }else{
                 if ($cek_awal_kanan) {
                     # code...
-                    echo json_encode(["response" => '1']);
+                    echo json_encode(["response" => '1','tree'=>$response_tree]);
                 }else{
-                    echo json_encode(["response" => '0']);
+                    echo json_encode(["response" => '0','tree'=>$response_tree]);
                 }
             }
         }else{
-            echo json_encode(["response" => '0']);
+            echo json_encode(["response" => '0','tree'=>$response_tree]);
         }
         // $get_kanan = getPosition($user->id, 2);
         // $get_kiri = getPosition($user->id, 1);

@@ -24,7 +24,7 @@
                 background-color: #96795f;">
                     @for ($i = 1; $i < $get_bv->bv+1; $i++)
                         
-                    <a class="nav-item nav-link" id="nav-user{{$i}}-tab" data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}}</a>
+                    <a class="nav-item nav-link tab" id="nav-user-tab" data-toggle="tab" onc href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}}</a>
                     @endfor
 
                     {{-- <a class="nav-item nav-link" id="nav-user2-tab" data-toggle="tab" href="#nav-user2" role="tab" aria-controls="nav-user2" aria-selected="false">User 2</a>
@@ -39,7 +39,7 @@
                 @for ($i = 1; $i < $get_bv->bv+1; $i++)
                 <div class="tab-pane fade show" id="nav-user{{$i}}" role="tabpanel" aria-labelledby="nav-user{{$i}}-tab">
                     <div class="card-body">
-                        <form action="{{route('user.user')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('user.user')}}" class="form" method="POST" enctype="multipart/form-data">
                             @csrf
                         <input type="text" name="count" hidden value="{{$i}}">
                         <div class="form-group">
@@ -70,7 +70,8 @@
                                   @endforeach
                             </select>
                         </div>
-
+                        <div class="card col-8 tree" id="tree" hidden>
+                        </div>
                         <div class="form-group">
                             <label for="position1">Position</label>
                             <select class="form-select form-control position" name="position" id="position" disabled>
@@ -113,6 +114,7 @@
                 
             </div>
         </div>
+        
     </div>
 </div>
 
@@ -138,6 +140,7 @@
 <script>
     $('.ref_username').on('change', function() {
         // var id = $('.ref_username').val();
+        // $('.tree').attr("hidden",true);
         var id = $(this).find(':selected').data('value');
         console.log(id);
         $.ajax({
@@ -151,23 +154,27 @@
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
+                    $('.tree').attr("hidden",false).html(data.tree);
                 }
                 else if (data.response == 1) {
                     var options =  '<option value="1">Left</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
+                    $('.tree').attr("hidden",false).html(data.tree);
                 }
                 else if (data.response == 2) {
                     var options =  '<option value="2">Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
+                    $('.tree').attr("hidden",false).html(data.tree);
                 }else{
                     var options =  '<option value="" hidden>Full</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",false).html('Please select Another Referral Username!.');
                     $('.position').html(options);
+                    $('.tree').attr("hidden",false).html(data.tree);
                 }
             }, 
         error: function(jqXHR, textStatus, errorThrown) {
@@ -175,6 +182,10 @@
             },
         dataType: "json"
         });
+    });
+    $('.tab').on('click', function() {
+        $('.tree').attr("hidden",true);
+        $('.form')[0].reset();
     });
 </script>
 @endpush

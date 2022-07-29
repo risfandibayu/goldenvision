@@ -7,11 +7,12 @@
 @section('panel')
 
     <div class="card">
-        <div class=" row">
+        
+        {{-- <div class=" row">
             <div class="col-md-11 col-8"></div>
 
             <a href="{{ url()->previous() }}" style="margin-left: -19px;margin-top:5px;" class="col-md-1 col-4 btn btn--secondary">Back</a>
-        </div>
+        </div> --}}
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
             <div class="w-1">
@@ -200,6 +201,7 @@
                                     <td><span class="rpaid"></span></td>
                                 </tr>
                             </table>
+                            <a href="" class="mt-4 btn btn--secondary btn-block btn-sm tree_url">See Tree</a>
 
                         </div>
                     </div>

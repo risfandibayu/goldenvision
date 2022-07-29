@@ -440,6 +440,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/user_boom', 'UserController@user_boom')->name('user_boom');
             });
             Route::get('/cek_pos/{id}', 'UserController@cek_pos')->name('cek_pos');
+            Route::get('/cek_tree/{id}', 'UserController@cek_tree')->name('cek_tree');
             Route::post('/user', 'UserController@user')->name('user');
 
         });
