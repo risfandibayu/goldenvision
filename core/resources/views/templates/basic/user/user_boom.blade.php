@@ -213,7 +213,7 @@
     $('.position').on('change', function() {
         var pos = $(this).find('option:selected').val();
         var pilih = `
-                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BROS</p>
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BRO</p>
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p> </div> <span class='line'></span> 
             `;
         var def = `
