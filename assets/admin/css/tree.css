@@ -308,8 +308,11 @@
 .no-user {
     border: 5px solid #ddd;
 }
+.select-user {
+    border: 10px solid #00f60e;
+}
 .active-user {
-    border: 12px solid #0091ed;
+    border: 12px solid #fb00e5;
 }
 .user-details-modal-area .modal-body {
     padding: 0;

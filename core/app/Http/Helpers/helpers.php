@@ -12,7 +12,7 @@ use App\Models\UserExtra;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Auth;
 
 function sidebarVariation(){
 
@@ -1160,9 +1160,10 @@ function showSingleUserinTree($user)
         $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
-        $res .= "<div class=\"user showDetails\" type=\"button\" $extraData>";
-        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType\">";
+        $res .= "<div class=\"user \" type=\"button\" >";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType showDetails\" $extraData>";
         $res .= "<p class=\"user-name\">$user->username</p>";
+        $res .= "<p class=\"user-name\" style=\"padding-top:20px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\">Explore Tree</a></p>";
 
     } else {
         $img = getImage('assets/images/user/profile/', null, true);
@@ -1228,9 +1229,26 @@ function showSingleUserinTree2($user,$id)
         $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
+        if(Auth::user()->pos_id == $user->id){
+            $res .= "<div class=\"user showDetails select_tree\" $extraData>";
+        }else{
         $res .= "<div class=\"user showDetails select_tree\" onclick='f1(\"$user->id\")' type=\"button\" $extraData>";
+        }
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType\">";
         $res .= "<p class=\"user-name\" style=\"$fs\"> $user->username</p>";
+        if(Auth::user()->pos_id == $user->id){
+
+        }elseif(Auth::user()->id == $user->id){
+            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#4cbe04;color:black;\"'>Leader (You)</a> </p>";
+            if (Auth::user()->id == $id) {
+                $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")'>Selected Referral</a> </p>";
+            }
+        }elseif($user->id == $id){
+            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")'>Selected Referral</a> </p>";
+        }
+        else{
+            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" onclick='f1(\"$user->id\")'>Explore Tree</a> </p>";
+        }
 
     } else {
         $img = getImage('assets/images/user/profile/', null, true);
@@ -1238,6 +1256,12 @@ function showSingleUserinTree2($user,$id)
         $res .= "<div class=\"user\" >";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
         $res .= "<p class=\"user-name\">BRO</p>";
+        // $users = user::where('pos_id',$id)->first();
+        // if($users){
+
+        // }else{
+        //     $res .= "<p class=\"user-name\"><a class=\"btn btn-sm\" style=\"background-color:#47bc52;\" href='posisi'>Select Position</a></p>";
+        // }
     }
 
     $res .= " </div>";

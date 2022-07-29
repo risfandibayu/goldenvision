@@ -24,7 +24,7 @@
                 background-color: #96795f;">
                     @for ($i = 1; $i < $get_bv->bv+1; $i++)
                         
-                    <a class="nav-item nav-link tab" id="nav-user-tab" data-toggle="tab" onc href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}}</a>
+                    <a class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}}</a>
                     @endfor
 
                     {{-- <a class="nav-item nav-link" id="nav-user2-tab" data-toggle="tab" href="#nav-user2" role="tab" aria-controls="nav-user2" aria-selected="false">User 2</a>
@@ -139,10 +139,12 @@
 </script> --}}
 <script>
     $('.ref_username').on('change', function() {
+        // var posa = $('.position').val();
+        // console.log(posa);
         // var id = $('.ref_username').val();
         // $('.tree').attr("hidden",true);
         var id = $(this).find(':selected').data('value');
-        console.log(id);
+        // console.log(id);
         $.ajax({
         type:"GET", 
         url: "{{url('/user/cek_pos')}}/"+id, 
@@ -151,25 +153,40 @@
                 // console.log(data.response);
                 
                 if (data.response == 0) {
-                    var options =  '<option value="1">Left</option><option value="2">Right</option>';
+                    var options =  '<option value="" hidden>-- Select Position --</option><option value="1">Left</option><option value="2">Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                 }
                 else if (data.response == 1) {
-                    var options =  '<option value="1">Left</option>';
+                    var options =  '<option value="" hidden>-- Select Position --</option><option value="1" selected>Left</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
+                    var pilih = `
+                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'>
+                    <p class='user-name'>BRO</p> 
+                    <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
+                    </div> <span class='line'></span> 
+            `;
+                    $('.pleft').html(pilih);
+                    
                 }
                 else if (data.response == 2) {
-                    var options =  '<option value="2">Right</option>';
+                    
+                    var options =  '<option value="" hidden>-- Select Position --</option><option value="2" selected>Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
+                    var pilih = `
+                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BRO</p>
+                    <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
+                    </div> <span class='line'></span> 
+            `;
+                    $('.pright').html(pilih);
                 }else{
                     var options =  '<option value="" hidden>Full</option>';
                     $('.position').prop('disabled', false).prop('required', true);
@@ -183,6 +200,32 @@
             },
         dataType: "json"
         });
+    });
+    // function posa(){
+    //     var pos = $('.position').find('option:selected').val();
+    //     console.log(pos);
+        
+    // };
+
+    $('.position').on('change', function() {
+        var pos = $(this).find('option:selected').val();
+        var pilih = `
+                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BROS</p>
+                    <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p> </div> <span class='line'></span> 
+            `;
+        var def = `
+                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='no-user'><p class='user-name'>BRO</p> </div> <span class='line'></span> 
+            `;
+        console.log(pos);
+
+        // $('.pleft').html("");
+        if (pos == 1) {
+            $('.pleft').html(pilih);
+            $('.pright').html(def);
+        }else{
+            $('.pright').html(pilih);
+            $('.pleft').html(def);
+        }
     });
     $('.tab').on('click', function() {
         $('.tree').attr("hidden",true);
@@ -201,27 +244,42 @@
         success: function(data) {
                 // $("body").append(JSON.stringify(data));
                 // console.log(data.response);
-                $("#form"+id+" .ref_username option[value='" + id + "']").attr("selected","selected");
+                // $(".ref_username option[value='" + id + "']").attr("selected","selected");
+                $('.form')[0].reset();
                 if (data.response == 0) {
-                    var options =  '<option value="1">Left</option><option value="2">Right</option>';
+                    var options =  '<option value="" hidden>-- Select Position --</option><option value="1">Left</option><option value="2">Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                 }
                 else if (data.response == 1) {
-                    var options =  '<option value="1">Left</option>';
+                    var options =  '<option value="" hidden>-- Select Position --</option><option value="1" selected>Left</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
+                    var pilih = `
+                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'>
+                    <p class='user-name'>BRO</p> 
+                    <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
+                    </div> <span class='line'></span> 
+            `;
+                    $('.pleft').html(pilih);
                 }
                 else if (data.response == 2) {
-                    var options =  '<option value="2">Right</option>';
+                    var options =  '<option value="" hidden>-- Select Position --</option><option value="2" selected>Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
+                    var pilih = `
+                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'>
+                    <p class='user-name'>BRO</p> 
+                    <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
+                    </div> <span class='line'></span> 
+            `;
+                    $('.pright').html(pilih);
                 }else{
                     var options =  '<option value="" hidden>Full</option>';
                     $('.position').prop('disabled', false).prop('required', true);

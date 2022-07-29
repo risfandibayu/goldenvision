@@ -873,30 +873,30 @@ class UserController extends Controller
         </div>
         <div class='row text-center justify-content-center llll'>
             <!-- <div class='col'> -->
-            <div class='w-2'>
-                ".showSingleUserinTree2($tree['b'],$id)."
+            <div class='w-2 pleft'>
+                ".showSingleUserinTree2($tree['b'],$id)." 
             </div>
             <!-- <div class='col'> -->
-            <div class='w-2 '>
-                ".showSingleUserinTree2($tree['c'],$id)."
+            <div class='w-2 pright'>
+                ".showSingleUserinTree2($tree['c'],$id)." 
             </div>
         </div>
-        <div class='row text-center justify-content-center llll'>
+        <div class='row text-center justify-content-center'>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2($tree['d'],$id)."
+                ".showSingleUserinTree2($tree['d'],$id)." 
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2($tree['e'],$id)."
+                ".showSingleUserinTree2($tree['e'],$id)." 
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2($tree['f'],$id)."
+                ".showSingleUserinTree2($tree['f'],$id)." 
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2($tree['g'],$id)."
+                ".showSingleUserinTree2($tree['g'],$id)." 
             </div>
             <!-- <div class='col'> -->
 
