@@ -31,7 +31,7 @@
     @stack('css')
 </head>
 <body>
-
+<input type="hidden" name="base_url" id="base_url" value="{{URL::to('/')}}">
 
 @yield('content')
 

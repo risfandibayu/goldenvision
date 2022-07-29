@@ -138,7 +138,10 @@
     });​​​​​​​​​​​​​​​
 </script> --}}
 <script>
+    var base_uri = $('#base_url').val();
+    
     $('.ref_username').on('change', function() {
+    // console.log(base_uri);
         // var posa = $('.position').val();
         // console.log(posa);
         // var id = $('.ref_username').val();
@@ -166,7 +169,7 @@
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                     var pilih = `
-                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'>
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'>
                     <p class='user-name'>BRO</p> 
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
                     </div> <span class='line'></span> 
@@ -182,7 +185,7 @@
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                     var pilih = `
-                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BRO</p>
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BRO</p>
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
                     </div> <span class='line'></span> 
             `;
@@ -210,13 +213,13 @@
     $('.position').on('change', function() {
         var pos = $(this).find('option:selected').val();
         var pilih = `
-                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BROS</p>
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BROS</p>
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p> </div> <span class='line'></span> 
             `;
         var def = `
-                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='no-user'><p class='user-name'>BRO</p> </div> <span class='line'></span> 
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='no-user'><p class='user-name'>BRO</p> </div> <span class='line'></span> 
             `;
-        console.log(pos);
+        // console.log(pos);
 
         // $('.pleft').html("");
         if (pos == 1) {
@@ -260,7 +263,7 @@
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                     var pilih = `
-                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'>
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'>
                     <p class='user-name'>BRO</p> 
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
                     </div> <span class='line'></span> 
@@ -274,7 +277,7 @@
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                     var pilih = `
-                <div class='user'><img src='http://localhost/microgold/assets/images/avatar.png' alt='*' class='select-user'>
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'>
                     <p class='user-name'>BRO</p> 
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
                     </div> <span class='line'></span> 

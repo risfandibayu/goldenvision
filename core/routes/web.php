@@ -2,11 +2,14 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\URL;
 
 Route::get('/mysql', function(){
     $pdo = DB::connection('mysql');
     dd($pdo);
+});
+Route::get('/cek_url', function(){
+    dd(URL::to('/'));
 });
 Route::get('/clear', function(){
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
@@ -442,7 +445,6 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/cek_pos/{id}', 'UserController@cek_pos')->name('cek_pos');
             Route::get('/cek_tree/{id}', 'UserController@cek_tree')->name('cek_tree');
             Route::post('/user', 'UserController@user')->name('user');
-
         });
     });
 });
