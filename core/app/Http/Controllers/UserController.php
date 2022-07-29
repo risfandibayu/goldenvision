@@ -864,7 +864,7 @@ class UserController extends Controller
         $cek_awal_kanan = User::where('pos_id',$user->id)->where('position',2)->first();
 
         $response_tree ="
-        <h4 class='row text-center justify-content-center'>Preview Tree of ".$tree['a']['username']." </h4>
+        <h4 class='row text-center justify-content-center'>Preview tree of ".$user->username." </h4>
         <div class='row text-center justify-content-center llll'>
         <!-- <div class='col'> -->
         <div class='w-1'>
@@ -900,7 +900,45 @@ class UserController extends Controller
             </div>
             <!-- <div class='col'> -->
 
-        </div>";
+        </div>
+        
+        ";
+        // <div class='row text-center justify-content-center llll'>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2($tree['h'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2($tree['i'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2($tree['j'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2($tree['k'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2($tree['l'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2($tree['m'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2($tree['n'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2($tree['o'],$id)."
+        //     </div>
+
+
+        // </div>
 
         if ($cek_awal) {
             # code...

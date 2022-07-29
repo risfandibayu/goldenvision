@@ -1196,10 +1196,13 @@ function showSingleUserinTree2($user,$id)
             $userType = "active-user";
             $stShow = "Free";
             $planName = '';
+            $fs ="font-weight: 700;font-size:18px;
+            color: #070707;";
         } else {
             $userType = "free-user";
             $stShow = "Free";
             $planName = '';
+            $fs="";
         }
 
         $img = getImage('assets/images/user/profile/'. $user->image, null, true);
@@ -1212,6 +1215,7 @@ function showSingleUserinTree2($user,$id)
         }
 
         $extraData = " data-name=\"$user->fullname\"";
+        $extraData .= " data-id=\"$user->id\"";
         $extraData .= " data-treeurl=\"$hisTree\"";
         $extraData .= " data-status=\"$stShow\"";
         $extraData .= " data-plan=\"$planName\"";
@@ -1224,9 +1228,9 @@ function showSingleUserinTree2($user,$id)
         $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
-        $res .= "<div class=\"user showDetails\" $extraData>";
+        $res .= "<div class=\"user showDetails select_tree\" onclick='f1(\"$user->id\")' type=\"button\" $extraData>";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType\">";
-        $res .= "<p class=\"user-name\">$user->username</p>";
+        $res .= "<p class=\"user-name\" style=\"$fs\"> $user->username</p>";
 
     } else {
         $img = getImage('assets/images/user/profile/', null, true);

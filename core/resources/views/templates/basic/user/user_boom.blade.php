@@ -39,12 +39,12 @@
                 @for ($i = 1; $i < $get_bv->bv+1; $i++)
                 <div class="tab-pane fade show" id="nav-user{{$i}}" role="tabpanel" aria-labelledby="nav-user{{$i}}-tab">
                     <div class="card-body">
-                        <form action="{{route('user.user')}}" class="form" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('user.user')}}" class="form" id="form{{$i}}" method="POST" enctype="multipart/form-data">
                             @csrf
                         <input type="text" name="count" hidden value="{{$i}}">
                         <div class="form-group">
                             <label for="ref_username1">Referral Username</label>
-                            <select class="form-select form-control ref_username" name="ref_username" id="ref_username" required>
+                            <select class="form-select form-control ref_username" name="ref_username" id="ref_username{{$i}}" required>
                               <option value="" hidden>-- Select Referral Username --</option>
                               @foreach($ref_user as $refus)
                                     @if($refus->pos == "Leader")
@@ -70,7 +70,7 @@
                                   @endforeach
                             </select>
                         </div>
-                        <div class="card col-8 tree" id="tree" hidden>
+                        <div class="card tree" id="tree" hidden>
                         </div>
                         <div class="form-group">
                             <label for="position1">Position</label>
@@ -149,6 +149,7 @@
         success: function(data) {
                 // $("body").append(JSON.stringify(data));
                 // console.log(data.response);
+                
                 if (data.response == 0) {
                     var options =  '<option value="1">Left</option><option value="2">Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
@@ -187,5 +188,53 @@
         $('.tree').attr("hidden",true);
         $('.form')[0].reset();
     });
+    $('.select_tree').on('click', function() {
+        // var id = $(this).data('id');
+        console.log('id');
+    });
+    function f1(id)
+        {
+            // console.log(id);
+        $.ajax({
+        type:"GET", 
+        url: "{{url('/user/cek_pos')}}/"+id, 
+        success: function(data) {
+                // $("body").append(JSON.stringify(data));
+                // console.log(data.response);
+                $("#form"+id+" .ref_username option[value='" + id + "']").attr("selected","selected");
+                if (data.response == 0) {
+                    var options =  '<option value="1">Left</option><option value="2">Right</option>';
+                    $('.position').prop('disabled', false).prop('required', true);
+                    $('.alr').attr("hidden",true);
+                    $('.position').html(options);
+                    $('.tree').attr("hidden",false).html(data.tree);
+                }
+                else if (data.response == 1) {
+                    var options =  '<option value="1">Left</option>';
+                    $('.position').prop('disabled', false).prop('required', true);
+                    $('.alr').attr("hidden",true);
+                    $('.position').html(options);
+                    $('.tree').attr("hidden",false).html(data.tree);
+                }
+                else if (data.response == 2) {
+                    var options =  '<option value="2">Right</option>';
+                    $('.position').prop('disabled', false).prop('required', true);
+                    $('.alr').attr("hidden",true);
+                    $('.position').html(options);
+                    $('.tree').attr("hidden",false).html(data.tree);
+                }else{
+                    var options =  '<option value="" hidden>Full</option>';
+                    $('.position').prop('disabled', false).prop('required', true);
+                    $('.alr').attr("hidden",false).html('Please select Another Referral Username!.');
+                    $('.position').html(options);
+                    $('.tree').attr("hidden",false).html(data.tree);
+                }
+            }, 
+        error: function(jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.status);
+            },
+        dataType: "json"
+        });
+        };
 </script>
 @endpush
