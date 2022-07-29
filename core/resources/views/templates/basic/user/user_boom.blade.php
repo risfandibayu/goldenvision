@@ -244,8 +244,8 @@
         success: function(data) {
                 // $("body").append(JSON.stringify(data));
                 // console.log(data.response);
-                // $(".ref_username option[value='" + id + "']").attr("selected","selected");
-                $('.form')[0].reset();
+                $(".ref_username option[value='" + id + "']").attr("selected","selected");
+                // $('.form')[0].reset();
                 if (data.response == 0) {
                     var options =  '<option value="" hidden>-- Select Position --</option><option value="1">Left</option><option value="2">Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
