@@ -14,19 +14,31 @@
   <link href="{{asset('assets/new')}}/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  {{-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"> --}}
+  {{--
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet"> --}}
 
-  {{-- <link href="http://db.onlinewebfonts.com/c/060e116a70e3096c52db16f61aaab194?family=Sofia+Pro+Regular" rel="stylesheet" type="text/css"/> --}}
+  {{--
+  <link href="http://db.onlinewebfonts.com/c/060e116a70e3096c52db16f61aaab194?family=Sofia+Pro+Regular" rel="stylesheet"
+    type="text/css" /> --}}
 
-  <style> 
-  @font-face {font-family: "Sofia Pro Regular";
-    src: url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.eot"); /* IE9*/
-    src: url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.woff2") format("woff2"), /* chrome、firefox */
-    url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.woff") format("woff"), /* chrome、firefox */
-    url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.svg#Sofia Pro Regular") format("svg"); /* iOS 4.1- */
-  }
+  <style>
+    @font-face {
+      font-family: "Sofia Pro Regular";
+      src: url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.eot");
+      /* IE9*/
+      src: url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.eot?#iefix") format("embedded-opentype"),
+      /* IE6-IE8 */
+      url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.woff2") format("woff2"),
+      /* chrome、firefox */
+      url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.woff") format("woff"),
+      /* chrome、firefox */
+      url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.ttf") format("truetype"),
+      /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url("{{asset('assets/new')}}/font/@font-face/060e116a70e3096c52db16f61aaab194.svg#Sofia Pro Regular") format("svg");
+      /* iOS 4.1- */
+    }
   </style>
   <!-- Vendor CSS Files -->
   <link href="{{asset('assets/new')}}/vendor/aos/aos.css" rel="stylesheet">
@@ -38,7 +50,12 @@
   <link href="{{asset('assets/new')}}/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="{{asset('assets/new')}}/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
 
   <!-- =======================================================
   * Template Name: Bootslander - v4.7.2
@@ -48,9 +65,35 @@
   ======================================================== -->
   <style>
     @media screen and (max-width: 900px) {
-      #tagline{
+      #tagline {
         padding-top: 50px
       }
+    }
+
+    .owl-prev {
+      width: 15px;
+      height: 100px;
+      position: absolute;
+      top: 40%;
+      margin-left: -20px;
+      display: block !important;
+      border: 0px solid black;
+    }
+
+    .owl-next {
+      width: 15px;
+      height: 100px;
+      position: absolute;
+      top: 40%;
+      right: -25px;
+      display: block !important;
+      border: 0px solid black;
+    }
+
+    .owl-prev i,
+    .owl-next i {
+      transform: scale(1, 6);
+      color: #ccc;
     }
   </style>
 </head>
@@ -95,7 +138,7 @@
           @if (!Auth::check())
           <li><a class="nav-link scrollto" href="{{route('user.login')}}">Login | Register</a></li>
           @else
-          
+
           <li><a class="nav-link scrollto" href="{{url('/user/dashboard')}}">Dashboard</a></li>
           @endif
         </ul>
@@ -104,7 +147,7 @@
 
     </div>
   </header><!-- End Header -->
-  
+
 
   <!-- ======= Hero Section ======= -->
   <section id="hero">
@@ -117,7 +160,8 @@
             {{-- <h1>Semua orang bisa punya <span>Emas</span></h1> --}}
             <h2>Semua orang bisa punya emas <br>
               SIMPAN EMAS | JUAL EMAS | NETWORK EMAS | BISNIS EMAS</h2>
-            {{-- <h2>Microgold menyediakan emas bersertifikat dengan ukuran 0.01 gram, 0,02 gram, 0,05 gram dan 0,1 gram.</h2> --}}
+            {{-- <h2>Microgold menyediakan emas bersertifikat dengan ukuran 0.01 gram, 0,02 gram, 0,05 gram dan 0,1
+              gram.</h2> --}}
             <div class="text-center text-lg-start row col-12 col-md-6">
               <div class="col-6 col-md-6">
                 <a href="{{url('/login')}}" class="btn-get-started w-100 text-center scrollto">Login</a>
@@ -135,12 +179,13 @@
         </div>
       </div>
       <div data-aos="zoom-out">
-        
-        <p  style="color: black;" id="tagline">Tabung dan tukarkan dengan emas Antam  3 gram,  5 gram, 10 gram.</p>
+
+        <p style="color: black;" id="tagline">Tabung dan tukarkan dengan emas Antam 3 gram, 5 gram, 10 gram.</p>
       </div>
     </div>
 
-    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28 " preserveAspectRatio="none">
       <defs>
         <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
       </defs>
@@ -157,13 +202,74 @@
 
   </section><!-- End Hero -->
 
+  <section id="produk" class="team">
+    <div class="container">
+
+      <div class="section-title" data-aos="fade-up">
+        <h2>Produk</h2>
+        <p>Produk Kami</p>
+        <h5>Microgold menyediakan emas bersertifikat dengan ukuran 0.01 gram, 0,02 gram, 0,05 gram dan 0,1 gram.</h5>
+      </div>
+      <div class="row">
+        <div class="owl-carousel">
+          <div class="item" style="padding: 20px;">
+            <div class="member" data-aos="zoom-in" data-aos-delay="400">
+              <div class="pic"><img src="{{asset('assets/new')}}/img/prod.png" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>BRO 1</h4>
+                <p>0.001 gram</p>
+                <p>Rp. 14.000</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="item" style="padding: 20px;">
+            <div class="member" data-aos="zoom-in" data-aos-delay="400">
+              <div class="pic"><img src="{{asset('assets/new')}}/img/prod.png" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>BRO 2</h4>
+                <p>0.002 gram</p>
+                <p>Rp. 27.000</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="item" style="padding: 20px;">
+            <div class="member" data-aos="zoom-in" data-aos-delay="400">
+              <div class="pic"><img src="{{asset('assets/new')}}/img/prod.png" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>BRO 3</h4>
+                <p>0.005 gram</p>
+                <p>Rp. 65.000</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="item" style="padding: 20px;">
+            <div class="member" data-aos="zoom-in" data-aos-delay="400">
+              <div class="pic"><img src="{{asset('assets/new')}}/img/prod.png" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>BRO 4</h4>
+                <p>0.01 gram</p>
+                <p>Rp. 128.000</p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </section><!-- End Team Section -->
+
   <!-- ======= Footer ======= -->
-  <footer id="footer" style="background-color: white;color: black">
-    
+  <footer id="footer" style="background-color: #3d312a">
 
     <div class="container">
       <div class="copyright" style="    border-top: white;">
-         Copyright &copy; 2022 <strong><span>MicroGold</span></strong>. All Rights Reserved
+        Copyright &copy; 2022 <strong><span>MicroGold</span></strong>. All Rights Reserved
       </div>
       {{-- <div class="credits">
         <!-- All the links in the footer should remain intact. -->
@@ -175,7 +281,8 @@
     </div>
   </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
@@ -188,7 +295,45 @@
 
   <!-- Template Main JS File -->
   <script src="{{asset('assets/new')}}/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
+  <script>
+    $(document).ready(function() {
+ 
+ $(".owl-carousel").owlCarousel({
 
+     autoPlay: 3000,
+     items : 3,
+     itemsDesktop : [1199,3],
+     itemsDesktopSmall : [979,3],
+     center: true,
+     nav:true,
+     navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+     loop:true,
+     responsive: {
+        0:{
+            items:1,
+            nav:true
+        },
+        600:{
+            items:2,
+            nav:true
+        },
+        1000:{
+            items:3,
+            nav:true,
+        }
+     }
+    
+    
+     
+     
+     
+
+ });
+
+});
+  </script>
 </body>
 
 </html>

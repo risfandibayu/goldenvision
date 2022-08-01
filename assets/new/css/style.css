@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6,p {
   top: calc(50% - 30px);
   left: calc(50% - 30px);
   border: 6px solid #3d312a;
-  border-top-color: #d2f9eb;
+  border-top-color: #96795f;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -222,7 +222,7 @@ h1, h2, h3, h4, h5, h6,p {
   font-size: 14px;
   font-weight: 500;
   text-transform: none;
-  color: #01036f;
+  color: #3d312a;
 }
 .navbar .dropdown ul a i {
   font-size: 12px;
@@ -571,7 +571,7 @@ section {
   font-weight: 700;
   text-transform: uppercase;
   font-family: "Poppins", sans-serif;
-  color: #010483;
+  color: #3d312a;
 }
 
 /*--------------------------------------------------------------
@@ -636,7 +636,7 @@ section {
 .about .icon-boxes h3 {
   font-size: 28px;
   font-weight: 700;
-  color: #010483;
+  color: #3d312a;
   margin-bottom: 15px;
 }
 .about .icon-box {
@@ -800,11 +800,11 @@ section {
   font-size: 16px;
 }
 .features .icon-box h3 a {
-  color: #010483;
+  color: #3d312a;
   transition: ease-in-out 0.3s;
 }
 .features .icon-box h3 a:hover {
-  color: #01036f;
+  color: #3d312a;
 }
 .features .icon-box:hover {
   background: #ebebff;
@@ -845,7 +845,7 @@ section {
   font-size: 36px;
   display: block;
   font-weight: 600;
-  color: #010483;
+  color: #3d312a;
 }
 .counts .count-box p {
   padding: 0;
@@ -863,7 +863,7 @@ section {
 .details .content h3 {
   font-weight: 600;
   font-size: 26px;
-  color: #010483;
+  color: #3d312a;
 }
 .details .content ul {
   list-style: none;
@@ -1021,7 +1021,7 @@ section {
   font-weight: 700;
   margin-bottom: 10px;
   font-size: 16px;
-  color: #01036f;
+  color: #3d312a;
   position: relative;
   padding-bottom: 10px;
 }
@@ -1039,14 +1039,14 @@ section {
   font-style: italic;
   display: block;
   font-size: 13px;
-  color: #01036f;
+  color: #3d312a;
 }
 .team .member .social {
   margin-top: 10px;
 }
 .team .member .social a {
   transition: color 0.3s;
-  color: #01036f;
+  color: #3d312a;
 }
 .team .member .social a:hover {
   color: #3d312a;
@@ -1246,7 +1246,7 @@ section {
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 5px;
-  color: #010483;
+  color: #3d312a;
 }
 .contact .info p {
   padding: 0 0 0 60px;
