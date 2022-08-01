@@ -1241,10 +1241,10 @@ function showSingleUserinTree2($user,$id)
         }elseif(Auth::user()->id == $user->id){
             $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#4cbe04;color:black;\"'>Leader (You)</a> </p>";
             if (Auth::user()->id == $id) {
-                $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")'>Selected Referral</a> </p>";
+                $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")'>Selected Parent</a> </p>";
             }
         }elseif($user->id == $id){
-            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")'>Selected Referral</a> </p>";
+            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")'>Selected Parent</a> </p>";
         }
         else{
             $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" onclick='f1(\"$user->id\")'>Explore Tree</a> </p>";

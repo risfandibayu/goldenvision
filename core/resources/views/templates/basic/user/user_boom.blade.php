@@ -43,9 +43,9 @@
                             @csrf
                         <input type="text" name="count" hidden value="{{$i}}">
                         <div class="form-group">
-                            <label for="ref_username1">Referral Username</label>
+                            <label for="ref_username1">Parent Username</label>
                             <select class="form-select form-control ref_username" name="ref_username" id="ref_username{{$i}}" required>
-                              <option value="" hidden>-- Select Referral Username --</option>
+                              <option value="" hidden>-- Select Parent Username --</option>
                               @foreach($ref_user as $refus)
                                     @if($refus->pos == "Leader")
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}" style="font-weight: 700">{{$refus->username}}
@@ -77,7 +77,7 @@
                             <select class="form-select form-control position" name="position" id="position" disabled>
                                 <option value="">-- Select Position --</option>
                             </select>
-                            <span id="alr" class="text-danger alr">Please select Referral Username First!.</span>
+                            <span id="alr" class="text-danger alr">Please select Parent Username First!.</span>
                             {{-- <span id="alr" class="text-danger"></span> --}}
                         </div>
 
@@ -193,7 +193,7 @@
                 }else{
                     var options =  '<option value="" hidden>Full</option>';
                     $('.position').prop('disabled', false).prop('required', true);
-                    $('.alr').attr("hidden",false).html('Please select Another Referral Username!.');
+                    $('.alr').attr("hidden",false).html('Please select Another Parent Username!.');
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                 }
@@ -286,7 +286,7 @@
                 }else{
                     var options =  '<option value="" hidden>Full</option>';
                     $('.position').prop('disabled', false).prop('required', true);
-                    $('.alr').attr("hidden",false).html('Please select Another Referral Username!.');
+                    $('.alr').attr("hidden",false).html('Please select Another Parent Username!.');
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                 }

@@ -1061,7 +1061,7 @@ class UserController extends Controller
         $us = user::where('id',Auth::user()->id)->first();
         //User Create
         $user = new User();
-        $user->ref_id       = $userCheck->id;
+        $user->ref_id       = Auth::user()->id;
         $user->pos_id       = $pos['pos_id'];
         $user->position     = $pos['position'];
         $user->firstname    = isset($us->firstname) ? $us->firstname : null;
@@ -1069,7 +1069,7 @@ class UserController extends Controller
         $user->email        = strtolower(trim($request->email));
         $user->password     = $us->password;
         $user->username     = trim($request->username);
-        $user->ref_id       = $userCheck->id;
+        // $user->ref_id       = $userCheck->id;
         $user->mobile       = $us->country_code . $us->mobile;
         $user->address      = $us->address;
         $user->status = 1;

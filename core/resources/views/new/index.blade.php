@@ -111,10 +111,13 @@
 
     <div class="container">
       <div class="row justify-content-between">
-        <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
+        <div class="col-lg-8 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
           <div data-aos="zoom-out">
-            <h1>Semua orang bisa punya <span>Emas</span></h1>
-            <h2>Microgold menyediakan emas bersertifikat dengan ukuran 0.01 gram, 0,02 gram, 0,05 gram dan 0,1 gram.</h2>
+            <h1>INDONESIA EMAS <span>2045</span></h1>
+            {{-- <h1>Semua orang bisa punya <span>Emas</span></h1> --}}
+            <h2>Semua orang bisa punya emas <br>
+              SIMPAN EMAS | JUAL EMAS | NETWORK EMAS | BISNIS EMAS</h2>
+            {{-- <h2>Microgold menyediakan emas bersertifikat dengan ukuran 0.01 gram, 0,02 gram, 0,05 gram dan 0,1 gram.</h2> --}}
             <div class="text-center text-lg-start row col-12 col-md-6">
               <div class="col-6 col-md-6">
                 <a href="{{url('/login')}}" class="btn-get-started w-100 text-center scrollto">Login</a>
@@ -125,7 +128,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
+        <div class="col-lg-3 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
           <img src="{{asset('assets/new')}}/img/hero-img4.png" class="img-fluid animated" alt="">
           {{-- <img src="{{asset('assets/new')}}/img/brosure-01.jpg" class="img-fluid animated" alt=""> --}}
           {{-- <img src="{{asset('assets/new')}}/img/brosure-01-cutout.png" class="img-fluid animated" alt=""> --}}
