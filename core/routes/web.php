@@ -23,6 +23,7 @@ Route::get('/voldemort/down', function(){
     echo "Website on Maintenance";
 });
 
+// Route::get('/generateUniqueCode/{no_bro}', 'Auth\RegisterController@generateUniqueCode');
 /*
 |--------------------------------------------------------------------------
 | Web Routes

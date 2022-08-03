@@ -124,6 +124,7 @@ class RegisterController extends Controller
             'mobile'        => 'required|string|max:30|unique:users',
             'password'      => 'required|string|min:6|confirmed',
             'username'      => 'required|alpha_num|unique:users|min:6',
+            'no_bro'        => 'integer|unique:users|min:8',
             // 'captcha'       => 'sometimes|required',
             'country_code'  => 'required',
             'agree' => $agree
@@ -131,6 +132,8 @@ class RegisterController extends Controller
 
         return $validate;
     }
+
+    
 
     public function register(Request $request)
     {
@@ -192,6 +195,7 @@ class RegisterController extends Controller
         //User Create
         $user = new User();
         $user->ref_id       = $userCheck->id;
+        $user->no_bro       = generateUniqueNoBro();
         $user->pos_id       = $pos['pos_id'];
         $user->position     = $pos['position'];
         $user->firstname    = isset($data['firstname']) ? $data['firstname'] : null;

@@ -24,7 +24,7 @@
                 background-color: #96795f;">
                     @for ($i = 1; $i < $get_bv->bv+1; $i++)
                         
-                    <a class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}}</a>
+                    <a class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} -> {{generateUniqueNoBro()}}</a>
                     @endfor
 
                     {{-- <a class="nav-item nav-link" id="nav-user2-tab" data-toggle="tab" href="#nav-user2" role="tab" aria-controls="nav-user2" aria-selected="false">User 2</a>

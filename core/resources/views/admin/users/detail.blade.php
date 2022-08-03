@@ -311,13 +311,23 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('No BRO') <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="no_bro" value="{{$user->no_bro}}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Email') <span
                                             class="text-danger">*</span></label>
                                     <input class="form-control" type="email" name="email" value="{{$user->email}}">
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label  font-weight-bold">@lang('Mobile Number') <span
                                             class="text-danger">*</span></label>

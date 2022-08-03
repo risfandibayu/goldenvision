@@ -56,6 +56,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('No BRO')<span class="text-danger">*</span></label>
+                                    <input class="form-control form-control-lg" type="email" value="{{auth()->user()->no_bro}}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Email')<span class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="email" value="{{auth()->user()->email}}" readonly>
                                 </div>
@@ -69,7 +75,7 @@
                                            value="{{auth()->user()->mobile}}" readonly>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label  font-weight-bold">@lang('Avatar')</label>
                                     <input class="form-control form-control-lg" type="file" accept="image/*"  onchange="loadFile(event)" name="image">

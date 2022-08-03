@@ -1313,3 +1313,11 @@ function displayRating($val)
     }
     return $result;
 }
+
+function generateUniqueNoBro()
+    {
+        do {
+            $code = random_int(10000000, 99999999);
+        } while (user::where("no_bro", "=", $code)->first());
+        return $code;
+    }

@@ -2,7 +2,7 @@
 
 @section('panel')
     <div class="row mb-none-30">
-        @if($general->notice != null)
+        {{-- @if($general->notice != null)
             <div class="col-lg-12 col-sm-6 mb-30">
                 <div class="card border--light">
                     <div class="card-header">@lang('Notice')</div>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
@@ -153,7 +153,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--12 b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-money-bill"></i>
@@ -170,7 +170,7 @@
                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--info b-radius--10 box-shadow">
@@ -191,7 +191,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--3 b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-users"></i>
@@ -207,7 +207,7 @@
                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--15 b-radius--10 box-shadow">
@@ -247,7 +247,7 @@
         </div>
 
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--17 b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-cart-arrow-down"></i>
@@ -321,7 +321,7 @@
                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
 @endsection

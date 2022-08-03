@@ -54,30 +54,30 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('user.bv.log') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.bv.log') }}">
                     <a href="{{ route('user.bv.log') }}" class="nav-link">
                         <i class="menu-icon las la-sitemap"></i>
                         <span class="menu-title">@lang('BV Log')</span>
                     </a>
-                </li>
-                <li class="sidebar-menu-item {{ menuActive('user.my.ref') }}">
+                </li> --}}
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.my.ref') }}">
                     <a href="{{ route('user.my.ref') }}" class="nav-link">
                         <i class="menu-icon las la-users"></i>
                         <span class="menu-title">@lang('My Referrals')</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
                     <a href="{{ route('user.my.tree') }}" class="nav-link">
                         <i class="menu-icon las la-tree"></i>
                         <span class="menu-title">@lang('My Tree')</span>
                     </a>
                 </li>
-                <li class="sidebar-menu-item {{ menuActive('user.binary.summery') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.binary.summery') }}">
                     <a href="{{ route('user.binary.summery') }}" class="nav-link">
                         <i class=" menu-icon las la-chart-area"></i>
                         <span class="menu-title">@lang('Binary Summery')</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="sidebar-menu-item {{ menuActive('user.deposit') }}">
                     <a href="{{ route('user.deposit') }}" class="nav-link">
                         <i class=" menu-icon las la-credit-card"></i>
@@ -90,12 +90,12 @@
                         <span class="menu-title">@lang('Withdraw Now')</span>
                     </a>
                 </li>
-                <li class="sidebar-menu-item {{ menuActive('user.balance.transfer') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.balance.transfer') }}">
                     <a href="{{ route('user.balance.transfer') }}" class="nav-link">
                         <i class="menu-icon las la-hand-holding-usd"></i>
                         <span class="menu-title">@lang('Balance Transfer')</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{menuActive('user.report*',3)}} my-2">
                         <i class="menu-icon las la-exchange-alt"></i>
@@ -130,12 +130,12 @@
                                     <span class="menu-title">@lang('Invest Log')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{menuActive('user.report.refCom')}}">
+                            {{-- <li class="sidebar-menu-item {{menuActive('user.report.refCom')}}">
                                 <a href="{{route('user.report.refCom')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Referral Commissions')</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="sidebar-menu-item {{menuActive('user.report.binaryCom')}}">
                                 <a href="{{route('user.report.binaryCom')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>

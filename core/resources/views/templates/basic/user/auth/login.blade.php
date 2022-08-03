@@ -19,7 +19,7 @@
                         @csrf
                         <div class="col-sm-12">
                             <label for="username" class="form--label-2">@lang('Your Name')</label>
-                            <input type="text" id="username" name="username" value="{{old('username')}}" placeholder="@lang('Username')" required class="form-control form--control-2">
+                            <input type="text" id="username" name="username" value="{{old('username')}}" placeholder="@lang('Username/E-mail/BRO Number')" required class="form-control form--control-2">
                         </div>
                         <div class="col-sm-12">
                             <label for="myInputThree" class="form--label-2">@lang('Your Password')</label>
