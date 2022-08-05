@@ -1087,6 +1087,99 @@ class UserController extends Controller
         $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
         return redirect()->back()->withNotify($notify);
     }
+
+    public function verification(){
+        $page_title = 'Data Verifications';
+        return view('templates.basic.user.kyc',compact('page_title'));
+    }
     
+    public function submitVerification(Request $request)
+    {
+        $request->validate([
+            'firstname' => 'required|string|max:50',
+            'lastname' => 'required|string|max:50',
+            'address' => "nullable|max:80",
+            'state' => 'nullable|max:80',
+            'zip' => 'nullable|max:40',
+            'city' => 'nullable|max:50',
+            'image' => 'mimes:png,jpg,jpeg'
+        ],[
+            'firstname.required'=>'First Name Field is required',
+            'lastname.required'=>'Last Name Field is required'
+        ]);
+
+
+        $in['firstname'] = $request->firstname;
+        $in['lastname'] = $request->lastname;
+        $in['nik'] = $request->nik;
+        // $in['foto_ktp'] = $request->ktp;
+        // $in['foto_selfie'] = $request->selfie;
+        $in['is_kyc'] = 1;
+
+        $in['address'] = [
+            'address' => $request->address,
+            'state' => $request->state,
+            'zip' => $request->zip,
+            'country' => $request->country,
+            'city' => $request->city,
+        ];
+
+        $user = Auth::user();
+
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $filename = time() . '_' . $user->username . '.jpg';
+        //     $location = 'assets/images/user/profile/' . $filename;
+        //     $in['image'] = $filename;
+
+        //     $path = './assets/images/user/profile/';
+        //     $link = $path . $user->image;
+        //     if (file_exists($link)) {
+        //         @unlink($link);
+        //     }
+        //     $size = imagePath()['profile']['user']['size'];
+        //     $image = Image::make($image);
+        //     $size = explode('x', strtolower($size));
+        //     $image->resize($size[0], $size[1]);
+        //     $image->save($location);
+        // }
+        if ($request->hasFile('ktp')) {
+            $image = $request->file('ktp');
+            $filename = time() . '_ktp_' . $user->username . '.jpg';
+            $location = 'assets/images/user/kyc/' . $filename;
+            $in['foto_ktp'] = $filename;
+
+            $path = './assets/images/user/kyc/';
+            $link = $path . $user->foto_ktp;
+            if (file_exists($link)) {
+                @unlink($link);
+            }
+            // $size = imagePath()['profile']['user']['size'];
+            $image = Image::make($image);
+            // $size = explode('x', strtolower($size));
+            // $image->resize($size[0], $size[1]);
+            $image->save($location);
+        }
+        if ($request->hasFile('selfie')) {
+            $image = $request->file('selfie');
+            $filename = time() . '_self_' . $user->username . '.jpg';
+            $location = 'assets/images/user/kyc/' . $filename;
+            $in['foto_selfie'] = $filename;
+
+            $path = './assets/images/user/kyc/';
+            $link = $path . $user->foto_selfie;
+            if (file_exists($link)) {
+                @unlink($link);
+            }
+            // $size = imagePath()['profile']['user']['size'];
+            $image = Image::make($image);
+            // $size = explode('x', strtolower($size));
+            // $image->resize($size[0], $size[1]);
+            $image->save($location);
+        }
+        $user->fill($in)->save();
+        $notify[] = ['success', 'Data Verification send successfully.'];
+        return redirect()->route('user.home')->withNotify($notify);
+    }
 
 }

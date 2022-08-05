@@ -66,12 +66,15 @@
                         <span class="menu-title">@lang('My Referrals')</span>
                     </a>
                 </li> --}}
-                <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
-                    <a href="{{ route('user.my.tree') }}" class="nav-link">
-                        <i class="menu-icon las la-tree"></i>
-                        <span class="menu-title">@lang('My Tree')</span>
-                    </a>
-                </li>
+                {{-- @if (Auth::user()->is_mlm == 1) --}}
+                    <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
+                        <a href="{{ route('user.my.tree') }}" class="nav-link">
+                            <i class="menu-icon las la-tree"></i>
+                            <span class="menu-title">@lang('My Tree')</span>
+                        </a>
+                    </li>
+                {{-- @endif --}}
+                
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.binary.summery') }}">
                     <a href="{{ route('user.binary.summery') }}" class="nav-link">
                         <i class=" menu-icon las la-chart-area"></i>
@@ -147,12 +150,12 @@
                     </div>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('user.twofactor') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.twofactor') }}">
                     <a href="{{ route('user.twofactor') }}" class="nav-link">
                         <i class="menu-icon las la-shield-alt"></i>
                         <span class="menu-title">@lang('2FA Security')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item {{ menuActive('ticket*') }}">
                     <a href="{{ route('ticket') }}" class="nav-link">

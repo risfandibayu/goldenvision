@@ -116,7 +116,7 @@ class RegisterController extends Controller
         }
 
         $validate = Validator::make($data, [
-            'referral'      => 'required|string|max:160',
+            // 'referral'      => 'required|string|max:160',
             // 'position'      => 'required|integer',
             'firstname'     => 'sometimes|required|string|max:60',
             'lastname'      => 'sometimes|required|string|max:60',
@@ -154,12 +154,12 @@ class RegisterController extends Controller
             return back()->withNotify($notify)->withInput();
         }
 
-        $userCheck = User::where('username', $request->referral)->first();
+        // $userCheck = User::where('username', $request->referral)->first();
 
-        if (!$userCheck) {
-            $notify[] = ['error', 'Referral not found.'];
-            return back()->withNotify($notify);
-        }
+        // if (!$userCheck) {
+        //     $notify[] = ['error', 'Referral not found.'];
+        //     return back()->withNotify($notify);
+        // }
 
         if (isset($request->captcha)) {
             if (!captchaVerify($request->captcha, $request->captcha_secret)) {
@@ -183,21 +183,25 @@ class RegisterController extends Controller
      * @param  array $data
      * @return \App\User
      */
+    public function generateUniqueCode($no_bro){
+        $code = generateUniqueNoBro();
+        echo $no_bro.'/'.$code;
+    }
     protected function create(array $data)
     {
 
         $gnl = GeneralSetting::first();
 
-        $userCheck = User::where('username', $data['referral'])->first();
-        $pos = getPosition($userCheck->id, $data['position']);
+        // $userCheck = User::where('username', $data['referral'])->first();
+        // $pos = getPosition($userCheck->id, $data['position']);
 
 
         //User Create
         $user = new User();
-        $user->ref_id       = $userCheck->id;
+        // $user->ref_id       = $userCheck->id;
         $user->no_bro       = generateUniqueNoBro();
-        $user->pos_id       = $pos['pos_id'];
-        $user->position     = $pos['position'];
+        // $user->pos_id       = $pos['pos_id'];
+        // $user->position     = $pos['position'];
         $user->firstname    = isset($data['firstname']) ? $data['firstname'] : null;
         $user->lastname     = isset($data['lastname']) ? $data['lastname'] : null;
         $user->email        = strtolower(trim($data['email']));

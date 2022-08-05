@@ -441,6 +441,21 @@ class ManageUsersController extends Controller
         return redirect()->route('user.home');
     }
 
+    public function verify($id){
+        $user = User::findOrFail($id);
+        $user->is_kyc = 2;
+        $user->save();
+        $notify[] = ['success', 'User successfully verify!!'];
+        return back()->withNotify($notify);
+    }
+    public function reject($id){
+        $user = User::findOrFail($id);
+        $user->is_kyc = 3;
+        $user->save();
+        $notify[] = ['success', 'User successfully rejected!!'];
+        return back()->withNotify($notify);
+    }
+
 
 }
 

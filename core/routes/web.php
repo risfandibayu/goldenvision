@@ -23,7 +23,7 @@ Route::get('/voldemort/down', function(){
     echo "Website on Maintenance";
 });
 
-// Route::get('/generateUniqueCode/{no_bro}', 'Auth\RegisterController@generateUniqueCode');
+Route::get('/generateUniqueCode/{no_bro}', 'Auth\RegisterController@generateUniqueCode');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -128,6 +128,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('users/sms-unverified', 'ManageUsersController@smsUnverifiedUsers')->name('users.smsUnverified');
         Route::get('users/sms-verified', 'ManageUsersController@smsVerifiedUsers')->name('users.smsVerified');
         Route::get('user/login/{id}', 'ManageUsersController@login')->name('users.login');
+        Route::post('user/verify/{id}', 'ManageUsersController@verify')->name('users.verify');
+        Route::post('user/reject/{id}', 'ManageUsersController@reject')->name('users.reject');
 
         Route::get('users/{scope}/search', 'ManageUsersController@search')->name('users.search');
         Route::get('user/detail/{id}', 'ManageUsersController@detail')->name('users.detail');
@@ -395,10 +397,10 @@ Route::name('user.')->prefix('user')->group(function () {
 
             //plan
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
-            Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
+            // Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::get('/referral-log', 'UserController@referralCom')->name('referral.log');
 
-            Route::get('/binary-log', 'PlanController@binaryCom')->name('binary.log');
+            // Route::get('/binary-log', 'PlanController@binaryCom')->name('binary.log');
             Route::get('/binary-summery', 'PlanController@binarySummery')->name('binary.summery');
             Route::get('/bv-log', 'PlanController@bvlog')->name('bv.log');
             Route::get('/referrals', 'PlanController@myRefLog')->name('my.ref');
@@ -412,15 +414,15 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('/search-user', 'UserController@searchUser')->name('search.user');
 
             //Report
-            Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');
-            Route::get('report/invest/log', 'UserReportController@investLog')->name('report.invest');
-            Route::get('report/transactions/log', 'UserReportController@transactions')->name('report.transactions');
-            Route::get('report/withdraw/log', 'UserReportController@withdrawLog')->name('report.withdraw');
-            Route::get('report/referral/commission', 'UserReportController@refCom')->name('report.refCom');
-            Route::get('report/binary/commission', 'UserReportController@binaryCom')->name('report.binaryCom');
+            // Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');
+            // Route::get('report/invest/log', 'UserReportController@investLog')->name('report.invest');
+            // Route::get('report/transactions/log', 'UserReportController@transactions')->name('report.transactions');
+            // Route::get('report/withdraw/log', 'UserReportController@withdrawLog')->name('report.withdraw');
+            // Route::get('report/referral/commission', 'UserReportController@refCom')->name('report.refCom');
+            // Route::get('report/binary/commission', 'UserReportController@binaryCom')->name('report.binaryCom');
 
             // Deposit
-            Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');
+            // Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');
             Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
             Route::get('deposit/preview', 'Gateway\PaymentController@depositPreview')->name('deposit.preview');
             Route::get('deposit/confirm', 'Gateway\PaymentController@depositConfirm')->name('deposit.confirm');
@@ -429,7 +431,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('deposit/history', 'UserController@depositHistory')->name('deposit.history');
 
             // Withdraw
-            Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
+            // Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
             Route::post('withdraw', 'UserController@withdrawStore')->name('withdraw.money');
             Route::get('withdraw/preview', 'UserController@withdrawPreview')->name('withdraw.preview');
             Route::post('withdraw/preview', 'UserController@withdrawSubmit')->name('withdraw.submit');
@@ -440,12 +442,30 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/survey/{id}/questions', 'UserController@surveyQuestions')->name('survey.questions');
             Route::post('/survey/answers', 'UserController@surveyQuestionsAnswers')->name('survey.questions.answers');
 
-            Route::middleware(['checkPaid'])->group(function () {
-            Route::get('/user_boom', 'UserController@user_boom')->name('user_boom');
+            Route::middleware(['checkKyc'])->group(function () {
+                Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
+                Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');
+                Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');
+                Route::get('report/invest/log', 'UserReportController@investLog')->name('report.invest');
+                Route::get('report/transactions/log', 'UserReportController@transactions')->name('report.transactions');
+                Route::get('report/withdraw/log', 'UserReportController@withdrawLog')->name('report.withdraw');
+                Route::get('report/referral/commission', 'UserReportController@refCom')->name('report.refCom');
+                Route::get('report/binary/commission', 'UserReportController@binaryCom')->name('report.binaryCom');
+
+                Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
+
+                Route::middleware(['checkPaid'])->group(function () {
+                Route::get('/user_boom', 'UserController@user_boom')->name('user_boom');
+                Route::get('/tree', 'PlanController@myTree')->name('my.tree');
+                });
             });
+
             Route::get('/cek_pos/{id}', 'UserController@cek_pos')->name('cek_pos');
             Route::get('/cek_tree/{id}', 'UserController@cek_tree')->name('cek_tree');
             Route::post('/user', 'UserController@user')->name('user');
+
+            Route::get('/verification','UserController@verification')->name('verification');
+            Route::post('/submitVerification','UserController@submitVerification')->name('submitVerification');
         });
     });
 });

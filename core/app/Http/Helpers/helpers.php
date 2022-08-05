@@ -1313,11 +1313,18 @@ function displayRating($val)
     }
     return $result;
 }
+function randomNumber($length) {
+    $result = '';
+    for($i = 0; $i < $length; $i++) {
+        $result .= mt_rand(0, 9);
+    }
+    return $result;
+}
 
 function generateUniqueNoBro()
     {
         do {
-            $code = random_int(10000000, 99999999);
+            $code = rand(2290000000, 2299999999);
         } while (user::where("no_bro", "=", $code)->first());
         return $code;
     }

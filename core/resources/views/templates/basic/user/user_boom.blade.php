@@ -5,8 +5,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 <style>
-    a{
-        color: #000000;
+    a{ 
         text-decoration: none;
         background-color: transparent;
     }
@@ -17,14 +16,14 @@
 
 <div class="card">
     <div class="row">
-        <div class="col-md-12">
-            <nav>
-                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist" style="border: none;
+        {{-- <div class="col-md-12"> --}}
+            <nav class="col-2">
+                <div class="nav nav-tabs nav-fill " id="nav-tab" role="tablist" style="border: none;
                 color: #ffffff;
                 background-color: #96795f;">
                     @for ($i = 1; $i < $get_bv->bv+1; $i++)
                         
-                    <a class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} -> {{generateUniqueNoBro()}}</a>
+                    <a class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - {{generateUniqueNoBro()}}</a>
                     @endfor
 
                     {{-- <a class="nav-item nav-link" id="nav-user2-tab" data-toggle="tab" href="#nav-user2" role="tab" aria-controls="nav-user2" aria-selected="false">User 2</a>
@@ -35,10 +34,16 @@
                     <a class="nav-item nav-link" id="nav-user7-tab" data-toggle="tab" href="#nav-user7" role="tab" aria-controls="nav-user7" aria-selected="false">User 7</a> --}}
                 </div>
             </nav>
-            <div class="tab-content" id="nav-tabContent">
+            <div class="col-10 tab-content" id="nav-tabContent">
                 @for ($i = 1; $i < $get_bv->bv+1; $i++)
                 <div class="tab-pane fade show" id="nav-user{{$i}}" role="tabpanel" aria-labelledby="nav-user{{$i}}-tab">
                     <div class="card-body">
+                        {{-- <?php
+                        $tmp = App\Models\User::where('email',$ref->usr.'+'.$i.'@'.$ref->domain)->first();
+                        ?>
+                        @if ($tmp)
+                        {{ $tmp->email }}
+                        @endif --}}
                         <form action="{{route('user.user')}}" class="form" id="form{{$i}}" method="POST" enctype="multipart/form-data">
                             @csrf
                         <input type="text" name="count" hidden value="{{$i}}">
@@ -113,7 +118,7 @@
                 @endfor
                 
             </div>
-        </div>
+        {{-- </div> --}}
         
     </div>
 </div>

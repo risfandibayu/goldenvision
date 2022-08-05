@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckPaid
+class CheckKyc
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class CheckPaid
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->plan_id != 0) {
+        if (auth()->user()->is_kyc != 0) {
             return $next($request);
         }
-        $notify[] = ['error','Sorry, You have to subscribe membership first.'];
-        return redirect()->route('user.plan.index')->withNotify($notify);
+        $notify[] = ['error','Sorry, You have to verification data first.'];
+        return redirect()->route('user.home')->withNotify($notify);
     }
 }
