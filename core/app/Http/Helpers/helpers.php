@@ -1324,7 +1324,7 @@ function randomNumber($length) {
 function generateUniqueNoBro()
     {
         do {
-            $code = rand(2290000000, 2299999999);
+            $code = rand(22900000, 22999999);
         } while (user::where("no_bro", "=", $code)->first());
         return $code;
     }
