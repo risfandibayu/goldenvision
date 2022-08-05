@@ -11,6 +11,9 @@ Route::get('/mysql', function(){
 Route::get('/cek_url', function(){
     dd(URL::to('/'));
 });
+Route::get('/cek_bit', function(){
+    dd(PHP_INT_MAX);
+});
 Route::get('/clear', function(){
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
