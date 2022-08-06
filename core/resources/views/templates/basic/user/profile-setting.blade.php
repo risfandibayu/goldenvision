@@ -20,6 +20,23 @@
                             <li class="list-group-item d-flex justify-content-between">
                                 <span>@lang('Joined at')</span> {{date('d M, Y h:i A',strtotime(auth()->user()->created_at))}}
                             </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Account Status</span> 
+                                @switch(auth()->user()->is_kyc)
+                                    @case(0)
+                                    <span class="badge badge-pill bg--danger">Unverified</span>
+                                    @break
+                                    @case(1)
+                                    <span class="badge badge-pill bg--warning">On Process Verification</span>
+                                    @break
+                                    @case(2)
+                                    <span class="badge badge-pill bg--success">Verified</span>
+                                    @break
+                                    @case(3)
+                                    <span class="badge badge-pill bg--danger">Rejected</span>
+                                    @break
+                                    @endswitch
+                            </li>
                         </ul>
 
                     </div>
