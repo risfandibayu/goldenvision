@@ -483,7 +483,7 @@
 
 
 
-                {{-- <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
+                <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
 
                 <li class="sidebar-menu-item {{menuActive('admin.frontend.templates')}}">
                     <a href="{{route('admin.frontend.templates')}}" class="nav-link ">
@@ -523,7 +523,7 @@
 
                         </ul>
                     </div>
-                </li> --}}
+                </li>
             </ul>
             {{-- <div class="text-center mb-3 text-uppercase">
                 <span class="text--primary">{{systemDetails()['name']}}</span>
