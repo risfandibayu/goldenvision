@@ -785,7 +785,7 @@ class UserController extends Controller
         ->orwhere('users.ref_id', auth::user()->id)//level1
         ->orderby('users.pos_id',"ASC")
         ->select('users.*',db::raw("if(users.id=".auth::user()->id.",'Leader',concat('Level ',users.pos_id-1)) as pos"),'us.username as usa')
-        ->join('users as us','us.id','=','users.pos_id')
+        ->leftjoin('users as us','us.id','=','users.pos_id')
         ->get();
 
         $reg = array();
