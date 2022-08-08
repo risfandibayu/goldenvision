@@ -137,39 +137,45 @@ class CronController extends Controller
                         $user_plan = user::where('users.id',$user)
                         ->join('plans','plans.id','=','users.plan_id')->first();                        
                         $pair = intval($weak / 3);
+                        $pair2[] = $pair == $uex->level_binary;
+
+                        if ($pair >= 10) {
+                            $pair = 10;
+                        }
+
                         $bonus = intval($pair * ($user_plan->tree_com * 6));
 
                         if ($pair == $uex->level_binary) {
-                            if ($uex->level_binary == 10) {
-                                $payment = User::find($uex->user_id);
-                                $payment->balance += $bonus;
-                                $payment->save();
+                            // if ($uex->level_binary == 10) {
+                            //     $payment = User::find($uex->user_id);
+                            //     $payment->balance += $bonus;
+                            //     $payment->save();
     
-                                $trx = new Transaction();
-                                $trx->user_id = $payment->id;
-                                $trx->amount = $bonus;
-                                $trx->charge = 0;
-                                $trx->trx_type = '+';
-                                $trx->post_balance = $payment->balance;
-                                $trx->remark = 'binary_commission';
-                                $trx->trx = getTrx();
-                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
-                                $trx->save();
-                                
-                                $uex->paid_left = 30;
-                                $uex->paid_right = 30;
-                                $uex->save();
-    
-                                sendEmail2($user, 'matching_bonus', [
-                                        'amount' => $bonus,
-                                        'currency' => $gnl->cur_text,
-                                        'paid_bv' => $pair * 6,
-                                        'post_balance' => $payment->balance,
-                                        'trx' =>  $trx->trx,
-                                ]);
-                            }else{
+                            //     $trx = new Transaction();
+                            //     $trx->user_id = $payment->id;
+                            //     $trx->amount = $bonus;
+                            //     $trx->charge = 0;
+                            //     $trx->trx_type = '+';
+                            //     $trx->post_balance = $payment->balance;
+                            //     $trx->remark = 'binary_commission';
+                            //     $trx->trx = getTrx();
+                            //     $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+                            //     $trx->save();
 
-                            }
+                            //     $uex->paid_left = 0;
+                            //     $uex->paid_right = 0;
+                            //     $uex->save();
+    
+                            //     sendEmail2($user, 'matching_bonus', [
+                            //             'amount' => $bonus,
+                            //             'currency' => $gnl->cur_text,
+                            //             'paid_bv' => $pair * 6,
+                            //             'post_balance' => $payment->balance,
+                            //             'trx' =>  $trx->trx,
+                            //     ]);
+                            // }else{
+
+                            // }
 
                         }else{
                             $payment = User::find($uex->user_id);
@@ -184,22 +190,42 @@ class CronController extends Controller
                             $trx->post_balance = $payment->balance;
                             $trx->remark = 'binary_commission';
                             $trx->trx = getTrx();
-                            $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
-                            $trx->save();
 
-                            $uex->level_binary = $pair;
-                            $uex->save();
-
+                            if ($pair >= 10) {
+                                $paid_bv = $uex->paid_left + $uex->paid_right;
+                            }else{
+                                $paid_bv = $pair * 6;
+                            }
+                            
                             sendEmail2($user, 'matching_bonus', [
                                     'amount' => $bonus,
                                     'currency' => $gnl->cur_text,
-                                    'paid_bv' => $pair * 6,
+                                    'paid_bv' => $paid_bv,
                                     'post_balance' => $payment->balance,
                                     'trx' =>  $trx->trx,
-                                ]);
+                            ]);
+                            
+                            if ($pair >= 10) {
+                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $uex->paid_left + $uex->paid_right . ' BRO.';
+                                $trx->save();
+                                # code...
+                                $uex->paid_left = 0;
+                                $uex->paid_right = 0;
+                                $uex->level_binary = 0;
+                                $uex->save();
+                            }else{
+                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+                                $trx->save();
+                                $uex->level_binary = $pair;
+                                $uex->save();
+                            }
+
+                            
                         }
         }
+        return $pair2;
         // dd($dd);
+
     }
     // public function cron30bro()
     // {
