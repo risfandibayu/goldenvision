@@ -145,7 +145,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputusername">BRO Number</label>
-                            <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="Random BRO Number">
+                            <input readonly type="text" class="form-control" name="no_bro" id="exampleInputno_bro" placeholder="no_bro" value="Random BRO Number">
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Email address</label>
