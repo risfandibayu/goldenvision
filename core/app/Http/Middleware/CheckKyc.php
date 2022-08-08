@@ -16,7 +16,7 @@ class CheckKyc
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->is_kyc != 0) {
+        if (auth()->user()->is_kyc == 2) {
             return $next($request);
         }
         $notify[] = ['error','Sorry, You have to verification data first.'];

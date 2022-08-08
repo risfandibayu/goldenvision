@@ -27,9 +27,9 @@
                     ?>
                     @if ($tmp)
                     {{-- {{ $tmp->email }} --}}
-                    <a style="color: black;    width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - {{$tmp->no_bro}} <i class="las la-check" style="color: aqua"></i></a>
+                    <a style="color: black;    width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - {{$tmp->no_bro}} <i class="las la-check" style="color: rgb(60, 226, 255)"></i></a>
                     @else
-                    <a style="color: black;     width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - (BRO Number) <i class="las la-ban" style="color: red"></i></a>
+                    <a style="color: black;     width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - (BRO Number) <i class="las la-pen" style="color: yellow"></i></a>
                     @endif
                     @endfor
 

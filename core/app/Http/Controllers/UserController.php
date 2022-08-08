@@ -1064,6 +1064,7 @@ class UserController extends Controller
         $user = new User();
         $user->no_bro       = generateUniqueNoBro();
         $user->ref_id       = Auth::user()->id;
+        $user->plan_id      = 1;
         $user->pos_id       = $pos['pos_id'];
         $user->position     = $pos['position'];
         $user->firstname    = isset($us->firstname) ? $us->firstname : null;
