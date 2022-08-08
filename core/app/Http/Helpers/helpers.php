@@ -1428,7 +1428,7 @@ function generateUniqueNoBro()
         // $cek_awal_kanan = User::where('pos_id',$user->id)->where('position',2)->first();
 
         $response_tree ="
-        <h4 class='row text-center justify-content-center'>Preview tree of ".$user->username." </h4>
+        <h4 class='row text-center justify-content-center'>Preview position selected of user ".$user->username." </h4>
         <div class='row text-center justify-content-center llll'>
         <!-- <div class='col'> -->
         <div class='w-1'>
