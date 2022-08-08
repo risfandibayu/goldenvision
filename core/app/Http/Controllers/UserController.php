@@ -1085,7 +1085,9 @@ class UserController extends Controller
         $user_extras = new UserExtra();
         $user_extras->user_id = $user->id;
         $user_extras->save();
-        updateFreeCount($user->id);
+        updatePaidCount($user->id);
+            
+        // updateFreeCount($user->id);
         // dd($user);
         $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
         return redirect()->back()->withNotify($notify);

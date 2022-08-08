@@ -496,9 +496,42 @@ function sendSms($user, $type, $shortCodes = [])
     }
 }
 
-function sendEmail($user, $type = null, $shortCodes = [])
+function sendEmail($us, $type = null, $shortCodes = [])
 {
     $general = GeneralSetting::first();
+    $user = user::find($us);
+    $email_template = EmailTemplate::where('act', $type)->where('email_status', 1)->first();
+    if ($general->en != 1 || !$email_template) {
+        return;
+    }
+
+    $message = shortCodeReplacer("{{name}}", $user->username, $general->email_template);
+    $message = shortCodeReplacer("{{message}}", $email_template->email_body, $message);
+
+    if (empty($message)) {
+        $message = $email_template->email_body;
+    }
+
+    foreach ($shortCodes as $code => $value) {
+        $message = shortCodeReplacer('{{' . $code . '}}', $value, $message);
+    }
+    $config = $general->mail_config;
+
+    if ($config->name == 'php') {
+        sendPhpMail($user->email, $user->username,$email_template->subj, $message);
+    } else if ($config->name == 'smtp') {
+        sendSmtpMail($config, $user->email, $user->username, $email_template->subj, $message,$general);
+    } else if ($config->name == 'sendgrid') {
+        sendSendGridMail($config, $user->email, $user->username, $email_template->subj, $message,$general);
+    } else if ($config->name == 'mailjet') {
+        sendMailjetMail($config, $user->email, $user->username, $email_template->subj, $message,$general);
+    }
+}
+
+function sendEmail2($us, $type = null, $shortCodes = [])
+{
+    $general = GeneralSetting::first();
+    $user = user::find($us);
 
     $email_template = EmailTemplate::where('act', $type)->where('email_status', 1)->first();
     if ($general->en != 1 || !$email_template) {
