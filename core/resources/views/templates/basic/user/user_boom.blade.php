@@ -29,7 +29,7 @@
                     {{-- {{ $tmp->email }} --}}
                     <a style="color: black;    width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - {{$tmp->no_bro}} <i class="las la-check" style="color: aqua"></i></a>
                     @else
-                    <a style="color: black;     width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - {{generateUniqueNoBro()}} <i class="las la-ban" style="color: red"></i></a>
+                    <a style="color: black;     width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - (BRO Number) <i class="las la-ban" style="color: red"></i></a>
                     @endif
                     @endfor
 
@@ -80,8 +80,12 @@
 
                         <div class="form-group">
                             <label for="exampleInputusername">Username</label>
-                            <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="{{$ref->username}}{{$i}}">
+                            <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="{{$tmp->username}}">
                           </div>
+                        <div class="form-group">
+                            <label for="exampleInputusername">BRO Number</label>
+                            <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="{{$tmp->no_bro}}">
+                        </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Email address</label>
                           <input readonly value="{{$ref->usr.'+'.$i.'@'.$ref->domain}}" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
@@ -138,7 +142,11 @@
                         <div class="form-group">
                             <label for="exampleInputusername">Username</label>
                             <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="{{$ref->username}}{{$i}}">
-                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputusername">BRO Number</label>
+                            <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="Random BRO Number">
+                        </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Email address</label>
                           <input readonly value="{{$ref->usr.'+'.$i.'@'.$ref->domain}}" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">

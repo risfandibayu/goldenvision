@@ -1062,6 +1062,7 @@ class UserController extends Controller
         $us = user::where('id',Auth::user()->id)->first();
         //User Create
         $user = new User();
+        $user->no_bro       = generateUniqueNoBro();
         $user->ref_id       = Auth::user()->id;
         $user->pos_id       = $pos['pos_id'];
         $user->position     = $pos['position'];
