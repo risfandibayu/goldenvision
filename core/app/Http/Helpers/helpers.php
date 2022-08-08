@@ -1270,6 +1270,97 @@ function showSingleUserinTree2($user,$id)
     return $res;
 
 }
+function showSingleUserinTree3($user,$pos_id,$id)
+{
+    $res = '';
+    if ($user) {
+        // if ($user->plan_id == 0) {
+        //     $userType = "free-user";
+        //     $stShow = "Free";
+        //     $planName = '';
+        // } else {
+        //     $userType = "paid-user";
+        //     $stShow = "Paid";
+        //     $planName = $user->plan->name;
+        // }
+
+        if ($user->id == $id) {
+            $userType = "select-user";
+            $stShow = "Free";
+            $planName = '';
+            $fs ="font-weight: 700;font-size:18px;
+            color: #070707;";
+        } else {
+            $userType = "free-user";
+            $stShow = "Free";
+            $planName = '';
+            $fs="";
+        }
+
+        $img = getImage('assets/images/user/profile/'. $user->image, null, true);
+
+        $refby = getUserById($user->ref_id)->fullname ?? '';
+        if (auth()->guard('admin')->user()) {
+            $hisTree = route('admin.users.other.tree', $user->username);
+        } else {
+            $hisTree = route('user.other.tree', $user->username);
+        }
+
+        $extraData = " data-name=\"$user->fullname\"";
+        $extraData .= " data-id=\"$user->id\"";
+        $extraData .= " data-treeurl=\"$hisTree\"";
+        $extraData .= " data-status=\"$stShow\"";
+        $extraData .= " data-plan=\"$planName\"";
+        $extraData .= " data-image=\"$img\"";
+        $extraData .= " data-refby=\"$refby\"";
+        $extraData .= " data-lpaid=\"" . @$user->userExtra->paid_left . "\"";
+        $extraData .= " data-rpaid=\"" . @$user->userExtra->paid_right . "\"";
+        $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";
+        $extraData .= " data-rfree=\"" . @$user->userExtra->free_right . "\"";
+        $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
+        $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
+
+        if(Auth::user()->pos_id == $user->id){
+            $res .= "<div class=\"user\" $extraData>";
+        }else{
+        $res .= "<div class=\"user\"  $extraData>";
+        }
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType\">";
+        $res .= "<p class=\"user-name\" style=\"$fs\"> $user->username</p>";
+        // if(Auth::user()->pos_id == $user->id){
+
+        // }elseif(Auth::user()->id == $user->id){
+        //     $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#4cbe04;color:black;\"'>Leader (You)</a> </p>";
+        //     if (Auth::user()->id == $id) {
+        //         $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#47bc52;color:black;\" onclick='f1(\"$user->id\")'>Selected Parent</a> </p>";
+        //     }
+        // }elseif($user->id == $id){
+        //     $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#47bc52;color:black;\" onclick='f1(\"$user->id\")'>Selected Position</a> </p>";
+        // }
+        // else{
+        //     // $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" onclick='f1(\"$user->id\")'>Explore Tree</a> </p>";
+        // }
+
+    } else {
+        $img = getImage('assets/images/user/profile/', null, true);
+
+        $res .= "<div class=\"user\" >";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
+        $res .= "<p class=\"user-name\">BRO</p>";
+        // $users = user::where('pos_id',$id)->first();
+        // if($users){
+
+        // }else{
+        //     $res .= "<p class=\"user-name\"><a class=\"btn btn-sm\" style=\"background-color:#47bc52;\" href='posisi'>Select Position</a></p>";
+        // }
+    }
+
+    $res .= " </div>";
+    $res .= " <span class=\"line\"></span>";
+
+    return $res;
+
+}
 
 /*
 ===============TREE AUTH==============
@@ -1327,4 +1418,54 @@ function generateUniqueNoBro()
             $code = rand(22900000, 22999999);
         } while (user::where("no_bro", "=", $code)->first());
         return $code;
+    }
+
+    function tree_created($email){
+        $user = User::where('email',$email)->first();
+        $tree = showTreePage($user->pos_id);
+        // $cek_awal = User::where('pos_id',$user->id)->first();
+        // $cek_awal_kiri = User::where('pos_id',$user->id)->where('position',1)->first();
+        // $cek_awal_kanan = User::where('pos_id',$user->id)->where('position',2)->first();
+
+        $response_tree ="
+        <h4 class='row text-center justify-content-center'>Preview tree of ".$user->username." </h4>
+        <div class='row text-center justify-content-center llll'>
+        <!-- <div class='col'> -->
+        <div class='w-1'>
+            ".showSingleUserinTree3($tree['a'],$user->pos_id,$user->id)."
+        </div>
+        </div>
+        <div class='row text-center justify-content-center llll'>
+            <!-- <div class='col'> -->
+            <div class='w-2 pleft'>
+                ".showSingleUserinTree3($tree['b'],$user->pos_id,$user->id)." 
+            </div>
+            <!-- <div class='col'> -->
+            <div class='w-2 pright'>
+                ".showSingleUserinTree3($tree['c'],$user->pos_id,$user->id)." 
+            </div>
+        </div>
+        <div class='row text-center justify-content-center'>
+            <!-- <div class='col'> -->
+            <div class='w-4 '>
+                ".showSingleUserinTree3($tree['d'],$user->pos_id,$user->id)." 
+            </div>
+            <!-- <div class='col'> -->
+            <div class='w-4 '>
+                ".showSingleUserinTree3($tree['e'],$user->pos_id,$user->id)." 
+            </div>
+            <!-- <div class='col'> -->
+            <div class='w-4 '>
+                ".showSingleUserinTree3($tree['f'],$user->pos_id,$user->id)." 
+            </div>
+            <!-- <div class='col'> -->
+            <div class='w-4 '>
+                ".showSingleUserinTree3($tree['g'],$user->pos_id,$user->id)." 
+            </div>
+            <!-- <div class='col'> -->
+
+        </div>
+        
+        ";
+         echo $response_tree;
     }

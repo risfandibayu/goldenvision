@@ -854,6 +854,7 @@ class UserController extends Controller
     </div>";
         // dd($tree['a']['username']);
         // echo json_encode(["response" => $response]);
+        echo $response;
     }
 
     public function cek_pos($id){

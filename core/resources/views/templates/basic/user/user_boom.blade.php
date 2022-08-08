@@ -22,8 +22,15 @@
                 color: #ffffff;
                 background-color: #96795f;">
                     @for ($i = 1; $i < $get_bv->bv+1; $i++)
-                        
-                    <a style="color: black;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - {{generateUniqueNoBro()}}</a>
+                    <?php
+                    $tmp = App\Models\User::where('email',$ref->usr.'+'.$i.'@'.$ref->domain)->first();
+                    ?>
+                    @if ($tmp)
+                    {{-- {{ $tmp->email }} --}}
+                    <a style="color: black;    width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - {{$tmp->no_bro}} <i class="las la-check" style="color: aqua"></i></a>
+                    @else
+                    <a style="color: black;     width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">User {{$i}} - {{generateUniqueNoBro()}} <i class="las la-ban" style="color: red"></i></a>
+                    @endif
                     @endfor
 
                     {{-- <a class="nav-item nav-link" id="nav-user2-tab" data-toggle="tab" href="#nav-user2" role="tab" aria-controls="nav-user2" aria-selected="false">User 2</a>
@@ -38,12 +45,53 @@
                 @for ($i = 1; $i < $get_bv->bv+1; $i++)
                 <div class="tab-pane fade show" id="nav-user{{$i}}" role="tabpanel" aria-labelledby="nav-user{{$i}}-tab">
                     <div class="card-body">
-                        {{-- <?php
-                        $tmp = App\Models\User::where('email',$ref->usr.'+'.$i.'@'.$ref->domain)->first();
+                        <?php
+                        $tmp = App\Models\User::where('users.email',$ref->usr.'+'.$i.'@'.$ref->domain)
+                        ->join('users as us','us.id','=','users.pos_id')
+                        ->select('users.*','us.username as us')
+                        ->first();
                         ?>
                         @if ($tmp)
-                        {{ $tmp->email }}
-                        @endif --}}
+                        <form action="{{route('user.user')}}" class="form" id="form{{$i}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                        <input type="text" name="count" hidden value="{{$i}}">
+                        <div class="card">
+                            {{ tree_created($ref->usr.'+'.$i.'@'.$ref->domain)}}
+                            {{-- @dump(tree_created($ref->usr.'+'.$i.'@'.$ref->domain)) --}}
+                        </div>
+                        <div class="form-group">
+                            <label for="ref_username1">Parent Username</label>
+                            <select class="form-select form-control ref_username" name="ref_username" id="ref_username{{$i}}" disabled>
+                              <option value="" hidden>{{$tmp->us}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="position1">Position</label>
+                            <select class="form-select form-control position" name="position" id="position" disabled>
+                                @if ($tmp->position == 1)
+                                <option value="">Left</option>
+                                @else
+                                <option value="">Right</option>
+                                @endif
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="exampleInputusername">Username</label>
+                            <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="{{$ref->username}}{{$i}}">
+                          </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Email address</label>
+                          <input readonly value="{{$ref->usr.'+'.$i.'@'.$ref->domain}}" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                          {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Password</label>
+                          <input disabled type="text" value="the password is the same as the main email" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        @else
                         <form action="{{route('user.user')}}" class="form" id="form{{$i}}" method="POST" enctype="multipart/form-data">
                             @csrf
                         <input type="text" name="count" hidden value="{{$i}}">
@@ -100,6 +148,8 @@
                           <label for="exampleInputPassword1">Password</label>
                           <input disabled type="text" value="the password is the same as the main email" class="form-control" id="exampleInputPassword1" placeholder="Password">
                         </div>
+                        @endif
+
                         @if (in_array($ref->usr.'+'.$i.'@'.$ref->domain, $reg))
                             <button class="btn btn--primary btn-block" disabled>User is already registered</button>
                         @else
