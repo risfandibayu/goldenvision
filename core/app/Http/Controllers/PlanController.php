@@ -67,7 +67,7 @@ class PlanController extends Controller
                 'amount' => getAmount($plan->price * $request->qty),
                 'currency' => $gnl->cur_text,
                 'trx' => $trx->trx,
-                'post_balance' => getAmount($user->balance) . ' ' . $gnl->cur_text,
+                'post_balance' => getAmount($user->balance),
             ]);
             if ($oldPlan == 0) {
                 updatePaidCount($user->id);
