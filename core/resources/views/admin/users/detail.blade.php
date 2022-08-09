@@ -1,5 +1,103 @@
 @extends('admin.layouts.app')
 
+@push('style')
+<style>
+    .custom-btn {
+        width: 130px;
+        height: 40px;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px 25px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        /* cursor: pointer; */
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+            7px 7px 20px 0px rgba(0, 0, 0, .1),
+            4px 4px 5px 0px rgba(0, 0, 0, .1);
+        outline: none;
+    }
+
+    /* 11 */
+    .btn-11 {
+        display: inline-block;
+        outline: none;
+        font-family: inherit;
+        font-size: 1em;
+        box-sizing: border-box;
+        border: none;
+        border-radius: .3em;
+        height: 2.75em;
+        line-height: 2.5em;
+        text-transform: uppercase;
+        padding: 0 1em;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(110, 80, 20, .4),
+            inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
+            inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+        background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);
+        border: 1px solid #a55d07;
+        color: rgb(120, 50, 5);
+        text-shadow: 0 2px 2px rgba(250, 227, 133, 1);
+        /* cursor: pointer; */
+        transition: all .2s ease-in-out;
+        background-size: 100% 100%;
+        background-position: center;
+        overflow: hidden;
+    }
+
+    /* .btn-11:hover {
+    text-decoration: none;
+    color: #fff;
+} */
+    .btn-11:before {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        top: -180px;
+        left: 0;
+        width: 30px;
+        height: 100%;
+        background-color: #fff;
+        animation: shiny-btn1 3s ease-in-out infinite;
+    }
+
+    /* .btn-11:hover{
+  opacity: .7;
+} */
+    /* .btn-11:active{
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+} */
+
+
+    @-webkit-keyframes shiny-btn1 {
+        0% {
+            -webkit-transform: scale(0) rotate(45deg);
+            opacity: 0;
+        }
+
+        80% {
+            -webkit-transform: scale(0) rotate(45deg);
+            opacity: 0.5;
+        }
+
+        81% {
+            -webkit-transform: scale(4) rotate(45deg);
+            opacity: 1;
+        }
+
+        100% {
+            -webkit-transform: scale(50) rotate(45deg);
+            opacity: 0;
+        }
+    }
+</style>
+@endpush
 @section('panel')
 <div class="row mb-none-30">
 
@@ -37,11 +135,11 @@
                         @lang('Balance')
                         <span class="font-weight-bold"> {{getAmount($user->balance)}} {{$general->cur_text}} </span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Total BV')
                         <span class="font-weight-bold"><a href="{{route('admin.report.single.bvLog', $user->id)}}">
                                 {{getAmount($user->userExtra->bv_left + $user->userExtra->bv_right)}} </a></span>
-                    </li>
+                    </li> --}}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Paid Left User')
                         <span class="font-weight-bold">{{$user->userExtra->paid_left}}</span>
@@ -58,6 +156,14 @@
                         @lang('Free Right User')
                         <span class="font-weight-bold">{{$user->userExtra->free_right}}</span>
                     </li>
+                    {{-- @if ($user->plan_id != 0)
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@lang('BRO')</span>
+                        <div class="custom-btn btn-11 text-center"><span style="font-weight: 700">
+                                {{$user->bro_qty}} BRO </span></div>
+                    </li>
+                    @endif --}}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Status')
                         @switch($user->status)
@@ -122,6 +228,23 @@
 
     <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
         <div class="row mb-none-30">
+            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                <div class="dashboard-w1 bg--primary b-radius--10 box-shadow has--link" style="background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);">
+                    <a href="{{route('admin.users.deposits',$user->id)}}" class="item--link"></a>
+                    <div class="icon">
+                        <i class="fa fa-coin"></i>
+                    </div>
+                    <div class="details">
+                        <div class="numbers">
+                            <span class="amount">{{$user->bro_qty}}</span>
+                            <span class="currency-sign">BRO</span>
+                        </div>
+                        <div class="desciption">
+                            <span>@lang('Total BRO')</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--primary b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.users.deposits',$user->id)}}" class="item--link"></a>
@@ -485,17 +608,19 @@
                         <button type="submit" class="btn btn--danger btn-block">User Rejected</button>
                     </div>
                     @else
-                        
+
                     <div class="col-md-6">
-                        <form action="{{route('admin.users.verify',[$user->id])}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('admin.users.verify',[$user->id])}}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
-                        <button type="submit" class="btn btn--success btn-block">Verify</button>
+                            <button type="submit" class="btn btn--success btn-block">Verify</button>
                         </form>
                     </div>
                     <div class="col-md-6">
-                        <form action="{{route('admin.users.reject',[$user->id])}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('admin.users.reject',[$user->id])}}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
-                        <button class="btn btn--danger btn-block">Reject</button>
+                            <button class="btn btn--danger btn-block">Reject</button>
                         </form>
                     </div>
                     @endif
