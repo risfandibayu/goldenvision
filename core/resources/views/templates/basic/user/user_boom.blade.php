@@ -61,14 +61,14 @@
                         </div>
                         <div class="form-group">
                             <label for="ref_username1">Parent Username</label>
-                            <select class="form-select form-control ref_username" name="ref_username" id="ref_username{{$i}}" disabled>
+                            <select class="form-select form-control" disabled>
                               <option value="" hidden>{{$tmp->us}}</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
                             <label for="position1">Position</label>
-                            <select class="form-select form-control position" name="position" id="position" disabled>
+                            <select class="form-select form-control" disabled>
                                 @if ($tmp->position == 1)
                                 <option value="">Left</option>
                                 @else

@@ -496,10 +496,10 @@ function sendSms($user, $type, $shortCodes = [])
     }
 }
 
-function sendEmail($us, $type = null, $shortCodes = [])
+function sendEmail($user, $type = null, $shortCodes = [])
 {
     $general = GeneralSetting::first();
-    $user = user::find($us);
+    // $user = user::find($us);
     $email_template = EmailTemplate::where('act', $type)->where('email_status', 1)->first();
     if ($general->en != 1 || !$email_template) {
         return;

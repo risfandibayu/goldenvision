@@ -50,7 +50,7 @@
                 <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
                     <a href="{{route('user.user_boom')}}" class="nav-link ">
                         <i class="menu-icon las la-users-cog"></i>
-                        <span class="menu-title">@lang('User Boom')</span>
+                        <span class="menu-title">@lang('Multiple user')</span>
                     </a>
                 </li>
 

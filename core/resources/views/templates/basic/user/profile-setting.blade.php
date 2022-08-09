@@ -1,168 +1,287 @@
 @extends($activeTemplate . 'user.layouts.app')
 
+@push('style')
+<style>
+    .custom-btn {
+        width: 130px;
+        height: 40px;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px 25px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        /* cursor: pointer; */
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+            7px 7px 20px 0px rgba(0, 0, 0, .1),
+            4px 4px 5px 0px rgba(0, 0, 0, .1);
+        outline: none;
+    }
+
+    /* 11 */
+    .btn-11 {
+        display: inline-block;
+        outline: none;
+        font-family: inherit;
+        font-size: 1em;
+        box-sizing: border-box;
+        border: none;
+        border-radius: .3em;
+        height: 2.75em;
+        line-height: 2.5em;
+        text-transform: uppercase;
+        padding: 0 1em;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(110, 80, 20, .4),
+            inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
+            inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+        background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);
+        border: 1px solid #a55d07;
+        color: rgb(120, 50, 5);
+        text-shadow: 0 2px 2px rgba(250, 227, 133, 1);
+        /* cursor: pointer; */
+        transition: all .2s ease-in-out;
+        background-size: 100% 100%;
+        background-position: center;
+        overflow: hidden;
+    }
+
+    /* .btn-11:hover {
+    text-decoration: none;
+    color: #fff;
+} */
+    .btn-11:before {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        top: -180px;
+        left: 0;
+        width: 30px;
+        height: 100%;
+        background-color: #fff;
+        animation: shiny-btn1 3s ease-in-out infinite;
+    }
+
+    /* .btn-11:hover{
+  opacity: .7;
+} */
+    /* .btn-11:active{
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+} */
+
+
+    @-webkit-keyframes shiny-btn1 {
+        0% {
+            -webkit-transform: scale(0) rotate(45deg);
+            opacity: 0;
+        }
+
+        80% {
+            -webkit-transform: scale(0) rotate(45deg);
+            opacity: 0.5;
+        }
+
+        81% {
+            -webkit-transform: scale(4) rotate(45deg);
+            opacity: 1;
+        }
+
+        100% {
+            -webkit-transform: scale(50) rotate(45deg);
+            opacity: 0;
+        }
+    }
+</style>
+@endpush
+
 @section('panel')
 
-    <div class="row mb-none-30">
-        <div class="col-xl-3 col-lg-5 col-md-5">
-            <div class="card b-radius--10 overflow-hidden box--shadow1">
-                <div class="card-body p-0">
-                    <div class="p-3 bg--white">
-                        <img id="output" src="{{ getImage('assets/images/user/profile/'. auth()->user()->image,  null, true)}}" alt="@lang('profile-image')" class="b-radius--10 w-100">
+<div class="row mb-none-30">
+    <div class="col-xl-3 col-lg-5 col-md-5">
+        <div class="card b-radius--10 overflow-hidden box--shadow1">
+            <div class="card-body p-0">
+                <div class="p-3 bg--white">
+                    <img id="output"
+                        src="{{ getImage('assets/images/user/profile/'. auth()->user()->image,  null, true)}}"
+                        alt="@lang('profile-image')" class="b-radius--10 w-100">
 
 
-                        <ul class="list-group mt-3">
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>@lang('Name')</span> {{auth()->user()->fullname}}
-                            </li>
-                            <li class="list-group-item rounded-0 d-flex justify-content-between">
-                                <span>@lang('Username')</span> {{auth()->user()->username}}
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>@lang('Joined at')</span> {{date('d M, Y h:i A',strtotime(auth()->user()->created_at))}}
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>Account Status</span> 
-                                @switch(auth()->user()->is_kyc)
-                                    @case(0)
-                                    <span class="badge badge-pill bg--danger">Unverified</span>
-                                    @break
-                                    @case(1)
-                                    <span class="badge badge-pill bg--warning">On Process Verification</span>
-                                    @break
-                                    @case(2)
-                                    <span class="badge badge-pill bg--success">Verified</span>
-                                    @break
-                                    @case(3)
-                                    <span class="badge badge-pill bg--danger">Rejected</span>
-                                    @break
-                                    @endswitch
-                            </li>
-                        </ul>
+                    <ul class="list-group mt-3">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>@lang('Name')</span> {{auth()->user()->fullname}}
+                        </li>
+                        <li class="list-group-item rounded-0 d-flex justify-content-between">
+                            <span>@lang('Username')</span> {{auth()->user()->username}}
+                        </li>
+                        @if (auth()->user()->plan_id != 0)
 
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>@lang('BRO')</span>
+                            <div class="custom-btn btn-11 text-center"><span style="font-weight: 700">
+                                    {{auth()->user()->bro_qty}} BRO </span></div>
+                        </li>
+                        @endif
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>@lang('Joined at')</span> {{date('d M, Y h:i
+                            A',strtotime(auth()->user()->created_at))}}
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Account Status</span>
+                            @switch(auth()->user()->is_kyc)
+                            @case(0)
+                            <span class="badge badge-pill bg--danger">Unverified</span>
+                            @break
+                            @case(1)
+                            <span class="badge badge-pill bg--warning">On Process Verification</span>
+                            @break
+                            @case(2)
+                            <span class="badge badge-pill bg--success">Verified</span>
+                            @break
+                            @case(3)
+                            <span class="badge badge-pill bg--danger">Rejected</span>
+                            @break
+                            @endswitch
+                        </li>
+                    </ul>
 
-        <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title mb-50 border-bottom pb-2">{{auth()->user()->fullname}} @lang('Information')</h5>
-
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('First Name') <span
-                                            class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="text" name="firstname"
-                                           value="{{auth()->user()->firstname}}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label  font-weight-bold">@lang('Last Name') <span
-                                            class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="text" name="lastname" value="{{auth()->user()->lastname}}" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('No BRO')<span class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="email" value="{{auth()->user()->no_bro}}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Email')<span class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="email" value="{{auth()->user()->email}}" readonly>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label  font-weight-bold">@lang('Mobile Number')<span
-                                            class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="text"
-                                           value="{{auth()->user()->mobile}}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label  font-weight-bold">@lang('Avatar')</label>
-                                    <input class="form-control form-control-lg" type="file" accept="image/*"  onchange="loadFile(event)" name="image">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Address') </label>
-                                    <input class="form-control form-control-lg" type="text" name="address"
-                                           value="{{auth()->user()->address->address}}">
-                                    <small class="form-text text-muted"><i
-                                            class="las la-info-circle"></i>@lang('House number, street address')
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label font-weight-bold">@lang('City')</label>
-                                    <input class="form-control form-control-lg" type="text" name="city"
-                                           value="{{auth()->user()->address->city}}">
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('State')</label>
-                                    <input class="form-control form-control-lg" type="text" name="state"
-                                           value="{{auth()->user()->address->state}}">
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Zip/Postal')</label>
-                                    <input class="form-control form-control-lg" type="text" name="zip"
-                                           value="{{auth()->user()->address->zip}}">
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Country')</label>
-                                    <select name="country" class="form-control form-control-lg"> @include('partials.country') </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save Changes')</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-50 border-bottom pb-2">{{auth()->user()->fullname}} @lang('Information')</h5>
+
+                <form action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('First Name') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="text" name="firstname"
+                                    value="{{auth()->user()->firstname}}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Last Name') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="text" name="lastname"
+                                    value="{{auth()->user()->lastname}}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('No BRO')<span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="email"
+                                    value="{{auth()->user()->no_bro}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('Email')<span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="email"
+                                    value="{{auth()->user()->email}}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Mobile Number')<span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="text"
+                                    value="{{auth()->user()->mobile}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Avatar')</label>
+                                <input class="form-control form-control-lg" type="file" accept="image/*"
+                                    onchange="loadFile(event)" name="image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('Address') </label>
+                                <input class="form-control form-control-lg" type="text" name="address"
+                                    value="{{auth()->user()->address->address}}">
+                                <small class="form-text text-muted"><i class="las la-info-circle"></i>@lang('House
+                                    number, street address')
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label font-weight-bold">@lang('City')</label>
+                                <input class="form-control form-control-lg" type="text" name="city"
+                                    value="{{auth()->user()->address->city}}">
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('State')</label>
+                                <input class="form-control form-control-lg" type="text" name="state"
+                                    value="{{auth()->user()->address->state}}">
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('Zip/Postal')</label>
+                                <input class="form-control form-control-lg" type="text" name="zip"
+                                    value="{{auth()->user()->address->zip}}">
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('Country')</label>
+                                <select name="country" class="form-control form-control-lg">
+                                    @include('partials.country') </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save
+                                    Changes')</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('breadcrumb-plugins')
-    <a href="{{route('user.change-password')}}" class="btn btn--success btn--shadow"><i class="fa fa-key"></i>@lang('Change Password')</a>
+<a href="{{route('user.change-password')}}" class="btn btn--success btn--shadow"><i class="fa fa-key"></i>@lang('Change
+    Password')</a>
 @endpush
 
 
 
 @push('script')
-    <script>
-        'use strict';
+<script>
+    'use strict';
         (function($){
             $("select[name=country]").val("{{ auth()->user()->address->country }}");
         })(jQuery)
@@ -176,7 +295,5 @@
         };
 
 
-    </script>
+</script>
 @endpush
-
-

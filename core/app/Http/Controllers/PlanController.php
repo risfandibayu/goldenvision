@@ -36,19 +36,23 @@ class PlanController extends Controller
 
         $user = User::find(Auth::id());
 
-        if ($user->balance < $plan->price) {
+        
+
+        if ($user->balance < ($plan->price * $request->qty)) {
             $notify[] = ['error', 'Insufficient Balance'];
             return back()->withNotify($notify);
         }
 
             $oldPlan = $user->plan_id;
+            
             $user->plan_id = $plan->id;
-            $user->balance -= $plan->price;
-            $user->total_invest += $plan->price;
+            $user->balance -= ($plan->price * $request->qty);
+            $user->total_invest += ($plan->price * $request->qty);
+            $user->bro_qty = $request->qty;
             $user->save();
 
             $trx = $user->transactions()->create([
-                'amount' => $plan->price,
+                'amount' => $plan->price * $request->qty,
                 'trx_type' => '-',
                 'details' => 'Purchased ' . $plan->name,
                 'remark' => 'purchased_plan',
@@ -56,9 +60,11 @@ class PlanController extends Controller
                 'post_balance' => getAmount($user->balance),
             ]);
 
-            notify($user, 'plan_purchased', [
+            // dd($user);
+
+            sendEmail2($user->id, 'plan_purchased', [
                 'plan' => $plan->name,
-                'amount' => getAmount($plan->price),
+                'amount' => getAmount($plan->price * $request->qty),
                 'currency' => $gnl->cur_text,
                 'trx' => $trx->trx,
                 'post_balance' => getAmount($user->balance) . ' ' . $gnl->cur_text,
@@ -66,15 +72,15 @@ class PlanController extends Controller
             if ($oldPlan == 0) {
                 updatePaidCount($user->id);
             }
-            $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
+            // $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
 
-            updateBV($user->id, $plan->bv, $details);
+            // updateBV($user->id, $plan->bv, $details);
 
-            if ($plan->tree_com > 0) {
-                treeComission($user->id, $plan->tree_com, $details);
-            }
+            // if ($plan->tree_com > 0) {
+            //     treeComission($user->id, $plan->tree_com, $details);
+            // }
 
-            referralCommission($user->id, $details);
+            // referralCommission($user->id, $details);
 
             $notify[] = ['success', 'Purchased ' . $plan->name . ' Successfully'];
             return redirect()->route('user.home')->withNotify($notify);

@@ -713,15 +713,14 @@ class UserController extends Controller
     }
 
     public function user_boom(){
-        $page_title = 'User Boom';
+        $page_title = 'Multiple User';
         $tree = showTreePage(Auth::id());
         $ref = user::where('id', auth::user()->id)
         ->select('users.*',db::raw("SUBSTRING(email, 1, LOCATE('@', email) - 1) AS usr"),db::raw("SUBSTRING(email, LOCATE('@', email) + 1) AS domain"))
         ->first();
 
         $get_bv = user::where('users.id',Auth::user()->id)
-        ->join('plans','plans.id','=','users.plan_id')
-        ->select('plans.bv')
+        ->select('users.bro_qty as bv')
         ->first();
         // dd($get_bv->bv);
         $dd = array();

@@ -74,8 +74,8 @@
     .progress-step::before {
         counter-increment: step;
         content: counter(step)
-        /* font-family: FontAwesome; */
-        /* content: "\f023"; */
+            /* font-family: FontAwesome; */
+            /* content: "\f023"; */
 
     }
 
@@ -332,7 +332,7 @@
     @endif
 </div>
 <div class="row mb-none-30">
-    
+
 
     {{-- @if($general->free_user_notice != null)
     <div class="col-lg-12 col-sm-6 mb-30">
@@ -345,6 +345,24 @@
         </div>
     </div>
     @endif --}}
+    @if (auth()->user()->plan_id != 0)
+
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+        <div class="dashboard-w1  h-100 w-100 bg--success b-radius--10 box-shadow" style="background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);">
+            <div class="details">
+                <div class="numbers">
+                    <span class="amount" style="font-family: serif;
+                    font-weight:bold;background-color: #414141ec;
+                    color: transparent;
+                    text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.007);
+                    -webkit-background-clip: text;
+                       -moz-background-clip: text;
+                            background-clip: text;  ">{{auth()->user()->bro_qty}} BRO</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
         <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
