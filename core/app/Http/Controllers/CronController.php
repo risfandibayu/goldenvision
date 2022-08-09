@@ -227,7 +227,7 @@ class CronController extends Controller
 
 
                             }else{
-                                if (strtolower(Date('D')) == 'wed' && Date('H:i:s') == "01:00:00" ) {
+                                if (strtolower(Date('D')) == 'tue' && Date('H:i:s') == "15:25:00" ) {
                                     # code...
                                 
                                 $paid_bv = $pair * 6;
