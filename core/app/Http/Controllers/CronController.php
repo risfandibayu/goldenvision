@@ -128,8 +128,7 @@ class CronController extends Controller
         $gnl = GeneralSetting::first();
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
- 
-        // dd(Date('D') );
+        // dd(Date('H:i') == "14:57");
         $userx = UserExtra::where('paid_left','>=',3)
         ->where('paid_right','>=',3)->get();
         $cron = array();
@@ -218,13 +217,16 @@ class CronController extends Controller
                                 $uex->level_binary = 0;
                                 $uex->save();
 
+                                $gnl->last_paid = Carbon::now()->toDateTimeString();
+                                $gnl->save();
+
                                 $cron[] = $user.'/'.$pair;
 
 
 
 
                             }else{
-                                if (Date('D') == 'Wed') {
+                                if (Date('D') == 'Wed' && Date('H:i:s') == "01:00:00" ) {
                                     # code...
                                 
                                 $paid_bv = $pair * 6;
@@ -241,6 +243,10 @@ class CronController extends Controller
 
                                 $uex->level_binary = $pair;
                                 $uex->save();
+
+                                $gnl->last_paid = Carbon::now()->toDateTimeString();
+                                $gnl->save();
+
                                 $cron[] = $user.'/'.$pair;
                                 }else{
                                 }
