@@ -144,6 +144,7 @@ class CronController extends Controller
                         if ($pair >= 10) {
                             $pair = 10;
                         }
+                        // dd(is_numeric($uex->paid_left));
 
                         $bonus = intval($pair * ($user_plan->tree_com * 6));
 
@@ -209,7 +210,7 @@ class CronController extends Controller
                             // if ($pair >= 10) {
                                 $payment->save();
 
-                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $uex->paid_left + $uex->paid_right . ' BRO.';
+                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . intval($uex->paid_left) + intval($uex->paid_right) . ' BRO.';
                                 $trx->save();
                                 
                                 $uex->paid_left = 0;
@@ -226,7 +227,7 @@ class CronController extends Controller
 
 
                             }else{
-                                if (Date('D') == 'Wed' && Date('H:i:s') == "01:00:00" ) {
+                                if (strtolower(Date('D')) == 'wed' && Date('H:i:s') == "01:00:00" ) {
                                     # code...
                                 
                                 $paid_bv = $pair * 6;
