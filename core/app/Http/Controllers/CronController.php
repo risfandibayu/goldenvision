@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserExtra;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class CronController extends Controller
 {
@@ -127,9 +128,11 @@ class CronController extends Controller
         $gnl = GeneralSetting::first();
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
-
+ 
+        // dd(Date('D') );
         $userx = UserExtra::where('paid_left','>=',3)
         ->where('paid_right','>=',3)->get();
+        $cron = array();
         foreach ($userx as $uex) {
                         $user = $uex->user_id;
                         $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
@@ -180,7 +183,7 @@ class CronController extends Controller
                         }else{
                             $payment = User::find($uex->user_id);
                             $payment->balance += $bonus;
-                            $payment->save();
+                            
 
                             $trx = new Transaction();
                             $trx->user_id = $payment->id;
@@ -193,37 +196,60 @@ class CronController extends Controller
 
                             if ($pair >= 10) {
                                 $paid_bv = $uex->paid_left + $uex->paid_right;
-                            }else{
-                                $paid_bv = $pair * 6;
-                            }
+                            // }else{
+                            // }
                             
-                            sendEmail2($user, 'matching_bonus', [
+                                sendEmail2($user, 'matching_bonus', [
+                                        'amount' => $bonus,
+                                        'currency' => $gnl->cur_text,
+                                        'paid_bv' => $paid_bv,
+                                        'post_balance' => $payment->balance,
+                                        'trx' =>  $trx->trx,
+                                ]);
+                            
+                            // if ($pair >= 10) {
+                                $payment->save();
+
+                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $uex->paid_left + $uex->paid_right . ' BRO.';
+                                $trx->save();
+                                
+                                $uex->paid_left = 0;
+                                $uex->paid_right = 0;
+                                $uex->level_binary = 0;
+                                $uex->save();
+
+                                $cron[] = $user.'/'.$pair;
+
+
+
+
+                            }else{
+                                if (Date('D') == 'Wed') {
+                                    # code...
+                                
+                                $paid_bv = $pair * 6;
+                                sendEmail2($user, 'matching_bonus', [
                                     'amount' => $bonus,
                                     'currency' => $gnl->cur_text,
                                     'paid_bv' => $paid_bv,
                                     'post_balance' => $payment->balance,
                                     'trx' =>  $trx->trx,
-                            ]);
-                            
-                            if ($pair >= 10) {
-                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $uex->paid_left + $uex->paid_right . ' BRO.';
-                                $trx->save();
-                                # code...
-                                $uex->paid_left = 0;
-                                $uex->paid_right = 0;
-                                $uex->level_binary = 0;
-                                $uex->save();
-                            }else{
+                                ]);
+                                $payment->save();
                                 $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
                                 $trx->save();
+
                                 $uex->level_binary = $pair;
                                 $uex->save();
+                                $cron[] = $user.'/'.$pair;
+                                }else{
+                                }
                             }
 
                             
                         }
         }
-        // return $pair2;
+        return $cron;
         // dd($dd);
 
     }
