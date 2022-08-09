@@ -63,7 +63,7 @@ class PlanController extends Controller
             // dd($user);
 
             sendEmail2($user->id, 'plan_purchased', [
-                'plan' => $plan->name,
+                'plan' => $plan->name. ' with '.$request->qty.' BRO',
                 'amount' => getAmount($plan->price * $request->qty),
                 'currency' => $gnl->cur_text,
                 'trx' => $trx->trx,
