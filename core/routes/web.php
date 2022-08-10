@@ -161,6 +161,12 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::post('plan/update', 'MlmController@planUpdate')->name('plan.update');
 
+        // mlm plan
+        Route::get('products', 'ProductController@products')->name('products');
+        Route::post('products/store', 'ProductController@productsStore')->name('products.store');
+
+        Route::post('products/update', 'ProductController@productsUpdate')->name('products.update');
+
         // matching bonus
         Route::post('matching-bonus/update', 'MlmController@matchingUpdate')->name('matching-bonus.update');
 

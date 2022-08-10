@@ -723,6 +723,10 @@ function imagePath()
         'path' => 'assets/images/survey',
         'size' => '360x190'
     ];
+    $data['product'] = [
+        'path' => 'assets/images/product',
+        'size' => '900x1200'
+    ];
     $data['profile'] = [
         'user'=> [
             'path'=>'assets/images/user/profile',

@@ -212,50 +212,21 @@
       </div>
       <div class="row">
         <div class="owl-carousel">
+          @foreach ($prod as $item)
+              
+          
           <div class="item" style="padding: 20px;">
             <div class="member" data-aos="zoom-in" data-aos-delay="400">
-              <div class="pic"><img src="{{asset('assets/new')}}/img/prod.png" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="{{ getImage('assets/images/product/'. $item->image,  null, true)}}" class="img-fluid" alt="Image {{$item->name}}"></div>
               <div class="member-info">
-                <h4>BRO 1</h4>
-                <p>0.001 gram</p>
-                <p>Rp. 14.000</p>
+                <h4>{{$item->name}}</h4>
+                <p>{{$item->weight}} gram</p>
+                <p>Rp. {{$item->price}}</p>
 
               </div>
             </div>
           </div>
-          <div class="item" style="padding: 20px;">
-            <div class="member" data-aos="zoom-in" data-aos-delay="400">
-              <div class="pic"><img src="{{asset('assets/new')}}/img/prod.png" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>BRO 2</h4>
-                <p>0.002 gram</p>
-                <p>Rp. 27.000</p>
-
-              </div>
-            </div>
-          </div>
-          <div class="item" style="padding: 20px;">
-            <div class="member" data-aos="zoom-in" data-aos-delay="400">
-              <div class="pic"><img src="{{asset('assets/new')}}/img/prod.png" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>BRO 3</h4>
-                <p>0.005 gram</p>
-                <p>Rp. 65.000</p>
-
-              </div>
-            </div>
-          </div>
-          <div class="item" style="padding: 20px;">
-            <div class="member" data-aos="zoom-in" data-aos-delay="400">
-              <div class="pic"><img src="{{asset('assets/new')}}/img/prod.png" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>BRO 4</h4>
-                <p>0.01 gram</p>
-                <p>Rp. 128.000</p>
-
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
 
 

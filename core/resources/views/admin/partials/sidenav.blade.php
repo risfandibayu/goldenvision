@@ -59,6 +59,13 @@
                         <span class="menu-title">@lang('Plans')</span>
                     </a>
                 </li>
+                <li class="sidebar-menu-item {{menuActive('admin.products*')}}">
+                    <a href="{{route('admin.products')}}" class="nav-link ">
+                        {{-- <i class="las la-paper-plane"></i> --}}
+                        <i class="menu-icon las la-archive"></i>
+                        <span class="menu-title">@lang('Products')</span>
+                    </a>
+                </li>
 
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{menuActive('admin.users*',3)}}">

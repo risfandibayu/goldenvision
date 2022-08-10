@@ -6,6 +6,7 @@ use App\Models\AdminNotification;
 use App\Models\Frontend;
 use App\Models\Language;
 use App\Models\Page;
+use App\Models\Product;
 use App\Models\Subscriber;
 use App\Models\SupportAttachment;
 use App\Models\SupportMessage;
@@ -69,7 +70,8 @@ class SiteController extends Controller
         return view($this->activeTemplate . 'home', $data);
     }
     public function index(){
-        return view('new.index');
+        $prod = Product::where('status',1)->get();
+        return view('new.index',compact('prod'));
     }
 
     public function pages($slug)
