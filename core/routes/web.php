@@ -162,7 +162,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('plan/update', 'MlmController@planUpdate')->name('plan.update');
 
         // mlm plan
-        Route::get('products', 'ProductController@products')->name('products');
+        Route::get('product', 'ProductController@products')->name('product');
         Route::post('products/store', 'ProductController@productsStore')->name('products.store');
 
         Route::post('products/update', 'ProductController@productsUpdate')->name('products.update');
@@ -407,6 +407,8 @@ Route::name('user.')->prefix('user')->group(function () {
 
             //plan
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
+            Route::get('/Product', 'ProductController@productIndex')->name('product.index');
+            Route::post('/Product-purchase', 'ProductController@productPurchase')->name('product.purchase');
             // Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::get('/referral-log', 'UserController@referralCom')->name('referral.log');
 

@@ -29,6 +29,11 @@
                     <i class="las la-search"></i>
                 </button>
             </li>
+            {{-- <li>
+                <button type="button">
+                    <i class="las la-shopping-cart"><span class="badge badge-pill badge-dark">2</span></i>
+                </button>
+            </li> --}}
 
 
             <li class="dropdown">

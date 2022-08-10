@@ -46,6 +46,12 @@
                         <span class="menu-title">@lang('Plan')</span>
                     </a>
                 </li>
+                <li class="sidebar-menu-item {{menuActive('user.product.index')}}">
+                    <a href="{{route('user.product.index')}}" class="nav-link ">
+                        <i class="menu-icon las la-archive"></i>
+                        <span class="menu-title">@lang('Product')</span>
+                    </a>
+                </li>
 
                 <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
                     <a href="{{route('user.user_boom')}}" class="nav-link ">

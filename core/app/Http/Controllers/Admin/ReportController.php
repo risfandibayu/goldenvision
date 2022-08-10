@@ -104,10 +104,10 @@ class ReportController extends Controller
         {
             $user = User::findOrFail($request->userID);
             $page_title = $user->username . ' - Invest Logs';
-            $transactions = Transaction::where('user_id', $user->id)->where('remark', 'purchased_plan')->with('user')->latest()->paginate(getPaginate());
+            $transactions = Transaction::where('user_id', $user->id)->where('remark', 'purchased_plan')->orwhere('user_id', $user->id)->where('remark', 'purchased_product')->with('user')->latest()->paginate(getPaginate());
         }else {
             $page_title = 'Invest Logs';
-            $transactions = Transaction::where('remark', 'purchased_plan')->with('user')->latest()->paginate(getPaginate());
+            $transactions = Transaction::where('remark', 'purchased_plan')->orwhere('remark', 'purchased_product')->with('user')->latest()->paginate(getPaginate());
         }
 
         $empty_message = 'No transactions.';

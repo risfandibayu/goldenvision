@@ -59,11 +59,11 @@
                         <span class="menu-title">@lang('Plans')</span>
                     </a>
                 </li>
-                <li class="sidebar-menu-item {{menuActive('admin.products*')}}">
-                    <a href="{{route('admin.products')}}" class="nav-link ">
+                <li class="sidebar-menu-item {{menuActive('admin.product*')}}">
+                    <a href="{{route('admin.product')}}" class="nav-link ">
                         {{-- <i class="las la-paper-plane"></i> --}}
                         <i class="menu-icon las la-archive"></i>
-                        <span class="menu-title">@lang('Products')</span>
+                        <span class="menu-title">@lang('Product')</span>
                     </a>
                 </li>
 
