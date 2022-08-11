@@ -56,14 +56,14 @@ class ProductController extends Controller
         $trx = $user->transactions()->create([
             'amount' => $product->price * $request->qty,
             'trx_type' => '-',
-            'details' => 'Purchased ' . $product->name. ' with '.$request->qty.' Item',
+            'details' => 'Purchased ' . $product->name. ' For '.$request->qty.' Item',
             'remark' => 'purchased_product',
             'trx' => getTrx(),
             'post_balance' => getAmount($user->balance),
         ]);
 
         sendEmail2($user->id, 'product_purchased', [
-            'plan' => $product->name. ' with '.$request->qty.' Item',
+            'plan' => $product->name. ' For '.$request->qty.' Item',
             'amount' => getAmount($product->price * $request->qty),
             'currency' => $gnl->cur_text,
             'trx' => $trx->trx,
