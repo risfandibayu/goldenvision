@@ -148,10 +148,13 @@ class UserReportController extends Controller
             $data['exchange'] = GoldExchange::where('user_id',Auth::user()->id)->where('ex_id', 'like', "%$search%")
             ->join('products','products.id','=','gold_exchanges.prod_id')
             ->select('gold_exchanges.*','products.name')
+            ->orderBy('gold_exchanges.created_at','DESC')
             ->paginate(getPaginate());
         } else {
             $data['page_title'] = "Gold Exchange Log";
-            $data['exchange'] = GoldExchange::where('user_id',Auth::user()->id)->join('products','products.id','=','gold_exchanges.prod_id')->select('gold_exchanges.*','products.name')->paginate(getPaginate());
+            $data['exchange'] = GoldExchange::where('user_id',Auth::user()->id)->join('products','products.id','=','gold_exchanges.prod_id')->select('gold_exchanges.*','products.name')
+            ->orderBy('gold_exchanges.created_at','DESC')
+            ->paginate(getPaginate());
         }
         $data['search'] = $search;
         $data['empty_message'] = "No Data Found!";
