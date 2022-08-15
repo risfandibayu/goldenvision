@@ -6,6 +6,7 @@ use App\Models\BvLog;
 use App\Models\Gateway;
 use App\Models\GeneralSetting;
 use App\Http\Controllers\Controller;
+use App\Models\Gold;
 use App\Models\SupportTicket;
 use App\Models\Transaction;
 use App\Models\User;
@@ -16,6 +17,7 @@ use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 
 class ManageUsersController extends Controller
@@ -123,8 +125,19 @@ class ManageUsersController extends Controller
         $totalTransaction   = Transaction::where('user_id',$user->id)->count();
 
         $totalBvCut         = BvLog::where('user_id',$user->id)->where('trx_type', '-')->sum('amount');
+        $emas               = Gold::where('user_id',$user->id)->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.user_id')->first();
         return view('admin.users.detail', compact('page_title','ref_id','user','totalDeposit',
-            'totalWithdraw','totalTransaction',  'totalBvCut'));
+            'totalWithdraw','totalTransaction',  'totalBvCut','emas'));
+    }
+
+    public function goldDetail($id){
+        $user = user::where('id',$id)->first();
+        $page_title         = 'Gold Invest Detail : '.$user->username;
+        $empty_message = 'Gold Invest Not found.';
+        $gold  = Gold::where('user_id',Auth::user()->id)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
+        ->paginate(getPaginate());
+        return view('admin.users.gold',compact('page_title', 'empty_message','gold'));
+        // return view('admin.users.gold',compact('page_title','emas'))
     }
 
 

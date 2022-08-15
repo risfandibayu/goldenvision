@@ -229,10 +229,10 @@
     <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
         <div class="row mb-none-30">
             <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--primary b-radius--10 box-shadow has--link" style="background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);">
-                    <a href="{{route('admin.users.deposits',$user->id)}}" class="item--link"></a>
+                <div class="dashboard-w1 bg--gradi-18 b-radius--10 box-shadow has--link" >
+                    <a href="{{route('admin.users.single.tree',$user->username)}}" class="item--link"></a>
                     <div class="icon">
-                        <i class="fa fa-coin"></i>
+                        <i class="fa fa-coins"></i>
                     </div>
                     <div class="details">
                         <div class="numbers">
@@ -241,6 +241,23 @@
                         </div>
                         <div class="desciption">
                             <span>@lang('Total BRO')</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow has--link" >
+                    <a href="{{route('admin.users.invest.detail',$user->id)}}" class="item--link"></a>
+                    <div class="icon">
+                        <i class="fa fa-coins"></i>
+                    </div>
+                    <div class="details">
+                        <div class="numbers">
+                            <span class="amount">{{$emas->total_wg}} </span>
+                            <span class="currency-sign">gr</span>
+                        </div>
+                        <div class="desciption">
+                            <span>Equal To {{$emas->total_rp}} IDR</span>
                         </div>
                     </div>
                 </div>

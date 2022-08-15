@@ -1,4 +1,4 @@
-@extends($activeTemplate . 'user.layouts.app')
+@extends('admin.layouts.app')
 
 @section('panel')
 
