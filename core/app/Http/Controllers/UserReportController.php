@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GoldExchange;
 use App\Models\Transaction;
 use App\Models\Withdrawal;
 use App\Models\WithdrawMethod;
@@ -139,5 +140,22 @@ class UserReportController extends Controller
         return view($this->activeTemplate . 'user.withdraw.log', $data);
     }
 
+    public function exchangeLog(Request $request){
+        $search = $request->search;
+
+        if ($search) {
+            $data['page_title'] = "Gold Exchange search : " . $search;
+            $data['exchange'] = GoldExchange::where('user_id',Auth::user()->id)->where('ex_id', 'like', "%$search%")
+            ->join('products','products.id','=','gold_exchanges.prod_id')
+            ->select('gold_exchanges.*','products.name')
+            ->paginate(getPaginate());
+        } else {
+            $data['page_title'] = "Gold Exchange Log";
+            $data['exchange'] = GoldExchange::where('user_id',Auth::user()->id)->join('products','products.id','=','gold_exchanges.prod_id')->select('gold_exchanges.*','products.name')->paginate(getPaginate());
+        }
+        $data['search'] = $search;
+        $data['empty_message'] = "No Data Found!";
+        return view($this->activeTemplate . 'user.exchangeGold', $data);
+    }
 
 }

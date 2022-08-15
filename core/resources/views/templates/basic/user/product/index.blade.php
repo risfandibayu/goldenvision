@@ -55,12 +55,12 @@
                         <input type="hidden" name="product_name" id="product_name" value="">
                         <div class="form-group col-6">
                             <label for="">QTY</label>
-                            <input type="number" name="qty" id="qty" min="1" placeholder="QTY" required>
+                            <input class="form-control" type="number" name="qty" id="qty" min="1" placeholder="QTY" required>
                         </div>
                         <div class="form-group col-6">
                             <label for="">total</label>
                             <input type="number" name="total" id="total" value="" placeholder="total" disabled>
-                            <input type="hidden" name="totals" id="totals" value="" placeholder="total">
+                            <input class="form-control" type="hidden" name="totals" id="totals" value="" placeholder="total">
                         </div>
                     </div>
                     <div class="modal-footer">

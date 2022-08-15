@@ -104,6 +104,8 @@ return array(
     'App\\Models\\Gateway' => $baseDir . '/app/Models/Gateway.php',
     'App\\Models\\GatewayCurrency' => $baseDir . '/app/Models/GatewayCurrency.php',
     'App\\Models\\GeneralSetting' => $baseDir . '/app/Models/GeneralSetting.php',
+    'App\\Models\\Gold' => $baseDir . '/app/Models/Gold.php',
+    'App\\Models\\GoldExchange' => $baseDir . '/app/Models/GoldExchange.php',
     'App\\Models\\Language' => $baseDir . '/app/Models/Language.php',
     'App\\Models\\Page' => $baseDir . '/app/Models/Page.php',
     'App\\Models\\PasswordReset' => $baseDir . '/app/Models/PasswordReset.php',

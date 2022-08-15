@@ -14,6 +14,7 @@ use App\Models\Withdrawal;
 use App\Models\Survey;
 use App\Models\Answer;
 use App\Models\Gold;
+use App\Models\GoldExchange;
 use App\Models\UserExtra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -1192,9 +1193,44 @@ class UserController extends Controller
     public function goldInvest(){
         $page_title = 'Gold Invest';
         $empty_message = 'Gold Invest Not found.';
-        $gold  = Gold::where('user_id',Auth::user()->id)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
+        $gold  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
         ->paginate(getPaginate());
         return view('templates.basic.user.gold',compact('page_title', 'empty_message','gold'));
+    }
+
+    public function goldExchange(Request $request){
+        // dd($request->all());
+        $gold = Gold::where('golds.user_id',Auth::user()->id)
+        ->join('products','products.id','=','golds.prod_id')
+        ->where('golds.prod_id',$request->product_id)
+        ->select('golds.*','products.price as price','products.weight as weight')
+        ->first();
+        if ($request->qty > $gold->qty) {
+            # code...
+            $notify[] = ['error', 'The weight you put in is more than the amount of gold you have.'];
+            return redirect()->back()->withNotify($notify);
+        }else{
+            $ex = new goldExchange();
+            $ex->ex_id = getTrx();
+            $ex->user_id = Auth::user()->id;
+            $ex->qty = $request->qty;
+            $ex->qty_after = $gold->qty - $request->qty ;
+            $ex->prod_id = $request->product_id;
+            $ex->wei = $request->qty * $gold->weight;
+            $ex->total = $gold->price * $request->qty;
+            $ex->charge = 0;
+            $ex->after_charge = $ex->total - $ex->charge;
+            $ex->status = 1;
+            $ex->save();
+
+            // dd($ex->total);
+
+            // $gold->qty -= $request->qty;
+            // $gold->save();
+
+            $notify[] = ['success', 'Gold exchange request is successful, please wait for confirmation.'];
+            return redirect()->back()->withNotify($notify);
+        }
     }
 
 }

@@ -640,6 +640,8 @@ class ComposerStaticInit3745021df70172f78897f89825d8c4e6
         'App\\Models\\Gateway' => __DIR__ . '/../..' . '/app/Models/Gateway.php',
         'App\\Models\\GatewayCurrency' => __DIR__ . '/../..' . '/app/Models/GatewayCurrency.php',
         'App\\Models\\GeneralSetting' => __DIR__ . '/../..' . '/app/Models/GeneralSetting.php',
+        'App\\Models\\Gold' => __DIR__ . '/../..' . '/app/Models/Gold.php',
+        'App\\Models\\GoldExchange' => __DIR__ . '/../..' . '/app/Models/GoldExchange.php',
         'App\\Models\\Language' => __DIR__ . '/../..' . '/app/Models/Language.php',
         'App\\Models\\Page' => __DIR__ . '/../..' . '/app/Models/Page.php',
         'App\\Models\\PasswordReset' => __DIR__ . '/../..' . '/app/Models/PasswordReset.php',

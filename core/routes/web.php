@@ -466,6 +466,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('report/withdraw/log', 'UserReportController@withdrawLog')->name('report.withdraw');
                 Route::get('report/referral/commission', 'UserReportController@refCom')->name('report.refCom');
                 Route::get('report/binary/commission', 'UserReportController@binaryCom')->name('report.binaryCom');
+                Route::get('report/exchange/log', 'UserReportController@exchangeLog')->name('report.exchangeLog');
 
                 Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
 
@@ -474,6 +475,8 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('/tree', 'PlanController@myTree')->name('my.tree');
                 });
             });
+
+            Route::post('gold_exchange', 'UserController@goldExchange')->name('gold.exchange');
 
             Route::get('/cek_pos/{id}', 'UserController@cek_pos')->name('cek_pos');
             Route::get('/cek_tree/{id}', 'UserController@cek_tree')->name('cek_tree');

@@ -145,6 +145,12 @@
                                     <span class="menu-title">@lang('Invest Log')</span>
                                 </a>
                             </li>
+                            <li class="sidebar-menu-item {{menuActive('user.report.exchangeLog')}}">
+                                <a href="{{route('user.report.exchangeLog')}}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Gold Exchange Log')</span>
+                                </a>
+                            </li>
                             {{-- <li class="sidebar-menu-item {{menuActive('user.report.refCom')}}">
                                 <a href="{{route('user.report.refCom')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
