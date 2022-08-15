@@ -134,7 +134,7 @@ class PlanController extends Controller
             $trx = $user->transactions()->create([
                 'amount' => $plan->price * $request->qty,
                 'trx_type' => '-',
-                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' BRO',
+                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' BRO and Get '.$request->qty * 77 .' pieces Gold',
                 'remark' => 'purchased_plan',
                 'trx' => getTrx(),
                 'post_balance' => getAmount($user->balance),
