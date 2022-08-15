@@ -11,12 +11,13 @@ class ExchangeController extends Controller
     //
     public function index(){
         $page_title = 'Exchange';
+        $empty_message = "Gold Exchange Request Not Found!";
         $items = GoldExchange::select('gold_exchanges.*','users.username as us','products.name as pdname')
         ->leftjoin('users','users.id','=','gold_exchanges.user_id')
         ->leftjoin('products','products.id','=','gold_exchanges.prod_id')
         ->orderBy('gold_exchanges.created_at','DESC')
         ->paginate(getPaginate());
-        return view('admin.exchange.exchange',compact('page_title','items'));
+        return view('admin.exchange.exchange',compact('page_title','items','empty_message'));
     }
 
     public function reject($id){
