@@ -226,7 +226,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('via/{method}/{type?}', 'DepositController@depViaMethod')->name('method');
             Route::get('/{scope}/search', 'DepositController@search')->name('search');
             Route::get('date-search/{scope}', 'DepositController@dateSearch')->name('dateSearch');
-
         });
 
 
@@ -330,6 +329,11 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('sms-template/edit/{id}', 'SmsTemplateController@edit')->name('sms.template.edit');
         Route::post('sms-template/update/{id}', 'SmsTemplateController@update')->name('sms.template.update');
         Route::post('email-template/send-test-sms', 'SmsTemplateController@sendTestSMS')->name('sms.template.sendTestSMS');
+
+        // Exchange
+        Route::get('exchange', 'ExchangeController@index')->name('exchange');
+        Route::post('exchange/reject/{id}', 'ExchangeController@reject')->name('exchange.reject');
+        Route::post('exchange/accept/{id}', 'ExchangeController@verify')->name('exchange.accept');
 
         // SEO
         Route::get('seo', 'FrontendController@seoEdit')->name('seo');

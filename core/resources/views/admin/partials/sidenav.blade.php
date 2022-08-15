@@ -66,7 +66,7 @@
                         <span class="menu-title">@lang('Product')</span>
                     </a>
                 </li>
-
+                
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{menuActive('admin.users*',3)}}">
                         <i class="menu-icon las la-users"></i>
@@ -251,6 +251,15 @@
                         </ul>
                     </div>
                 </li>
+
+                <li class="sidebar-menu-item {{menuActive('admin.exchange*')}}">
+                    <a href="{{route('admin.exchange')}}" class="nav-link ">
+                        {{-- <i class="las la-paper-plane"></i> --}}
+                        <i class="menu-icon las la-sync"></i>
+                        <span class="menu-title">@lang('Exchange')</span>
+                    </a>
+                </li>
+
 
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{menuActive('admin.ticket*',3)}}">
