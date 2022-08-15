@@ -1229,7 +1229,7 @@ class UserController extends Controller
             // $gold->save();
 
             $notify[] = ['success', 'Gold exchange request is successful, please wait for confirmation.'];
-            return redirect()->back()->withNotify($notify);
+            return redirect()->route('user.report.exchangeLog')->withNotify($notify);
         }
     }
 
