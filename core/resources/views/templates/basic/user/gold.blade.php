@@ -24,7 +24,7 @@
                         @forelse($gold as $gd)
                             <tr>
                                 <td data-label="@lang('Name')">{{$gd->name}}</td>
-                                <td data-label="@lang('Price')">{{$gd->price}}</td>
+                                <td data-label="@lang('Price')">{{$gd->price}} IDR</td>
                                 <td data-label="@lang('Type')">{{$gd->weight}}</td>
                                 <td data-label="@lang('Qty')">{{$gd->qty}}</td>
                                 <td data-label="@lang('Total')">{{$gd->total_rp}} IDR</td>
