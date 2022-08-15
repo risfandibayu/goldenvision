@@ -395,7 +395,7 @@
                 </div>
             </div>
             <br>
-            <a href="{{route('user.report.transactions')}}" class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+            <a href="{{route('user.gold.invest')}}" class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
     @endif
