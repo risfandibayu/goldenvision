@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BvLog;
 use App\Models\GeneralSetting;
+use App\Models\Gold;
 use App\Models\Plan;
 use App\Models\Transaction;
 use App\Models\User;
@@ -50,6 +51,85 @@ class PlanController extends Controller
             $user->total_invest += ($plan->price * $request->qty);
             $user->bro_qty = $request->qty;
             $user->save();
+
+
+            $gold = Gold::where('user_id',Auth::user()->id)->first();
+            $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->first();
+            $gold2 = Gold::where('user_id',Auth::user()->id)->where('prod_id',2)->first();
+            $gold3 = Gold::where('user_id',Auth::user()->id)->where('prod_id',3)->first();
+            $gold4 = Gold::where('user_id',Auth::user()->id)->where('prod_id',4)->first();
+
+            if($gold){
+                if($gold1){
+                    $gold1->qty += 50 * $request->qty;
+                    $gold1->save();
+                }else{
+                    $newg = new Gold();
+                    $newg->user_id = Auth::user()->id;
+                    $newg->prod_id = 1;
+                    $newg->qty = 50 * $request->qty;
+                    $newg->save();
+                }
+
+                if($gold2){
+                    $gold2->qty += 20 * $request->qty;
+                    $gold2->save();
+                }else{
+                    $newg = new Gold();
+                    $newg->user_id = Auth::user()->id;
+                    $newg->prod_id = 2;
+                    $newg->qty = 20 * $request->qty;
+                    $newg->save();
+                }
+
+                if($gold3){
+                    $gold3->qty += 5 * $request->qty;
+                    $gold3->save();
+                }else{
+                    $newg = new Gold();
+                    $newg->user_id = Auth::user()->id;
+                    $newg->prod_id = 3;
+                    $newg->qty = 5 * $request->qty;
+                    $newg->save();
+                }
+
+                if($gold4){
+                    $gold4->qty += 2 * $request->qty;
+                    $gold4->save();
+                }else{
+                    $newg = new Gold();
+                    $newg->user_id = Auth::user()->id;
+                    $newg->prod_id = 4;
+                    $newg->qty = 2 * $request->qty;
+                    $newg->save();
+                }
+
+
+            }else{
+                $newg = new Gold();
+                $newg->user_id = Auth::user()->id;
+                $newg->prod_id = 1;
+                $newg->qty = 50 * $request->qty;
+                $newg->save();
+
+                $newg = new Gold();
+                $newg->user_id = Auth::user()->id;
+                $newg->prod_id = 2;
+                $newg->qty = 20 * $request->qty;
+                $newg->save();
+
+                $newg = new Gold();
+                $newg->user_id = Auth::user()->id;
+                $newg->prod_id = 3;
+                $newg->qty = 5 * $request->qty;
+                $newg->save();
+
+                $newg = new Gold();
+                $newg->user_id = Auth::user()->id;
+                $newg->prod_id = 4;
+                $newg->qty = 2 * $request->qty;
+                $newg->save();
+            }
 
             $trx = $user->transactions()->create([
                 'amount' => $plan->price * $request->qty,

@@ -348,8 +348,8 @@
     @if (auth()->user()->plan_id != 0)
 
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-        <div class="dashboard-w1  h-100 w-100 bg--success b-radius--10 box-shadow" style="background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);">
-            <div class="details">
+        <div class="dashboard-w1  h-100 w-100 bg--gradi-18 b-radius--10 box-shadow">
+            {{-- <div class="details">
                 <div class="numbers">
                     <span class="amount" style="font-family: serif;
                     font-weight:bold;background-color: #414141ec;
@@ -359,7 +359,43 @@
                        -moz-background-clip: text;
                             background-clip: text;  ">{{auth()->user()->bro_qty}} BRO</span>
                 </div>
+            </div> --}}
+            <div class="icon">
+                <i class="las la-tree"></i>
             </div>
+            <div class="details">
+                <div class="numbers" >
+                    <span class="amount">{{auth()->user()->bro_qty}}</span>
+                    <span class="currency-sign">BRO</span>
+                </div>
+                <div class="desciption">
+                    <span class="text--small">Business Right Owner</span>
+                </div>
+            </div>
+            <br>
+            <a href="{{ route('user.my.tree') }}" class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+        </div>
+    </div>
+    @endif
+
+    @if ($emas)
+        
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow">
+            <div class="icon">
+                <i class="las la-coins"></i>
+            </div>
+            <div class="details">
+                <div class="numbers">
+                    <span class="amount">{{$emas->total_wg}}</span>
+                    <span class="currency-sign">Gram</span>
+                </div>
+                <div class="desciption">
+                    <span class="text--small">Equal To {{$emas->total_rp}} IDR</span>
+                </div>
+            </div>
+            <br>
+            <a href="{{route('user.report.transactions')}}" class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
     @endif
@@ -377,9 +413,9 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Current Balance')</span>
                 </div>
-                <a href="{{route('user.report.transactions')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+            <a href="{{route('user.report.transactions')}}" class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -396,9 +432,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Deposit')</span>
                 </div>
-                <a href="{{route('user.report.deposit')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+            <a href="{{route('user.report.deposit')}}"
+                class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -415,9 +452,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Withdraw')</span>
                 </div>
-                <a href="{{route('user.report.withdraw')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+                <a href="{{route('user.report.withdraw')}}"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
@@ -432,9 +470,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Complete Withdraw')</span>
                 </div>
-                <a href="{{route('user.report.withdraw')}}?type=complete"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+                <a href="{{route('user.report.withdraw')}}?type=complete"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -450,9 +489,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Pending Withdraw')</span>
                 </div>
-                <a href="{{route('user.report.withdraw')}}?type=complete"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+                <a href="{{route('user.report.withdraw')}}?type=complete"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -468,9 +508,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Reject Withdraw')</span>
                 </div>
-                <a href="{{route('user.report.withdraw')}}?type=reject"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+                <a href="{{route('user.report.withdraw')}}?type=reject"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -487,9 +528,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Invest')</span>
                 </div>
-                <a href="{{route('user.report.invest')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+                <a href="{{route('user.report.invest')}}"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -507,7 +549,7 @@
                     <span class="text--small">@lang('Total Referral Commission')</span>
                 </div>
                 <a href="{{route('user.report.refCom')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
     </div> --}}
@@ -525,9 +567,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Binary Commission')</span>
                 </div>
-                <a href="{{route('user.report.binaryCom')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+                <a href="{{route('user.report.binaryCom')}}"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -544,7 +587,7 @@
                     <span class="text--small">@lang('Total Referral')</span>
                 </div>
                 <a href="{{route('user.my.ref')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
     </div> --}}
@@ -562,9 +605,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Left')</span>
                 </div>
-                <a href="{{route('user.my.tree')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+                <a href="{{route('user.my.tree')}}"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -581,9 +625,10 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Right')</span>
                 </div>
-                <a href="{{route('user.my.tree')}}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+                <a href="{{route('user.my.tree')}}"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
 
@@ -602,7 +647,7 @@
                     <span class="text--small">@lang('Total BV')</span>
                 </div>
                 <a href="{{route('user.bv.log')}}?type=paidBV"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
     </div>
@@ -621,7 +666,7 @@
                     <span class="text--small">@lang('Left BV')</span>
                 </div>
                 <a href="{{route('user.bv.log')}}?type=leftBV"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
     </div>
@@ -639,7 +684,7 @@
                     <span class="text--small">@lang('Right BV')</span>
                 </div>
                 <a href="{{route('user.bv.log')}}?type=rightBV"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
     </div>
@@ -659,7 +704,7 @@
                     <span class="text--small">@lang('Total Bv Cut')</span>
                 </div>
                 <a href="{{route('user.bv.log')}}?type=cutBV"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
     </div> --}}

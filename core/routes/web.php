@@ -455,6 +455,8 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('/survey/answers', 'UserController@surveyQuestionsAnswers')->name('survey.questions.answers');
 
             Route::middleware(['checkKyc'])->group(function () {
+                Route::get('gold_invest', 'UserController@goldInvest')->name('gold.invest');
+
                 Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
                 Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');
                 Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');

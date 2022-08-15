@@ -79,6 +79,12 @@
                             <span class="menu-title">@lang('My Tree')</span>
                         </a>
                     </li>
+                    <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
+                        <a href="{{ route('user.gold.invest') }}" class="nav-link">
+                            <i class="menu-icon las la-coins"></i>
+                            <span class="menu-title">@lang('Gold Invest')</span>
+                        </a>
+                    </li>
                 {{-- @endif --}}
                 
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.binary.summery') }}">

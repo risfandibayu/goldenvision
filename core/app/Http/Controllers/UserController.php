@@ -13,6 +13,7 @@ use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
 use App\Models\Survey;
 use App\Models\Answer;
+use App\Models\Gold;
 use App\Models\UserExtra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,7 @@ class UserController extends Controller
         $data['rejectWithdraw']     = Withdrawal::where('user_id', auth()->id())->where('status', 3)->count();
         $data['total_ref']          = User::where('ref_id', auth()->id())->count();
         $data['totalBvCut']         = BvLog::where('user_id', auth()->id())->where('trx_type', '-')->sum('amount');
-
+        $data['emas']               = Gold::where('user_id',Auth::user()->id)->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.user_id')->first();
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
     public function profile()
@@ -1185,6 +1186,15 @@ class UserController extends Controller
         $user->fill($in)->save();
         $notify[] = ['success', 'Data Verification send successfully.'];
         return redirect()->route('user.home')->withNotify($notify);
+    }
+
+
+    public function goldInvest(){
+        $page_title = 'Gold Invest';
+        $empty_message = 'Gold Invest Not found.';
+        $gold  = Gold::where('user_id',Auth::user()->id)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
+        ->paginate(getPaginate());
+        return view('templates.basic.user.gold',compact('page_title', 'empty_message','gold'));
     }
 
 }
