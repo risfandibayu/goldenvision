@@ -121,6 +121,10 @@
                 modal.modal('show');
             });
 
+            $('.modal').on('hidden.bs.modal', function(){
+                $(this).find('form')[0].reset();
+            });
+
             // $('.add-product').on('click', function () {
             //     var modal = $('#add-product');
             //     modal.modal('show');
