@@ -7,9 +7,9 @@
                 <div class="card card-deposit">
                     <h5 class="card-header text-center">{{__($data->name)}}
                     </h5>
-                    <div class="card-body card-body-deposit">
+                    {{-- <div class="card-body card-body-deposit">
                         <img src="{{$data->methodImage()}}" class="card-img-top depo" alt="{{__($data->name)}}">
-                    </div>
+                    </div> --}}
                     <div class="card-footer">
                         <a href="javascript:void(0)"  data-id="{{$data->id}}" data-resource="{{$data}}"
                             data-min_amount="{{getAmount($data->min_amount)}}"

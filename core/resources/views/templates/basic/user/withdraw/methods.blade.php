@@ -6,9 +6,9 @@
                 <div class="card card-deposit method-card">
                     <h5 class="card-header text-center">{{__($data->name)}}</h5>
                     <div class="card-body card-body-deposit">
-                        <img src="{{getImage(imagePath()['withdraw']['method']['path'].'/'. $data->image)}}"
-                                class="card-img-top w-100" alt="{{__($data->name)}}">
-                            <div class="deposit-content mt-4">
+                        {{-- <img src="{{getImage(imagePath()['withdraw']['method']['path'].'/'. $data->image)}}"
+                                class="card-img-top w-100" alt="{{__($data->name)}}"> --}}
+                            <div class="deposit-content">
                                 <ul  class="text-center font-15 ">
                                     <li>
                                         @lang('Limit')
