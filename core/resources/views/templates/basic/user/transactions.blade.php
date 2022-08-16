@@ -27,11 +27,11 @@
                                     <td data-label="@lang('TRX')" class="font-weight-bold">{{ $trx->trx }}</td>
                                     <td data-label="@lang('Amount')" class="budget">
                                         <strong @if($trx->trx_type == '+') class="text-success"
-                                                @else class="text-danger" @endif> {{($trx->trx_type == '+') ? '+':'-'}} {{getAmount($trx->amount)}} {{$general->cur_text}}</strong>
+                                                @else class="text-danger" @endif> {{($trx->trx_type == '+') ? '+':'-'}} {{nb(getAmount($trx->amount))}} {{$general->cur_text}}</strong>
                                     </td>
                                     <td data-label="@lang('Charge')"
-                                        class="budget">{{ $general->cur_sym }} {{ getAmount($trx->charge) }} </td>
-                                    <td data-label="@lang('Post Balance')">{{ $trx->post_balance +0 }} {{$general->cur_text}}</td>
+                                        class="budget">{{ $general->cur_sym }} {{ nb(getAmount($trx->charge)) }} </td>
+                                    <td data-label="@lang('Post Balance')">{{ nb($trx->post_balance +0) }} {{$general->cur_text}}</td>
                                     <td data-label="@lang('Detail')">{{ __($trx->details) }}</td>
                                 </tr>
                             @empty

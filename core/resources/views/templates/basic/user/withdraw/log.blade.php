@@ -26,19 +26,19 @@
                                     <td data-label="#@lang('Trx')">{{$data->trx}}</td>
                                     <td data-label="@lang('Gateway')">{{ $data->method->name   }}</td>
                                     <td data-label="@lang('Amount')">
-                                        <strong>{{getAmount($data->amount)}} {{$general->cur_text}}</strong>
+                                        <strong>{{nb(getAmount($data->amount))}} {{$general->cur_text}}</strong>
                                     </td>
                                     <td data-label="@lang('Charge')" class="text--danger">
-                                        {{getAmount($data->charge)}} {{$general->cur_text}}
+                                        {{nb(getAmount($data->charge))}} {{$general->cur_text}}
                                     </td>
                                     <td data-label="@lang('After Charge')">
-                                        {{getAmount($data->after_charge)}} {{$general->cur_text}}
+                                        {{nb(getAmount($data->after_charge))}} {{$general->cur_text}}
                                     </td>
                                     <td data-label="@lang('Rate')">
-                                        {{getAmount($data->rate)}} {{$data->currency}}
+                                        {{nb(getAmount($data->rate))}} {{$data->currency}}
                                     </td>
                                     <td data-label="@lang('Receivable')" class="text--success">
-                                        <strong>{{getAmount($data->final_amount)}} {{$data->currency}}</strong>
+                                        <strong>{{nb(getAmount($data->final_amount))}} {{$data->currency}}</strong>
                                     </td>
                                     <td data-label="@lang('Status')">
                                         @if($data->status == 2)

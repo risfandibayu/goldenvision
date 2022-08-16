@@ -9,7 +9,7 @@
                 <div class="pricing-table text-center mb-4">
                     <h2 class="package-name mb-20 text-"><strong>@lang($data->name)</strong></h2>
                     <span
-                        class="price text--dark font-weight-bold d-block">{{$general->cur_sym}}{{getAmount($data->price)}}</span>
+                        class="price text--dark font-weight-bold d-block">{{$general->cur_sym}}{{nb(getAmount($data->price))}}</span>
                     <p>/ BRO</p>
                     <hr>
                     <ul class="package-features-list mt-30">
@@ -24,7 +24,7 @@
                         <li>
                             <i
                                 class="fas @if(getAmount($data->tree_com) != 0) fa-check bg--success @else fa-times bg--danger @endif "></i>
-                            <span>@lang('Tree Commission'): {{$general->cur_sym}} {{getAmount($data->tree_com)}} </span>
+                            <span>@lang('Tree Commission'): {{$general->cur_sym}} {{nb(getAmount($data->tree_com))}} </span>
                             <span class="icon" data-toggle="modal" data-target="#treeComInfoModal"><i
                                     class="fas fa-question-circle"></i></span>
                         </li>

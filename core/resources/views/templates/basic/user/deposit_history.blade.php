@@ -24,7 +24,7 @@
                                         <td data-label="#@lang('Transaction ID')">{{$data->trx}}</td>
                                         <td data-label="@lang('Gateway')">{{__($data->gateway->name)}}</td>
                                         <td data-label="@lang('Amount')">
-                                            <strong>{{getAmount($data->amount)}} {{$general->cur_text}}</strong>
+                                            <strong>{{nb(getAmount($data->amount))}} {{$general->cur_text}}</strong>
                                         </td>
                                         <td data-label="@lang('Status')">
                                             @if($data->status == 1)

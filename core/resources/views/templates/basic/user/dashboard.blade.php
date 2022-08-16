@@ -365,7 +365,7 @@
             </div>
             <div class="details">
                 <div class="numbers" >
-                    <span class="amount">{{auth()->user()->bro_qty}}</span>
+                    <span class="amount">{{nb(auth()->user()->bro_qty)}}</span>
                     <span class="currency-sign">BRO</span>
                 </div>
                 <div class="desciption">
@@ -387,11 +387,11 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{$emas->total_wg}}</span>
+                    <span class="amount">{{nbk($emas->total_wg)}}</span>
                     <span class="currency-sign">Gram</span>
                 </div>
                 <div class="desciption">
-                    <span class="text--small">Equal To {{$emas->total_rp}} IDR</span>
+                    <span class="text--small">Equal To {{nb($emas->total_rp)}} IDR</span>
                 </div>
             </div>
             <br>
@@ -407,7 +407,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{getAmount(auth()->user()->balance)}}</span>
+                    <span class="amount">{{nb(getAmount(auth()->user()->balance))}}</span>
                     <span class="currency-sign">{{$general->cur_text}}</span>
                 </div>
                 <div class="desciption">
@@ -426,7 +426,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{getAmount($totalDeposit)}}</span>
+                    <span class="amount">{{nb(getAmount($totalDeposit))}}</span>
                     <span class="currency-sign">{{$general->cur_text}}</span>
                 </div>
                 <div class="desciption">
@@ -446,7 +446,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{getAmount($totalWithdraw)}}</span>
+                    <span class="amount">{{nb(getAmount($totalWithdraw))}}</span>
                     <span class="currency-sign">{{$general->cur_text}}</span>
                 </div>
                 <div class="desciption">
@@ -522,7 +522,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{getAmount(auth()->user()->total_invest)}}</span>
+                    <span class="amount">{{nb(getAmount(auth()->user()->total_invest))}}</span>
                     <span class="currency-sign">{{$general->cur_text}}</span>
                 </div>
                 <div class="desciption">
@@ -561,7 +561,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{getAmount(auth()->user()->total_binary_com)}}</span>
+                    <span class="amount">{{nb(getAmount(auth()->user()->total_binary_com))}}</span>
                     <span class="currency-sign">{{$general->cur_text}}</span>
                 </div>
                 <div class="desciption">

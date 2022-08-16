@@ -12,13 +12,13 @@
                                 <ul  class="text-center font-15 ">
                                     <li>
                                         @lang('Limit')
-                                        : <span class="text--success"> {{getAmount($data->min_limit)}}
-                                            - {{getAmount($data->max_limit)}} {{$general->cur_text}}</li></span>
+                                        : <span class="text--success"> {{nb(getAmount($data->min_limit))}}
+                                            - {{nb(getAmount($data->max_limit))}} {{$general->cur_text}}</li></span>
 
                                     <li>
                                          @lang('Charge') -
                                         <span class="text--danger">
-                                            {{getAmount($data->fixed_charge)}} {{$general->cur_text}}
+                                            {{nb(getAmount($data->fixed_charge))}} {{$general->cur_text}}
                                         + {{getAmount($data->percent_charge)}}%
                                         </span>
                                     </li>

@@ -25,11 +25,11 @@
                         @forelse($gold as $gd)
                             <tr>
                                 <td data-label="@lang('Name')">{{$gd->name}}</td>
-                                <td data-label="@lang('Price')">{{$gd->price}} IDR</td>
-                                <td data-label="@lang('Type')">{{$gd->weight}} Gr</td>
-                                <td data-label="@lang('Qty')">{{$gd->qty}} pcs</td>
-                                <td data-label="@lang('Total')">{{$gd->total_rp}} IDR</td>
-                                <td data-label="@lang('Weight Total')">{{$gd->total_wg}} gr</td>
+                                <td data-label="@lang('Price')">{{nb($gd->price)}} IDR</td>
+                                <td data-label="@lang('Type')">{{nbk($gd->weight)}} gr</td>
+                                <td data-label="@lang('Qty')">{{nb($gd->qty)}} pcs</td>
+                                <td data-label="@lang('Total')">{{nb($gd->total_rp)}} IDR</td>
+                                <td data-label="@lang('Weight Total')">{{nbk($gd->total_wg)}} gr</td>
                                 <td data-label="@lang('Action')">
                                 <button class="btn btn--sm btn--primary exchange"
                                 data-id="{{ $gd->id }}"

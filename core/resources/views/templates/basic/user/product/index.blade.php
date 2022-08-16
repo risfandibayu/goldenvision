@@ -9,8 +9,8 @@
                 <div class="pricing-table text-center mb-4">
                     <img class="img-fluid" src="{{ getImage('assets/images/product/'. $data->image,  null, true)}}" alt="">
                     <h4 class="package-name mb-20 text-"><strong>@lang($data->name)</strong></h4>
-                    <p>{{$data->weight}} Gram</p>
-                    <p>Rp. {{$data->price}}</p>
+                    <p>{{nbk($data->weight)}} Gram</p>
+                    <p>Rp. {{nb($data->price)}}</p>
                 </div>
                 <div class="row px-10">
                     {{-- <div class="col-6"> --}}

@@ -29,9 +29,9 @@
                                     <td data-label="@lang('Date')">{{ showDateTime($ex->created_at) }}</td>
                                     <td data-label="@lang('Exchange ID')">{{ $ex->ex_id }}</td>
                                     <td data-label="@lang('Product')">{{ $ex->name }}</td>
-                                    <td data-label="@lang('Qty')">{{ $ex->qty }}</td>
-                                    <td data-label="@lang('Weight')">{{ $ex->wei }} gr</td>
-                                    <td data-label="@lang('Amount')">{{ $ex->total }} IDR</td>
+                                    <td data-label="@lang('Qty')">{{ nb($ex->qty) }}</td>
+                                    <td data-label="@lang('Weight')">{{ nbk($ex->wei) }} gr</td>
+                                    <td data-label="@lang('Amount')">{{ nb($ex->total) }} IDR</td>
                                     <td data-label="@lang('Status')">
                                         @if($ex->status == 2)
                                             <span class="badge badge--success">@lang('Complete')</span>
