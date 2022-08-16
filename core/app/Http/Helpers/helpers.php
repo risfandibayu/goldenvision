@@ -1505,35 +1505,35 @@ function generateUniqueNoBro()
         <div class='row text-center justify-content-center llll'>
             <!-- <div class='col'> -->
             <div class='w-8'>
-                ".showSingleUserinTree2($tree['h'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3($tree['h'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-8'>
-                ".showSingleUserinTree2($tree['i'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3($tree['i'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-8'>
-                ".showSingleUserinTree2($tree['j'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3($tree['j'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-8'>
-                ".showSingleUserinTree2($tree['k'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3($tree['k'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-8'>
-                ".showSingleUserinTree2($tree['l'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3($tree['l'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-8'>
-                ".showSingleUserinTree2($tree['m'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3($tree['m'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-8'>
-                ".showSingleUserinTree2($tree['n'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3($tree['n'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-8'>
-                ".showSingleUserinTree2($tree['o'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3($tree['o'],$user->pos_id,$user->id)."
             </div>
 
 
