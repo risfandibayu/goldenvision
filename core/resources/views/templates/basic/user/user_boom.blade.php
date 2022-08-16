@@ -17,7 +17,7 @@
 <div class="card">
     <div class="row">
         {{-- <div class="col-md-12"> --}}
-            <nav class="col-4 col-md-2">
+            <nav class="col-3 col-md-2">
                 <div class="nav nav-tabs nav-fill " id="nav-tab" role="tablist" style="border: none;
                 color: #ffffff;
                 background-color: #96795f;">
@@ -41,7 +41,7 @@
                     <a class="nav-item nav-link" id="nav-user7-tab" data-toggle="tab" href="#nav-user7" role="tab" aria-controls="nav-user7" aria-selected="false">User 7</a> --}}
                 </div>
             </nav>
-            <div class="col-8 col-md-10 tab-content" id="nav-tabContent">
+            <div class="col-9 col-md-10 tab-content" id="nav-tabContent">
                 @for ($i = 1; $i < $get_bv->bv+1; $i++)
                 <div class="tab-pane fade show" id="nav-user{{$i}}" role="tabpanel" aria-labelledby="nav-user{{$i}}-tab">
                     <div class="card-body">
