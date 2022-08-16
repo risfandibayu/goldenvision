@@ -63,11 +63,11 @@
                         <input type="hidden" name="plan_id" value="{{$data->id}}">
                         <div class="form-group col-6">
                             <label for="">QTY</label>
-                            <input type="number" name="qty" id="qty" min="1" value="1" placeholder="BRO qty" required>
+                            <input class="form-control" type="number" name="qty" id="qty" min="1" value="1" placeholder="BRO qty" required>
                         </div>
                         <div class="form-group col-6">
                             <label for="">total</label>
-                            <input type="number" name="total" value="{{getAmount($data->price)}}" placeholder="total" disabled>
+                            <input class="form-control" type="number" name="total" value="{{getAmount($data->price)}}" placeholder="total" disabled>
                         </div>
                     </div>
                     <div class="modal-footer">

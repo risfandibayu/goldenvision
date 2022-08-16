@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="">total</label>
-                            <input type="number" name="total" id="total" value="" placeholder="total" disabled>
+                            <input class="form-control" type="number" name="total" id="total" value="" placeholder="total" disabled>
                             <input class="form-control" type="hidden" name="totals" id="totals" value="" placeholder="total">
                         </div>
                     </div>
