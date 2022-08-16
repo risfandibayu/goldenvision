@@ -125,7 +125,7 @@ class ManageUsersController extends Controller
         $totalTransaction   = Transaction::where('user_id',$user->id)->count();
 
         $totalBvCut         = BvLog::where('user_id',$user->id)->where('trx_type', '-')->sum('amount');
-        $emas               = Gold::where('user_id',$user->id)->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.user_id')->first();
+        $emas               = Gold::where('user_id',$user->id)->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('COALESCE(SUM(products.price * golds.qty),0) as total_rp'),db::raw('COALESCE(sum(products.weight * golds.qty ),0) as total_wg'))->groupBy('golds.user_id')->first();
         return view('admin.users.detail', compact('page_title','ref_id','user','totalDeposit',
             'totalWithdraw','totalTransaction',  'totalBvCut','emas'));
     }
