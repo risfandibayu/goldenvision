@@ -221,7 +221,7 @@
               <div class="member-info">
                 <h4>{{$item->name}}</h4>
                 <p>{{$item->weight}} gram</p>
-                <p>Rp. {{$item->price}}</p>
+                <p>Rp. {{nb($item->price)}}</p>
 
               </div>
             </div>

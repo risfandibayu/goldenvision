@@ -1541,3 +1541,7 @@ function generateUniqueNoBro()
         ";
          echo $response_tree;
     }
+
+function nb($number){
+    return number_format($number,0,',','.');
+}
