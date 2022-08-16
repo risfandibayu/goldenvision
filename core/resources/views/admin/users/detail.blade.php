@@ -245,6 +245,8 @@
                     </div>
                 </div>
             </div>
+            @if ($emas)
+                
             <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow has--link" >
                     <a href="{{route('admin.users.invest.detail',$user->id)}}" class="item--link"></a>
@@ -262,6 +264,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--primary b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.users.deposits',$user->id)}}" class="item--link"></a>
