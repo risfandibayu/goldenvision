@@ -412,8 +412,9 @@ Route::name('user.')->prefix('user')->group(function () {
 
             //plan
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
+
             Route::get('/Product', 'ProductController@productIndex')->name('product.index');
-            Route::post('/Product-purchase', 'ProductController@productPurchase')->name('product.purchase');
+            
             // Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::get('/referral-log', 'UserController@referralCom')->name('referral.log');
 
@@ -461,6 +462,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::middleware(['checkKyc'])->group(function () {
                 Route::get('gold_invest', 'UserController@goldInvest')->name('gold.invest');
+                Route::post('/Product-purchase', 'ProductController@productPurchase')->name('product.purchase');
 
                 Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
                 Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');
