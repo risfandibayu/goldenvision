@@ -49,7 +49,7 @@ class PlanController extends Controller
             $user->plan_id = $plan->id;
             $user->balance -= ($plan->price * $request->qty);
             $user->total_invest += ($plan->price * $request->qty);
-            $user->bro_qty = $request->qty;
+            $user->bro_qty = $request->qty - 1;
             $user->save();
 
 
