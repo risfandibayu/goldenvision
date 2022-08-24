@@ -155,9 +155,10 @@
       <div class="row justify-content-between">
         <div class="col-lg-8 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
           <div data-aos="zoom-out">
-            <h1 style="color: black">MICROGOLD</h1>
+            <h1 style="color: black">INDONESIA EMAS <span style="color: black">2045</span></h1>
             {{-- <h1>Semua orang bisa punya <span>Emas</span></h1> --}}
-            <h2 style="color: black">Simpan dan tabung emas ada ketika sudah terakumulasi sejumlah 5 gram anda bisa tukarkan dengan emas Logam mulia bersertifikat ANTAM.</h2>
+            <h2 style="color: black">Semua orang bisa punya emas <br>
+              SIMPAN EMAS | JUAL EMAS | NETWORK EMAS | BISNIS EMAS</h2>
             {{-- <h2>Microgold menyediakan emas bersertifikat dengan ukuran 0.01 gram, 0,02 gram, 0,05 gram dan 0,1
               gram.</h2> --}}
             <div class="text-center text-lg-start row col-12 col-md-6">
@@ -176,9 +177,11 @@
           {{-- <img src="{{asset('assets/new')}}/img/brosure-01-cutout.png" class="img-fluid animated" alt=""> --}}
         </div>
       </div>
-      <div data-aos="zoom-out">
-
-        <p style="color: black;" id="tagline">Tabung dan tukarkan dengan emas Antam 3 gram, 5 gram, 10 gram.</p>
+      <div data-aos="zoom-out" class="row">
+        <div class="col-md-6 col-12">
+          <p style="color: black;" id="tagline">Simpan dan tabung emas anda, ketika sudah terakumulasi sejumlah 5 gram, anda bisa tukarkan dengan emas Logam mulia bersertifikat ANTAM.</p>
+          <p style="color: black;" id="tagline">Microgold adalah produk dari PT SAKA BHUMI AURUM</p>
+        </div>
       </div>
     </div>
 
