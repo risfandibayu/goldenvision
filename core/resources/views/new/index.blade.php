@@ -112,10 +112,9 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          {{-- <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#produk">Produk</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#features">Pricing</a></li>
-          <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li> --}}
           {{-- <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -156,10 +155,9 @@
       <div class="row justify-content-between">
         <div class="col-lg-8 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
           <div data-aos="zoom-out">
-            <h1>INDONESIA EMAS <span>2045</span></h1>
+            <h1 style="color: black">MICROGOLD</h1>
             {{-- <h1>Semua orang bisa punya <span>Emas</span></h1> --}}
-            <h2>Semua orang bisa punya emas <br>
-              SIMPAN EMAS | JUAL EMAS | NETWORK EMAS | BISNIS EMAS</h2>
+            <h2 style="color: black">Simpan dan tabung emas ada ketika sudah terakumulasi sejumlah 5 gram anda bisa tukarkan dengan emas Logam mulia bersertifikat ANTAM.</h2>
             {{-- <h2>Microgold menyediakan emas bersertifikat dengan ukuran 0.01 gram, 0,02 gram, 0,05 gram dan 0,1
               gram.</h2> --}}
             <div class="text-center text-lg-start row col-12 col-md-6">
@@ -235,8 +233,64 @@
     </div>
   </section><!-- End Team Section -->
 
+  <section id="about" class="about">
+    <div class="container">
+
+      <div class="">
+
+
+        <div class="row icon-boxes align-items-stretch justify-content-center pb-5" data-aos="fade-left">
+          <h3>Pentingnya Investasi Emas Untuk Masa Depan</h3>
+          <p>Emas merupakan logam mulai dengan karakteristik yang stabil, tidak berubah zat, tidak beroksidasi di udara normal, dan mengandung unsur murni. Emas biasanya digunakan sebagai koleksi atau investasi.</p>
+
+          <div class="col-xl-6">
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="100">
+              <div class="icon"><i class="bx bx-lock"></i></div>
+              <h4 class="title"><a href="">Aman</a></h4>
+              <p class="description">Emas dinilai sangat aman untuk dijadikan sebagai instrumen investasi. Jika kita memiliki uang dan hanya disimpan ditabungan, maka uang tersebut bisa perlahan menghilang. Hal tersebut dikarenakan adanya biaya administrasi, pajak, suku bunga, dan biaya lain-lain.</p>
+            </div>
+  
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
+              <div class="icon"><i class="bx bx-shield"></i></div>
+              <h4 class="title"><a href="">Terlindungi</a></h4>
+              <p class="description">Inflasi dan deflasi merupakan masalah klasik yang sudah ada sejak dahulu kala. Dua kondisi ini bisa membuat nilai aset menurun. Maka dari itu, salah satu cara untuk mencegah hal tersebut yaitu dengan berinvestasi pada instrumen investasi, salah satunya emas.</p>
+            </div>
+  
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
+              <div class="icon"><i class='bx bx-donate-blood'></i></div>
+              <h4 class="title"><a href="">Mudah Dicairkan</a></h4>
+              <p class="description">Likuiditas yang tinggi menjadi salah satu alasan banyak orang berminat investasi emas. Instrumen investasi lainnya bisanya memerlukan waktu lebih dari satu hari saat hendak dicairkan.</p>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="100">
+            <div class="icon"><i class='bx bx-line-chart' ></i></div>
+            <h4 class="title"><a href="">Menguntungkan</a></h4>
+            <p class="description">Harga emas yang stabil bahkan cenderung meningkat, membuat banyak orang lebih memilih investasi emas dibandingkan instrumen investasi lain. Emas juga diketahui sangat cocok untuk disimpan dalam jangka menengah atau panjang.</p>
+          </div>
+
+          <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
+            <div class="icon"><i class='bx bx-street-view'></i></div>
+            <h4 class="title"><a href="">Resiko Rendah</a></h4>
+            <p class="description">Alasan investasi emas lainnya yaitu karena risikonya rendah. Emas diketahui tidak memiliki nilai penyusutan. Nilai emas untuk jangka pendek memang berfluktuasi, namun untuk jangka panjang nilainya cenderung meningkat.</p>
+          </div>
+
+          <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
+            <div class="icon"><i class='bx bx-bar-chart-alt-2' ></i></div>
+            <h4 class="title"><a href="">Harga Stabil</a></h4>
+            <p class="description">Manfaat emas dalam bidang investasi lainnya yaitu memiliki harga yang stabil. Emas memiliki risiko lebih rendah, keamanan ketat, dan keuntungan yang lebih besar dibandingkan instrumen investasi lainnya. Harganya yang stabil membuat emas menjadi instrumen investasi yang menguntungkan.</p>
+          </div>
+        </div>
+         
+          
+
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End About Section -->
   <!-- ======= Footer ======= -->
-  <footer id="footer" style="background-color: #3d312a">
+  <footer id="footer" style="background-color: #212A51">
 
     <div class="container">
       <div class="copyright" style="    border-top: white;">
@@ -283,15 +337,15 @@
      loop:true,
      responsive: {
         0:{
-            items:2,
-            nav:true
-        },
-        600:{
             items:3,
             nav:true
         },
-        1000:{
+        600:{
             items:4,
+            nav:true
+        },
+        1000:{
+            items:5,
             nav:true,
         }
      }

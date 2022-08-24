@@ -118,13 +118,13 @@ h1, h2, h3, h4, h5, h6,p {
   transition: all 0.5s;
   z-index: 997;
   transition: all 0.5s;
-  background: #3d312ae0;
+  background: #212A51;
 }
 #header.header-transparent {
   background: transparent;
 }
 #header.header-scrolled {
-  background: #3d312ae0;
+  background: #212A51;
   height: 60px;
 }
 #header .logo h1 {
@@ -301,7 +301,7 @@ h1, h2, h3, h4, h5, h6,p {
   left: 15px;
   padding: 10px 0;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #212a51;
   overflow-y: auto;
   transition: 0.3s;
 }
@@ -311,10 +311,10 @@ h1, h2, h3, h4, h5, h6,p {
 .navbar-mobile a, .navbar-mobile a:focus {
   padding: 10px 20px;
   font-size: 15px;
-  color: #0205a1;
+  color: #ffffff;
 }
 .navbar-mobile a:hover, .navbar-mobile .active, .navbar-mobile li:hover > a {
-  color: #3f43fd;
+  color: #C29A62;
 }
 .navbar-mobile .getstarted, .navbar-mobile .getstarted:focus {
   margin: 15px;
@@ -357,7 +357,7 @@ h1, h2, h3, h4, h5, h6,p {
 }
 #hero:before {
   content: "";
-  background: #96795f;
+  background: #c29a62f0;
   position: absolute;
   bottom: 0;
   top: 0;
@@ -390,7 +390,7 @@ h1, h2, h3, h4, h5, h6,p {
   border-radius: 50px;
   transition: 0.5s;
   color: #fff;
-  background: #3d312a;
+  background: black;
 }
 #hero .btn-get-started:hover {
   background: #b56d48;
@@ -649,7 +649,7 @@ section {
   justify-content: center;
   width: 64px;
   height: 64px;
-  border: 2px solid #7ceec6;
+  border: 2px solid #C29A62;
   border-radius: 50px;
   transition: 0.5s;
 }

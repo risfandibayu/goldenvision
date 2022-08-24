@@ -163,7 +163,7 @@ class PlanController extends Controller
             // referralCommission($user->id, $details);
 
             $notify[] = ['success', 'Purchased ' . $plan->name . ' Successfully'];
-            return redirect()->route('user.home')->withNotify($notify);
+            return redirect()->route('user.user_boom')->withNotify($notify);
 
     }
 
