@@ -715,7 +715,7 @@ class UserController extends Controller
     }
 
     public function user_boom(){
-        $page_title = 'Multiple User';
+        $page_title = 'Manage User';
         $tree = showTreePage(Auth::id());
         $ref = user::where('id', auth::user()->id)
         ->select('users.*',db::raw("SUBSTRING(email, 1, LOCATE('@', email) - 1) AS usr"),db::raw("SUBSTRING(email, LOCATE('@', email) + 1) AS domain"))

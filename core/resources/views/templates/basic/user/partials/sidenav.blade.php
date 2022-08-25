@@ -56,7 +56,7 @@
                 <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
                     <a href="{{route('user.user_boom')}}" class="nav-link ">
                         <i class="menu-icon las la-users-cog"></i>
-                        <span class="menu-title">@lang('Multiple user')</span>
+                        <span class="menu-title">@lang('Manage user')</span>
                     </a>
                 </li>
 
@@ -188,12 +188,12 @@
                         <span class="menu-title">@lang('Profile')</span>
                     </a>
                 </li>
-                <li class="sidebar-menu-item {{ menuActive('user.login.history') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.login.history') }}">
                     <a href="{{ route('user.login.history') }}" class="nav-link">
                         <i class="menu-icon las la-user"></i>
                         <span class="menu-title">@lang('Login History')</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="sidebar-menu-item">
                     <a href="{{ route('user.logout') }}" class="nav-link">
                         <i class="menu-icon las la-sign-out-alt"></i>

@@ -477,7 +477,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
 
                 Route::middleware(['checkPaid'])->group(function () {
-                Route::get('/multiple_user', 'UserController@user_boom')->name('user_boom');
+                Route::get('/manage_user', 'UserController@user_boom')->name('user_boom');
                 Route::get('/tree', 'PlanController@myTree')->name('my.tree');
                 });
             });
