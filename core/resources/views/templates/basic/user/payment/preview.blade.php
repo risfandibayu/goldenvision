@@ -5,11 +5,11 @@
         <div class="row  justify-content-center">
             <div class="col-md-12 col-lg-12 col-xl-10 col-xxl-7">
                 <div class="card card-deposit text-center">
-                    <div class="card-body card-body-deposit card-body p-0 p-sm-4">
-                        <div class="deposit-preview">
-                            <div class="deposit-thumb">
+                    <div class="card-body card-body-deposit card-body">
+                        <div class="">
+                            {{-- <div class="deposit-thumb">
                                 <img class="" src="{{ $data->gateway_currency()->methodImage() }}" />
-                            </div>
+                            </div> --}}
                             <div class="deposit-content">
                                 <ul class="mb-3">
                                     <li>
