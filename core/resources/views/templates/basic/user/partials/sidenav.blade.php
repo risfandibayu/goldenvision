@@ -56,7 +56,7 @@
                 <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
                     <a href="{{route('user.user_boom')}}" class="nav-link ">
                         <i class="menu-icon las la-users-cog"></i>
-                        <span class="menu-title">@lang('Manage user')</span>
+                        <span class="menu-title">@lang('MANAGE USER')</span>
                     </a>
                 </li>
 
@@ -82,7 +82,7 @@
                     <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
                         <a href="{{ route('user.gold.invest') }}" class="nav-link">
                             <i class="menu-icon las la-coins"></i>
-                            <span class="menu-title">@lang('Gold Invest')</span>
+                            <span class="menu-title">@lang('Gold Investment')</span>
                         </a>
                     </li>
                 {{-- @endif --}}
@@ -175,6 +175,12 @@
                     </a>
                 </li> --}}
 
+                {{-- <li class="sidebar-menu-item {{ menuActive('ticket*') }}">
+                    <a href="{{ route('ticket') }}" class="nav-link">
+                        <i class="menu-icon las la-ticket-alt"></i>
+                        <span class="menu-title">@lang('Support')</span>
+                    </a>
+                </li> --}}
                 <li class="sidebar-menu-item {{ menuActive('ticket*') }}">
                     <a href="{{ route('ticket') }}" class="nav-link">
                         <i class="menu-icon las la-ticket-alt"></i>
