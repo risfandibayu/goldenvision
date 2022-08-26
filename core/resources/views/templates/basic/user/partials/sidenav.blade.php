@@ -176,7 +176,7 @@
                 </li> --}}
 
                 {{-- <li class="sidebar-menu-item {{ menuActive('ticket*') }}">
-                    <a href="https://wa.me/112312313?text=I'm%20interested%20in%20your%20car%20for%20sale" target="_blank" class="nav-link">
+                    <a href="https://wa.me/087123123123?text=Hello%20MicroGold" target="_blank" class="nav-link">
                         <i class="menu-icon las la-ticket-alt"></i>
                         <span class="menu-title">@lang('Support')</span>
                     </a>

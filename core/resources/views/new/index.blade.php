@@ -340,11 +340,11 @@
      loop:true,
      responsive: {
         0:{
-            items:3,
+            items:2,
             nav:true
         },
         600:{
-            items:4,
+            items:3,
             nav:true
         },
         1000:{
