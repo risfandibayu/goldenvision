@@ -22,7 +22,7 @@ $policyElements =  getContent('policy_pages.element');
                 <form class="account--form row gy-3" method="post" action="{{route('user.register')}}" onsubmit="return submitUserForm();">
                     @csrf
 
-            {{-- @if($ref_user == null)
+            @if($ref_user == null)
                 <div class="col-sm-6">
                     <label for="ref_name" class="form--label-2">@lang('Referral Username')</label>
                     <input type="text" name="referral" class="referral form-control form--control-2" value="{{old('referral')}}" id="ref_name" placeholder="@lang('Enter Referral Username')*" required>
@@ -60,7 +60,7 @@ $policyElements =  getContent('policy_pages.element');
                 <input type="hidden" name="position" value="{{$position}}">
                 <span id="position-test"><span class="text-success">@php echo $joining; @endphp</span></span>
             </div>
-            @endif --}}
+            @endif
 
             <div class="col-sm-6">
                 <label for="firstname" class="form--label-2">@lang('First Name')</label>

@@ -414,9 +414,9 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('login/history', 'UserController@userLoginHistory')->name('login.history');
 
             //plan
-            // Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
+            Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
 
-            // Route::get('/Product', 'ProductController@productIndex')->name('product.index');
+            Route::get('/Product', 'ProductController@productIndex')->name('product.index');
             
             // Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::get('/referral-log', 'UserController@referralCom')->name('referral.log');
@@ -498,6 +498,7 @@ Route::name('user.')->prefix('user')->group(function () {
 });
 
 Route::post('/check/referral', 'SiteController@CheckUsername')->name('check.referral');
+Route::post('/check/referralbro', 'SiteController@CheckBro')->name('check.referralbro');
 Route::post('/get/user/position', 'SiteController@userPosition')->name('get.user.position');
 
 Route::post('subscriber', 'SiteController@subscriberStore')->name('subscriber.store');

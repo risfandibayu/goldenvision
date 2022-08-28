@@ -69,6 +69,26 @@
                             <label for="">total</label>
                             <input class="form-control" type="number" name="total" value="{{getAmount($data->price)}}" placeholder="total" disabled>
                         </div>
+                        <div class="col-6">
+                            <label for="ref_name" class="form--label-2">@lang('Referral BRO Number')</label>
+                            <input type="text" name="referral" class="referral form-control form--control-2" value="{{old('referral')}}" id="ref_name" placeholder="@lang('Enter Referral BRO Number')*" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
+                            <select name="position" class="position form-control form--control-2" id="position" required disabled>
+                                <option value="">@lang('Select position')*</option>
+                                @foreach(mlmPositions() as $k=> $v)
+                                    <option value="{{$k}}">@lang($v)</option>
+                                @endforeach
+                            </select>
+                            <span id="position-test">
+                                <span class="text-danger">
+                                    @if(!old('position'))
+                                        @lang('Please enter referral BRO Number first')
+                                    @endif
+                                </span>
+                            </span>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--danger" data-dismiss="modal"><i class="fa fa-times"></i>
@@ -158,4 +178,113 @@
     });
 </script>
     
+<script>
+    (function($) {
+        "use strict";
+
+        var oldPosition = '{{ old("position") }}';
+
+        if(oldPosition){
+            $('select[name=position]').removeAttr('disabled');
+            $('#position').val(oldPosition);
+        }
+
+        var not_select_msg = $('#position-test').html();
+
+        $(document).on('blur', '#ref_name', function() {
+            var ref_id = $('#ref_name').val();
+            var token = "{{csrf_token()}}";
+            $.ajax({
+                type: "POST",
+                url: "{{route('check.referralbro')}}",
+                data: {
+                    'ref_id': ref_id,
+                    '_token': token
+                },
+                success: function(data) {
+                    if (data.success) {
+                        $('select[name=position]').removeAttr('disabled');
+                        $('#position-test').text('');
+                    } else {
+                        $('select[name=position]').attr('disabled', true);
+                        $('#position-test').html(not_select_msg);
+                    }
+                    $("#ref").html(data.msg);
+                }
+            });
+        });
+
+        $(document).on('change', '#position', function() {
+            updateHand();
+        });
+
+        function updateHand() {
+            var pos = $('#position').val();
+            var referrer_id = $('#referrer_id').val();
+            var token = "{{csrf_token()}}";
+            $.ajax({
+                type: "POST",
+                url: "{{route('get.user.position')}}",
+                data: {
+                    'referrer': referrer_id,
+                    'position': pos,
+                    '_token': token
+                },
+                error: function(data) {
+                    $("#position-test").html(data.msg);
+                }
+            });
+        }
+
+        @if(@$country_code)
+        $(`option[data-code={{ $country_code }}]`).attr('selected', '');
+        @endif
+        $('select[name=country_code]').change(function() {
+            $('input[name=country]').val($('select[name=country_code] :selected').data('country'));
+        }).change();
+
+        function submitUserForm() {
+            var response = grecaptcha.getResponse();
+            if (response.length == 0) {
+                document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">@lang("Captcha field is required.")</span>';
+                return false;
+            }
+            return true;
+        }
+
+        function verifyCaptcha() {
+            document.getElementById('g-recaptcha-error').innerHTML = '';
+        }
+
+        @if($general -> secure_password)
+        $('input[name=password]').on('input', function() {
+            var password = $(this).val();
+            var capital = /[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/;
+            var capital = capital.test(password);
+            if (!capital) {
+                $('.capital').removeClass('text--success');
+            } else {
+                $('.capital').addClass('text--success');
+            }
+            var number = /[123456790]/;
+            var number = number.test(password);
+            if (!number) {
+                $('.number').removeClass('text--success');
+            } else {
+                $('.number').addClass('text--success');
+            }
+            var special = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+            var special = special.test(password);
+            if (!special) {
+                $('.special').removeClass('text--success');
+            } else {
+                $('.special').addClass('text--success');
+            }
+
+        });
+        @endif
+
+
+    })(jQuery);
+</script>
 @endpush

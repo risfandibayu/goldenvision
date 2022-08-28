@@ -36,9 +36,12 @@ class PlanController extends Controller
         $gnl = GeneralSetting::first();
 
         $user = User::find(Auth::id());
-        $
+        $ref_user = User::where('no_bro', $request->referral)->first();
+        if ($ref_user == null) {
+            $notify[] = ['error', 'Invalid BRO Number.'];
+            return back()->withNotify($notify);
+        }
 
-        
 
         if ($user->balance < ($plan->price * $request->qty)) {
             $notify[] = ['error', 'Insufficient Balance'];
@@ -47,6 +50,8 @@ class PlanController extends Controller
 
             $oldPlan = $user->plan_id;
             
+            $user->pos_id= $ref_user->id;
+            $user->position= $request->position;
             $user->plan_id = $plan->id;
             $user->balance -= ($plan->price * $request->qty);
             $user->total_invest += ($plan->price * $request->qty);

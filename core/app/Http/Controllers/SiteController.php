@@ -33,6 +33,17 @@ class SiteController extends Controller
 
         }
     }
+    public function CheckBro(Request $request)
+    {
+        $id = User::where('no_bro', $request->ref_id)->first();
+        if ($id == '') {
+            return response()->json(['success' => false, 'msg' => "<span class='help-block'><strong class='text-danger'>Referrer username not found</strong></span>"]);
+        } else {
+            return response()->json(['success' => true, 'msg' => "<span class='help-block'><strong class='text-success'>Referrer username matched</strong></span>
+                     <input type='hidden' id='referrer_id' value='$id->id' name='referrer_id'>"]);
+
+        }
+    }
 
 
     public function userPosition(Request $request)
