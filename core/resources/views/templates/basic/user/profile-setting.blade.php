@@ -123,7 +123,7 @@
                         <li class="list-group-item d-flex justify-content-between">
                             <span>@lang('BRO')</span>
                             <div class="custom-btn btn-11 text-center"><span style="font-weight: 700">
-                                    {{auth()->user()->bro_qty}} BRO </span></div>
+                                    {{auth()->user()->bro_qty + 1}} BRO </span></div>
                         </li>
                         @endif
                         <li class="list-group-item d-flex justify-content-between">
