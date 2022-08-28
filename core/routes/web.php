@@ -416,7 +416,7 @@ Route::name('user.')->prefix('user')->group(function () {
             //plan
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
 
-            Route::get('/Product', 'ProductController@productIndex')->name('product.index');
+            // Route::get('/Product', 'ProductController@productIndex')->name('product.index');
             
             // Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::get('/referral-log', 'UserController@referralCom')->name('referral.log');
