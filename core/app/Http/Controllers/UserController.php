@@ -1078,6 +1078,7 @@ class UserController extends Controller
         $user->mobile       = $us->country_code . $us->mobile;
         $user->address      = $us->address;
         $user->status = 1;
+        $user->is_kyc = 2;
         $user->ev = $gnl->ev ? 0 : 1;
         $user->sv = $gnl->sv ? 0 : 1;
         $user->ts = 0;
