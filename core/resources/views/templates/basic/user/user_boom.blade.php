@@ -105,10 +105,10 @@
                               <option value="" hidden>-- Select Parent Username --</option>
                               @foreach($ref_user as $refus)
                                     @if($refus->pos == "Leader")
-                                    <option value="{{$refus->id}}" data-value="{{$refus->id}}" style="font-weight: 700">{{$refus->username}}
+                                    <option value="{{$refus->id}}" data-value="{{$refus->id}}" style="font-weight: 700">{{$refus->username}}.{{$refus->id}}
                                                
                                     @else
-                                    <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
+                                    <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}.{{$refus->id}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
                                                 @if($refus->pos == "Leader")
@@ -311,7 +311,7 @@
                 // $("body").append(JSON.stringify(data));
                 // console.log(data.response);
                 $(".ref_username option[value='" + id + "']").attr("selected","selected");
-                // $('.form')[0].reset();
+                $('.form')[0].reset();
                 if (data.response == 0) {
                     var options =  '<option value="" hidden>-- Select Position --</option><option value="1">Left</option><option value="2">Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);

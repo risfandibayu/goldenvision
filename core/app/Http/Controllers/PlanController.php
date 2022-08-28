@@ -42,6 +42,11 @@ class PlanController extends Controller
             return back()->withNotify($notify);
         }
 
+        if($ref_user->no_bro == $user->no_bro){
+            $notify[] = ['error', 'Invalid Input BRO Number. You can`t input your own BRO number'];
+            return back()->withNotify($notify);
+        }
+
 
         if ($user->balance < ($plan->price * $request->qty)) {
             $notify[] = ['error', 'Insufficient Balance'];

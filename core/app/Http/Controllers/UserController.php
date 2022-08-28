@@ -730,7 +730,7 @@ class UserController extends Controller
         // $dd3 = array();
         // $dd4 = array();
         // $dd5 = array();
-        $level = user::where('ref_id',Auth::user()->id)->select('id')->get(); 
+        $level = user::where('pos_id',Auth::user()->id)->select('id')->get(); 
         if($level){
             foreach ($level as $key => $value) {
                 $dd[] = $value->id;
@@ -740,7 +740,7 @@ class UserController extends Controller
         // foreach ($level as $get_bv->bv => $value) {
         for ($i=0; $i < $get_bv->bv; $i++) { 
             # code...
-            $level[$i] = user::whereIn('ref_id',$dd)->select('id')->get(); 
+            $level[$i] = user::whereIn('pos_id',$dd)->select('id')->get(); 
             if($level[$i]){
                 foreach ($level[$i] as $key => $value) {
                     $dd[] = $value->id;
@@ -777,14 +777,14 @@ class UserController extends Controller
         //         $dd5[] = $value->id;
         //     }
         // }
-        $ref_user = user::whereIn('users.ref_id', $dd) //level2
+        $ref_user = user::whereIn('users.pos_id', $dd) //level2
         // ->orwhereIn('users.ref_id', $dd5) //level6
         // ->orwhereIn('users.ref_id', $dd4) //level5
         // ->orwhereIn('users.ref_id', $dd3) //level4
         // ->orwhereIn('users.ref_id', $dd2) //level3
         ->orwhere('users.id', auth::user()->id)//leader
         ->orwhere('users.ref_id', auth::user()->id)//level1
-        ->orderby('users.pos_id',"ASC")
+        ->orderby('users.pos_id',"DESC")
         ->select('users.*',db::raw("if(users.id=".auth::user()->id.",'Leader',concat('Level ',users.pos_id-1)) as pos"),'us.username as usa')
         ->leftjoin('users as us','us.id','=','users.pos_id')
         ->get();
