@@ -36,6 +36,7 @@ class PlanController extends Controller
         $gnl = GeneralSetting::first();
 
         $user = User::find(Auth::id());
+        $
 
         
 
