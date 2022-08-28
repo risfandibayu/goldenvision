@@ -1079,7 +1079,7 @@ class UserController extends Controller
         $user->address      = $us->address;
         $user->status = 1;
         $user->is_kyc = 2;
-        $user->ev = $gnl->ev ? 0 : 1;
+        $user->ev = 1;
         $user->sv = $gnl->sv ? 0 : 1;
         $user->ts = 0;
         $user->tv = 1;
@@ -1088,7 +1088,7 @@ class UserController extends Controller
         $user_extras = new UserExtra();
         $user_extras->user_id = $user->id;
         $user_extras->save();
-        updatePaidCount($user->id);
+        updatePaidCount2($user->id);
             
         // updateFreeCount($user->id);
         // dd($user);

@@ -966,6 +966,33 @@ function updatePaidCount($id)
     }
 
 }
+function updatePaidCount2($id)
+{
+    while ($id != "" || $id != "0") {
+        if (isUserExists($id)) {
+            $posid = getPositionId($id);
+            if ($posid == "0") {
+                break;
+            }
+            $position = getPositionLocation($id);
+
+            $extra = UserExtra::where('user_id', $posid)->first();
+
+            if ($position == 1) {
+                // $extra->free_left -= 1;
+                $extra->paid_left += 1;
+            } else {
+                // $extra->free_right -= 1;
+                $extra->paid_right += 1;
+            }
+            $extra->save();
+            $id = $posid;
+        } else {
+            break;
+        }
+    }
+
+}
 
 
 function updateBV($id, $bv, $details)
