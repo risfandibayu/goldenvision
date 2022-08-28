@@ -45,6 +45,27 @@ class ManageUsersController extends Controller
         $users = User::banned()->latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
+    public function rejectDataUsers()
+    {
+        $page_title = 'Rejected Data Users';
+        $empty_message = 'No rejected user found';
+        $users = User::where('is_kyc','3')->paginate(getPaginate());
+        return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
+    }
+    public function verifiedDataUsers()
+    {
+        $page_title = 'Verified Data Users';
+        $empty_message = 'No Verified user found';
+        $users = User::where('is_kyc','2')->paginate(getPaginate());
+        return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
+    }
+    public function verificationDataUsers()
+    {
+        $page_title = 'Waiting For Verification Data Users';
+        $empty_message = 'No Data user found';
+        $users = User::where('is_kyc','1')->paginate(getPaginate());
+        return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
+    }
 
     public function emailUnverifiedUsers()
     {

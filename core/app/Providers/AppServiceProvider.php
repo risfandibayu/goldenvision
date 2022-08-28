@@ -51,6 +51,9 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('admin.partials.sidenav', function ($view) {
             $view->with([
+                'reject_users_count'           => User::where('is_kyc',3)->count(),
+                'verified_users_count'           => User::where('is_kyc',2)->count(),
+                'need_action_users_count'           => User::where('is_kyc',1)->count(),
                 'banned_users_count'           => User::banned()->count(),
                 'email_unverified_users_count' => User::emailUnverified()->count(),
                 'sms_unverified_users_count'   => User::smsUnverified()->count(),

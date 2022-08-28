@@ -127,10 +127,38 @@
                             </li>
 
 
-                            <li class="sidebar-menu-item {{menuActive('admin.users.email.all')}}">
+                            {{-- <li class="sidebar-menu-item {{menuActive('admin.users.email.all')}}">
                                 <a href="{{route('admin.users.email.all')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Send Email')</span>
+                                </a>
+                            </li> --}}
+
+                            <li class="sidebar-menu-item {{menuActive('admin.users.dataverification')}} ">
+                                <a href="{{route('admin.users.dataverification')}}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Data Users')</span>
+                                    @if($need_action_users_count)
+                                        <span class="menu-badge pill bg--primary ml-auto">{{$need_action_users_count}}</span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item {{menuActive('admin.users.dataverified')}} ">
+                                <a href="{{route('admin.users.dataverified')}}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Verified Data Users')</span>
+                                    {{-- @if($reject_users_count)
+                                        <span class="menu-badge pill bg--primary ml-auto">{{$reject_users_count}}</span>
+                                    @endif --}}
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item {{menuActive('admin.users.datareject')}} ">
+                                <a href="{{route('admin.users.datareject')}}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Rejected Data Users')</span>
+                                    {{-- @if($reject_users_count)
+                                        <span class="menu-badge pill bg--primary ml-auto">{{$reject_users_count}}</span>
+                                    @endif --}}
                                 </a>
                             </li>
 
