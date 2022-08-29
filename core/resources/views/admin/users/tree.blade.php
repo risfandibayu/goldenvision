@@ -126,7 +126,9 @@
                                     <td><span class="lpaid"></span></td>
                                     <td><span class="rpaid"></span></td>
                                 </tr>
+                                
                             </table>
+                            <a href="" target="_blank" class="mt-4 btn btn--secondary btn-block btn-sm tree_login_url">Login as User</a>
 
                         </div>
                     </div>
@@ -143,6 +145,7 @@
                 var modal = $('#exampleModalCenter');
                 $('.tree_name').text($(this).data('name'));
                 $('.tree_url').attr({"href": $(this).data('treeurl')});
+                $('.tree_login_url').attr({"href": $(this).data('treeloginurl')});
                 $('.tree_status').text($(this).data('status'));
                 $('.tree_bro').text('BRO Number : '+$(this).data('bro'));
                 $('.tree_plan').text($(this).data('plan'));

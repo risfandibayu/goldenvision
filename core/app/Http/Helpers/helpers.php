@@ -1205,13 +1205,15 @@ function showSingleUserinTree($user)
         $img = getImage('assets/images/user/profile/'. $user->image, null, true);
 
         $refby = getUserById($user->ref_id)->fullname ?? '';
+        $extraData = " data-name=\"$user->fullname\"";
         if (auth()->guard('admin')->user()) {
             $hisTree = route('admin.users.other.tree', $user->username);
+            $loginTree = route('admin.users.login',$user->id);
+            $extraData .= " data-treeloginurl=\"$loginTree\"";
         } else {
             $hisTree = route('user.other.tree', $user->username);
         }
 
-        $extraData = " data-name=\"$user->fullname\"";
         $extraData .= " data-treeurl=\"$hisTree\"";
         $extraData .= " data-status=\"$stShow\"";
         $extraData .= " data-plan=\"$planName\"";
