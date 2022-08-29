@@ -1215,6 +1215,7 @@ function showSingleUserinTree($user)
         $extraData .= " data-treeurl=\"$hisTree\"";
         $extraData .= " data-status=\"$stShow\"";
         $extraData .= " data-plan=\"$planName\"";
+        $extraData .= " data-bro=\"$user->no_bro\"";
         $extraData .= " data-image=\"$img\"";
         $extraData .= " data-refby=\"$refby\"";
         $extraData .= " data-lpaid=\"" . @$user->userExtra->paid_left . "\"";
