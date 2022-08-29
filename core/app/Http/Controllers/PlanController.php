@@ -55,8 +55,9 @@ class PlanController extends Controller
 
             $oldPlan = $user->plan_id;
             
-            $user->ref_id= $ref_user->id;
-            $user->pos_id= $ref_user->id;
+            $pos = getPosition($ref_user->id, $request->position);
+            // $user->ref_id= $ref_user->id;
+            $user->pos_id= $pos['pos_id'];
             $user->position= $request->position;
             $user->plan_id = $plan->id;
             $user->balance -= ($plan->price * $request->qty);
