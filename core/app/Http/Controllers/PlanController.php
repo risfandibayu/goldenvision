@@ -56,7 +56,7 @@ class PlanController extends Controller
             $oldPlan = $user->plan_id;
             
             $pos = getPosition($ref_user->id, $request->position);
-            // $user->ref_id= $ref_user->id;
+            $user->ref_id= $ref_user->id;
             $user->pos_id= $pos['pos_id'];
             $user->position= $request->position;
             $user->plan_id = $plan->id;
