@@ -129,6 +129,7 @@
                                 
                             </table>
                             <a href="" target="_blank" class="mt-4 btn btn--secondary btn-block btn-sm tree_login_url">Login as User</a>
+                            <a href="" target="_blank" class="mt-4 btn btn--info btn-block btn-sm tree_detail_url">Detail User</a>
 
                         </div>
                     </div>
@@ -146,6 +147,7 @@
                 $('.tree_name').text($(this).data('name'));
                 $('.tree_url').attr({"href": $(this).data('treeurl')});
                 $('.tree_login_url').attr({"href": $(this).data('treeloginurl')});
+                $('.tree_detail_url').attr({"href": $(this).data('treedetailurl')});
                 $('.tree_status').text($(this).data('status'));
                 $('.tree_bro').text('BRO Number : '+$(this).data('bro'));
                 $('.tree_plan').text($(this).data('plan'));

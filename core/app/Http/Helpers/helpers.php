@@ -1209,7 +1209,9 @@ function showSingleUserinTree($user)
         if (auth()->guard('admin')->user()) {
             $hisTree = route('admin.users.other.tree', $user->username);
             $loginTree = route('admin.users.login',$user->id);
+            $detailTree = route('admin.users.detail',$user->id);
             $extraData .= " data-treeloginurl=\"$loginTree\"";
+            $extraData .= " data-treedetailurl=\"$detailTree\"";
         } else {
             $hisTree = route('user.other.tree', $user->username);
         }
