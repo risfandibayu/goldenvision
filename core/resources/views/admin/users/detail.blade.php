@@ -236,7 +236,7 @@
                     </div>
                     <div class="details">
                         <div class="numbers">
-                            <span class="amount">{{$user->bro_qty}}</span>
+                            <span class="amount">{{$user->bro_qty + 1}}</span>
                             <span class="currency-sign">BRO</span>
                         </div>
                         <div class="desciption">
