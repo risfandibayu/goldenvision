@@ -176,7 +176,7 @@
                         </div>
                         <div class="user-details-body text-center">
 
-                            <h6 class="my-3">@lang('Referred By'): <span class="tree_ref"></span></h6>
+                            {{-- <h6 class="my-3">@lang('Referred By'): <span class="tree_ref"></span></h6> --}}
 
 
                             <table class="table table-bordered">
@@ -186,16 +186,16 @@
                                     <th>@lang('RIGHT')</th>
                                 </tr>
 
-                                <tr>
+                                {{-- <tr>
                                     <td>@lang('Current BV')</td>
                                     <td><span class="lbv"></span></td>
                                     <td><span class="rbv"></span></td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+                                {{-- <tr>
                                     <td>@lang('Free Member')</td>
                                     <td><span class="lfree"></span></td>
                                     <td><span class="rfree"></span></td>
-                                </tr>
+                                </tr> --}}
 
                                 <tr>
                                     <td>@lang('Paid Member')</td>
