@@ -12,11 +12,11 @@
                     </div> --}}
                     <div class="card-footer">
                         <a href="javascript:void(0)"  data-id="{{$data->id}}" data-resource="{{$data}}"
-                            data-min_amount="{{getAmount($data->min_amount)}}"
-                            data-max_amount="{{getAmount($data->max_amount)}}"
+                            data-min_amount="{{nb(getAmount($data->min_amount))}}"
+                            data-max_amount="{{nb(getAmount($data->max_amount))}}"
                             data-base_symbol="{{$data->baseSymbol()}}"
-                            data-fix_charge="{{getAmount($data->fixed_charge)}}"
-                            data-percent_charge="{{getAmount($data->percent_charge)}}" class=" btn  btn--success btn-block custom-success deposit" data-toggle="modal" data-target="#depositModal">
+                            data-fix_charge="{{nb(getAmount($data->fixed_charge))}}"
+                            data-percent_charge="{{nb(getAmount($data->percent_charge))}}" class=" btn  btn--success btn-block custom-success deposit" data-toggle="modal" data-target="#depositModal">
                             @lang('Deposit Now')</a>
                     </div>
                 </div>
