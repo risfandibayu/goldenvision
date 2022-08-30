@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label>@lang('Enter Amount'):</label>
                             <div class="input-group">
-                                <input id="amount" type="text" class="form-control form-control-lg" name="amount" required  value="{{old('amount')}}">
+                                <input id="amount" autocomplete="off" type="text" class="form-control form-control-lg" name="amount" required  value="{{old('amount')}}">
                                 <div class="input-group-append">
                                     <span class="input-group-text currency-addon addon">{{$general->cur_text}}</span>
                                 </div>
