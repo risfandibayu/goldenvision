@@ -460,12 +460,12 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item {{menuActive('admin.setting.notice')}}">
+                {{-- <li class="sidebar-menu-item {{menuActive('admin.setting.notice')}}">
                     <a href="{{route('admin.setting.notice')}}" class="nav-link">
                         <i class="menu-icon las la-exclamation-triangle"></i>
                         <span class="menu-title">@lang('Notice')</span>
                     </a>
-                </li>
+                </li> --}}
 
 
                 <li class="sidebar-menu-item sidebar-dropdown">
@@ -527,7 +527,7 @@
 
 
 
-                <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
+                {{-- <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
 
                 <li class="sidebar-menu-item {{menuActive('admin.frontend.templates')}}">
                     <a href="{{route('admin.frontend.templates')}}" class="nav-link ">
@@ -567,7 +567,7 @@
 
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             </ul>
             {{-- <div class="text-center mb-3 text-uppercase">
                 <span class="text--primary">{{systemDetails()['name']}}</span>
