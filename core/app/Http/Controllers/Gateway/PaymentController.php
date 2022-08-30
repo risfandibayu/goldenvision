@@ -37,7 +37,7 @@ class PaymentController extends Controller
         // dd($request->amount);
 
         $request->validate([
-            'amount' => 'required|numeric|gt:0',
+            'amount' => 'required',
             'method_code' => 'required',
             'currency' => 'required',
         ]);
