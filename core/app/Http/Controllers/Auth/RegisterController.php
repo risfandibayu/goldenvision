@@ -148,11 +148,11 @@ class RegisterController extends Controller
             }
         }
 
-        $exist = User::where('mobile', $request->country_code . $request->mobile)->first();
-        if ($exist) {
-            $notify[] = ['error', 'Mobile number already exist'];
-            return back()->withNotify($notify)->withInput();
-        }
+        // $exist = User::where('mobile', $request->country_code . $request->mobile)->first();
+        // if ($exist) {
+        //     $notify[] = ['error', 'Mobile number already exist'];
+        //     return back()->withNotify($notify)->withInput();
+        // }
 
         // $userCheck = User::where('username', $request->referral)->first();
 
