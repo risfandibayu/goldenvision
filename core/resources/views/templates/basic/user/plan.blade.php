@@ -70,7 +70,7 @@
                             <input class="form-control" type="number" name="total" value="{{getAmount($data->price)}}" placeholder="total" disabled>
                         </div>
                         <div class="col-6">
-                            <label for="ref_name" class="form--label-2">@lang('Referral BRO Number')</label>
+                            <label for="ref_name" class="form--label-2">@lang('Referral BRO Number (Upline)')</label>
                             <input type="text" name="referral" class="referral form-control form--control-2" value="{{old('referral')}}" id="ref_name" placeholder="@lang('Enter Referral BRO Number')*" required>
                         </div>
                         <div class="col-6">

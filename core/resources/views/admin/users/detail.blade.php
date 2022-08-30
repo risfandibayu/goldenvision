@@ -129,7 +129,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Ref By')
-                        <span class="font-weight-bold"> {{$ref_id->username ?? 'N/A'}}</span>
+                        <span class="font-weight-bold"> {{$ref_id->no_bro ?? 'N/A'}}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Balance')

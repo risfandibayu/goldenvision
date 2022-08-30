@@ -1206,6 +1206,14 @@ class UserController extends Controller
         ->where('golds.prod_id',$request->product_id)
         ->select('golds.*','products.price as price','products.weight as weight')
         ->first();
+        // dd($request->all());
+        // dd((int)$request->totals);
+        if ($request->totals < 1 || (int)$request->totals % 5 != 0) {
+            # code...
+            $notify[] = ['error', 'The total weight must be a multiple of 5, 10, 15,....'];
+            return redirect()->back()->withNotify($notify);
+        }
+
         if ($request->qty > $gold->qty) {
             # code...
             $notify[] = ['error', 'The weight you put in is more than the amount of gold you have.'];
