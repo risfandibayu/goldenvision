@@ -33,7 +33,7 @@ class PaymentController extends Controller
     {
 
         // dd($request->all());
-        $request->amount =  str_replace('.','',$request->amount);
+        $request->amount =  str_replace('.','',$request->amount) + rand(10, 99);
         // dd($request->amount);
 
         $request->validate([
