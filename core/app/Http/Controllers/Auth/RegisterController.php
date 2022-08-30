@@ -121,7 +121,7 @@ class RegisterController extends Controller
             'firstname'     => 'sometimes|required|string|max:60',
             'lastname'      => 'sometimes|required|string|max:60',
             'email'         => 'required|regex:/^[a-zA-Z0-9@.]+$/|string|email|max:160|unique:users',
-            'mobile'        => 'required|string|max:30|unique:users',
+            'mobile'        => 'required|string|max:30',
             'password'      => 'required|string|min:6|confirmed',
             'username'      => 'required|alpha_num|unique:users|min:6',
             // 'no_bro'        => 'integer|unique:users|min:8',
