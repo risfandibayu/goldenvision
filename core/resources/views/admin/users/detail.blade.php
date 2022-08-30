@@ -473,6 +473,7 @@
                     </div>
 
                     <div class="row">
+                        @if ($user->plan_id != 0)
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label class="form-control-label font-weight-bold">@lang('No BRO') <span
@@ -481,6 +482,7 @@
                                     readonly>
                             </div>
                         </div>
+                        @endif
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label class="form-control-label font-weight-bold">@lang('Email') <span
