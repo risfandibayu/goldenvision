@@ -330,6 +330,19 @@
         </div>
     </div>
     @endif
+
+    @if (Auth::user()->plan_id != 0)
+    <div class="col-lg-3 col-md-3 col-12 mb-30">
+        <div class="card card-header-actions">
+            <div class="card-header" style="font-weight: 600;">
+                BRO Number
+            </div>
+            <div class="card-body text-center bg--gradi-9 border-3">
+                <h2 style="font-weight: 700;color: black;">{{Auth::user()->no_bro}}</h2>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
 <div class="row mb-none-30">
 
