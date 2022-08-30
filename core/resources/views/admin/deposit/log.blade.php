@@ -6,7 +6,7 @@
             <div class="col-md-4 col-sm-6 mb-30">
                 <div class="widget-two box--shadow2 b-radius--5 bg--success">
                     <div class="widget-two__content">
-                        <h2 class="text-white">{{ __($general->cur_sym) }}{{ $deposits->where('status',1)->sum('amount') }}</h2>
+                        <h2 class="text-white">{{ __($general->cur_sym) }}{{ nb($deposits->where('status',1)->sum('amount')) }}</h2>
                         <p class="text-white">@lang('Successful Deposit')</p>
                     </div>
                 </div><!-- widget-two end -->
@@ -14,7 +14,7 @@
             <div class="col-md-4 col-sm-6 mb-30">
                 <div class="widget-two box--shadow2 b-radius--5 bg--6">
                     <div class="widget-two__content">
-                        <h2 class="text-white">{{ __($general->cur_sym) }}{{ $deposits->where('status',2)->sum('amount') }}</h2>
+                        <h2 class="text-white">{{ __($general->cur_sym) }}{{ nb($deposits->where('status',2)->sum('amount')) }}</h2>
                         <p class="text-white">@lang('Pending Deposit')</p>
                     </div>
                 </div><!-- widget-two end -->
@@ -22,7 +22,7 @@
             <div class="col-md-4 col-sm-6 mb-30">
                 <div class="widget-two box--shadow2 b-radius--5 bg--pink">
                     <div class="widget-two__content">
-                        <h2 class="text-white">{{ __($general->cur_sym) }}{{ $deposits->where('status',3)->sum('amount') }}</h2>
+                        <h2 class="text-white">{{ __($general->cur_sym) }}{{ nb($deposits->where('status',3)->sum('amount')) }}</h2>
                         <p class="text-white">@lang('Rejected Deposit')</p>
                     </div>
                 </div><!-- widget-two end -->
@@ -69,10 +69,10 @@
                                         @endif
                                     </td>
                                     <td data-label="@lang('Amount')"
-                                        class="font-weight-bold">{{ getAmount($deposit->amount ) }} {{ __($general->cur_text) }}</td>
+                                        class="font-weight-bold">{{ nb(getAmount($deposit->amount )) }} {{ __($general->cur_text) }}</td>
 
                                     <td data-label="@lang('Payable')" class="font-weight-bold">
-                                        {{ getAmount($deposit->final_amo) }} {{__($deposit->method_currency)}}
+                                        {{ nb(getAmount($deposit->final_amo)) }} {{__($deposit->method_currency)}}
                                     </td>
                                     <td data-label="@lang('Status')">
                                         @if($deposit->status == 2)
