@@ -199,7 +199,7 @@ class RegisterController extends Controller
         //User Create
         $user = new User();
         // $user->ref_id       = $userCheck->id;
-        $user->no_bro       = generateUniqueNoBro();
+        // $user->no_bro       = generateUniqueNoBro();
         // $user->pos_id       = $pos['pos_id'];
         // $user->position     = $pos['position'];
         $user->firstname    = isset($data['firstname']) ? $data['firstname'] : null;
