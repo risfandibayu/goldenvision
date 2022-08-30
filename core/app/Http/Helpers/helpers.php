@@ -1231,7 +1231,7 @@ function showSingleUserinTree($user)
 
         $res .= "<div class=\"user \" type=\"button\" >";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType showDetails\" $extraData>";
-        $res .= "<p class=\"user-name\">$user->username</p>";
+        $res .= "<p class=\"user-name\">$user->no_bro</p>";
         $res .= "<p class=\"user-name\" style=\"padding-top:20px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\">Explore Tree</a></p>";
 
     } else {
@@ -1304,7 +1304,7 @@ function showSingleUserinTree2($user,$id)
         $res .= "<div class=\"user showDetails select_tree\" onclick='f1(\"$user->id\")' type=\"button\" $extraData>";
         }
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType\">";
-        $res .= "<p class=\"user-name\" style=\"$fs\"> $user->username</p>";
+        $res .= "<p class=\"user-name\" style=\"$fs\"> $user->no_bro</p>";
         if(Auth::user()->pos_id == $user->id){
 
         }elseif(Auth::user()->id == $user->id){
