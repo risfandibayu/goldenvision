@@ -111,7 +111,7 @@
                                     <th>@lang('LEFT')</th>
                                     <th>@lang('RIGHT')</th>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <td>@lang('Current BV')</td>
                                     <td><span class="lbv"></span></td>
                                     <td><span class="rbv"></span></td>
@@ -120,7 +120,7 @@
                                     <td>@lang('Free Member')</td>
                                     <td><span class="lfree"></span></td>
                                     <td><span class="rfree"></span></td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <td>@lang('Paid Member')</td>
                                     <td><span class="lpaid"></span></td>
