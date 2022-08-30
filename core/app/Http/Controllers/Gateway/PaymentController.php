@@ -32,6 +32,10 @@ class PaymentController extends Controller
     public function depositInsert(Request $request)
     {
 
+        // dd($request->all());
+        $request->amount =  str_replace('.','',$request->amount);
+        // dd($request->amount);
+
         $request->validate([
             'amount' => 'required|numeric|gt:0',
             'method_code' => 'required',

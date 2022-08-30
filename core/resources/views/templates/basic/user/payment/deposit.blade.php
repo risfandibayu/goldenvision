@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label>@lang('Enter Amount'):</label>
                             <div class="input-group">
-                                <input id="amount" type="text" class="form-control form-control-lg" onkeyup="this.value = this.value.replace (/^\.|[^\d\.]/g, '')" name="amount" placeholder="0.00" required  value="{{old('amount')}}">
+                                <input id="amount" type="text" class="form-control form-control-lg" name="amount" required  value="{{old('amount')}}">
                                 <div class="input-group-append">
                                     <span class="input-group-text currency-addon addon">{{$general->cur_text}}</span>
                                 </div>
@@ -85,4 +85,21 @@
             });
         })(jQuery);
     </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.6.0/autoNumeric.min.js" integrity="sha512-6j+LxzZ7EO1Kr7H5yfJ8VYCVZufCBMNFhSMMzb2JRhlwQ/Ri7Zv8VfJ7YI//cg9H5uXT2lQpb14YMvqUAdGlcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+ var autoNumericInstance = new AutoNumeric('#amount', {
+    digitGroupSeparator        : '.',
+    decimalCharacter           : ',',
+    minimumValue : '0',
+    maximumValue : '999999999',
+    decimalPlaces : 0,
+    // digitGroupSeparator : '.',
+});
+
+// $('#amount').on('keyup', function() {
+//     // Retrieve instance numeric string value
+//     $('#amount').val(autoNumericInstance.getNumericString());
+// });
+</script>
 @endpush
