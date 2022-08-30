@@ -124,7 +124,7 @@ class RegisterController extends Controller
             'mobile'        => 'required|string|max:30|unique:users',
             'password'      => 'required|string|min:6|confirmed',
             'username'      => 'required|alpha_num|unique:users|min:6',
-            'no_bro'        => 'integer|unique:users|min:8',
+            // 'no_bro'        => 'integer|unique:users|min:8',
             // 'captcha'       => 'sometimes|required',
             'country_code'  => 'required',
             'agree' => $agree
