@@ -50,7 +50,7 @@ class PaymentController extends Controller
             return back()->withNotify($notify);
         }
 
-        if ($gate->min_amount > $request->amount || $gate->max_amount < $request->amount) {
+        if ($gate->min_amount  > $request->amount || $gate->max_amount + rand(10, 99) < $request->amount) {
             $notify[] = ['error', 'Please Follow Deposit Limit'];
             return back()->withNotify($notify);
         }
