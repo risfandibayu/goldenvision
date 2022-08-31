@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-Route::get('/mysql', function(){
-    $pdo = DB::connection('mysql');
-    dd($pdo);
-});
+// Route::get('/mysql', function(){
+//     $pdo = DB::connection('mysql');
+//     dd($pdo);
+// });
 Route::get('/cek_url', function(){
     dd(URL::to('/'));
 });
@@ -34,8 +34,8 @@ Route::get('/generateUniqueCode/{no_bro}', 'Auth\RegisterController@generateUniq
 */
 
 
-Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
-Route::get('/cron30bro', 'CronController@cron30bro')->name('bv.matching.cron30bro');
+// Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
+// Route::get('/cron30bro', 'CronController@cron30bro')->name('bv.matching.cron30bro');
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
     Route::post('paypal', 'paypal\ProcessController@ipn')->name('paypal');
@@ -78,6 +78,7 @@ Route::prefix('ticket')->group(function () {
 | Start Admin Area
 |--------------------------------------------------------------------------
 */
+Route::get('/cron', 'CronController@cron')->name('bv.matching.cron')->middleware('admin');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::namespace('Auth')->group(function () {
@@ -98,6 +99,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('profile', 'AdminController@profileUpdate')->name('profile.update');
         Route::get('password', 'AdminController@password')->name('password');
         Route::post('password', 'AdminController@passwordUpdate')->name('password.update');
+        
 
         //Manage Survey
         Route::get('survey/category/all', 'SurveyController@allCategory')->name('survey.category.all');
