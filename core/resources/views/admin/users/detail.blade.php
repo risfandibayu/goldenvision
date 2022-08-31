@@ -222,6 +222,9 @@
                 <a href="{{route('admin.users.ref',$user->id)}}" class="btn btn--info btn--shadow btn-block btn-lg">
                     @lang('User Referrals')
                 </a>
+                <a data-toggle="modal" href="#userPlacement" class="btn btn--success btn--shadow btn-block btn-lg">
+                    @lang('Set User Placement')
+                </a>
             </div>
         </div>
     </div>
@@ -689,6 +692,47 @@
                                     <div class="input-group-text">{{ $general->cur_text }}</div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Submit')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="userPlacement" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@lang('Set User Placement')</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{route('admin.users.setUserPlacement', $user->id)}}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <label>@lang('BRO Number')<span class="text-danger">*</span></label>
+                            <div class="input-group has_append">
+                                <input type="text" name="no_bro" class="form-control"
+                                    placeholder="BRO Number as parent" required>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
+                            <select name="position" class="position form-control form--control-2" id="position" required>
+                                <option value="">@lang('Select position')*</option>
+                                @foreach(mlmPositions() as $k=> $v)
+                                    <option value="{{$k}}">@lang($v)</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>

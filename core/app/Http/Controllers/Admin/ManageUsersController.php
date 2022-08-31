@@ -12,6 +12,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserLogin;
 use App\Models\Survey;
+use App\Models\UserExtra;
 use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
@@ -488,6 +489,92 @@ class ManageUsersController extends Controller
         $user->is_kyc = 3;
         $user->save();
         $notify[] = ['success', 'User successfully rejected!!'];
+        return back()->withNotify($notify);
+    }
+
+    public function setUserPlacement($id,Request $request){
+        // dd($request->all());
+        $user = user::where('id',$id)->first();
+        $userextra = UserExtra::where('user_id',$id)->first();
+        $uplineextra = UserExtra::where('user_id',$user->pos_id)->first();
+        $parent = user::where('no_bro',$request->no_bro)->first();
+        $parentextra = UserExtra::where('user_id',$parent->id)->first();
+        //bro tidak ditemukan
+        if (!$parent) {
+            $notify[] = ['error', 'BRO number not found'];
+            return back()->withNotify($notify);
+        }
+
+        $lparent = user::where('pos_id',$parent->id)->where('position',1)->first();
+        $rparent = user::where('pos_id',$parent->id)->where('position',2)->first();
+
+        //slot penuh
+        if ($lparent && $rparent) {
+            # code...
+            $notify[] = ['error', 'BRO number has not empty slot'];
+            return back()->withNotify($notify);
+        }
+
+        //kiri penuh
+        if ($lparent && $request->position == 1) {
+            # code...
+            $notify[] = ['error', 'Left slot BRO number has not empty'];
+            return back()->withNotify($notify);
+        }
+
+        //kanan penuh
+        if ($rparent && $request->position == 2) {
+            # code...
+            $notify[] = ['error', 'Right slot BRO number has not empty'];
+            return back()->withNotify($notify);
+        }
+
+
+
+        // if ($request->position == 1) {
+        //     # code...
+
+        //     $parentextra->paid_left += ($userextra->paid_left + $userextra->paid_right) + 1;
+        //     $parentextra->left += ($userextra->left + $userextra->right) + 1;
+        //     $parentextra->save();
+
+        // }
+
+        // if ($request->position == 2) {
+        //     # code...
+        //     $parentextra->paid_right += ($userextra->paid_left + $userextra->paid_right) + 1;
+        //     $parentextra->right += ($userextra->left + $userextra->right) + 1;
+        //     $parentextra->save();
+
+        // }
+
+
+
+        if ($user->position == 1) {
+            # code...
+            $uplineextra->paid_left -= ($userextra->paid_left + $userextra->paid_right) + 1;
+            $uplineextra->left -= ($userextra->left + $userextra->right) + 1;
+            $uplineextra->save();
+
+        }
+
+        if ($user->position == 2) {
+            # code...
+            $uplineextra->paid_right -= ($userextra->paid_left + $userextra->paid_right) + 1;
+            $uplineextra->right -= ($userextra->left + $userextra->right) + 1;
+            $uplineextra->save();
+
+        }
+
+
+
+        $user->pos_id = $parent->id;
+        $user->position = $request->position;
+        $user->save();
+        updatePaidCount3($user->id);
+
+
+        $notify[] = ['success', 'The user has successfully changed his placement'];
         return back()->withNotify($notify);
     }
 
