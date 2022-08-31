@@ -105,10 +105,10 @@
                               <option value="" hidden>-- Select Parent Username --</option>
                               @foreach($ref_user as $refus)
                                     @if($refus->pos == "Leader")
-                                    <option value="{{$refus->id}}" data-value="{{$refus->id}}" style="font-weight: 700">{{$refus->username}}
+                                    <option value="{{$refus->id}}" data-value="{{$refus->id}}" style="font-weight: 700">{{$refus->no_bro}}
                                                
                                     @else
-                                    <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->username}}
+                                    <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->no_bro}}
                                     @endif
                                         {{-- @if($refus->pos == $refus->pos_id) --}}
                                                 @if($refus->pos == "Leader")
