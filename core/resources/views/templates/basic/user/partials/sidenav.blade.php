@@ -52,13 +52,15 @@
                         <span class="menu-title">@lang('Product')</span>
                     </a>
                 </li> --}}
-
+                @if (auth()->user()->bro_qty + 1 > 1)
+                    
                 <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
                     <a href="{{route('user.user_boom')}}" class="nav-link ">
                         <i class="menu-icon las la-users-cog"></i>
                         <span class="menu-title">@lang('Manage User')</span>
                     </a>
                 </li>
+                @endif
 
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.bv.log') }}">
                     <a href="{{ route('user.bv.log') }}" class="nav-link">
