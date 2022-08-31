@@ -122,7 +122,7 @@
                                     <td><span class="rfree"></span></td>
                                 </tr> --}}
                                 <tr>
-                                    <td>@lang('Paid Member')</td>
+                                    <td>@lang('BRO Member')</td>
                                     <td><span class="lpaid"></span></td>
                                     <td><span class="rpaid"></span></td>
                                 </tr>

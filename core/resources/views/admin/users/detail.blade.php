@@ -141,21 +141,21 @@
                                 {{getAmount($user->userExtra->bv_left + $user->userExtra->bv_right)}} </a></span>
                     </li> --}}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('Paid Left User')
-                        <span class="font-weight-bold">{{$user->userExtra->paid_left}}</span>
+                        @lang('BRO Left User')
+                        <span class="font-weight-bold">{{$user->userExtra->left}}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('Paid Right User')
-                        <span class="font-weight-bold">{{$user->userExtra->paid_right}}</span>
+                        @lang('BRO Right User')
+                        <span class="font-weight-bold">{{$user->userExtra->right}}</span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Free Left User')
                         <span class="font-weight-bold">{{$user->userExtra->free_left}}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Free Right User')
                         <span class="font-weight-bold">{{$user->userExtra->free_right}}</span>
-                    </li>
+                    </li> --}}
                     {{-- @if ($user->plan_id != 0)
 
                     <li class="list-group-item d-flex justify-content-between">

@@ -1226,8 +1226,8 @@ function showSingleUserinTree($user)
         $extraData .= " data-bro=\"$user->no_bro\"";
         $extraData .= " data-image=\"$img\"";
         $extraData .= " data-refby=\"$refby\"";
-        $extraData .= " data-lpaid=\"" . @$user->userExtra->paid_left . "\"";
-        $extraData .= " data-rpaid=\"" . @$user->userExtra->paid_right . "\"";
+        $extraData .= " data-lpaid=\"" . @$user->userExtra->left . "\"";
+        $extraData .= " data-rpaid=\"" . @$user->userExtra->right . "\"";
         $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";
         $extraData .= " data-rfree=\"" . @$user->userExtra->free_right . "\"";
         $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
@@ -1295,8 +1295,8 @@ function showSingleUserinTree2($user,$id)
         $extraData .= " data-plan=\"$planName\"";
         $extraData .= " data-image=\"$img\"";
         $extraData .= " data-refby=\"$refby\"";
-        $extraData .= " data-lpaid=\"" . @$user->userExtra->paid_left . "\"";
-        $extraData .= " data-rpaid=\"" . @$user->userExtra->paid_right . "\"";
+        $extraData .= " data-lpaid=\"" . @$user->userExtra->left . "\"";
+        $extraData .= " data-rpaid=\"" . @$user->userExtra->right . "\"";
         $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";
         $extraData .= " data-rfree=\"" . @$user->userExtra->free_right . "\"";
         $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
