@@ -60,7 +60,7 @@
                 <div class="details">
                     <div class="numbers">
                         <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{getAmount($widget['users_balance'])}}</span>
+                        <span class="amount">{{nb(getAmount($widget['users_balance']))}}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Users Balance')</span>
@@ -190,7 +190,7 @@
                 <div class="details">
                     <div class="numbers">
                         <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{getAmount($widget['users_invest'])}}</span>
+                        <span class="amount">{{nb(getAmount($widget['users_invest']))}}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total Invest')</span>
@@ -209,7 +209,7 @@
                 <div class="details">
                     <div class="numbers">
                         <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{getAmount($widget['last7days_invest'])}}</span>
+                        <span class="amount">{{nb(getAmount($widget['last7days_invest']))}}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Last 7 Days Invest')</span>
@@ -247,7 +247,7 @@
                 <div class="details">
                     <div class="numbers">
                         <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{getAmount($widget['total_binary_com'])}}</span>
+                        <span class="amount">{{nb(getAmount($widget['total_binary_com']))}}</span>
 
                     </div>
                     <div class="desciption">
@@ -349,7 +349,7 @@
                             <i class="las la-money-bill "></i>
                         </div>
                         <div class="widget-three__content">
-                            <h2 class="numbers">{{getAmount($payment['total_deposit_amount'])}} {{$general->cur_text}}</h2>
+                            <h2 class="numbers">{{nb(getAmount($payment['total_deposit_amount']))}} {{$general->cur_text}}</h2>
                             <p class="text--small">@lang('Total Deposit')</p>
                         </div>
                     </div>
@@ -360,7 +360,7 @@
                             <i class="las la-money-check"></i>
                         </div>
                         <div class="widget-three__content">
-                            <h2 class="numbers">{{getAmount($payment['total_deposit_charge'])}} {{$general->cur_text}}</h2>
+                            <h2 class="numbers">{{nb(getAmount($payment['total_deposit_charge']))}} {{$general->cur_text}}</h2>
                             <p class="text--small">@lang('Total Deposit Charge')</p>
                         </div>
                     </div>
@@ -420,7 +420,7 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{getAmount($paymentWithdraw['total_withdraw_amount'])}}</span>
+                        <span class="amount">{{nb(getAmount($paymentWithdraw['total_withdraw_amount']))}}</span>
                         <span class="currency-sign">{{trans($general->cur_text)}}</span>
                     </div>
                     <div class="desciption">
@@ -439,7 +439,7 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{getAmount($paymentWithdraw['total_withdraw_charge'])}} </span>
+                        <span class="amount">{{nb(getAmount($paymentWithdraw['total_withdraw_charge']))}} </span>
                         <span class="currency-sign">{{trans($general->cur_text)}}</span>
                     </div>
                     <div class="desciption">
