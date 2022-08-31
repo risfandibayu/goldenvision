@@ -44,12 +44,14 @@ class PlanController extends Controller
             $g2 = 20;
             $g3 = 5;
             $g4 = 2;
+            $tot = 77;
         }else{
             // dd('w');
             $g1 = 70;
             $g2 = 20;
             $g3 = 7;
             $g4 = 2;
+            $tot = 99;
         }
 
 
@@ -166,7 +168,7 @@ class PlanController extends Controller
             $trx = $user->transactions()->create([
                 'amount' => $plan->price * $request->qty,
                 'trx_type' => '-',
-                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' BRO and Get '.$request->qty * 77 .' Pieces Gold',
+                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' BRO and Get '.$request->qty * $tot .' Pieces Gold',
                 'remark' => 'purchased_plan',
                 'trx' => getTrx(),
                 'post_balance' => getAmount($user->balance),
@@ -175,7 +177,7 @@ class PlanController extends Controller
             // dd($user);
 
             sendEmail2($user->id, 'plan_purchased', [
-                'plan' => $plan->name. ' For '.$request->qty.' BRO and Get '.$request->qty * 77 .' Pieces Gold',
+                'plan' => $plan->name. ' For '.$request->qty.' BRO and Get '.$request->qty * $tot .' Pieces Gold',
                 'amount' => getAmount($plan->price * $request->qty),
                 'currency' => $gnl->cur_text,
                 'trx' => $trx->trx,
