@@ -78,7 +78,7 @@ Route::prefix('ticket')->group(function () {
 | Start Admin Area
 |--------------------------------------------------------------------------
 */
-Route::get('/cron', 'CronController@cron')->name('bv.matching.cron')->middleware('admin');
+Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::namespace('Auth')->group(function () {
