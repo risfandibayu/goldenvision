@@ -184,7 +184,7 @@ class PlanController extends Controller
                 'post_balance' => getAmount($user->balance),
             ]);
             if ($oldPlan == 0) {
-                updatePaidCount($user->id);
+                updatePaidCount2($user->id);
             }
             // $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
 
