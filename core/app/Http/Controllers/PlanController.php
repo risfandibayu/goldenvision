@@ -35,6 +35,24 @@ class PlanController extends Controller
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
         $gnl = GeneralSetting::first();
 
+        $brolimit = user::where('plan_id','!=',0)->count();
+        // dd($brolimit);
+        if ($brolimit > 200) {
+            # code...
+            // dd('s');
+            $g1 = 50;
+            $g2 = 20;
+            $g3 = 5;
+            $g4 = 2;
+        }else{
+            // dd('w');
+            $g1 = 70;
+            $g2 = 20;
+            $g3 = 7;
+            $g4 = 2;
+        }
+
+
         $user = User::find(Auth::id());
         $ref_user = User::where('no_bro', $request->referral)->first();
         if ($ref_user == null) {
@@ -75,46 +93,46 @@ class PlanController extends Controller
 
             if($gold){
                 if($gold1){
-                    $gold1->qty += 70 * $request->qty;
+                    $gold1->qty += $g1 * $request->qty;
                     $gold1->save();
                 }else{
                     $newg = new Gold();
                     $newg->user_id = Auth::user()->id;
                     $newg->prod_id = 1;
-                    $newg->qty = 70 * $request->qty;
+                    $newg->qty = $g1 * $request->qty;
                     $newg->save();
                 }
 
                 if($gold2){
-                    $gold2->qty += 20 * $request->qty;
+                    $gold2->qty += $g2 * $request->qty;
                     $gold2->save();
                 }else{
                     $newg = new Gold();
                     $newg->user_id = Auth::user()->id;
                     $newg->prod_id = 2;
-                    $newg->qty = 20 * $request->qty;
+                    $newg->qty = $g2 * $request->qty;
                     $newg->save();
                 }
 
                 if($gold3){
-                    $gold3->qty += 7 * $request->qty;
+                    $gold3->qty += $g3 * $request->qty;
                     $gold3->save();
                 }else{
                     $newg = new Gold();
                     $newg->user_id = Auth::user()->id;
                     $newg->prod_id = 3;
-                    $newg->qty = 7 * $request->qty;
+                    $newg->qty = $g3 * $request->qty;
                     $newg->save();
                 }
 
                 if($gold4){
-                    $gold4->qty += 2 * $request->qty;
+                    $gold4->qty += $g4 * $request->qty;
                     $gold4->save();
                 }else{
                     $newg = new Gold();
                     $newg->user_id = Auth::user()->id;
                     $newg->prod_id = 4;
-                    $newg->qty = 2 * $request->qty;
+                    $newg->qty = $g4 * $request->qty;
                     $newg->save();
                 }
 
@@ -123,25 +141,25 @@ class PlanController extends Controller
                 $newg = new Gold();
                 $newg->user_id = Auth::user()->id;
                 $newg->prod_id = 1;
-                $newg->qty = 70 * $request->qty;
+                $newg->qty = $g1 * $request->qty;
                 $newg->save();
 
                 $newg = new Gold();
                 $newg->user_id = Auth::user()->id;
                 $newg->prod_id = 2;
-                $newg->qty = 20 * $request->qty;
+                $newg->qty = $g2 * $request->qty;
                 $newg->save();
 
                 $newg = new Gold();
                 $newg->user_id = Auth::user()->id;
                 $newg->prod_id = 3;
-                $newg->qty = 7 * $request->qty;
+                $newg->qty = $g3 * $request->qty;
                 $newg->save();
 
                 $newg = new Gold();
                 $newg->user_id = Auth::user()->id;
                 $newg->prod_id = 4;
-                $newg->qty = 2 * $request->qty;
+                $newg->qty = $g4 * $request->qty;
                 $newg->save();
             }
 
