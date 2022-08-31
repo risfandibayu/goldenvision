@@ -220,7 +220,7 @@
         </div>
 
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--3 b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-hand-holding-usd"></i>
@@ -237,7 +237,7 @@
                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--17 b-radius--10 box-shadow">
@@ -259,7 +259,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--deep-purple b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-cut"></i>
@@ -330,7 +330,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row mt-50 mb-none-30">
         <div class="col-xl-6 mb-30">
