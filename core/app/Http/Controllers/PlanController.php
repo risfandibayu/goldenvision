@@ -75,13 +75,13 @@ class PlanController extends Controller
 
             if($gold){
                 if($gold1){
-                    $gold1->qty += 50 * $request->qty;
+                    $gold1->qty += 70 * $request->qty;
                     $gold1->save();
                 }else{
                     $newg = new Gold();
                     $newg->user_id = Auth::user()->id;
                     $newg->prod_id = 1;
-                    $newg->qty = 50 * $request->qty;
+                    $newg->qty = 70 * $request->qty;
                     $newg->save();
                 }
 
@@ -97,13 +97,13 @@ class PlanController extends Controller
                 }
 
                 if($gold3){
-                    $gold3->qty += 5 * $request->qty;
+                    $gold3->qty += 7 * $request->qty;
                     $gold3->save();
                 }else{
                     $newg = new Gold();
                     $newg->user_id = Auth::user()->id;
                     $newg->prod_id = 3;
-                    $newg->qty = 5 * $request->qty;
+                    $newg->qty = 7 * $request->qty;
                     $newg->save();
                 }
 
@@ -123,7 +123,7 @@ class PlanController extends Controller
                 $newg = new Gold();
                 $newg->user_id = Auth::user()->id;
                 $newg->prod_id = 1;
-                $newg->qty = 50 * $request->qty;
+                $newg->qty = 70 * $request->qty;
                 $newg->save();
 
                 $newg = new Gold();
@@ -135,7 +135,7 @@ class PlanController extends Controller
                 $newg = new Gold();
                 $newg->user_id = Auth::user()->id;
                 $newg->prod_id = 3;
-                $newg->qty = 5 * $request->qty;
+                $newg->qty = 7 * $request->qty;
                 $newg->save();
 
                 $newg = new Gold();
