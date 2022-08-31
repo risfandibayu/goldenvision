@@ -954,9 +954,11 @@ function updatePaidCount($id)
             if ($position == 1) {
                 $extra->free_left -= 1;
                 $extra->paid_left += 1;
+                $extra->left += 1;
             } else {
                 $extra->free_right -= 1;
                 $extra->paid_right += 1;
+                $extra->right += 1;
             }
             $extra->save();
             $id = $posid;
@@ -981,9 +983,11 @@ function updatePaidCount2($id)
             if ($position == 1) {
                 // $extra->free_left -= 1;
                 $extra->paid_left += 1;
+                $extra->left += 1;
             } else {
                 // $extra->free_right -= 1;
                 $extra->paid_right += 1;
+                $extra->right += 1;
             }
             $extra->save();
             $id = $posid;
