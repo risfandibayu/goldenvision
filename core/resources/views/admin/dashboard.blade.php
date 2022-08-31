@@ -329,8 +329,8 @@
                     <a href="{{route('admin.report.bvLog')}}?type=rightBV" class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
-    </div> --}}
+        </div>--}}
+    </div> 
 
     <div class="row mt-50 mb-none-30">
         <div class="col-xl-6 mb-30">
