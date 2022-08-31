@@ -222,9 +222,9 @@
                 <a href="{{route('admin.users.ref',$user->id)}}" class="btn btn--info btn--shadow btn-block btn-lg">
                     @lang('User Referrals')
                 </a>
-                {{-- <a data-toggle="modal" href="#userPlacement" class="btn btn--success btn--shadow btn-block btn-lg">
+                <a data-toggle="modal" href="#userPlacement" class="btn btn--success btn--shadow btn-block btn-lg">
                     @lang('Set User Placement')
-                </a> --}}
+                </a>
             </div>
         </div>
     </div>
