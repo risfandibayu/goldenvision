@@ -612,8 +612,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{auth()->user()->userExtra->free_left +
-                        auth()->user()->userExtra->paid_left}}</span>
+                    <span class="amount">{{auth()->user()->userExtra->left}}</span>
                 </div>
                 <div class="desciption">
                     <span class="text--small">@lang('Total Left')</span>
@@ -632,8 +631,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{auth()->user()->userExtra->free_right +
-                        auth()->user()->userExtra->paid_left}}</span>
+                    <span class="amount">{{auth()->user()->userExtra->right}}</span>
                 </div>
                 <div class="desciption">
                     <span class="text--small">@lang('Total Right')</span>
