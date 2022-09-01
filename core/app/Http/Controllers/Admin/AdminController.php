@@ -41,6 +41,7 @@ class AdminController extends Controller
         $widget['last7days_invest'] = Transaction::whereDate('created_at', '>=', Carbon::now()->subDays(6))->where('remark', 'purchased_plan')->sum('amount');
         $widget['total_binary_com'] = User::sum('total_binary_com');
         $widget['total_ref_com'] = User::sum('total_ref_com');
+        $widget['total_bro_joined'] = User::where('plan_id','!=',0)->count();
 
 
         // Monthly Deposit & Withdraw Report Graph
