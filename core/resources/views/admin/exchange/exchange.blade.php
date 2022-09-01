@@ -26,7 +26,7 @@
 
                                     <td data-label="@lang('Exchange')">{{$item->ex_id}}</td>
                                     <td data-label="@lang('Time')">{{showDateTime($item->created_at)}}</td>
-                                    <td data-label="@lang('Username')">{{$item->us}}</td>
+                                    <td data-label="@lang('Username')"><a href="{{ route('admin.users.detail', $item->usid) }}">{{$item->us}}</a></td>
                                     <td data-label="@lang('Product Name')">{{$item->pdname}}</td>
                                     <td data-label="@lang('Qty')">{{$item->qty}}</td>
                                     <td data-label="@lang('Total')">{{$item->total}}</td>
