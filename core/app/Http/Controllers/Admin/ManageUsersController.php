@@ -157,7 +157,7 @@ class ManageUsersController extends Controller
         $user = user::where('id',$id)->first();
         $page_title         = 'Gold Invest Detail : '.$user->username;
         $empty_message = 'Gold Invest Not found.';
-        $gold  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
+        $gold  = Gold::where('user_id',$id)->where('golds.qty','!=',0)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
         ->paginate(getPaginate());
         return view('admin.users.gold',compact('page_title', 'empty_message','gold'));
         // return view('admin.users.gold',compact('page_title','emas'))
