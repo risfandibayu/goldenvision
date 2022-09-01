@@ -29,7 +29,13 @@
                                     </div>
                                 </td>
                                 <td data-label="@lang('Username')"><a href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a></td>
-                                <td data-label="@lang('BRO')">{{ $user->no_bro }}</td>
+                                <td data-label="@lang('BRO')">
+                                    @if ($user->no_bro == 0)
+                                    <small>User has not purchased a plan</small>
+                                    @else
+                                    {{ $user->no_bro }}
+                                    @endif
+                                </td>
                                 <td data-label="@lang('Email')">{{ $user->email }}</td>
                                 <td data-label="@lang('Phone')">{{ $user->mobile }}</td>
                                 <td data-label="@lang('Joined At')">{{ showDateTime($user->created_at) }}</td>
