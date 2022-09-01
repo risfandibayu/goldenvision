@@ -81,7 +81,7 @@ class SiteController extends Controller
         return view($this->activeTemplate . 'home', $data);
     }
     public function index(){
-        $prod = Product::where('status',1)->get();
+        $prod = Product::where('status',1)->where('is_reseller',0)->get();
         return view('new.index',compact('prod'));
     }
 
