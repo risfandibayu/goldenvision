@@ -127,6 +127,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         // Users Manager
         Route::get('users', 'ManageUsersController@allUsers')->name('users.all');
+        Route::get('users_export', 'ManageUsersController@exportAllUsers')->name('users.export.all');
         Route::get('users/active', 'ManageUsersController@activeUsers')->name('users.active');
         Route::get('users/banned', 'ManageUsersController@bannedUsers')->name('users.banned');
         Route::get('users/data/reject', 'ManageUsersController@rejectDataUsers')->name('users.datareject');

@@ -1,6 +1,10 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ExportUser;
+use App\Exports\ExptUserQuery;
+use App\Exports\ExptUserQueryPage;
+use App\Exports\ExptUserView;
 use App\Models\Deposit;
 use App\Models\BvLog;
 use App\Models\Gateway;
@@ -19,7 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class ManageUsersController extends Controller
 {
@@ -29,6 +33,59 @@ class ManageUsersController extends Controller
         $empty_message = 'No user found';
         $users = User::latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
+    }
+
+    public function exportallUsers(Request $request){
+        if ($request->search) {
+            return Excel::download(new ExptUserQuery($request->search), 'users.xlsx');
+            # code...
+        }else{
+            if ($request->page != "Manage Users") {
+                # code...
+                // return Excel::download(new ExportUser, 'users.xlsx');
+                // dd('s');
+                if ($request->page == "Manage Active Users") {
+                $q = User::query()->active()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
+                }
+
+                if ($request->page == "Banned Users") {
+                $q = User::query()->banned()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
+                }
+
+                if ($request->page == "Verified Data Users") {
+                $q = User::query()->where('is_kyc','2')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
+                }
+
+                if ($request->page == "Waiting For Verification Data Users") {
+                $q = User::query()->where('is_kyc','1')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
+                }
+
+                if ($request->page == "Email Unverified Users") {
+                $q = User::query()->emailUnverified()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
+                }
+
+                if ($request->page == "Email Verified Users") {
+                $q = User::query()->emailVerified()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
+                }
+
+                if ($request->page == "Rejected Data Users") {
+                $q = User::query()->where('is_kyc','3')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
+                }
+
+
+            }else{
+                return Excel::download(new ExportUser, 'users.xlsx');
+            }
+
+        }
+        // dd($request->page);
     }
 
     public function activeUsers()
@@ -84,20 +141,20 @@ class ManageUsersController extends Controller
     }
 
 
-    public function smsUnverifiedUsers()
-    {
-        $page_title = 'SMS Unverified Users';
-        $empty_message = 'No sms unverified user found';
-        $users = User::smsUnverified()->latest()->paginate(getPaginate());
-        return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
-    }
-    public function smsVerifiedUsers()
-    {
-        $page_title = 'SMS Verified Users';
-        $empty_message = 'No sms verified user found';
-        $users = User::smsVerified()->latest()->paginate(getPaginate());
-        return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
-    }
+    // public function smsUnverifiedUsers()
+    // {
+    //     $page_title = 'SMS Unverified Users';
+    //     $empty_message = 'No sms unverified user found';
+    //     $users = User::smsUnverified()->latest()->paginate(getPaginate());
+    //     return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
+    // }
+    // public function smsVerifiedUsers()
+    // {
+    //     $page_title = 'SMS Verified Users';
+    //     $empty_message = 'No sms verified user found';
+    //     $users = User::smsVerified()->latest()->paginate(getPaginate());
+    //     return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
+    // }
 
 
 

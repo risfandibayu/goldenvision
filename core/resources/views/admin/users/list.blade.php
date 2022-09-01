@@ -67,8 +67,13 @@
 
 
 
-@push('breadcrumb-plugins')
-    <form action="{{ route('admin.users.search', $scope ?? str_replace('admin.users.', '', request()->route()->getName())) }}" method="GET" class="form-inline float-sm-right bg--white">
+@push('breadcrumb-plugins') 
+    <form action="{{ route('admin.users.export.all') }}" method="GET" class="form-inline float-sm-right  bg--white">
+            <input hidden type="text" name="search" class="form-control" placeholder="@lang('Username or email')" value="{{ $search ?? '' }}">
+            <input hidden type="text" name="page" class="form-control" placeholder="@lang('Username or email')" value="{{ $page_title ?? '' }}">
+            <button class="btn btn--primary" type="submit">Export</button>
+    </form>    
+    <form action="{{ route('admin.users.search', $scope ?? str_replace('admin.users.', '', request()->route()->getName())) }}" method="GET" class="form-inline float-sm-right bg--white mr-2">
         <div class="input-group has_append">
             <input type="text" name="search" class="form-control" placeholder="@lang('Username or email')" value="{{ $search ?? '' }}">
             <div class="input-group-append">
@@ -76,4 +81,5 @@
             </div>
         </div>
     </form>
+    
 @endpush

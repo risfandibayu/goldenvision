@@ -115,7 +115,7 @@
                                 </a>
                             </li>
 
-                            <li class="sidebar-menu-item {{menuActive('admin.users.smsUnverified')}}">
+                            {{-- <li class="sidebar-menu-item {{menuActive('admin.users.smsUnverified')}}">
                                 <a href="{{route('admin.users.smsUnverified')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('SMS Unverified')</span>
@@ -124,7 +124,7 @@
                                             class="menu-badge pill bg--primary ml-auto">{{$sms_unverified_users_count}}</span>
                                     @endif
                                 </a>
-                            </li>
+                            </li> --}}
 
 
                             {{-- <li class="sidebar-menu-item {{menuActive('admin.users.email.all')}}">
