@@ -670,11 +670,11 @@ class ManageUsersController extends Controller
             return Excel::download(new ExptUserGold(User::query()->join('golds','golds.user_id','=','users.id')->join('products','products.id','=','golds.prod_id')
             ->where('users.email', 'like',"%$search%")
             ->Orwhere('users.username', 'like',"%$search%")
-            ->select('users.id as id','users.username as username', 'users.firstname as fr','users.lastname as ls', 'users.email as email', db::raw('sum(products.weight * golds.qty) as emas'))
+            ->select('users.id as id','users.username as username', db::raw("CONCAT(users.firstname, ' ',users.lastname ) AS nama"), 'users.email as email', db::raw('sum(products.weight * golds.qty) as emas'))
             ->groupby('users.id')), 'users_golds.xlsx');
         }else{
             return Excel::download(new ExptUserGold(User::query()->join('golds','golds.user_id','=','users.id')->join('products','products.id','=','golds.prod_id')
-            ->select('users.username as username', 'users.firstname as fr','users.lastname as ls', 'users.email as email', db::raw('sum(products.weight * golds.qty) as emas'))
+            ->select('users.username as username', db::raw("CONCAT(users.firstname, ' ',users.lastname ) AS nama"), 'users.email as email', db::raw('sum(products.weight * golds.qty) as emas'))
             ->groupby('users.id')), 'users_golds.xlsx');
         }
     }
