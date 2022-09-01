@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\ExportUser;
+use App\Exports\ExptUserGold;
 use App\Exports\ExptUserQuery;
 use App\Exports\ExptUserQueryPage;
 use App\Exports\ExptUserView;
@@ -660,6 +661,22 @@ class ManageUsersController extends Controller
 
         // dd($users);
         return view('admin.users.gd', compact('page_title', 'empty_message', 'users'));
+    }
+
+    public function exportUserGold(Request $request){
+        if ($request->search) {
+            # code...
+            $search = $request->search;
+            return Excel::download(new ExptUserGold(User::query()->join('golds','golds.user_id','=','users.id')->join('products','products.id','=','golds.prod_id')
+            ->where('users.email', 'like',"%$search%")
+            ->Orwhere('users.username', 'like',"%$search%")
+            ->select('users.id as id','users.username as username', 'users.firstname as fr','users.lastname as ls', 'users.email as email', db::raw('sum(products.weight * golds.qty) as emas'))
+            ->groupby('users.id')), 'users_golds.xlsx');
+        }else{
+            return Excel::download(new ExptUserGold(User::query()->join('golds','golds.user_id','=','users.id')->join('products','products.id','=','golds.prod_id')
+            ->select('users.username as username', 'users.firstname as fr','users.lastname as ls', 'users.email as email', db::raw('sum(products.weight * golds.qty) as emas'))
+            ->groupby('users.id')), 'users_golds.xlsx');
+        }
     }
 
 
