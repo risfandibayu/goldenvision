@@ -31,7 +31,7 @@
                                 <td data-label="@lang('Username')"><a href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a></td>
                                 <td data-label="@lang('BRO')">
                                     @if ($user->no_bro == 0)
-                                    <small>User has not purchased a plan</small>
+                                    <small>Not subscribed yetn</small>
                                     @else
                                     {{ $user->no_bro }}
                                     @endif
