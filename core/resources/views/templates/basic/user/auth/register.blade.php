@@ -135,7 +135,7 @@ $policyElements =  getContent('policy_pages.element');
                             &nbsp;
                             <label for="agree" class="m-0 pl-2 text-white">@lang('I agree with')&nbsp;</label>
                             @foreach ($policyElements as $item)
-                                <a href="{{route('policy.details',[slug(@$item->data_values->title),$item->id])}}" class="text--base"> {{__($item->data_values->title)}} </a> @if(!$loop->last) ,&nbsp; @endif
+                                <span href="{{route('policy.details',[slug(@$item->data_values->title),$item->id])}}" class="text--base"> {{__($item->data_values->title)}} </span> @if(!$loop->last) ,&nbsp; @endif
                             @endforeach
                         </div>
                     </div>
