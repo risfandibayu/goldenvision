@@ -578,6 +578,18 @@ class ManageUsersController extends Controller
         return back()->withNotify($notify);
     }
 
+    public function userGold(){
+        $page_title = 'User Golds';
+        $empty_message = 'No user found';
+        $users = User::join('golds','golds.user_id','=','users.id')->join('products','products.id','=','golds.prod_id')
+        ->select('users.id as id','users.username as username', 'users.firstname as fr','users.lastname as ls', 'users.email as email', db::raw('sum(products.weight * golds.qty) as emas'))
+        ->groupby('users.id')
+        ->paginate(getPaginate());
+
+        // dd($users);
+        return view('admin.users.gd', compact('page_title', 'empty_message', 'users'));
+    }
+
 
 }
 
