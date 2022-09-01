@@ -15,7 +15,7 @@ class ProductController extends Controller
     //
     public function productIndex(){
         $data['page_title'] = "Product";
-        $data['product'] = Product::where('status',1)->get();
+        $data['product'] = Product::where('status',1)->where('is_reseller',0)->get();
         return view('templates.basic.user.product.index',$data);
     }
 
