@@ -39,6 +39,7 @@
                                 <th scope="col">@lang('Trx Number')</th>
                                 @if(!request()->routeIs('admin.users.deposits') && !request()->routeIs('admin.users.deposits.method'))
                                     <th scope="col">@lang('Username')</th>
+                                    <th scope="col">@lang('Email')</th>
                                 @endif
                                 <th scope="col">@lang('Method')</th>
                                 <th scope="col">@lang('Amount')</th>
@@ -60,6 +61,7 @@
                                         <td data-label="@lang('Username')"><a
                                                 href="{{ route('admin.users.detail', $deposit->user_id) }}">{{ $deposit->user->username }}</a>
                                         </td>
+                                        <td data-label="@lang('Date')"> {{ $deposit->user->email }}</td>
                                     @endif
                                     <td data-label="@lang('Method')">
                                         @if(request()->routeIs('admin.users.deposits') || request()->routeIs('admin.users.deposits.method'))
