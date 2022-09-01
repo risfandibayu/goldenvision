@@ -199,6 +199,8 @@
         <div class="col-md-6 col-12">
           <p style="color: black;" id="tagline">Simpan dan tabung emas Anda, ketika sudah terakumulasi sejumlah 5 gram, Anda bisa tukarkan dengan emas Logam mulia bersertifikat ANTAM.</p>
           <p style="color: black;" id="tagline">Microgold adalah produk dari PT SAKA BHUMI AURUM.</p>
+          <br>
+          <button onclick="window.open(`{{asset('assets/new')}}/PPT_Microgold.pdf`)" class="btn-get-started"> Download Marketing Plan </button>
         </div>
       </div>
     </div>
