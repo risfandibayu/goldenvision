@@ -23,7 +23,7 @@
                                 </td>
                                 <td data-label="@lang('Username')"><a href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a></td>
                                 <td data-label="@lang('Email')">{{ $user->email }}</td>
-                                <td data-label="@lang('Email')">{{ $user->emas }}</td>
+                                <td data-label="@lang('Email')">{{ $user->emas }} gr</td>
                                 <td data-label="@lang('Action')">
                                     <a href="{{ route('admin.users.invest.detail', $user->id) }}" class="icon-btn" data-toggle="tooltip" data-original-title="@lang('Details')">
                                         <i class="las la-desktop text--shadow"></i>

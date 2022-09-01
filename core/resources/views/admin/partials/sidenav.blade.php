@@ -283,7 +283,7 @@
                 <li class="sidebar-menu-item {{menuActive('admin.users.invest*')}}">
                     <a href="{{route('admin.users.invest.gdetail')}}" class="nav-link ">
                         {{-- <i class="las la-paper-plane"></i> --}}
-                        <i class="menu-icon las la-sync"></i>
+                        <i class="menu-icon las la-coins"></i>
                         <span class="menu-title">@lang('User Golds')</span>
                     </a>
                 </li>
