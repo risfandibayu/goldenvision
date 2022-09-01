@@ -130,7 +130,7 @@ class ReportController extends Controller
 
         $transactions = Transaction::with('user')->whereHas('user', function ($user) use ($search) {
             $user->where('username', 'like',"%$search%");
-        })->orWhere('trx', $search)->orderBy('id','desc')->paginate(getPaginate());
+        })->orWhere('trx', $search)->orwhere('details', 'like',"%$search%")->orderBy('id','desc')->paginate(getPaginate());
 
         return view('admin.reports.transactions', compact('page_title', 'transactions', 'empty_message'));
     }
