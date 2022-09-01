@@ -142,7 +142,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('users/{scope}/search', 'ManageUsersController@search')->name('users.search');
         Route::get('user/detail/{id}', 'ManageUsersController@detail')->name('users.detail');
-        Route::get('user/gold_invest', 'ManageUsersController@userGold')->name('users.invest.gdetail');
+        Route::get('user/gold_invest', 'ManageUsersController@userGold')->name('invest.gdetail');
         Route::get('user/gold_invest_detail/{id}', 'ManageUsersController@goldDetail')->name('users.invest.detail');
         Route::get('user/referral/{id}', 'ManageUsersController@userRef')->name('users.ref');
         Route::post('user/update/{id}', 'ManageUsersController@update')->name('users.update');

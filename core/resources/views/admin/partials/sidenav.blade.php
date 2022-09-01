@@ -280,8 +280,8 @@
                     </div>
                 </li>
 
-                <li class="sidebar-menu-item {{menuActive('admin.users.invest*')}}">
-                    <a href="{{route('admin.users.invest.gdetail')}}" class="nav-link ">
+                <li class="sidebar-menu-item {{menuActive('admin.invest.gdetail*')}}">
+                    <a href="{{route('admin.invest.gdetail')}}" class="nav-link ">
                         {{-- <i class="las la-paper-plane"></i> --}}
                         <i class="menu-icon las la-coins"></i>
                         <span class="menu-title">@lang('User Golds')</span>

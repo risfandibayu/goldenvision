@@ -578,7 +578,21 @@ class ManageUsersController extends Controller
         return back()->withNotify($notify);
     }
 
-    public function userGold(){
+    public function userGold(Request $request){
+        if ($request->search) {
+            $search = $request->search;
+            $page_title = 'User Golds';
+            $empty_message = 'No user found';
+            $users = User::join('golds','golds.user_id','=','users.id')->join('products','products.id','=','golds.prod_id')
+            ->where('users.email', 'like',"%$search%")
+            ->Orwhere('users.username', 'like',"%$search%")
+            ->select('users.id as id','users.username as username', 'users.firstname as fr','users.lastname as ls', 'users.email as email', db::raw('sum(products.weight * golds.qty) as emas'))
+            ->groupby('users.id')
+            ->paginate(getPaginate());
+
+            // dd($users);
+            return view('admin.users.gd', compact('page_title','search', 'empty_message', 'users'));
+        }
         $page_title = 'User Golds';
         $empty_message = 'No user found';
         $users = User::join('golds','golds.user_id','=','users.id')->join('products','products.id','=','golds.prod_id')
