@@ -97,6 +97,7 @@
                                 ></div>
                             <div class="content">
                                 <a class="user-name tree_url tree_name" href=""></a>
+                                <input type="hidden" name="id" class="tree_id">
                                 <span class="user-status tree_bro"></span>
                                 <br>
                                 <span class="user-status tree_status"></span>
@@ -128,12 +129,94 @@
                                 </tr>
                                 
                             </table>
-                            <a href="" target="_blank" class="mt-4 btn btn--secondary btn-block btn-sm tree_login_url">Login as User</a>
-                            <a href="" target="_blank" class="mt-4 btn btn--info btn-block btn-sm tree_detail_url">Detail User</a>
+                            <a href="" target="_blank" class="mt-2 btn btn--secondary btn-block btn-sm tree_login_url">Login as User</a>
+                            <a href="" target="_blank" class="mt-2 btn btn--info btn-block btn-sm tree_detail_url">Detail User</a>
+                            <a class="mt-2 text--white btn btn--success btn-block btn-sm set_user_placement" data-dismiss="modal">Set User Placement</a>
+                            <a class="mt-2 text--white btn btn--warning btn-block btn-sm update_counting" data-dismiss="modal">Update Counting</a>
 
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="userPlacement" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('Set User Placement') <span class="username"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="userPlace" class="userPlace">
+                    <div class="modal-body">
+                        <div class="form-row">
+    
+                            <input hidden type="text" name="id" id="id" class="id">
+                            <div class="form-group col-md-12">
+                                <label>@lang('BRO Number')<span class="text-danger">*</span></label>
+                                <div class="input-group has_append">
+                                    <input type="text" name="no_bro" class="form-control no_bro"
+                                        placeholder="BRO Number as parent" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
+                                <select name="position" class="position form-control form--control-2 position" id="position" required>
+                                    <option value="">@lang('Select position')*</option>
+                                    @foreach(mlmPositions() as $k=> $v)
+                                        <option value="{{$k}}">@lang($v)</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success submitPlace">@lang('Submit')</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="updateCounting" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('Update Counting') <span class="username"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="updateCounting" class="updateCounting">
+                    <div class="modal-body">
+                        <div class="form-row">
+    
+                            <input hidden type="text" name="id" id="id" class="id">
+                            <div class="form-group col-md-12">
+                                <label>@lang('Left')<span class="text-danger">*</span></label>
+                                <div class="input-group has_append">
+                                    <input type="text" name="left" class="form-control left"
+                                        placeholder="BRO Left Count" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>@lang('Right')<span class="text-danger">*</span></label>
+                                <div class="input-group has_append">
+                                    <input type="text" name="right" class="form-control right"
+                                        placeholder="BRO Right Count" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success submitCount">@lang('Submit')</button>
+                    </div>
             </div>
         </div>
     </div>
@@ -144,6 +227,7 @@
         (function($){
             $('.showDetails').on('click', function () {
                 var modal = $('#exampleModalCenter');
+                $('.tree_id').val($(this).data('id'));
                 $('.tree_name').text($(this).data('name'));
                 $('.tree_url').attr({"href": $(this).data('treeurl')});
                 $('.tree_login_url').attr({"href": $(this).data('treeloginurl')});
@@ -163,11 +247,101 @@
                 $('.lfree').text($(this).data('lfree'));
                 $('.rfree').text($(this).data('rfree'));
                 $('#exampleModalCenter').modal('show');
+
+                $('.set_user_placement').on('click', function () {
+                    var modal = $('#userPlacement');
+                    $('.username').text($('.tree_bro').text());
+
+                    $('.id').val($('.tree_id').val());
+                    $('#userPlacement').modal('show');
+                });
+
+                $('.update_counting').on('click', function () {
+                    var modal = $('#updateCounting');
+                    $('.username').text($('.tree_bro').text());
+
+                    $('.id').val($('.tree_id').val());
+                    $('#updateCounting').modal('show');
+                });
             });
         })(jQuery)
 
     </script>
+    {{-- <script>
+        $('.set_user_placement').on('click', function () {
+            var modal = $('#userPlacement');
+            $('.username').text($(this).data('name'));
+            $('#userPlacement').modal('show');
+        });
+    </script> --}}
 
+    <script>
+    $('.submitPlace').on('click', function () {
+            var id = $('.id').val();
+            var no_bro = $('.no_bro').val();
+            var position = $('.position').val();
+            // console.log(id);
+            var token = "{{csrf_token()}}";
+            $.ajax({
+                type: "POST",
+                url: "{{url('admin/user/set-user-placement/')}}/"+id,
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                data: {
+                    'id': id,
+                    'no_bro': no_bro,
+                    'position': position,
+                    '_token': token
+                },
+                success: function(data) {
+                    // console.log(data.msg);
+                    if (data.msg == 'mantap') {
+                        iziToast.success({
+                            message: 'User set placement successfully',
+                            position: "topRight"
+                        });
+                        window.location.reload();
+                    }
+
+                }
+            });
+    });
+    </script>
+
+    <script>
+    $('.submitCount').on('click', function () {
+            var id = $('.id').val();
+            var left = $('.left').val();
+            var right = $('.right').val();
+            // console.log(id);
+            var token = "{{csrf_token()}}";
+            $.ajax({
+                type: "POST",
+                url: "{{url('admin/user/update_counting/')}}/"+id,
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                data: {
+                    'id': id,
+                    'left': left,
+                    'right': right,
+                    '_token': token
+                },
+                success: function(data) {
+                    // console.log(data.msg);
+                    if (data.msg == 'mantap') {
+                        iziToast.success({
+                            message: 'Update Counting successfully',
+                            position: "topRight"
+                        });
+                        window.location.reload();
+                    }
+
+                }
+            });
+    });
+    </script>
 @endpush
 @push('breadcrumb-plugins')
 

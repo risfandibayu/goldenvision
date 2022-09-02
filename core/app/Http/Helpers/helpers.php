@@ -997,7 +997,7 @@ function updatePaidCount2($id)
     }
 
 }
-function updatePaidCount3($id)
+function updatePaidCount3($id, $count)
 {
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
@@ -1011,20 +1011,16 @@ function updatePaidCount3($id)
 
             if ($position == 1) {
                 // $extra->free_left -= 1;
-                if ($extra->right != 0) {
-                    $extra->paid_right -= 1;
-                    $extra->right -= 1;
-                }
-                $extra->paid_left += 1;
-                $extra->left += 1;
+                    $extra->paid_right -= $count;
+                    $extra->right -= $count;
+                $extra->paid_left += $count;
+                $extra->left += $count;
             } else {
-                // $extra->free_right -= 1;
-                if ($extra->left != 0) {
-                    $extra->paid_left -= 1;
-                    $extra->left -= 1;
-                }
-                $extra->paid_right += 1;
-                $extra->right += 1;
+                // $extra->free_right -= $count;
+                    $extra->paid_left -= $count;
+                    $extra->left -= $count;
+                $extra->paid_right += $count;
+                $extra->right += $count;
             }
             $extra->save();
             $id = $posid;
@@ -1260,6 +1256,7 @@ function showSingleUserinTree($user)
         $extraData .= " data-treeurl=\"$hisTree\"";
         $extraData .= " data-status=\"$stShow\"";
         $extraData .= " data-plan=\"$planName\"";
+        $extraData .= " data-id=\"$user->id\"";
         $extraData .= " data-bro=\"$user->no_bro\"";
         $extraData .= " data-image=\"$img\"";
         $extraData .= " data-refby=\"$refby\"";

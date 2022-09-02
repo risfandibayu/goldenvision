@@ -150,6 +150,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('user/update/{id}', 'ManageUsersController@update')->name('users.update');
         Route::post('user/add-sub-balance/{id}', 'ManageUsersController@addSubBalance')->name('users.addSubBalance');
         Route::post('user/set-user-placement/{id}', 'ManageUsersController@setUserPlacement')->name('users.setUserPlacement');
+        Route::post('user/update_counting/{id}', 'ManageUsersController@updateCounting')->name('users.updateCounting');
         Route::get('user/send-email/{id}', 'ManageUsersController@showEmailSingleForm')->name('users.email.single');
         Route::post('user/send-email/{id}', 'ManageUsersController@sendEmailSingle')->name('users.email.single');
         Route::get('user/transactions/{id}', 'ManageUsersController@transactions')->name('users.transactions');

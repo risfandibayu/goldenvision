@@ -555,7 +555,8 @@ class ManageUsersController extends Controller
         // dd($request->all());
         $user = user::where('id',$id)->first();
         $userextra = UserExtra::where('user_id',$id)->first();
-        $uplineextra = UserExtra::where('user_id',$user->pos_id)->first();
+        $usparent = User::where('id',$user->pos_id)->first();
+        $usparentextra = UserExtra::where('user_id',$usparent->id)->first();
         $parent = user::where('no_bro',$request->no_bro)->first();
         $parentextra = UserExtra::where('user_id',$parent->id)->first();
         //bro tidak ditemukan
@@ -587,6 +588,31 @@ class ManageUsersController extends Controller
             $notify[] = ['error', 'Right slot BRO number has not empty'];
             return back()->withNotify($notify);
         }
+        // $count = ($userextra->left + $userextra->right) + 1;
+
+        // if ($request->no_bro == $usparent->no_bro) {
+        //     # code...
+        //     // dd('s');
+        //     if ($request->position == 1) {
+        //         # code...
+        //         $usparentextra->paid_left += ($userextra->paid_left + $userextra->paid_right) + 1;
+        //         $usparentextra->left += ($userextra->left + $userextra->right) + 1;
+        //         $usparentextra->paid_right -= ($userextra->paid_left + $userextra->paid_right) + 1;
+        //         $usparentextra->right -= ($userextra->left + $userextra->right) + 1;
+        //         $usparentextra->save();
+        //     }
+
+        //     if ($request->position == 2) {
+        //         # code...
+        //         $usparentextra->paid_left -= ($userextra->paid_left + $userextra->paid_right) + 1;
+        //         $usparentextra->left -= ($userextra->left + $userextra->right) + 1;
+        //         $usparentextra->paid_right += ($userextra->paid_left + $userextra->paid_right) + 1;
+        //         $usparentextra->right += ($userextra->left + $userextra->right) + 1;
+        //         $usparentextra->save();
+        //     }
+        // }
+
+
 
 
 
@@ -609,32 +635,43 @@ class ManageUsersController extends Controller
 
 
 
-        if ($user->position == 1) {
-            # code...
-            $uplineextra->paid_left -= ($userextra->paid_left + $userextra->paid_right) + 1;
-            $uplineextra->left -= ($userextra->left + $userextra->right) + 1;
-            $uplineextra->save();
+        // if ($user->position == 1) {
+        //     # code...
+        //     $usparentextra->paid_left -= ($userextra->paid_left + $userextra->paid_right) + 1;
+        //     $usparentextra->left -= ($userextra->left + $userextra->right) + 1;
+        //     $usparentextra->save();
 
-        }
+        // }
 
-        if ($user->position == 2) {
-            # code...
-            $uplineextra->paid_right -= ($userextra->paid_left + $userextra->paid_right) + 1;
-            $uplineextra->right -= ($userextra->left + $userextra->right) + 1;
-            $uplineextra->save();
+        // if ($user->position == 2) {
+        //     # code...
+        //     $usparentextra->paid_right -= ($userextra->paid_left + $userextra->paid_right) + 1;
+        //     $usparentextra->right -= ($userextra->left + $userextra->right) + 1;
+        //     $usparentextra->save();
 
-        }
+        // }
 
 
 
         $user->pos_id = $parent->id;
         $user->position = $request->position;
         $user->save();
-        updatePaidCount3($user->id);
+        // updatePaidCount3($user->id,$count);
 
 
         $notify[] = ['success', 'The user has successfully changed his placement'];
-        return back()->withNotify($notify);
+        return response()->json(['msg' => 'mantap']);
+    }
+
+    public function updateCounting($id,Request $request){
+        $userextra = UserExtra::where('user_id',$id)->first();
+        $userextra->paid_left = $request->left;
+        $userextra->left = $request->left;
+        $userextra->paid_right = $request->right;
+        $userextra->right = $request->right;
+        $userextra->save();            
+
+        return response()->json(['msg' => 'mantap']);
     }
 
     public function userGold(Request $request){
