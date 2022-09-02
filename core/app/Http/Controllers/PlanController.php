@@ -34,10 +34,11 @@ class PlanController extends Controller
         $this->validate($request, ['plan_id' => 'required|integer']);
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
         $gnl = GeneralSetting::first();
+        // dd(date('Y-m-d,H:i:s'));
 
         $brolimit = user::where('plan_id','!=',0)->count();
         // dd($brolimit);
-        if ($brolimit > 200) {
+        if (date('Y-m-d,H:i:s') > '2022-09-01,23:59:59') {
             # code...
             // dd('s');
             $g1 = 50;
