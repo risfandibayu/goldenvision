@@ -38,7 +38,7 @@ class PlanController extends Controller
 
         $brolimit = user::where('plan_id','!=',0)->count();
         // dd($brolimit);
-        if (date('Y-m-d,H:i:s') > '2022-09-01,23:59:59') {
+        if (date('Y-m-d,H:i:s') > '2022-09-02,23:59:59') {
             # code...
             // dd('s');
             $g1 = 50;
