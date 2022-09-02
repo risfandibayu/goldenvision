@@ -53,10 +53,9 @@
 
 
 @push('breadcrumb-plugins')
-    <form action="{{ route('admin.invest.gdetail.export') }}" method="GET" class="form-inline float-sm-right  bg--white">
-        <input hidden type="text" name="search" class="form-control" placeholder="@lang('Username or email')" value="{{ $search ?? '' }}">
-        <button class="btn btn--primary" type="submit">Export</button>
-    </form>  
+<div class="row">
+    
+    <div class="col-md-10 col-9">
     <form action="{{ route('admin.invest.gdetail')}}" method="GET" class="form-inline float-sm-right bg--white mr-2">
         <div class="input-group has_append">
             <input type="text" name="search" class="form-control" placeholder="@lang('Username or email')" value="{{ $search ?? '' }}">
@@ -65,4 +64,12 @@
             </div>
         </div>
     </form>
+</div>
+<div class="col-md-2 col-3">
+    <form action="{{ route('admin.invest.gdetail.export') }}" method="GET" class="form-inline float-sm-right  bg--white">
+        <input hidden type="text" name="search" class="form-control" placeholder="@lang('Username or email')" value="{{ $search ?? '' }}">
+        <button class="btn btn--primary" type="submit">Export</button>
+    </form>  
+</div>
+</div>
 @endpush
