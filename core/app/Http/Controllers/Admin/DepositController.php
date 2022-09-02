@@ -126,22 +126,25 @@ class DepositController extends Controller
         }
         $date = explode('-',$search);
 
-
         if(!(@strtotime($date[0]) && @strtotime($date[1]))){
             $notify[]=['error','Please provide valid date'];
             return back()->withNotify($notify);
         }
-
+        
         $start  = @$date[0];
         $end    = @$date[1];
+        
+        // dd(Carbon::parse($start)->subDays(0));
 
-
-        if ($start) {
-            $deposits = Deposit::where('status','!=',0)->where('created_at','>',Carbon::parse($start)->subDays(1))->where('created_at','<=',Carbon::parse($start)->addDays(1));
-        }
-        if($end){
-            $deposits = Deposit::where('status','!=',0)->where('created_at','>',Carbon::parse($start)->subDays(1))->where('created_at','<',Carbon::parse($end)->addDays(1));
-        }
+        // if ($start) {
+        //     $deposits = Deposit::where('status','!=',0)->where('created_at','>',Carbon::parse($start)->subDays(1))->where('created_at','<=',Carbon::parse($start)->addDays(0));
+        // }
+        // if($end){
+        //     $deposits = Deposit::where('status','!=',0)->where('created_at','>',Carbon::parse($start)->subDays(1))->where('created_at','<',Carbon::parse($end)->addDays(1));
+        // }
+        
+        $deposits = Deposit::where('status','!=',0)->whereBetween('created_at', [Carbon::parse($start), Carbon::parse($end)->addDays(1)]);
+        
         if ($request->method) {
             $method = Gateway::where('alias',$request->method)->firstOrFail();
             $deposits = $deposits->where('method_code',$method->code);
