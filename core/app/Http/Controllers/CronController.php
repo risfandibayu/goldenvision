@@ -196,6 +196,9 @@ class CronController extends Controller
                             $trx->trx = getTrx();
 
                             if ($pair >= 10) {
+                                if (Date('H:i') == "01:00" ) {
+                                    # code...
+
                                 $paid_bv = $uex->paid_left + $uex->paid_right;
                             // }else{
                             // }
@@ -223,7 +226,7 @@ class CronController extends Controller
                                 $gnl->save();
 
                                 $cron[] = $user.'/'.$pair;
-
+                                }
 
 
 
