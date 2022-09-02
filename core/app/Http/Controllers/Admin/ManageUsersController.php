@@ -558,12 +558,13 @@ class ManageUsersController extends Controller
         $usparent = User::where('id',$user->pos_id)->first();
         $usparentextra = UserExtra::where('user_id',$usparent->id)->first();
         $parent = user::where('no_bro',$request->no_bro)->first();
-        $parentextra = UserExtra::where('user_id',$parent->id)->first();
         //bro tidak ditemukan
         if (!$parent) {
             $notify[] = ['error', 'BRO number not found'];
-            return back()->withNotify($notify);
+            return response()->json($notify);
         }
+        
+        $parentextra = UserExtra::where('user_id',$parent->id)->first();
 
         $lparent = user::where('pos_id',$parent->id)->where('position',1)->first();
         $rparent = user::where('pos_id',$parent->id)->where('position',2)->first();
@@ -572,21 +573,21 @@ class ManageUsersController extends Controller
         if ($lparent && $rparent) {
             # code...
             $notify[] = ['error', 'BRO number has not empty slot'];
-            return back()->withNotify($notify);
+            return response()->json($notify);
         }
 
         //kiri penuh
         if ($lparent && $request->position == 1) {
             # code...
             $notify[] = ['error', 'Left slot BRO number has not empty'];
-            return back()->withNotify($notify);
+            return response()->json($notify);
         }
 
         //kanan penuh
         if ($rparent && $request->position == 2) {
             # code...
             $notify[] = ['error', 'Right slot BRO number has not empty'];
-            return back()->withNotify($notify);
+            return response()->json($notify);
         }
         // $count = ($userextra->left + $userextra->right) + 1;
 
@@ -660,7 +661,7 @@ class ManageUsersController extends Controller
 
 
         $notify[] = ['success', 'The user has successfully changed his placement'];
-        return response()->json(['msg' => 'mantap']);
+        return response()->json($notify);
     }
 
     public function updateCounting($id,Request $request){
@@ -671,7 +672,8 @@ class ManageUsersController extends Controller
         $userextra->right = $request->right;
         $userextra->save();            
 
-        return response()->json(['msg' => 'mantap']);
+        $notify[] = ['success', 'Update Counting Successfully'];
+        return response()->json($notify);
     }
 
     public function userGold(Request $request){

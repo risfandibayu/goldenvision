@@ -199,14 +199,14 @@
                             <div class="form-group col-md-12">
                                 <label>@lang('Left')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
-                                    <input type="text" name="left" class="form-control left"
+                                    <input type="number" name="left" class="form-control left"
                                         placeholder="BRO Left Count" required>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
                                 <label>@lang('Right')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
-                                    <input type="text" name="right" class="form-control right"
+                                    <input type="number" name="right" class="form-control right"
                                         placeholder="BRO Right Count" required>
                                 </div>
                             </div>
@@ -295,14 +295,26 @@
                     '_token': token
                 },
                 success: function(data) {
-                    // console.log(data.msg);
-                    if (data.msg == 'mantap') {
-                        iziToast.success({
-                            message: 'User set placement successfully',
-                            position: "topRight"
-                        });
-                        window.location.reload();
+                    // console.log(data);
+                    // if (data.msg == 'mantap') {
+                    //     // iziToast[.success]({
+                    //     //     message: 'User set placement successfully',
+                    //     //     position: "topRight"
+                    //     // });
+                    //     // window.location.reload();
+
+                    // }
+                    iziToast[data[0][0]]({
+                        message: data[0][1],
+                        position: "topRight"
+                    });
+                    if (data[0][0] == 'success') {
+                        // window.location.reload();
+                        setTimeout(function(){
+                        window.location.reload(1);
+                        }, 1000);
                     }
+                    // window.location.reload();
 
                 }
             });
@@ -329,13 +341,16 @@
                     '_token': token
                 },
                 success: function(data) {
-                    // console.log(data.msg);
-                    if (data.msg == 'mantap') {
-                        iziToast.success({
-                            message: 'Update Counting successfully',
-                            position: "topRight"
-                        });
-                        window.location.reload();
+                    // console.log(data[0][0]);
+                    iziToast[data[0][0]]({
+                        message: data[0][1],
+                        position: "topRight"
+                    });
+                    if (data[0][0] == 'success') {
+                        // window.location.reload();
+                        setTimeout(function(){
+                        window.location.reload(1);
+                        }, 1000);
                     }
 
                 }
