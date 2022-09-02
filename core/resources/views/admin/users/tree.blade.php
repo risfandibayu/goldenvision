@@ -98,6 +98,8 @@
                             <div class="content">
                                 <a class="user-name tree_url tree_name" href=""></a>
                                 <input type="hidden" name="id" class="tree_id">
+                                <span class="user-status tree_username"></span>
+                                <br>
                                 <span class="user-status tree_bro"></span>
                                 <br>
                                 <span class="user-status tree_status"></span>
@@ -229,6 +231,7 @@
                 var modal = $('#exampleModalCenter');
                 $('.tree_id').val($(this).data('id'));
                 $('.tree_name').text($(this).data('name'));
+                $('.tree_username').text($(this).data('username'));
                 $('.tree_url').attr({"href": $(this).data('treeurl')});
                 $('.tree_login_url').attr({"href": $(this).data('treeloginurl')});
                 $('.tree_detail_url').attr({"href": $(this).data('treedetailurl')});
