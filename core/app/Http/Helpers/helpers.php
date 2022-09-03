@@ -1270,7 +1270,7 @@ function showSingleUserinTree($user)
 
         $res .= "<div class=\"user \" type=\"button\" >";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType showDetails\" $extraData>";
-        $res .= "<p class=\"user-name\">$user->no_bro</p>";
+        $res .= "<p class=\"user-name\">$user->username</p>";
         $res .= "<p class=\"user-name\" style=\"padding-top:20px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\">Explore Tree</a></p>";
 
     } else {
