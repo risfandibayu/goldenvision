@@ -30,7 +30,7 @@
   <meta name="msapplication-TileImage" content="{{asset('assets/new')}}/img/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
-  
+  @include('partials.seo')
   <!-- Google Fonts -->
   {{--
   <link

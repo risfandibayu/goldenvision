@@ -81,8 +81,19 @@ class SiteController extends Controller
         return view($this->activeTemplate . 'home', $data);
     }
     public function index(){
-        $prod = Product::where('status',1)->where('is_reseller',0)->get();
-        return view('new.index',compact('prod'));
+        $count = Page::where('tempname',$this->activeTemplate)->where('slug','home')->count();
+        if($count == 0){
+            $page = new Page();
+            $page->tempname = $this->activeTemplate;
+            $page->name = 'HOME';
+            $page->slug = 'home';
+            $page->save();
+        }
+
+        $data['page_title'] = 'Home';
+        $data['sections'] = Page::where('tempname',$this->activeTemplate)->where('slug','home')->firstOrFail();
+        $data['prod'] = Product::where('status',1)->where('is_reseller',0)->get();
+        return view('new.index',$data);
     }
 
     public function pages($slug)
