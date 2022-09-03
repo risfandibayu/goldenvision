@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ExportData;
 use App\Models\Deposit;
 use App\Models\Gateway;
 use App\Models\GeneralSetting;
@@ -10,6 +11,8 @@ use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class DepositController extends Controller
 {
@@ -244,6 +247,122 @@ class DepositController extends Controller
 
         $notify[] = ['success', 'Deposit has been rejected.'];
         return  redirect()->route('admin.deposit.pending')->withNotify($notify);
+
+    }
+
+    public function export(Request $request){
+        // dd($request->all());
+        $scope = $request->page;
+        $pt = $request->paget;
+        $search = $request->search;
+        $dates = $request->date;
+
+        $date = explode('-',$dates);
+        $start  = @$date[0];
+        $end    = @$date[1];
+
+        if($request->search){
+            switch ($scope) {
+                case 'pending':
+                    $code = 2;
+                    break;
+                case 'approved':
+                    $code = 1;
+                    break;
+                case 'rejected':
+                    $code = 3;
+                    break;
+                case 'list':
+                    return Excel::download(
+                        new ExportData(
+                        Deposit::query()
+                        ->where('deposits.status','!=',0)
+                        ->where('deposits.trx', 'like', "%$search%")
+                        ->orWhere('users.username', 'like', "%$search%")
+                        ->where('deposits.status','!=',0)
+                        ->join('users','users.id','=','deposits.user_id')
+                        ->orderBy('deposits.id','DESC')
+                        ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+                    break;
+            }
+            return Excel::download(
+                new ExportData(
+                Deposit::query()
+                ->where('deposits.status','!=',0)
+                ->where('deposits.status','=',$code)
+                ->where('deposits.trx', 'like', "%$search%")
+                ->orWhere('users.username', 'like', "%$search%")
+                ->where('deposits.status','!=',0)
+                ->where('deposits.status','=',$code)
+                ->join('users','users.id','=','deposits.user_id')
+                ->orderBy('deposits.id','DESC')
+                ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+        }
+
+        if ($request->date) {
+            # code...
+             switch ($scope) {
+                case 'pending':
+                    $code = 2;
+                    break;
+                case 'approved':
+                    $code = 1;
+                    break;
+                case 'rejected':
+                    $code = 3;
+                    break;
+                case 'list':
+                    return Excel::download(
+                        new ExportData(
+                        Deposit::query()
+                        ->where('deposits.status','!=',0)
+                        ->whereBetween('deposits.created_at', [Carbon::parse($start), Carbon::parse($end)->addDays(1)])
+                        ->join('users','users.id','=','deposits.user_id')
+                        ->orderBy('deposits.id','DESC')
+                        ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+                    break;
+            }
+            return Excel::download(
+                new ExportData(
+                Deposit::query()
+                ->where('deposits.status','!=',0)
+                ->whereBetween('deposits.created_at', [Carbon::parse($start), Carbon::parse($end)->addDays(1)])
+                ->where('deposits.status','=',$code)
+                ->join('users','users.id','=','deposits.user_id')
+                ->orderBy('deposits.id','DESC')
+                ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+        }
+
+        switch ($pt) {
+            case 'Pending Deposits':
+                $code = 2;
+                break;
+            case 'Approved Deposits':
+                $code = 1;
+                break;
+            case 'Rejected Deposits':
+                $code = 3;
+                break;
+            case 'Deposit History':
+                return Excel::download(
+                    new ExportData(
+                    Deposit::query()
+                    ->where('deposits.status','!=',0)
+                    ->join('users','users.id','=','deposits.user_id')
+                    ->orderBy('deposits.id','DESC')
+                    ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+            break;
+        }
+
+        return Excel::download(
+            new ExportData(
+            Deposit::query()
+            ->where('deposits.status','=',$code)
+            ->join('users','users.id','=','deposits.user_id')
+            ->orderBy('deposits.id','DESC')
+            ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))")
+            )), 'deposit.xlsx')
+            ;
 
     }
 }

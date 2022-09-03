@@ -236,6 +236,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('via/{method}/{type?}', 'DepositController@depViaMethod')->name('method');
             Route::get('/{scope}/search', 'DepositController@search')->name('search');
             Route::get('date-search/{scope}', 'DepositController@dateSearch')->name('dateSearch');
+            
+            Route::get('export', 'DepositController@export')->name('export');
+
         });
 
 

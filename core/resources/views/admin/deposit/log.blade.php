@@ -115,10 +115,12 @@
 
 @push('breadcrumb-plugins')
     @if(!request()->routeIs('admin.users.deposits') && !request()->routeIs('admin.users.deposits.method'))
+    <div class="row">
+        <div class="col-md-10 col-9">
         <form
             action="{{route('admin.deposit.search', $scope ?? str_replace('admin.deposit.', '', request()->route()->getName()))}}"
             method="GET" class="form-inline float-sm-right bg--white mb-2">
-            <div class="input-group has_append  ">
+            <div class="input-group has_append ">
                 <input type="text" name="search" class="form-control" placeholder="@lang('Deposit code/Username')"
                        value="{{ $search ?? '' }}">
                 <div class="input-group-append">
@@ -141,6 +143,17 @@
                 </div>
             </div>
         </form>
+        </div>
+        <div class="col-md-2 col-3">
+            <form action="{{ route('admin.deposit.export') }}" method="GET" class="form-inline float-sm-right">
+                <input hidden type="text" name="search" class="form-control" placeholder="@lang('Username or email')" value="{{ $search ?? '' }}">
+                <input hidden type="text" name="date" class="form-control" placeholder="@lang('Username or email')" value="{{ $dateSearch ?? '' }}">
+                <input hidden type="text" name="page" class="form-control" placeholder="@lang('Username or email')" value="{{ $scope ?? '' }}">
+                <input hidden type="text" name="paget" class="form-control" placeholder="@lang('Username or email')" value="{{ $page_title ?? '' }}">
+                <button class="btn btn--primary" type="submit">Export</button>
+            </form>  
+        </div>
+    </div>
 
     @endif
 @endpush
