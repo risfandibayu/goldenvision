@@ -1242,7 +1242,7 @@ function showSingleUserinTree($user)
         $img = getImage('assets/images/user/profile/'. $user->image, null, true);
 
         $refby = getUserById($user->ref_id)->fullname ?? '';
-        $posby = getUserById($user->pos_id)->fullname ?? '';
+        $posby = getUserById($user->pos_id)->username ?? '';
         $extraData = " data-name=\"$user->fullname\"";
         if (auth()->guard('admin')->user()) {
             $hisTree = route('admin.users.other.tree', $user->username);
