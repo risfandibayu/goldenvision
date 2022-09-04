@@ -620,7 +620,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-control-label font-weight-bold">Selfie Photo</label>
+                            <label class="form-control-label font-weight-bold">Selfie With National ID/Passport ID Photo</label>
                             <div class="">
                                 <img src="{{ getImage('assets/images/user/kyc/'. $user->foto_selfie, null, true)}}"
                                     alt="Selfie Photo" class="b-radius--10 w-100">
