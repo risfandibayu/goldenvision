@@ -133,6 +133,7 @@
           <li><a class="nav-link scrollto active" href="#hero">Beranda</a></li>
           <li><a class="nav-link scrollto" href="#produk">Produk</a></li>
           <li><a class="nav-link scrollto" href="#about">Tentang</a></li>
+          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           {{-- <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -256,8 +257,8 @@
     </div>
   </section><!-- End Team Section -->
 
-  <section id="about" class="about">
-    <div class="container">
+  <section id="about" class="about" style="background: #f5f5f5;">
+    <div class="container pt-3">
 
       <div class="">
 
@@ -312,6 +313,193 @@
 
     </div>
   </section><!-- End About Section -->
+  <section id="faq" class="faq section-bg" style="background: #ffffff;">
+    <div class="container">
+
+      <div class="section-title" data-aos="fade-up">
+        <h2>F.A.Q</h2>
+        <p>Frequently Asked Questions</p>
+      </div>
+
+      <div class="faq-list">
+        <ul>
+          <li data-aos="fade-up" style="background: #f5f5f5;"> 
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">Apa Itu Microgold ?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+              <p>
+                Microgold adalah produsen dan penjual produk emas dengan ukuran micro : 0,01 gram, 0,02 gram, 0,05 gram, 0,1 gram. Fine gold 999 bersertifikat.
+
+Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tukar dengan emas antam 5 gram yang akan dimasukkan ke rekening dinaran.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="100" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Apa itu Mitra Microgold ? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Mitra microgold adalah reseller yang akan memperoleh harga khusus jika membeli produk
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="200" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">Bagaimana Cara Jika Saya Ingin Bergabung ? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Klik menu “Registrasi” dan masukan data sesuai kolom yang tersedia dan buat password akun Anda.
+                Microgold akan mengirimkan OTP melalui E-mail yang telah didaftarkan.
+<br>
+<br>
+                <strong>Selamat kamu telah berhasil bergabung bersama Microgold.</strong>
+<br>
+<br>
+                Silahkan Login menggunakan  email dan password yang telah Anda daftarkan.
+
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="300" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Mengapa Saya Harus Melakukan Verifikasi Akun Saya ? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Seluruh pemilik akun Microgold harus melewati proses E-KYC guna perlindungan konsumen dan sebagai upaya komitmen Microgold dalam penerapan program APUPPT, sehingga Microgold memberlakukan kebijakan hanya Pengguna yang telah ter-verifikasi yang dapat melakukan deposit untuk pembelian paket Microgold.
+
+                Bagian ini tidak berlaku bagi yang sudah menjadi member dinaran.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="400" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed">Bagaimana Caranya Melakukan Verifikasi Akun Dinaran Saya ? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Setelah kamu berhasil melakukan registrasi maka kamu dapat mengajukan permohonan verifikasi akun kamu.
+                <br><br>
+                <strong>
+                  Berikut langkah-langkah Permohonan Verifikasi Akun :
+                </strong>
+              </p>
+              <p>
+                •	Login akun kamu
+                <br>
+                •	Klik tombol verifikasi pada kotak berwarna biru bertuliskan “Verify Now” di halaman akun Microgold Anda. <br>
+                • Isi seluruh data sesuai kolom yang tersedia serta upload foto dokumen pendukung dengan benar lalu Klik “Save Change”.  <br>
+                •	Proses verifikasi Selesai. <br>
+                •	Admin akan membantu proses verifikasi akun kamu. <br>
+                •	Tunggu hingga status dalam kotak berubah menjadi “Verified”. <br>
+                •	Kamu akan menerima notifikasi melalui email untuk status permohonan verifikasi kamu. <br>
+                •	Pihak Microgold berhak melakukan penolakan apabila terdapat ketidaksesuaian data dengan memberitahukan alasan penolakannya. <br>
+                •	Kamu dapat mengajukan permohonan ulang kembali setelah melakukan perbaikan data hingga akun kamu berhasil di verifikasi oleh pihak Microgold. <br>
+                •	Kamu baru bisa melakukan deposit dan pembelian setelah status akun kamu terverifikasi. <br>
+
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="500" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-6" class="collapsed">Berapa Minimum Deposit Awal Di Microgold? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-6" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Untuk Deposit awal kamu bisa mulai dari Rp. 2.890.000 untuk harga 1 paket Microgold. Untuk deposit berikutnya tidak ada nilai minimum deposit.
+                <br><br>
+                <strong>
+                  Berikut langkah-langkah pengisian deposit :
+                </strong>
+              </p>
+              <p>
+                •	Login Akun kamu dan pastikan akun kamu sudah dilakukan verifikasi.<br>
+                •	Klik Deposit Now pada halaman dashboard Microgold Anda.<br>
+                •	Masukan jumlah deposit yang diinginkan lalu klik Submit.<br>
+                •	Anda akan melihat Payment Preview Anda, jika sudah sesuai Klik Confirm Deposit.<br>
+                •	Anda akan melihat Deposit Confirm Anda.<br>
+                •	Lakukan pembayaran sesuai nominal yang tertera.<br>
+                •	Lakukan pembayaran hanya ke rekening PT.SHAKA BUMI AURUM.<br>
+                •	Upload bukti transfer pada halaman deposit confirm.<br>
+                •	Lakukan pembayaran sesuai nominal yang tertera sesuai batas waktu yang telah ditentukan.<br>
+                •	Klik kolom Pay Now jika sudah sesuai.<br>
+                •	Mohon ditunggu, Deposit kamu akan di cek dan di approve oleh tim Microgold.<br>
+                •	Saldo deposit kamu akan masuk jika sudah di approve oleh tim Microgold. <br>
+                •	Cek Saldo deposit pada akun Microgold kamu jika. <br>
+                <br><br>
+                Jika terdapat kesalahan maupun kendala silahkan hubungi Customer Care Microgold.
+
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="600" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-7" class="collapsed">Bagaimana Caranya Melakukan Transaksi Pembelian Paket Mitra Microgold ? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-7" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Setelah kamu berhasil melakukan verifikasi akun kamu dan melakukan deposit, maka kamu sudah dapat membeli 1 atau lebih paket Microgold.
+                <br><br>
+                <strong>Berikut langkah-langkah Pasang dan Atur Pohon :</strong>
+
+              </p>
+              <p>
+              •	Login Akun kamu dan pastikan akun kamu sudah dilakukan verifikasi. <br>
+              •	Klik Plan pada halaman dashboard Microgold Anda. <br>
+              •	Klik Subscribe. <br>
+              •	Masukan jumlah BRO yang Anda beli. <br>
+              •	Masukan BRO dari Upline Anda. <br>
+              •	Pilih posisi Anda Kanan/kiri.<br>
+              •	Klik Subsribe. <br> 
+              •	Selamat Anda sudah bisa langsung pasang dan atur pohon Anda. <br>
+              •	Klik menu Manage User jika Anda membeli lebih dari 1 BRO. <br>
+
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="700" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-8" class="collapsed">Alur Pembayaran Komisi  <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-8" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                •	Mitra wajib punya akun Dinaran. <br>
+                •	Komisi dibayarkan melalui akun Dinaran milik mitra. <br>
+                •	Perhitungan komisi dilakukan setiap hari selasa s/d selasa minggu berikkutnya pukul 24.00. <br>
+                •	Komisi dibayarkan setiap hari Rabu jam 12.00 siang ke rekening Dinaran. <br>
+
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="800" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-9" class="collapsed">Cara Merefer Dengan No Upline Dan Nomor Bro Kanan Kirinya <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-9" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                •	Upline cukup memberikan nomor BRO miliknya kecalon downline. <br>
+                •	Calon downline otomatis akan langsung berada di bawahnya
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="900" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-10" class="collapsed">Cara Membeli Emas Retail Dan Memesan Customized <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-10" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Pembelian emas retil baru bisa di 1 oktober melalui website.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="1000" style="background: #f5f5f5;">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-11" class="collapsed">Cara Menukar Emas Sertifikat Dengan Emas Antam 5 Gram <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-11" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Tukar emas microgold anda minimal 5gr
+              </p>
+            </div>
+          </li>
+
+
+        </ul>
+      </div>
+
+    </div>
+  </section><!-- End F.A.Q Section -->
   <!-- ======= Footer ======= -->
   <footer id="footer" style="background-color: #212A51">
 

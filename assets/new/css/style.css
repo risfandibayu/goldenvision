@@ -19,7 +19,7 @@ a {
 }
 
 a:hover {
-  color: #34e5a6;
+  color: #C29A62;
   text-decoration: none;
 }
 
@@ -1188,7 +1188,7 @@ section {
   position: absolute;
   right: 0;
   left: 20px;
-  color: #34e5a6;
+  color: #C29A62;
 }
 .faq .faq-list .icon-show, .faq .faq-list .icon-close {
   font-size: 24px;
