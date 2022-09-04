@@ -108,6 +108,7 @@
                         </div>
                         <div class="user-details-body text-center">
                             <h6 class="my-3">@lang('Referred By'): <span class="tree_ref"></span></h6>
+                            <h6 class="my-3">@lang('Position Under'): <span class="tree_pos"></span></h6>
                             <table class="table table-bordered">
                                 <tr>
                                     <th>&nbsp;</th>
@@ -243,6 +244,7 @@
                 $('.user-details-header').removeClass('Free');
                 $('.user-details-header').addClass($(this).data('status'));
                 $('.tree_ref').text($(this).data('refby'));
+                $('.tree_pos').text($(this).data('posby'));
                 $('.lbv').text($(this).data('lbv'));
                 $('.rbv').text($(this).data('rbv'));
                 $('.lpaid').text($(this).data('lpaid'));

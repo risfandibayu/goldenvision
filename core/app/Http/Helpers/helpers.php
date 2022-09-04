@@ -1242,6 +1242,7 @@ function showSingleUserinTree($user)
         $img = getImage('assets/images/user/profile/'. $user->image, null, true);
 
         $refby = getUserById($user->ref_id)->fullname ?? '';
+        $posby = getUserById($user->pos_id)->fullname ?? '';
         $extraData = " data-name=\"$user->fullname\"";
         if (auth()->guard('admin')->user()) {
             $hisTree = route('admin.users.other.tree', $user->username);
@@ -1253,6 +1254,8 @@ function showSingleUserinTree($user)
             $hisTree = route('user.other.tree', $user->username);
         }
 
+
+
         $extraData .= " data-treeurl=\"$hisTree\"";
         $extraData .= " data-status=\"$stShow\"";
         $extraData .= " data-plan=\"$planName\"";
@@ -1261,6 +1264,7 @@ function showSingleUserinTree($user)
         $extraData .= " data-bro=\"$user->no_bro\"";
         $extraData .= " data-image=\"$img\"";
         $extraData .= " data-refby=\"$refby\"";
+        $extraData .= " data-posby=\"$posby\"";
         $extraData .= " data-lpaid=\"" . @$user->userExtra->left . "\"";
         $extraData .= " data-rpaid=\"" . @$user->userExtra->right . "\"";
         $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";
