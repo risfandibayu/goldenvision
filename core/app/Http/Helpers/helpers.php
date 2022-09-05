@@ -1261,6 +1261,8 @@ function showSingleUserinTree($user)
         $extraData .= " data-plan=\"$planName\"";
         $extraData .= " data-username=\"$user->username\"";
         $extraData .= " data-id=\"$user->id\"";
+        $extraData .= " data-email=\"$user->email\"";
+        $extraData .= " data-mobile=\"$user->mobile\"";
         $extraData .= " data-bro=\"$user->no_bro\"";
         $extraData .= " data-image=\"$img\"";
         $extraData .= " data-refby=\"$refby\"";

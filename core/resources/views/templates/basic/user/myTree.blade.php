@@ -168,8 +168,14 @@
                                 ></div>
                             <div class="content">
                                 <a class="user-name tree_url tree_name" href=""></a>
-                                <span class="user-status tree_bro"></span>
+                                <strong style="    font-size: 19px;
+                                font-weight: bolder;"  class="user-status tree_bro"></strong>
                                 <br>
+                                <span class="user-status tree_email"></span>
+                                <br>
+                                <span class="user-status tree_phone"></span>
+                                <br>
+                                
                                 <span class="user-status tree_status"></span>
                                 <span class="user-status tree_plan"></span>
                             </div>
@@ -227,6 +233,8 @@
                 $('.tree_url').attr({"href": $(this).data('treeurl')});
                 $('.tree_status').text($(this).data('status'));
                 $('.tree_plan').text($(this).data('plan'));
+                $('.tree_phone').text('+' + $(this).data('mobile'));
+                $('.tree_email').text($(this).data('email'));
                 $('.tree_bro').text($(this).data('bro'));
                 $('.tree_image').attr({"src": $(this).data('image')});
                 $('.user-details-header').removeClass('Paid');
