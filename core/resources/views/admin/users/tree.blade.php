@@ -96,12 +96,25 @@
                             <div class="thumb"><img class="w-h-100-p tree_image" src="#" alt="*"
                                 ></div>
                             <div class="content">
-                                <a class="user-name tree_url tree_name" href=""></a>
+                                {{-- <a class="user-name tree_url tree_name" href=""></a>
                                 <input type="hidden" name="id" class="tree_id">
                                 <span class="user-status tree_username"></span>
                                 <br>
                                 <span class="user-status tree_bro"></span>
                                 <br>
+                                <span class="user-status tree_status"></span>
+                                <span class="user-status tree_plan"></span> --}}
+                                <a class="user-name tree_url tree_name" href=""></a>
+                                <strong style="    font-size: 19px;
+                                font-weight: bolder;"  class="user-status tree_bro"></strong>
+                                <br>
+                                <span class="user-status tree_username"></span>
+                                <br>
+                                <span class="user-status tree_email"></span>
+                                <br>
+                                <span class="user-status tree_phone"></span>
+                                <br>
+                                
                                 <span class="user-status tree_status"></span>
                                 <span class="user-status tree_plan"></span>
                             </div>
@@ -232,12 +245,15 @@
                 var modal = $('#exampleModalCenter');
                 $('.tree_id').val($(this).data('id'));
                 $('.tree_name').text($(this).data('name'));
+                $('.tree_phone').text('+' + $(this).data('mobile'));
+                $('.tree_email').text($(this).data('email'));
+                $('.tree_bro').text($(this).data('bro'));
                 $('.tree_username').text($(this).data('username'));
                 $('.tree_url').attr({"href": $(this).data('treeurl')});
                 $('.tree_login_url').attr({"href": $(this).data('treeloginurl')});
                 $('.tree_detail_url').attr({"href": $(this).data('treedetailurl')});
                 $('.tree_status').text($(this).data('status'));
-                $('.tree_bro').text('BRO Number : '+$(this).data('bro'));
+                $('.tree_bro').text(+$(this).data('bro'));
                 $('.tree_plan').text($(this).data('plan'));
                 $('.tree_image').attr({"src": $(this).data('image')});
                 $('.user-details-header').removeClass('Paid');
