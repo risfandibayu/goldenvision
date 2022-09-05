@@ -167,11 +167,11 @@
                             <div class="thumb"><img src="#" alt="*" class="tree_image w-h-100-p"
                                 ></div>
                             <div class="content">
-                                {{-- <a class="user-name tree_url tree_name" href=""></a> --}}
+                                <a class="user-name tree_url tree_name" href=""></a>
                                 <span class="user-status tree_bro"></span>
-                                {{-- <br> --}}
-                                {{-- <span class="user-status tree_status"></span> --}}
-                                {{-- <span class="user-status tree_plan"></span> --}}
+                                <br>
+                                <span class="user-status tree_status"></span>
+                                <span class="user-status tree_plan"></span>
                             </div>
                         </div>
                         <div class="user-details-body text-center">

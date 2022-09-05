@@ -1277,7 +1277,7 @@ function showSingleUserinTree($user)
         if (auth()->guard('admin')->user()) {
         $res .= "<p class=\"user-name\">$user->username</p>";
         } else {
-            $res .= "<p class=\"user-name\">$user->no_bro</p>";
+            $res .= "<p class=\"user-name\">$user->username</p>";
         }
             $res .= "<p class=\"user-name\" style=\"padding-top:20px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\">Explore Tree</a></p>";
 
