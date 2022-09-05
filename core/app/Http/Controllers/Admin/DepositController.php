@@ -282,7 +282,7 @@ class DepositController extends Controller
                         ->where('deposits.status','!=',0)
                         ->join('users','users.id','=','deposits.user_id')
                         ->orderBy('deposits.id','DESC')
-                        ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+                        ->select(db::raw("DATE_ADD(deposits.created_at, INTERVAL 0 HOUR)"),'deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
                     break;
             }
             return Excel::download(
@@ -296,7 +296,7 @@ class DepositController extends Controller
                 ->where('deposits.status','=',$code)
                 ->join('users','users.id','=','deposits.user_id')
                 ->orderBy('deposits.id','DESC')
-                ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+                ->select(db::raw("DATE_ADD(deposits.created_at, INTERVAL 0 HOUR)"),'deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
         }
 
         if ($request->date) {
@@ -319,7 +319,7 @@ class DepositController extends Controller
                         ->whereBetween('deposits.created_at', [Carbon::parse($start), Carbon::parse($end)->addDays(1)])
                         ->join('users','users.id','=','deposits.user_id')
                         ->orderBy('deposits.id','DESC')
-                        ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+                        ->select(db::raw("DATE_ADD(deposits.created_at, INTERVAL 0 HOUR)"),'deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
                     break;
             }
             return Excel::download(
@@ -330,7 +330,7 @@ class DepositController extends Controller
                 ->where('deposits.status','=',$code)
                 ->join('users','users.id','=','deposits.user_id')
                 ->orderBy('deposits.id','DESC')
-                ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+                ->select(db::raw("DATE_ADD(deposits.created_at, INTERVAL 0 HOUR)"),'deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
         }
 
         switch ($pt) {
@@ -350,7 +350,7 @@ class DepositController extends Controller
                     ->where('deposits.status','!=',0)
                     ->join('users','users.id','=','deposits.user_id')
                     ->orderBy('deposits.id','DESC')
-                    ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
+                    ->select(db::raw("DATE_ADD(deposits.created_at, INTERVAL 0 HOUR)"),'deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))"))), 'deposit.xlsx');
             break;
         }
 
@@ -360,7 +360,7 @@ class DepositController extends Controller
             ->where('deposits.status','=',$code)
             ->join('users','users.id','=','deposits.user_id')
             ->orderBy('deposits.id','DESC')
-            ->select('deposits.created_at','deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))")
+            ->select(db::raw("DATE_ADD(deposits.created_at, INTERVAL 0 HOUR)"),'deposits.trx','users.username','users.email','deposits.amount',db::raw("if(deposits.status = 2, 'pending',if(deposits.status = 1,'approved','Rejected'))")
             )), 'deposit.xlsx')
             ;
 
