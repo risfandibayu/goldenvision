@@ -96,9 +96,9 @@
                             <div class="thumb"><img class="w-h-100-p tree_image" src="#" alt="*"
                                 ></div>
                             <div class="content">
-                                {{-- <a class="user-name tree_url tree_name" href=""></a>
+                                {{-- <a class="user-name tree_url tree_name" href=""></a> --}}
                                 <input type="hidden" name="id" class="tree_id">
-                                <span class="user-status tree_username"></span>
+                                {{-- <span class="user-status tree_username"></span>
                                 <br>
                                 <span class="user-status tree_bro"></span>
                                 <br>
