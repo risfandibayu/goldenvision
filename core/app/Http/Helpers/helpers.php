@@ -770,13 +770,13 @@ function sendGeneralEmail($email, $subject, $message, $receiver_name = '')
     $config  = $general->mail_config;
 
     if ($config->name == 'php') {
-        sendPhpMail($email, $receiver_name, $general->email_from, $subject, $message);
+        sendPhpMail($email, $receiver_name, $subject, $message, $general);
     } else if ($config->name == 'smtp') {
-        sendSmtpMail($config, $email, $receiver_name, $general->email_from, $general->sitename, $subject, $message);
+        sendSmtpMail($config, $email, $receiver_name, $subject, $message, $general);
     } else if ($config->name == 'sendgrid') {
-        sendSendGridMail($config, $email, $receiver_name, $general->email_from, $general->sitename, $subject, $message);
+        sendSendGridMail($config, $email, $receiver_name,$subject, $message,$general);
     } else if ($config->name == 'mailjet') {
-        sendMailjetMail($config, $email, $receiver_name, $general->email_from, $general->sitename, $subject, $message);
+        sendMailjetMail($config, $email, $receiver_name,$subject, $message, $general);
     }
 }
 
