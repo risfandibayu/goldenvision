@@ -190,6 +190,51 @@ class PaymentController extends Controller
         }
     }
 
+    public static function userDataUpdate2($trx)
+    {
+        $gnl = GeneralSetting::first();
+        $data = Deposit::where('trx', $trx)->first();
+        if ($data->status == 2) {
+            $data->status = 1;
+            $data->save();
+
+            $user = User::find($data->user_id);
+            $user->balance += $data->amount;
+            $user->save();
+            $gateway = $data->gateway;
+
+            $transaction = new Transaction();
+            $transaction->user_id = $data->user_id;
+            $transaction->amount = $data->amount;
+            $transaction->post_balance = getAmount($user->balance);
+            $transaction->charge = getAmount($data->charge);
+            $transaction->trx_type = '+';
+            $transaction->details = 'Deposit Via ' . $data->gateway_currency()->name;
+            $transaction->trx = $data->trx;
+            $transaction->save();
+
+            $adminNotification = new AdminNotification();
+            $adminNotification->user_id = $user->id;
+            $adminNotification->title = 'Deposit successful via '.$data->gateway_currency()->name;
+            $adminNotification->click_url = route('admin.deposit.successful');
+            $adminNotification->save();
+
+            notify($user, 'DEPOSIT_COMPLETE', [
+                'method_name' => $data->gateway_currency()->name,
+                'method_currency' => $data->method_currency,
+                'method_amount' => getAmount($data->final_amo),
+                'amount' => getAmount($data->amount),
+                'charge' => getAmount($data->charge),
+                'currency' => $gnl->cur_text,
+                'rate' => getAmount($data->rate),
+                'trx' => $data->trx,
+                'post_balance' => getAmount($user->balance)
+            ]);
+
+
+        }
+    }
+
     public function manualDepositConfirm()
     {
         $track = session()->get('Track');
@@ -303,7 +348,7 @@ class PaymentController extends Controller
         if ($status == 'berhasil') {
             # code...
             $data = Deposit::where('trx', $request->reference_id)->orderBy('id', 'DESC')->with('gateway')->first();
-            $this->userDataUpdate($data->trx);
+            $this->userDataUpdate2($data->trx);
             return response()->json(['status'=> 'ok']);
         }
         return response()->json(['status'=> 'error']);
