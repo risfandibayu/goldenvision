@@ -205,13 +205,13 @@ class CronController extends Controller
                             // }else{
                             // }
                             
-                                sendEmail2($user, 'matching_bonus', [
-                                        'amount' => $bonus,
-                                        'currency' => $gnl->cur_text,
-                                        'paid_bv' => $paid_bv,
-                                        'post_balance' => $payment->balance,
-                                        'trx' =>  $trx->trx,
-                                ]);
+                                // sendEmail2($user, 'matching_bonus', [
+                                //         'amount' => $bonus,
+                                //         'currency' => $gnl->cur_text,
+                                //         'paid_bv' => $paid_bv,
+                                //         'post_balance' => $payment->balance,
+                                //         'trx' =>  $trx->trx,
+                                // ]);
                             
                             // if ($pair >= 10) {
                                 $payment->save();
@@ -237,13 +237,13 @@ class CronController extends Controller
                                     # code...
                                 
                                 $paid_bv = $pair * 6;
-                                sendEmail2($user, 'matching_bonus', [
-                                    'amount' => $bonus,
-                                    'currency' => $gnl->cur_text,
-                                    'paid_bv' => $paid_bv,
-                                    'post_balance' => $payment->balance,
-                                    'trx' =>  $trx->trx,
-                                ]);
+                                // sendEmail2($user, 'matching_bonus', [
+                                //     'amount' => $bonus,
+                                //     'currency' => $gnl->cur_text,
+                                //     'paid_bv' => $paid_bv,
+                                //     'post_balance' => $payment->balance,
+                                //     'trx' =>  $trx->trx,
+                                // ]);
                                 $payment->save();
                                 $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
                                 $trx->save();
