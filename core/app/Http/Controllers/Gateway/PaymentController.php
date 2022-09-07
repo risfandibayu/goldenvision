@@ -97,6 +97,23 @@ class PaymentController extends Controller
         $page_title = 'Payment Preview';
         return view($this->activeTemplate . 'user.payment.preview', compact('data', 'page_title'));
     }
+    // public function depositPreview()
+    // {
+
+    //     $track = session()->get('Track');
+    //     $data = Deposit::where('trx', $track)->orderBy('id', 'DESC')->firstOrFail();
+
+    //     if (is_null($data)) {
+    //         $notify[] = ['error', 'Invalid Deposit Request'];
+    //         return redirect()->route(gatewayRedirectUrl())->withNotify($notify);
+    //     }
+    //     if ($data->status != 0) {
+    //         $notify[] = ['error', 'Invalid Deposit Request'];
+    //         return redirect()->route(gatewayRedirectUrl())->withNotify($notify);
+    //     }
+    //     $page_title = 'Payment Preview';
+    //     return view($this->activeTemplate . 'user.payment.preview', compact('data', 'page_title'));
+    // }
 
 
     public function depositConfirm()
@@ -298,13 +315,17 @@ class PaymentController extends Controller
     public function callback(Request $request){
 
         $status = $request->status;
+        $data = Deposit::where('trx', $request->reference_id)->orderBy('id', 'DESC')->with('gateway')->first();
         if ($status == 'berhasil') {
             # code...
-            $data = Deposit::where('trx', $request->reference_id)->orderBy('id', 'DESC')->with('gateway')->first();
             $this->userDataUpdate($data->trx);
             return response()->json(['status'=> 'ok']);
+        }else{
+
+            $data->status = 5;
+            $data->save();
+            return response()->json(['status'=> 'pending']);
         }
-        return response()->json(['status'=> 'error']);
     }
 
 
