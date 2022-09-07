@@ -268,8 +268,8 @@ class PaymentController extends Controller
         $body['buyerName']  = $user->firstname . ' '. $user->lastname;
         $body['buyerEmail'] = $user->email;
         $body['buyerPhone'] = $user->mobile;
-        $body['expired'] = 10;
-        $body['expiredType'] = 'seconds';
+        // $body['expired'] = 10;
+        // $body['expiredType'] = 'seconds';
         // $body['autoRedirect'] = 10;
         // $body['returnUrl']  = env('APP_URL').'/thank-you';
         $body['returnUrl']  = route('user.home');
@@ -353,9 +353,15 @@ class PaymentController extends Controller
         if ($status == 'berhasil') {
             # code...
             $this->userDataUpdate2($data->trx);
-            return response()->json(['status'=> 'ok']);
+            return response()->json(['status'=> $status]);
+        }elseif($status == 'pending'){
+
+        }else{
+            $data->status = 3;
+            $data->admin_feedback =  "Deposit Expired";
+            $data->save();
         }
-        return response()->json(['status'=> 'error']);
+        return response()->json(['status'=> $status]);
     }
 
 
