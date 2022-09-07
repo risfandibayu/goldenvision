@@ -268,8 +268,8 @@ class PaymentController extends Controller
         $body['buyerName']  = $user->firstname . ' '. $user->lastname;
         $body['buyerEmail'] = $user->email;
         $body['buyerPhone'] = $user->mobile;
-        // $body['expired'] = 10;
-        // $body['expiredType'] = 'seconds';
+        $body['expired'] = 10;
+        $body['expiredType'] = 'seconds';
         // $body['autoRedirect'] = 10;
         // $body['returnUrl']  = env('APP_URL').'/thank-you';
         $body['returnUrl']  = route('user.home');
