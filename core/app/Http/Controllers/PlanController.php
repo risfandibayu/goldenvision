@@ -31,7 +31,12 @@ class PlanController extends Controller
     function planStore(Request $request)
     {
 
-        $this->validate($request, ['plan_id' => 'required|integer']);
+        $this->validate($request, [
+            'plan_id' => 'required|integer',
+            'referral' => 'required',
+            'position' => 'required',
+        ]);
+        // dd($request->all());
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
         $gnl = GeneralSetting::first();
         // dd(date('Y-m-d,H:i:s'));
