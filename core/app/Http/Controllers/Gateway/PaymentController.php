@@ -33,7 +33,8 @@ class PaymentController extends Controller
     {
 
         // dd($request->all());
-        $request->amount =  str_replace('.','',$request->amount) + rand(10, 99);
+        // $request->amount =  str_replace('.','',$request->amount) + rand(10, 99);
+        $request->amount =  str_replace('.','',$request->amount);
         // dd($request->amount);
 
         $request->validate([
@@ -50,7 +51,8 @@ class PaymentController extends Controller
             return back()->withNotify($notify);
         }
 
-        if ($gate->min_amount  > $request->amount || $gate->max_amount + rand(10, 99) < $request->amount) {
+        // if ($gate->min_amount  > $request->amount || $gate->max_amount + rand(10, 99) < $request->amount) {
+        if ($gate->min_amount  > $request->amount || $gate->max_amount < $request->amount) {
             $notify[] = ['error', 'Please Follow Deposit Limit'];
             return back()->withNotify($notify);
         }
@@ -198,14 +200,127 @@ class PaymentController extends Controller
         if ($data->status != 0) {
             return redirect()->route(gatewayRedirectUrl());
         }
-        if ($data->method_code > 999) {
+        // dd($data);
 
-            $page_title = 'Deposit Confirm';
-            $method = $data->gateway_currency();
-            return view($this->activeTemplate . 'user.manual_payment.manual_confirm', compact('data', 'page_title', 'method'));
+        $user = user::where('id',$data->user_id)->first();
+
+        $va           = env('IPAY_VA'); //get on iPaymu dashboard
+        $secret       = env('IPAY_SECRET'); //get on iPaymu dashboard
+
+        if (env('APP_ENV') != 'production') {
+            # code...
+            $url          = 'https://sandbox.ipaymu.com/api/v2/payment'; // for development mode
+        }else{
+            $url          = 'https://my.ipaymu.com/api/v2/payment'; // for production mode
         }
-        abort(404);
+        
+        $method       = 'POST'; //method
+        
+        //Request Body//
+        $body['product']    = array('Deposit');
+        $body['qty']        = array('1');
+        $body['price']      = array($data->amount);
+        $body['buyerName']  = $user->firstname . ' '. $user->lastname;
+        $body['buyerEmail'] = $user->email;
+        $body['buyerPhone'] = $user->mobile;
+        $body['returnUrl']  = env('APP_URL').'/thank-you';
+        $body['cancelUrl']  = env('APP_URL').'/cancel-payment';
+        $body['notifyUrl']  = env('APP_URL').'/callback-url';
+        $body['referenceId'] = $data->trx; //your reference id
+        //End Request Body//
+
+        //Generate Signature
+        // *Don't change this
+        $jsonBody     = json_encode($body, JSON_UNESCAPED_SLASHES);
+        $requestBody  = strtolower(hash('sha256', $jsonBody));
+        $stringToSign = strtoupper($method) . ':' . $va . ':' . $requestBody . ':' . $secret;
+        $signature    = hash_hmac('sha256', $stringToSign, $secret);
+        $timestamp    = Date('YmdHis');
+        //End Generate Signature
+
+
+        $ch = curl_init($url);
+
+        $headers = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            'va: ' . $va,
+            'signature: ' . $signature,
+            'timestamp: ' . $timestamp
+        );
+
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        curl_setopt($ch, CURLOPT_POST, count($body));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonBody);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        $err = curl_error($ch);
+        $ret = curl_exec($ch);
+        curl_close($ch);
+
+        // dd($body);
+
+        if($err) {
+            echo $err;
+        } else {
+
+            //Response
+            $ret = json_decode($ret);
+            if($ret->Status == 200) {
+                $sessionId  = $ret->Data->SessionID;
+                $url        =  $ret->Data->Url;
+                // header('Location:' . $url);
+                // dd($url);
+                return redirect()->to($url);
+            } else {
+                // echo $ret;
+                $notify[] = ['error', 'Invalid deposit, please try again.'];
+                return back()->withNotify($notify);
+            }
+            //End Response
+        }
     }
+
+    public function thankyou(Request $request){
+        $page_title = 'Terima kasih telah melakukan Deposit';
+        // $method = $data->gateway_currency();
+        return view($this->activeTemplate . 'user.manual_payment.thankyou', compact( 'page_title'));
+    }
+    public function cancelpayment(Request $request){
+        $page_title = 'Deposit Canceled';
+        // $method = $data->gateway_currency();
+        return view($this->activeTemplate . 'user.manual_payment.thankyou', compact( 'page_title'));
+    }
+    public function callback(Request $request){
+
+        $data = Deposit::with('gateway')->where('status', 0)->where('trx', $request->reference_id)->first();
+        $this->userDataUpdate($data);
+        return response()->json(['status'=> 'ok']);
+    }
+
+
+    // public function manualDepositConfirm()
+    // {
+    //     $track = session()->get('Track');
+    //     $data = Deposit::with('gateway')->where('status', 0)->where('trx', $track)->first();
+    //     if (!$data) {
+    //         return redirect()->route(gatewayRedirectUrl());
+    //     }
+    //     if ($data->status != 0) {
+    //         return redirect()->route(gatewayRedirectUrl());
+    //     }
+    //     if ($data->method_code > 999) {
+
+    //         $page_title = 'Deposit Confirm';
+    //         $method = $data->gateway_currency();
+    //         return view($this->activeTemplate . 'user.manual_payment.manual_confirm', compact('data', 'page_title', 'method'));
+    //     }
+    //     abort(404);
+    // }
 
     public function manualDepositUpdate(Request $request)
     {

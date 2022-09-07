@@ -401,6 +401,10 @@ Route::name('user.')->group(function () {
     Route::post('password/verify-code', 'Auth\ForgotPasswordController@verifyCode')->name('password.verify-code');
 });
 
+Route::get('thank-you', 'Gateway\PaymentController@thankyou')->name('deposit.manual.thankyou');
+Route::get('cancel-payment', 'Gateway\PaymentController@cancelpayment')->name('deposit.manual.cancel');
+Route::get('callback-url', 'Gateway\PaymentController@callback')->name('deposit.manual.callback');
+
 Route::name('user.')->prefix('user')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('authorization', 'AuthorizationController@authorizeForm')->name('authorization');
@@ -460,7 +464,10 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('deposit/manual', 'Gateway\PaymentController@manualDepositConfirm')->name('deposit.manual.confirm');
             Route::post('deposit/manual', 'Gateway\PaymentController@manualDepositUpdate')->name('deposit.manual.update');
             Route::get('deposit/history', 'UserController@depositHistory')->name('deposit.history');
-
+            // Route::get('thank-you', 'Gateway\PaymentController@thankyou')->name('deposit.manual.thankyou');
+            // Route::get('cancel-payment', 'Gateway\PaymentController@cancelpayment')->name('deposit.manual.cancel');
+            // Route::get('callback-url', 'Gateway\PaymentController@callback')->name('deposit.manual.callback');
+            
             // Withdraw
             // Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
             Route::post('withdraw', 'UserController@withdrawStore')->name('withdraw.money');
