@@ -403,7 +403,7 @@ Route::name('user.')->group(function () {
 
 Route::get('thank-you', 'Gateway\PaymentController@thankyou')->name('deposit.manual.thankyou');
 Route::get('cancel-payment', 'Gateway\PaymentController@cancelpayment')->name('deposit.manual.cancel');
-Route::get('callback-url', 'Gateway\PaymentController@callback')->name('deposit.manual.callback');
+Route::post('callback-url', 'Gateway\PaymentController@callback')->name('deposit.manual.callback');
 
 Route::name('user.')->prefix('user')->group(function () {
     Route::middleware('auth')->group(function () {
