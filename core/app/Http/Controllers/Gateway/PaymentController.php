@@ -298,7 +298,7 @@ class PaymentController extends Controller
     public function callback(Request $request){
 
         $data = Deposit::where('trx', $request->reference_id)->orderBy('id', 'DESC')->with('gateway')->first();
-        // $this->userDataUpdate($data->trx);
+        $this->userDataUpdate($data->trx);
         return response()->json(['status'=> 'ok']);
     }
 
