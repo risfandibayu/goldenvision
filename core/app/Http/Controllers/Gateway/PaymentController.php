@@ -322,12 +322,12 @@ class PaymentController extends Controller
         if ($status == 'berhasil') {
             # code...
             $this->userDataUpdate($data->trx);
-            return response()->json(['status'=> 'ok']);
+            return response()->json(['status'=> $status]);
         }else{
 
             $data->status = 2;
             $data->save();
-            return response()->json(['status'=> 'pending']);
+            return response()->json(['status'=> $status]);
         }
     }
 
