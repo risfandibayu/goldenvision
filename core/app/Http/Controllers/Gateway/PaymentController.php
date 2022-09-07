@@ -264,7 +264,7 @@ class PaymentController extends Controller
         //Request Body//
         $body['product']    = array('Deposit');
         $body['qty']        = array('1');
-        $body['price']      = array($data->amount);
+        $body['price']      = array($data->final_amo);
         $body['buyerName']  = $user->firstname . ' '. $user->lastname;
         $body['buyerEmail'] = $user->email;
         $body['buyerPhone'] = $user->mobile;
