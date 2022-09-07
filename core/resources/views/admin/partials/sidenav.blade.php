@@ -191,27 +191,27 @@
                                 </a>
                             </li>
 
-                            <li class="sidebar-menu-item {{menuActive('admin.deposit.approved')}} ">
+                            {{-- <li class="sidebar-menu-item {{menuActive('admin.deposit.approved')}} ">
                                 <a href="{{route('admin.deposit.approved')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Approved Deposits')</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
-                            {{-- <li class="sidebar-menu-item {{menuActive('admin.deposit.successful')}} ">
+                            <li class="sidebar-menu-item {{menuActive('admin.deposit.successful')}} ">
                                 <a href="{{route('admin.deposit.successful')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Successful Deposits')</span>
                                 </a>
-                            </li> --}}
+                            </li>
 
 
-                            <li class="sidebar-menu-item {{menuActive('admin.deposit.rejected')}} ">
+                            {{-- <li class="sidebar-menu-item {{menuActive('admin.deposit.rejected')}} ">
                                 <a href="{{route('admin.deposit.rejected')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Rejected Deposits')</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             <li class="sidebar-menu-item {{menuActive('admin.deposit.list')}} ">
                                 <a href="{{route('admin.deposit.list')}}" class="nav-link">
