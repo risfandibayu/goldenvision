@@ -47,16 +47,24 @@
                                             $details = ($data->detail != null) ? json_encode($data->detail) : null;
                                         @endphp
                                         <td data-label="@lang('Details')">
-                                            <a href="javascript:void(0)" class="icon-btn  approveBtn"
-                                               data-info="{{$details}}"
-                                               data-id="{{ $data->id }}"
-                                               data-amount="{{ getAmount($data->amount)}} {{ $general->cur_text }}"
-                                               data-charge="{{ getAmount($data->charge)}} {{ $general->cur_text }}"
-                                               data-after_charge="{{ getAmount($data->amount + $data->charge)}} {{ $general->cur_text }}"
-                                               data-rate="{{ getAmount($data->rate)}} {{ $data->method_currency }}"
-                                               data-payable="{{ getAmount($data->final_amo)}} {{ $data->method_currency }}">
-                                                <i class="fa fa-desktop"></i>
-                                            </a>
+                                            <div class="row col-6" style="float: right">
+                                                @if ($data->status == 2)
+                                                <div class="col-6"><a class="icon-btn" href="{{$data->url}}" target="_blank"> <i class="fa fa-credit-card" aria-hidden="true"></i></a></div>
+                                                @endif
+                                                <div class="col-6">
+                                                    <a href="javascript:void(0)" class="icon-btn  approveBtn"
+                                                    data-info="{{$details}}"
+                                                    data-id="{{ $data->id }}"
+                                                    data-amount="{{ getAmount($data->amount)}} {{ $general->cur_text }}"
+                                                    data-charge="{{ getAmount($data->charge)}} {{ $general->cur_text }}"
+                                                    data-after_charge="{{ getAmount($data->amount + $data->charge)}} {{ $general->cur_text }}"
+                                                    data-rate="{{ getAmount($data->rate)}} {{ $data->method_currency }}"
+                                                    data-payable="{{ getAmount($data->final_amo)}} {{ $data->method_currency }}">
+                                                     <i class="fa fa-desktop"></i>
+                                                 </a>
+                                                </div>
+                                            </div>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach
