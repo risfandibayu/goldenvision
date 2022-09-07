@@ -570,6 +570,7 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
 
 });
   </script>
+      @include('partials.plugins')
 </body>
 
 </html>
