@@ -404,9 +404,6 @@ Route::name('user.')->group(function () {
     Route::post('password/verify-code', 'Auth\ForgotPasswordController@verifyCode')->name('password.verify-code');
 });
 
-Route::get('thank-you', 'Gateway\PaymentController@thankyou')->name('deposit.manual.thankyou');
-Route::get('cancel-payment', 'Gateway\PaymentController@cancelpayment')->name('deposit.manual.cancel');
-Route::post('callback-url', 'Gateway\PaymentController@callback')->name('deposit.manual.callback');
 
 Route::name('user.')->prefix('user')->group(function () {
     Route::middleware('auth')->group(function () {
@@ -520,6 +517,10 @@ Route::name('user.')->prefix('user')->group(function () {
 Route::post('/check/referral', 'SiteController@CheckUsername')->name('check.referral');
 Route::post('/check/referralbro', 'SiteController@CheckBro')->name('check.referralbro');
 Route::post('/get/user/position', 'SiteController@userPosition')->name('get.user.position');
+
+Route::get('thank-you', 'Gateway\PaymentController@thankyou')->name('deposit.manual.thankyou');
+Route::get('cancel-payment', 'Gateway\PaymentController@cancelpayment')->name('deposit.manual.cancel');
+Route::post('callback-url', 'Gateway\PaymentController@callback')->name('deposit.manual.callback');
 
 Route::post('subscriber', 'SiteController@subscriberStore')->name('subscriber.store');
 // Policy Details
