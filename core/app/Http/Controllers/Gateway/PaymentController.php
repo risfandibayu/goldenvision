@@ -268,6 +268,9 @@ class PaymentController extends Controller
         $body['buyerName']  = $user->firstname . ' '. $user->lastname;
         $body['buyerEmail'] = $user->email;
         $body['buyerPhone'] = $user->mobile;
+        $body['expired'] = 10;
+        $body['expiredType'] = 'seconds';
+        $body['autoRedirect'] = 10;
         $body['returnUrl']  = env('APP_URL').'/thank-you';
         $body['cancelUrl']  = env('APP_URL').'/cancel-payment';
         $body['notifyUrl']  = env('APP_URL').'/callback-url';
@@ -345,13 +348,16 @@ class PaymentController extends Controller
     public function callback(Request $request){
 
         $status = $request->status;
+        $data = Deposit::where('trx', $request->reference_id)->orderBy('id', 'DESC')->with('gateway')->first();
         if ($status == 'berhasil') {
             # code...
-            $data = Deposit::where('trx', $request->reference_id)->orderBy('id', 'DESC')->with('gateway')->first();
             $this->userDataUpdate2($data->trx);
             return response()->json(['status'=> 'ok']);
+        }else{
+            $data->status = 4;
+            $data->save();
+            return response()->json(['status'=> 'error']);
         }
-        return response()->json(['status'=> 'error']);
     }
 
 
