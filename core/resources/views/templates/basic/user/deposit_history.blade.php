@@ -50,6 +50,8 @@
                                             <div class="row col-6" style="float: right">
                                                 @if ($data->status == 2)
                                                 <div class="col-6"><a class="icon-btn" href="{{$data->url}}" target="_blank"> <i class="fa fa-credit-card" aria-hidden="true"></i></a></div>
+                                                @else
+                                                <div class="col-6"></div>
                                                 @endif
                                                 <div class="col-6">
                                                     <a href="javascript:void(0)" class="icon-btn  approveBtn"
