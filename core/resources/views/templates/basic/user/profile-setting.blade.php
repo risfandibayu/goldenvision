@@ -118,14 +118,14 @@
                         <li class="list-group-item rounded-0 d-flex justify-content-between">
                             <span>@lang('Username')</span> {{auth()->user()->username}}
                         </li>
-                        @if (auth()->user()->plan_id != 0)
+                        {{-- @if (auth()->user()->plan_id != 0)
 
                         <li class="list-group-item d-flex justify-content-between">
                             <span>@lang('BRO')</span>
                             <div class="custom-btn btn-11 text-center"><span style="font-weight: 700">
                                     {{auth()->user()->bro_qty + 1}} BRO </span></div>
                         </li>
-                        @endif
+                        @endif --}}
                         <li class="list-group-item d-flex justify-content-between">
                             <span>@lang('Joined at')</span> {{date('d M, Y h:i
                             A',strtotime(auth()->user()->created_at))}}
