@@ -131,6 +131,8 @@ class CronController extends Controller
         // dd(Date('H:i') == "14:57");
         $userx = UserExtra::where('paid_left','>=',3)
         ->where('paid_right','>=',3)->get();
+
+        // dd($userx);
         $cron = array();
         foreach ($userx as $uex) {
                         $user = $uex->user_id;
@@ -196,7 +198,7 @@ class CronController extends Controller
                             $trx->trx = getTrx();
 
                             if ($pair >= 10) {
-                                if (Date('H:i') == "01:00" ) {
+                                if (Date('H') == "01" ) {
                                     # code...
 
                                 $paid_bv = $uex->paid_left + $uex->paid_right;
@@ -231,7 +233,7 @@ class CronController extends Controller
 
 
                             }else{
-                                if (strtolower(Date('D')) == 'wed' && Date('H:i') == "01:00" ) {
+                                if (strtolower(Date('D')) == 'wed' && Date('H') == "19" ) {
                                     # code...
                                 
                                 $paid_bv = $pair * 6;
