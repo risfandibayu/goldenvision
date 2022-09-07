@@ -271,7 +271,8 @@ class PaymentController extends Controller
         // $body['expired'] = 10;
         // $body['expiredType'] = 'seconds';
         // $body['autoRedirect'] = 10;
-        $body['returnUrl']  = env('APP_URL').'/thank-you';
+        // $body['returnUrl']  = env('APP_URL').'/thank-you';
+        $body['returnUrl']  = route('user.home');
         $body['cancelUrl']  = env('APP_URL').'/cancel-payment';
         $body['notifyUrl']  = env('APP_URL').'/callback-url';
         $body['referenceId'] = $data->trx; //your reference id
