@@ -217,6 +217,7 @@ class PaymentController extends Controller
         if ($data->status != 0) {
             return redirect()->route(gatewayRedirectUrl());
         }
+        
         // dd($data);
 
         $user = user::where('id',$data->user_id)->first();
@@ -292,6 +293,8 @@ class PaymentController extends Controller
                 $url        =  $ret->Data->Url;
                 // header('Location:' . $url);
                 // dd($url);
+                $data->status = 2;
+                $data->save();
                 return redirect()->to($url);
             } else {
                 // echo $ret;
@@ -322,7 +325,7 @@ class PaymentController extends Controller
             return response()->json(['status'=> 'ok']);
         }else{
 
-            $data->status = 5;
+            $data->status = 2;
             $data->save();
             return response()->json(['status'=> 'pending']);
         }
