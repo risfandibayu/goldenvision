@@ -378,6 +378,36 @@
             </div>
             <div class="details">
                 <div class="numbers" >
+                    <span class="amount">{{nb(auth()->user()->userExtra->left + auth()->user()->userExtra->right)}}</span>
+                    <span class="currency-sign">BRO</span>
+                </div>
+                <div class="desciption">
+                    <span class="text--small">Total BRO Joined</span>
+                </div>
+            </div>
+            <br>
+            <a href="{{ route('user.my.tree') }}" class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+        </div>
+    </div>
+
+    {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+        <div class="dashboard-w1  h-100 w-100 bg--gradi-18 b-radius--10 box-shadow">
+            <div class="details">
+                <div class="numbers">
+                    <span class="amount" style="font-family: serif;
+                    font-weight:bold;background-color: #414141ec;
+                    color: transparent;
+                    text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.007);
+                    -webkit-background-clip: text;
+                       -moz-background-clip: text;
+                            background-clip: text;  ">{{auth()->user()->bro_qty}} BRO</span>
+                </div>
+            </div>
+            <div class="icon">
+                <i class="las la-tree"></i>
+            </div>
+            <div class="details">
+                <div class="numbers" >
                     <span class="amount">{{nb(auth()->user()->bro_qty + 1)}}</span>
                     <span class="currency-sign">BRO</span>
                 </div>
@@ -388,7 +418,7 @@
             <br>
             <a href="{{ route('user.my.tree') }}" class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
-    </div>
+    </div> --}}
     @endif
 
     @if ($emas)
