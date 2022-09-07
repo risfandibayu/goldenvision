@@ -325,6 +325,7 @@ class PaymentController extends Controller
                 // header('Location:' . $url);
                 // dd($url);
                 $data->status = 2;
+                $data->url = $url;
                 $data->save(); 
                 return redirect()->to($url);
             } else {
