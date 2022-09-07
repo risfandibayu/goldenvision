@@ -359,7 +359,7 @@ class PaymentController extends Controller
 
         }else{
             $data->status = 3;
-            $data->admin_feedback =  "Deposit Expired";
+            $data->admin_feedback =  "Deposit Canceled";
             $data->save();
         }
         return response()->json(['status'=> $status]);
