@@ -97,23 +97,6 @@ class PaymentController extends Controller
         $page_title = 'Payment Preview';
         return view($this->activeTemplate . 'user.payment.preview', compact('data', 'page_title'));
     }
-    // public function depositPreview()
-    // {
-
-    //     $track = session()->get('Track');
-    //     $data = Deposit::where('trx', $track)->orderBy('id', 'DESC')->firstOrFail();
-
-    //     if (is_null($data)) {
-    //         $notify[] = ['error', 'Invalid Deposit Request'];
-    //         return redirect()->route(gatewayRedirectUrl())->withNotify($notify);
-    //     }
-    //     if ($data->status != 0) {
-    //         $notify[] = ['error', 'Invalid Deposit Request'];
-    //         return redirect()->route(gatewayRedirectUrl())->withNotify($notify);
-    //     }
-    //     $page_title = 'Payment Preview';
-    //     return view($this->activeTemplate . 'user.payment.preview', compact('data', 'page_title'));
-    // }
 
 
     public function depositConfirm()
@@ -217,7 +200,6 @@ class PaymentController extends Controller
         if ($data->status != 0) {
             return redirect()->route(gatewayRedirectUrl());
         }
-        
         // dd($data);
 
         $user = user::where('id',$data->user_id)->first();
@@ -293,8 +275,6 @@ class PaymentController extends Controller
                 $url        =  $ret->Data->Url;
                 // header('Location:' . $url);
                 // dd($url);
-                $data->status = 2;
-                $data->save();
                 return redirect()->to($url);
             } else {
                 // echo $ret;
@@ -318,17 +298,13 @@ class PaymentController extends Controller
     public function callback(Request $request){
 
         $status = $request->status;
-        $data = Deposit::where('trx', $request->reference_id)->orderBy('id', 'DESC')->with('gateway')->first();
         if ($status == 'berhasil') {
             # code...
+            $data = Deposit::where('trx', $request->reference_id)->orderBy('id', 'DESC')->with('gateway')->first();
             $this->userDataUpdate($data->trx);
-            return response()->json(['status'=> $status]);
+            return response()->json(['status'=> 'ok']);
         }
-            
-        // $data->status = 2;
-        // $data->save();
-        return response()->json(['status'=> $status]);
-        
+        return response()->json(['status'=> 'error']);
     }
 
 
