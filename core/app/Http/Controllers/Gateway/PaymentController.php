@@ -353,11 +353,8 @@ class PaymentController extends Controller
             # code...
             $this->userDataUpdate2($data->trx);
             return response()->json(['status'=> 'ok']);
-        }else{
-            $data->status = 4;
-            $data->save();
-            return response()->json(['status'=> 'error']);
         }
+        return response()->json(['status'=> 'error']);
     }
 
 
