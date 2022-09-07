@@ -17,6 +17,9 @@ Route::get('/cek_bit', function(){
 Route::get('/clear', function(){
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
+Route::get('/key', function(){
+    \Illuminate\Support\Facades\Artisan::call('key:generate');
+});
 Route::get('/voldemort/up', function(){
     \Illuminate\Support\Facades\Artisan::call('up');
     echo "Website on Live Production";
