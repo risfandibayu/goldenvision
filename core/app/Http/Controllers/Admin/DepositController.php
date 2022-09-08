@@ -273,7 +273,7 @@ class DepositController extends Controller
                     $code = 3;
                     break;
                 case 'successful':
-                    $code = 3;
+                    $code = 1;
                     break;
                 case 'list':
                     return Excel::download(
