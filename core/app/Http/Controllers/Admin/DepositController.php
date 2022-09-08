@@ -272,6 +272,9 @@ class DepositController extends Controller
                 case 'rejected':
                     $code = 3;
                     break;
+                case 'successful':
+                    $code = 3;
+                    break;
                 case 'list':
                     return Excel::download(
                         new ExportData(
