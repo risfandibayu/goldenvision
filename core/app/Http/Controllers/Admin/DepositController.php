@@ -311,6 +311,9 @@ class DepositController extends Controller
                 case 'approved':
                     $code = 1;
                     break;
+                case 'successful':
+                    $code = 1;
+                    break;
                 case 'rejected':
                     $code = 3;
                     break;
@@ -341,6 +344,9 @@ class DepositController extends Controller
                 $code = 2;
                 break;
             case 'Approved Deposits':
+                $code = 1;
+                break;
+            case 'Successful Deposits':
                 $code = 1;
                 break;
             case 'Rejected Deposits':
