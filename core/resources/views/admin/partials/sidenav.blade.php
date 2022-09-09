@@ -362,18 +362,18 @@
                                     <span class="menu-title">@lang('Invest Log')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{menuActive(['admin.report.bvLog'])}}">
+                            {{-- <li class="sidebar-menu-item {{menuActive(['admin.report.bvLog'])}}">
                                 <a href="{{route('admin.report.bvLog')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('BV Log')</span>
                                 </a>
-                            </li>
-                            <li class="sidebar-menu-item {{menuActive(['admin.report.refCom'])}}">
+                            </li> --}}
+                            {{-- <li class="sidebar-menu-item {{menuActive(['admin.report.refCom'])}}">
                                 <a href="{{route('admin.report.refCom')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Referral Commission')</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="sidebar-menu-item {{menuActive(['admin.report.binaryCom'])}}">
                                 <a href="{{route('admin.report.binaryCom')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>

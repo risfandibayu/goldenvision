@@ -283,6 +283,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('report/login/history', 'ReportController@loginHistory')->name('report.login.history');
         Route::get('report/login/ipHistory/{ip}', 'ReportController@loginIpHistory')->name('report.login.ipHistory');
+        
+        Route::get('report/export', 'ReportController@export')->name('report.export');
 
 
         // Admin Support

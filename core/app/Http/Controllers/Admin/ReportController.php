@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ExportData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\BvLog;
 use App\Models\Transaction;
 use App\Models\UserLogin;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -91,7 +94,7 @@ class ReportController extends Controller
             $page_title = $user->username . ' - Binary Commission Logs';
             $transactions = Transaction::where('user_id', $user->id)->where('remark', 'binary_commission')->with('user')->latest()->paginate(getPaginate());
         }else {
-            $page_title = 'Referral Commission Logs';
+            $page_title = 'Binary Commission Logs';
             $transactions = Transaction::where('remark', 'binary_commission')->with('user')->latest()->paginate(getPaginate());
         }
 
@@ -132,7 +135,7 @@ class ReportController extends Controller
             $user->where('username', 'like',"%$search%");
         })->orWhere('trx', $search)->orwhere('details', 'like',"%$search%")->orderBy('id','desc')->paginate(getPaginate());
 
-        return view('admin.reports.transactions', compact('page_title', 'transactions', 'empty_message'));
+        return view('admin.reports.transactions', compact('page_title', 'transactions','search', 'empty_message'));
     }
 
     public function loginHistory(Request $request)
@@ -161,5 +164,56 @@ class ReportController extends Controller
 
     }
 
+    public function export(Request $request){
+        // dd($request->all());
+        $search = $request->search;
+        $page = $request->page;
+        if ($search) {
+            return Excel::download(
+                new ExportData(
+                Transaction::query()
+                ->join('users','users.id','=','transactions.user_id')
+                ->whereHas('user', function ($user) use ($search) {
+                    $user->where('username', 'like',"%$search%");
+                })->orWhere('trx', $search)->orwhere('details', 'like',"%$search%")
+                ->orderBy('transactions.id','DESC')
+                ->select(db::raw("DATE_ADD(transactions.created_at, INTERVAL 0 HOUR)"), 'transactions.trx','users.username',db::raw("CONCAT(transactions.trx_type,' ',transactions.amount)"), 'transactions.charge','transactions.post_balance','transactions.details'
+            )), 'report.xlsx')
+            ;
+        }
+
+        if ($page) {
+            # code...
+            if ($page == 'Transaction Logs') {
+                # code...
+                return Excel::download(
+                    new ExportData(
+                    Transaction::query()
+                    ->join('users','users.id','=','transactions.user_id')
+                    ->orderBy('transactions.id','DESC')
+                    ->select(db::raw("DATE_ADD(transactions.created_at, INTERVAL 0 HOUR)"), 'transactions.trx','users.username',db::raw("CONCAT(transactions.trx_type,' ',transactions.amount)"), 'transactions.charge','transactions.post_balance','transactions.details'
+                )), 'report.xlsx')
+                ;
+            }
+
+            if ($page == 'Invest Logs') {
+                $remark = "purchased_plan";
+            }
+            if ($page == 'Binary Commission Logs') {
+                $remark = 'binary_commission';
+            }
+
+            return Excel::download(
+                new ExportData(
+                Transaction::query()
+                ->join('users','users.id','=','transactions.user_id')
+                ->where('remark', $remark)
+                ->orderBy('transactions.id','DESC')
+                ->select(db::raw("DATE_ADD(transactions.created_at, INTERVAL 0 HOUR)"), 'transactions.trx','users.username',db::raw("CONCAT(transactions.trx_type,' ',transactions.amount)"), 'transactions.charge','transactions.post_balance','transactions.details'
+            )), 'report.xlsx')
+            ;
+
+        }
+    }
 
 }

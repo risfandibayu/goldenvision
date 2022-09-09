@@ -51,7 +51,7 @@
 
 
 @push('breadcrumb-plugins')
-    @if(request()->routeIs('admin.users.transactions'))
+    {{-- @if(request()->routeIs('admin.users.transactions'))
         <form action="" method="GET" class="form-inline float-sm-right bg--white">
             <div class="input-group has_append">
                 <input type="text" name="search" class="form-control" placeholder="@lang('TRX / Username')" value="{{ $search ?? '' }}">
@@ -69,7 +69,29 @@
                 </div>
             </div>
         </form>
-    @endif
+    @endif --}}
+<div class="row">
+    
+    <div class="col-md-10 col-9">
+    
+        <form action="{{ route('admin.report.transaction.search') }}" method="GET" class="form-inline float-sm-right bg--white">
+            <div class="input-group has_append">
+                <input type="text" name="search" class="form-control" placeholder="@lang('TRX / Username')" value="{{ $search ?? '' }}">
+                <div class="input-group-append">
+                    <button class="btn btn--primary" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2 col-3">
+
+        <form action="{{ route('admin.report.export') }}" method="GET" class="form-inline float-sm-right">
+            <input hidden type="text" name="search" class="form-control" placeholder="@lang('Username or email')" value="{{ $search ?? '' }}">
+            <input hidden type="text" name="page" class="form-control" placeholder="@lang('Username or email')" value="{{ $page_title ?? '' }}">
+            <button class="btn btn--primary" type="submit">Export</button>
+        </form>    
+    </div>
+</div>
 @endpush
 
 
