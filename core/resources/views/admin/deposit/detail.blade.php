@@ -95,14 +95,14 @@
                     @if($deposit->status == 2)
                         <div class="row mt-4">
                             <div class="col-md-12">
-                                <button class="btn btn--success ml-1 approveBtn"
+                                {{-- <button class="btn btn--success ml-1 approveBtn"
                                         data-id="{{ $deposit->id }}"
                                         data-info="{{$details}}"
                                         data-amount="{{ getAmount($deposit->amount)}} {{ __($general->cur_text) }}"
                                         data-username="{{ @$deposit->user->username }}"
                                         data-toggle="tooltip" data-original-title="@lang('Approve')"><i class="fas fa-check"></i>
                                     @lang('Approve')
-                                </button>
+                                </button> --}}
 
                                 <button class="btn btn--danger ml-1 rejectBtn"
                                         data-id="{{ $deposit->id }}"
