@@ -140,7 +140,17 @@ class CronController extends Controller
                         // $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
                         $user_plan = user::where('users.id',$user)
                         ->join('plans','plans.id','=','users.plan_id')->first();                        
-                        $pair = intval($weak / 3);
+                        
+                        $pairs = intval($weak / 3);
+
+                        if($uex->level_binary != 0 && $pairs != $uex->level_binary){
+                            $pair = intval($weak / 3) - $uex->level_binary;
+                            $bonus = intval($pair * ($user_plan->tree_com * 6));
+                        }else{
+                            $pair = intval($weak / 3);
+                            $bonus = intval($pair * ($user_plan->tree_com * 6));
+                        }
+
                         $pair2[] = $pair == $uex->level_binary;
 
                         if ($pair >= 10) {
@@ -148,7 +158,6 @@ class CronController extends Controller
                         }
                         // dd(is_numeric($uex->paid_left));
 
-                        $bonus = intval($pair * ($user_plan->tree_com * 6));
 
                         if ($pair == $uex->level_binary) {
                             // if ($uex->level_binary == 10) {
