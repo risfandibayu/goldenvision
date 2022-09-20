@@ -329,7 +329,7 @@
               <p>
                 Microgold adalah produsen dan penjual produk emas dengan ukuran micro : 0,01 gram, 0,02 gram, 0,05 gram, 0,1 gram. Fine gold 999 bersertifikat.
 
-Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tukar dengan emas antam 5 gram yang akan dimasukkan ke rekening dinaran.
+Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tukar dengan emas antam 5 gram.
               </p>
             </div>
           </li>
@@ -366,12 +366,12 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
               <p>
                 Seluruh pemilik akun Microgold harus melewati proses E-KYC guna perlindungan konsumen dan sebagai upaya komitmen Microgold dalam penerapan program APUPPT, sehingga Microgold memberlakukan kebijakan hanya Pengguna yang telah ter-verifikasi yang dapat melakukan deposit untuk pembelian paket Microgold.
 
-                Bagian ini tidak berlaku bagi yang sudah menjadi member dinaran.
+                {{-- Bagian ini tidak berlaku bagi yang sudah menjadi member dinaran. --}}
               </p>
             </div>
           </li>
 
-          <li data-aos="fade-up" data-aos-delay="400" style="background: #f5f5f5;">
+          {{-- <li data-aos="fade-up" data-aos-delay="400" style="background: #f5f5f5;">
             <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed">Bagaimana Caranya Melakukan Verifikasi Akun Dinaran Saya ? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
             <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
               <p>
@@ -396,7 +396,7 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
 
               </p>
             </div>
-          </li>
+          </li> --}}
 
           <li data-aos="fade-up" data-aos-delay="500" style="background: #f5f5f5;">
             <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-6" class="collapsed">Berapa Minimum Deposit Awal Di Microgold? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
@@ -453,7 +453,7 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
             </div>
           </li>
 
-          <li data-aos="fade-up" data-aos-delay="700" style="background: #f5f5f5;">
+          {{-- <li data-aos="fade-up" data-aos-delay="700" style="background: #f5f5f5;">
             <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-8" class="collapsed">Alur Pembayaran Komisi  <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
             <div id="faq-list-8" class="collapse" data-bs-parent=".faq-list">
               <p>
@@ -464,7 +464,7 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
 
               </p>
             </div>
-          </li>
+          </li> --}}
 
           <li data-aos="fade-up" data-aos-delay="800" style="background: #f5f5f5;">
             <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-9" class="collapsed">Cara Merefer Dengan No Upline Dan Nomor Bro Kanan Kirinya <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
