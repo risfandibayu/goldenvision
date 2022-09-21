@@ -142,12 +142,12 @@ class CronController extends Controller
                         ->join('plans','plans.id','=','users.plan_id')->first();                        
                         
                         $pairs = intval($weak / 3);
+                        $pair = intval($weak / 3);
 
                         if($uex->level_binary != 0 && $pairs != $uex->level_binary){
-                            $pair = intval($weak / 3) - $uex->level_binary;
-                            $bonus = intval($pair * ($user_plan->tree_com * 6));
+                            // $pair = intval($weak / 3) - $uex->level_binary;
+                            $bonus = intval(($pair-$uex->level_binary) * ($user_plan->tree_com * 6));
                         }else{
-                            $pair = intval($weak / 3);
                             $bonus = intval($pair * ($user_plan->tree_com * 6));
                         }
 
@@ -254,7 +254,13 @@ class CronController extends Controller
                                 //     'trx' =>  $trx->trx,
                                 // ]);
                                 $payment->save();
-                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+
+                                    if($uex->level_binary != 0 && $pairs != $uex->level_binary){
+                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' BRO.';
+                                    }else{
+                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+
+                                    }
                                 $trx->save();
 
                                 $uex->level_binary = $pair;
