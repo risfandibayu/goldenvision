@@ -207,7 +207,7 @@ class CronController extends Controller
                             $trx->trx = getTrx();
 
                             if ($pair >= 10) {
-                                if (Date('H') == "01" ) {
+                                if (Date('H') == "14" ) {
                                     # code...
 
                                 $paid_bv = $uex->paid_left + $uex->paid_right;
@@ -242,7 +242,7 @@ class CronController extends Controller
 
 
                             }else{
-                                if (strtolower(Date('D')) == 'wed' && Date('H') == "01" ) {
+                                if (strtolower(Date('D')) == 'wed' && Date('H') == "14" ) {
                                     # code...
                                 
                                 $paid_bv = $pair * 6;

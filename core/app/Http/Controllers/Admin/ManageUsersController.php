@@ -11,7 +11,9 @@ use App\Models\BvLog;
 use App\Models\Gateway;
 use App\Models\GeneralSetting;
 use App\Http\Controllers\Controller;
+use App\Models\bank;
 use App\Models\Gold;
+use App\Models\rekening;
 use App\Models\SupportTicket;
 use App\Models\Transaction;
 use App\Models\User;
@@ -201,6 +203,7 @@ class ManageUsersController extends Controller
         $page_title         = 'User Detail';
         $user               = User::where('id', $id)->with('userExtra')->first();
         $ref_id             = User::find($user->ref_id);
+        $bank = bank::all();
         $totalDeposit       = Deposit::where('user_id',$user->id)->where('status',1)->sum('amount');
         $totalWithdraw      = Withdrawal::where('user_id',$user->id)->where('status',1)->sum('amount');
         $totalTransaction   = Transaction::where('user_id',$user->id)->count();
@@ -209,7 +212,7 @@ class ManageUsersController extends Controller
         
         $emas               = Gold::where('user_id',$user->id)->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('COALESCE(SUM(products.price * golds.qty),0) as total_rp'),db::raw('COALESCE(sum(products.weight * golds.qty ),0) as total_wg'))->groupBy('golds.user_id')->first();
         return view('admin.users.detail', compact('page_title','ref_id','user','totalDeposit',
-            'totalWithdraw','totalTransaction',  'totalBvCut','emas'));
+            'totalWithdraw','totalTransaction',  'totalBvCut','emas','bank'));
     }
 
     public function goldDetail($id){
@@ -261,6 +264,34 @@ class ManageUsersController extends Controller
         $user->save();
 
         $notify[] = ['success', 'User detail has been updated'];
+        return redirect()->back()->withNotify($notify);
+    }
+
+    public function rek(Request $request, $id)
+    {
+        $this->validate($request, [
+            'bank_name' => 'required',
+            'acc_name' => 'required',
+            'acc_number' => 'required'
+        ]);
+
+        $rek = rekening::where('user_id',$id)->first();
+        
+        if ($rek) {
+            # code...
+            $reks = rekening::where('user_id',$id)->first();
+        }else{
+            $reks = new rekening();
+            $reks->user_id = $id; 
+        }
+        $reks->nama_bank = $request->bank_name;
+        $reks->nama_akun = $request->acc_name;
+        $reks->no_rek = $request->acc_number;
+        $reks->save();
+
+        
+
+        $notify[] = ['success', 'User Bank Account detail has been updated'];
         return redirect()->back()->withNotify($notify);
     }
 

@@ -109,7 +109,21 @@
                             @endif
                         @endforeach
                     @endif
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('Bank Name')
+                            <span class="font-weight-bold">{{ $withdrawal->user->userBank->nama_bank }}</span>
+                        </li>
 
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('Account Name')
+                            <span class="font-weight-bold">{{ $withdrawal->user->userBank->nama_akun }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('Account Number')
+                            <span class="font-weight-bold">{{ $withdrawal->user->userBank->no_rek }}</span>
+                        </li>
+                    </ul>
 
                     @if($withdrawal->status == 2)
                         <div class="row mt-4">

@@ -232,9 +232,9 @@
     <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
         <div class="row mb-none-30">
             @if ($user->plan_id != 0)
-                
+
             <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--gradi-18 b-radius--10 box-shadow has--link" >
+                <div class="dashboard-w1 bg--gradi-18 b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.users.single.tree',$user->username)}}" class="item--link"></a>
                     <div class="icon">
                         <i class="fa fa-coins"></i>
@@ -254,9 +254,9 @@
             @endif
 
             @if ($emas)
-                
+
             <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow has--link" >
+                <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.users.invest.detail',$user->id)}}" class="item--link"></a>
                     <div class="icon">
                         <i class="fa fa-coins"></i>
@@ -601,6 +601,101 @@
                 </form>
             </div>
         </div>
+        <div class="card mt-50">
+            <div class="card-body">
+                <h5 class="card-title mb-50 border-bottom pb-2">@lang('Bank Account Information')</h5>
+                @if ($user->userBank)
+                <form action="{{route('admin.users.rek',[$user->id])}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('Bank name')<span
+                                        class="text-danger">*</span></label>
+                                        <select name="bank_name" id="bank_name" class="form-control">
+                                            @foreach ($bank as $item)
+                                            <option value="{{$item->nama_bank}}" {{$user->userBank->nama_bank == $item->nama_bank ? 'selected' : '';}} >{{$item->nama_bank}}</option>
+                                            @endforeach
+        
+                                        </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="acc_name"
+                                    value="{{$user->userBank->nama_akun}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                class="text-danger">*</span></label>
+                        <input class="form-control" type="text" name="acc_number" value="{{$user->userBank->no_rek}}">
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save Changes')
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                @else
+
+
+                <form action="{{route('admin.users.rek',[$user->id])}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('Bank name')<span
+                                        class="text-danger">*</span></label>
+                                <select name="bank_name" id="bank_name" class="form-control" required>
+                                    <option value="" hidden selected>-- Pilih Bank --</option>
+                                    @foreach ($bank as $item)
+                                    <option value="{{$item->nama_bank}}">{{$item->nama_bank}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="acc_name" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                class="text-danger">*</span></label>
+                        <input class="form-control" type="text" name="acc_number" required>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save Changes')
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                @endif
+
+            </div>
+        </div>
 
         <div class="card mt-4">
             <div class="card-body">
@@ -621,7 +716,8 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-control-label font-weight-bold">Selfie With National ID/Passport ID Photo</label>
+                            <label class="form-control-label font-weight-bold">Selfie With National ID/Passport ID
+                                Photo</label>
                             <div class="">
                                 <img src="{{ getImage('assets/images/user/kyc/'. $user->foto_selfie, null, true)}}"
                                     alt="Selfie Photo" class="b-radius--10 w-100">
@@ -722,16 +818,17 @@
                         <div class="form-group col-md-12">
                             <label>@lang('BRO Number')<span class="text-danger">*</span></label>
                             <div class="input-group has_append">
-                                <input type="text" name="no_bro" class="form-control"
-                                    placeholder="BRO Number as parent" required>
+                                <input type="text" name="no_bro" class="form-control" placeholder="BRO Number as parent"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
-                            <select name="position" class="position form-control form--control-2" id="position" required>
+                            <select name="position" class="position form-control form--control-2" id="position"
+                                required>
                                 <option value="">@lang('Select position')*</option>
                                 @foreach(mlmPositions() as $k=> $v)
-                                    <option value="{{$k}}">@lang($v)</option>
+                                <option value="{{$k}}">@lang($v)</option>
                                 @endforeach
                             </select>
                         </div>

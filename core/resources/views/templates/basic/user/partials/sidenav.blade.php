@@ -101,12 +101,12 @@
                         <span class="menu-title">@lang('Deposit Now')</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-menu-item {{ menuActive('user.withdraw') }}">
+                <li class="sidebar-menu-item {{ menuActive('user.withdraw') }}">
                     <a href="{{ route('user.withdraw') }}" class="nav-link">
                         <i class="menu-icon las la-cloud-download-alt"></i>
                         <span class="menu-title">@lang('Withdraw Now')</span>
                     </a>
-                </li> --}}
+                </li>
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.balance.transfer') }}">
                     <a href="{{ route('user.balance.transfer') }}" class="nav-link">
                         <i class="menu-icon las la-hand-holding-usd"></i>

@@ -151,6 +151,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('user/gold_invest_detail/{id}', 'ManageUsersController@goldDetail')->name('users.invest.detail');
         Route::get('user/referral/{id}', 'ManageUsersController@userRef')->name('users.ref');
         Route::post('user/update/{id}', 'ManageUsersController@update')->name('users.update');
+        Route::post('user/rek/{id}', 'ManageUsersController@rek')->name('users.rek');
         Route::post('user/add-sub-balance/{id}', 'ManageUsersController@addSubBalance')->name('users.addSubBalance');
         Route::post('user/set-user-placement/{id}', 'ManageUsersController@setUserPlacement')->name('users.setUserPlacement');
         Route::post('user/update_counting/{id}', 'ManageUsersController@updateCounting')->name('users.updateCounting');
@@ -420,6 +421,8 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
             Route::post('profile-setting', 'UserController@submitProfile');
+            Route::post('edit_rekening', 'UserController@edit_rekening')->name('edit_rekening');
+            Route::post('add_rekening', 'UserController@add_rekening')->name('add_rekening');
             Route::get('change-password', 'UserController@changePassword')->name('change-password');
             Route::post('change-password', 'UserController@submitPassword');
 

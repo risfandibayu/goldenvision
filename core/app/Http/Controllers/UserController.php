@@ -13,8 +13,10 @@ use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
 use App\Models\Survey;
 use App\Models\Answer;
+use App\Models\bank;
 use App\Models\Gold;
 use App\Models\GoldExchange;
+use App\Models\rekening;
 use App\Models\UserExtra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +48,8 @@ class UserController extends Controller
     public function profile()
     {
         $data['page_title'] = "Profile Setting";
+        $data['bank'] = bank::all();
+        $data['bank_user'] = rekening::where('user_id',Auth::user()->id)->first();
         $data['user'] = Auth::user();
         return view($this->activeTemplate. 'user.profile-setting', $data);
     }
@@ -162,6 +166,14 @@ class UserController extends Controller
         ]);
         $method = WithdrawMethod::where('id', $request->method_code)->where('status', 1)->firstOrFail();
         $user = auth()->user();
+        $rek = rekening::where('user_id',$user->id)->first();
+
+        if (!$rek) {
+            # code...
+            $notify[] = ['error', 'You Don`t Have Bank Account, Please Enter Your Bank Account.'];
+            return redirect()->route('user.profile-setting')->withNotify($notify);
+        }
+
         if ($request->amount < $method->min_limit) {
             $notify[] = ['error', 'Your Requested Amount is Smaller Than Minimum Amount.'];
             return back()->withNotify($notify);
@@ -199,6 +211,7 @@ class UserController extends Controller
     public function withdrawPreview()
     {
         $data['withdraw'] = Withdrawal::with('method','user')->where('trx', session()->get('wtrx'))->where('status', 0)->latest()->firstOrFail();
+        $data['user'] = Auth::user();
         $data['page_title'] = "Withdraw Preview";
         return view($this->activeTemplate . 'user.withdraw.preview', $data);
     }
@@ -1240,6 +1253,48 @@ class UserController extends Controller
             $notify[] = ['success', 'Gold exchange request is successful, please wait for confirmation.'];
             return redirect()->route('user.report.exchangeLog')->withNotify($notify);
         }
+    }
+
+    public function edit_rekening(Request $request){
+        $this->validate($request, [
+            'bank_name' => 'required',
+            'acc_name' => 'required',
+            'acc_number' => 'required'
+        ]);
+
+        $user = Auth::user();
+
+        $rek = rekening::where('user_id',$user->id)->first();
+        $rek->nama_bank = $request->bank_name;
+        $rek->nama_akun = $request->acc_name;
+        $rek->no_rek = $request->acc_number;
+        $rek->save();
+
+        $notify[] = ['success', 'Bank Account Information, Success edited!!'];
+        return redirect()->back()->withNotify($notify);
+
+        // dd($request->all());
+    }
+    public function add_rekening(Request $request){
+        $this->validate($request, [
+            'bank_name' => 'required',
+            'acc_name' => 'required',
+            'acc_number' => 'required'
+        ]);
+
+        $user = Auth::user();
+
+        $rek = new rekening();
+        $rek->user_id = $user->id;
+        $rek->nama_bank = $request->bank_name;
+        $rek->nama_akun = $request->acc_name;
+        $rek->no_rek = $request->acc_number;
+        $rek->save();
+
+        $notify[] = ['success', 'Bank Account Information, Success added!!'];
+        return redirect()->back()->withNotify($notify);
+
+        // dd($request->all());
     }
 
 }

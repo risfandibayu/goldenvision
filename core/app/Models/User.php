@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->hasOne(UserExtra::class);
     }
 
+    public function userBank()
+    {
+        return $this->hasOne(rekening::class);
+    }
+
     public function plan()
     {
         return $this->belongsTo(Plan::class);

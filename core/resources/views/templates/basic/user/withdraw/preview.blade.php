@@ -50,6 +50,22 @@
                                 </div>
                             </div>
                             <div class="col-md-7">
+                                <ul  class="list-group text-center">
+                                    <li class="list-group-item">
+                                        <span class="font-weight-bold">@lang('Bank Name') :
+                                        {{$user->userBank->nama_bank}}  </span>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <span class="font-weight-bold">@lang('Account Name') :
+                                            {{$user->userBank->nama_akun}}  </span> 
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="font-weight-bold">@lang('Account Number') :
+                                            {{$user->userBank->no_rek}}  </span>
+                                    </li>
+                                    
+                                </ul>
                                 <form action="{{route('user.withdraw.submit')}}" method="post" enctype="multipart/form-data">
                                     @csrf
 

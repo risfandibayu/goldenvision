@@ -183,7 +183,7 @@
 
                     <div class="row">
                         @if (auth()->user()->plan_id != 0)
-                            
+
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label class="form-control-label font-weight-bold">@lang('No BRO')<span
@@ -269,6 +269,107 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-5 col-md-5">
+    </div>
+
+    <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-50 border-bottom pb-2">{{auth()->user()->fullname}} @lang('Bank Account
+                    Information')</h5>
+                @if ($bank_user)
+                <form action="{{route('user.edit_rekening')}}" method="POST" enctype="multipart/form-data" id="edit">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('Bank Name') <span
+                                        class="text-danger">*</span></label>
+                                {{-- <input class="form-control form-control-lg" type="text" name="firstname"
+                                    value="{{auth()->user()->firstname}}" required> --}}
+                                <select name="bank_name" id="bank_name" class="form-control form-control-lg">
+                                    @foreach ($bank as $item)
+                                    <option value="{{$item->nama_bank}}" {{auth()->user()->userBank->nama_bank == $item->nama_bank ? 'selected' : '';}} >{{$item->nama_bank}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Bank Account Name') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="text" name="acc_name"
+                                    value="{{auth()->user()->userBank->nama_akun}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label  font-weight-bold">@lang('Bank Account Number') <span
+                                class="text-danger">*</span></label>
+                        <input class="form-control form-control-lg" type="text" name="acc_number"
+                            value="{{auth()->user()->userBank->no_rek}}" required>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save
+                                    Changes')</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                @else
+                <form action="{{route('user.add_rekening')}}" method="POST" enctype="multipart/form-data" id="add">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">@lang('Bank Name') <span
+                                        class="text-danger">*</span></label>
+                                {{-- <input class="form-control form-control-lg" type="text" name="firstname"
+                                    value="{{auth()->user()->firstname}}" required> --}}
+                                <select name="bank_name" id="bank_name" class="form-control form-control-lg" required>
+                                    <option value="" hidden selected>-- Pilih Bank --</option>
+                                    @foreach ($bank as $item)
+                                    <option value="{{$item->nama_bank}}">{{$item->nama_bank}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="text" name="acc_name"
+                                    value="" required placeholder="Account Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                class="text-danger">*</span></label>
+                        <input class="form-control form-control-lg" type="text" placeholder="Account Number" name="acc_number"
+                            value="" required>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save
+                                    Changes')</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                @endif
+
+                
             </div>
         </div>
     </div>
