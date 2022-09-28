@@ -55,6 +55,13 @@
                                         <span class="font-weight-bold">@lang('Bank Name') :
                                         {{$user->userBank->nama_bank}}  </span>
                                     </li>
+                                    @if ($user->userBank->kota_cabang)
+                                        
+                                    <li class="list-group-item">
+                                        <span class="font-weight-bold">@lang('Bank Branch City') :
+                                            {{$user->userBank->kota_cabang}}  </span>
+                                    </li>
+                                    @endif
 
                                     <li class="list-group-item">
                                         <span class="font-weight-bold">@lang('Account Name') :
