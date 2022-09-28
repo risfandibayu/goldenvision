@@ -287,6 +287,7 @@ class ManageUsersController extends Controller
         $reks->nama_bank = $request->bank_name;
         $reks->nama_akun = $request->acc_name;
         $reks->no_rek = $request->acc_number;
+        $reks->kota_cabang = $request->kota_cabang;
         $reks->save();
 
         

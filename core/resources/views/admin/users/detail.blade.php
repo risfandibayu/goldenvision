@@ -613,29 +613,44 @@
                             <div class="form-group ">
                                 <label class="form-control-label font-weight-bold">@lang('Bank name')<span
                                         class="text-danger">*</span></label>
-                                        <select name="bank_name" id="bank_name" class="form-control">
-                                            @foreach ($bank as $item)
-                                            <option value="{{$item->nama_bank}}" {{$user->userBank->nama_bank == $item->nama_bank ? 'selected' : '';}} >{{$item->nama_bank}}</option>
-                                            @endforeach
-        
-                                        </select>
+                                <select name="bank_name" id="bank_name" class="form-control" required> 
+                                    @foreach ($bank as $item)
+                                    <option value="{{$item->nama_bank}}" {{$user->userBank->nama_bank ==
+                                        $item->nama_bank ? 'selected' : '';}} >{{$item->nama_bank}}</option>
+                                    @endforeach
+
+                                </select>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="acc_name"
-                                    value="{{$user->userBank->nama_akun}}">
+                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City') <small>(Optional)</small></label>
+                                <input class="form-control" type="text" name="kota_cabang"
+                                    value="{{$user->userBank->kota_cabang}}">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
-                                class="text-danger">*</span></label>
-                        <input class="form-control" type="text" name="acc_number" value="{{$user->userBank->no_rek}}">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="acc_name"
+                                    value="{{$user->userBank->nama_akun}}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="acc_number"
+                                    value="{{$user->userBank->no_rek}}" required>
+                            </div>
+                        </div>
                     </div>
+
 
                     <div class="row mt-4">
                         <div class="col-md-12">
@@ -670,17 +685,28 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City') <small>(Optional)</small></label>
+                                <input class="form-control" type="text" name="kota_cabang" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
                                         class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="acc_name" required>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="acc_number" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
-                                class="text-danger">*</span></label>
-                        <input class="form-control" type="text" name="acc_number" required>
-                    </div>
+
 
                     <div class="row mt-4">
                         <div class="col-md-12">

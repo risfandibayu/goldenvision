@@ -1268,6 +1268,7 @@ class UserController extends Controller
         $rek->nama_bank = $request->bank_name;
         $rek->nama_akun = $request->acc_name;
         $rek->no_rek = $request->acc_number;
+        $rek->kota_cabang = $request->kota_cabang;
         $rek->save();
 
         $notify[] = ['success', 'Bank Account Information, Success edited!!'];
@@ -1289,6 +1290,7 @@ class UserController extends Controller
         $rek->nama_bank = $request->bank_name;
         $rek->nama_akun = $request->acc_name;
         $rek->no_rek = $request->acc_number;
+        $rek->kota_cabang = $request->kota_cabang;
         $rek->save();
 
         $notify[] = ['success', 'Bank Account Information, Success added!!'];

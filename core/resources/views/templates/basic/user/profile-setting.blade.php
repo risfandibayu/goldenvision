@@ -301,19 +301,32 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City') <small>(Optional)</small></label>
+                                <input class="form-control form-control-lg" type="text" name="kota_cabang"
+                                    value="{{auth()->user()->userBank->kota_cabang}}" placeholder="Bank KCP Jakarta">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label class="form-control-label  font-weight-bold">@lang('Bank Account Name') <span
                                         class="text-danger">*</span></label>
                                 <input class="form-control form-control-lg" type="text" name="acc_name"
                                     value="{{auth()->user()->userBank->nama_akun}}" required>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Bank Account Number') <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="text" name="acc_number"
+                                    value="{{auth()->user()->userBank->no_rek}}" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-control-label  font-weight-bold">@lang('Bank Account Number') <span
-                                class="text-danger">*</span></label>
-                        <input class="form-control form-control-lg" type="text" name="acc_number"
-                            value="{{auth()->user()->userBank->no_rek}}" required>
-                    </div>
+                    
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -345,18 +358,30 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City') <small>(Optional)</small></label>
+                                <input class="form-control form-control-lg" type="text" name="kota_cabang"
+                                    value="" placeholder="Bank KCP Jakarta">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
                                         class="text-danger">*</span></label>
                                 <input class="form-control form-control-lg" type="text" name="acc_name"
                                     value="" required placeholder="Account Name">
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
-                                class="text-danger">*</span></label>
-                        <input class="form-control form-control-lg" type="text" placeholder="Account Number" name="acc_number"
-                            value="" required>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                    class="text-danger">*</span></label>
+                                    <input class="form-control form-control-lg" type="text" placeholder="Account Number" name="acc_number"
+                                    value="" required>
+                                </div>
+                            </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-12">

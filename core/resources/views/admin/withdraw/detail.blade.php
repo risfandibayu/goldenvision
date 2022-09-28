@@ -114,6 +114,10 @@
                             @lang('Bank Name')
                             <span class="font-weight-bold">{{ $withdrawal->user->userBank->nama_bank }}</span>
                         </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('Bank Branch City')
+                            <span class="font-weight-bold">{{ $withdrawal->user->userBank->kota_cabang }}</span>
+                        </li>
 
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Account Name')
