@@ -170,6 +170,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('user/completed/survey/{id}', 'ManageUsersController@survey')->name('users.survey');
 
+
+        Route::get('user/custom_order', 'CorderController@adminIndex')->name('custom.order');
+        Route::get('user/custom_order/details/{id}', 'CorderController@detail')->name('corder.details');
+        Route::post('user/custom_order/approve', 'CorderController@app')->name('corder.approve');
+        Route::post('user/custom_order/reject', 'CorderController@rej')->name('corder.reject');
+        Route::post('user/custom_order/update', 'CorderController@upd')->name('corder.update');
+
         // mlm plan
         Route::get('plans', 'MlmController@plan')->name('plan');
         Route::post('plan/store', 'MlmController@planStore')->name('plan.store');
@@ -435,7 +442,7 @@ Route::name('user.')->prefix('user')->group(function () {
             //plan
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
 
-            // Route::get('/Product', 'ProductController@productIndex')->name('product.index');
+            Route::get('/Product', 'ProductController@productIndex')->name('product.index');
             
             // Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::get('/referral-log', 'UserController@referralCom')->name('referral.log');
@@ -488,6 +495,8 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::middleware(['checkKyc'])->group(function () {
                 Route::get('gold_invest', 'UserController@goldInvest')->name('gold.invest');
                 Route::post('/Product-purchase', 'ProductController@productPurchase')->name('product.purchase');
+                Route::post('/Product-custom', 'CorderController@productCustom')->name('product.custom');
+                Route::post('/Product-rcustom', 'CorderController@rproductCustom')->name('product.rcustom');
 
                 Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
                 Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');

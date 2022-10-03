@@ -15,6 +15,7 @@
                                 <th scope="col">@lang('Name')</th>
                                 <th scope="col">@lang('Type')</th>
                                 <th scope="col">@lang('Price')</th>
+                                <th scope="col">@lang('Stock')</th>
                                 <th scope="col">@lang('Status')</th>
                                 <th scope="col">@lang('Action')</th>
                             </tr>
@@ -29,6 +30,13 @@
                                 <td data-label="@lang('Name')">{{ __($product->name) }}</td>
                                 <td data-label="@lang('Type')">{{ $product->weight }} Gram</td>
                                 <td data-label="@lang('Price')">{{ getAmount($product->price) }} {{$general->cur_text}}
+                                <td data-label="@lang('Type')">
+                                    @if ($product->stok == 0)
+                                    <small class="text-danger font-italic font-weight-bold">out of stock!</small>
+                                    @else
+                                    {{ $product->stok }} Pieces
+                                    @endif
+                                </td>
                                 </td>
                                 <td data-label="@lang('Status')">
                                     @if($product->status == 1)
@@ -37,6 +45,14 @@
                                     @else
                                     <span
                                         class="text--small badge font-weight-normal badge--danger">@lang('Inactive')</span>
+                                    @endif
+
+                                    @if($product->is_reseller == 1)
+                                    <span
+                                        class="text--small badge font-weight-normal badge--primary">@lang('Reseller')</span>
+                                    @else
+                                    <span
+                                        class="text--small badge font-weight-normal badge--warning">@lang('Public')</span>
                                     @endif
                                 </td>
 
@@ -47,7 +63,8 @@
                                         data-status="{{ $product->status }}"
                                          data-weight="{{ $product->weight }}"
                                         data-image="{{ $product->image }}"
-                                        data-price="{{ $product->price }}" data-original-title="Edit">
+                                        data-price="{{ $product->price }}"
+                                        data-stok="{{ $product->stok }}" data-original-title="Edit">
                                         <i class="la la-pencil"></i>
                                     </button>
                                 </td>
@@ -116,10 +133,24 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col">
+                            <label class="font-weight-bold">@lang('Stock')</label>
+                            <input type="number" class="form-control stok" name="stok" step="0" placeholder="0" >
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
                             <label class="font-weight-bold">@lang('Status')</label>
                             <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
                                 data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('Inactive')"
                                 name="status" checked>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="font-weight-bold">@lang('Pricing For')</label>
+                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                data-toggle="toggle" data-on="@lang('Reseller')" data-off="@lang('Public')"
+                                name="reseller" checked>
                         </div>
                     </div>
                 </div>
@@ -174,10 +205,24 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col">
+                            <label class="font-weight-bold">@lang('Stock')</label>
+                            <input type="number" class="form-control" name="stok" step="0" placeholder="0" >
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
                             <label class="font-weight-bold">@lang('Status')</label>
                             <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
                                 data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('Inactive')"
                                 name="status" checked>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="font-weight-bold">@lang('Pricing For')</label>
+                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                data-toggle="toggle" data-on="@lang('Reseller')" data-off="@lang('Public')"
+                                name="reseller" checked>
                         </div>
                     </div>
                 </div>
@@ -205,6 +250,7 @@
                 var modal = $('#edit-product');
                 modal.find('.name').val($(this).data('name'));
                 modal.find('.price').val($(this).data('price'));
+                modal.find('.stok').val($(this).data('stok'));
                 modal.find('.weight').val($(this).data('weight'));
                 var input = modal.find('.image');
                 // input.setAttribute("value", "http://localhost/microgold/assets/images/avatar.png");

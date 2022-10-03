@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\corder;
 use App\Models\GeneralSetting;
 use App\Models\Gold;
 use App\Models\Product;
@@ -17,11 +18,13 @@ class ProductController extends Controller
         $data['page_title'] = "Product";
         if (auth()->user()->plan_id != 0) {
             # code...
-            $data['product'] = Product::where('status',1)->where('is_reseller',1)->get();
+            $data['product'] = Product::where('status',1)->where('is_reseller',1)->where('is_custom','!=',1)->get();
+            $data['cproduct'] = Product::where('status',1)->where('is_reseller',1)->where('is_custom','=',1)->get();
         }else{
-            $data['product'] = Product::where('status',1)->where('is_reseller',0)->get();
-
+            $data['product'] = Product::where('status',1)->where('is_reseller',0)->where('is_custom','!=',1)->get();
+            $data['cproduct'] = Product::where('status',1)->where('is_reseller',1)->where('is_custom','=',1)->get();
         }
+        $data['corder'] = corder::where('user_id',Auth::user()->id)->where('status','!=',1)->get();
         return view('templates.basic.user.product.index',$data);
     }
 
@@ -32,6 +35,16 @@ class ProductController extends Controller
         $gnl = GeneralSetting::first();
 
         $user = User::find(Auth::id());
+
+        if ($product->stok == 0) {
+            $notify[] = ['error', 'Out Of Stock'];
+            return back()->withNotify($notify);
+        }
+
+        if ($product->stok < $request->qty) {
+            $notify[] = ['error', 'the number of qty you input exceeds the available stock'];
+            return back()->withNotify($notify);
+        }
 
         if ($user->balance < ($product->price * $request->qty)) {
             $notify[] = ['error', 'Insufficient Balance'];
@@ -47,6 +60,9 @@ class ProductController extends Controller
             $user->balance -= ($product->price * $request->qty);
             $user->total_invest += ($product->price * $request->qty);
             $user->save();
+
+            $product->stok -= $request->qty;
+            $product->save();
         }else{
             $newg = new Gold();
             $newg->user_id = Auth::user()->id;
@@ -57,6 +73,9 @@ class ProductController extends Controller
             $user->balance -= ($product->price * $request->qty);
             $user->total_invest += ($product->price * $request->qty);
             $user->save();
+
+            $product->stok -= $request->qty;
+            $product->save();
         }
 
         $trx = $user->transactions()->create([

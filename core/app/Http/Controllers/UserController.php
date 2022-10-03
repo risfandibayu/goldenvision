@@ -14,10 +14,12 @@ use App\Models\Withdrawal;
 use App\Models\Survey;
 use App\Models\Answer;
 use App\Models\bank;
+use App\Models\corder;
 use App\Models\Gold;
 use App\Models\GoldExchange;
 use App\Models\rekening;
 use App\Models\UserExtra;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +44,7 @@ class UserController extends Controller
         $data['rejectWithdraw']     = Withdrawal::where('user_id', auth()->id())->where('status', 3)->count();
         $data['total_ref']          = User::where('ref_id', auth()->id())->count();
         $data['totalBvCut']         = BvLog::where('user_id', auth()->id())->where('trx_type', '-')->sum('amount');
-        $data['emas']               = Gold::where('user_id',Auth::user()->id)->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.user_id')->first();
+        $data['emas']               = Gold::where('user_id',Auth::user()->id)->where('golds.status','=','0')->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.user_id')->first();
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
     public function profile()
@@ -1207,8 +1209,61 @@ class UserController extends Controller
     public function goldInvest(){
         $page_title = 'Gold Invest';
         $empty_message = 'Gold Invest Not found.';
-        $gold  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
-        ->paginate(getPaginate());
+        $golds  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->where('products.is_custom','!=',1)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
+        ->get();
+        // ->paginate(getPaginate());
+        $Corder = corder::where('corders.user_id',Auth::user()->id)
+        ->select('products.*','corders.name as cname','golds.qty',db::raw('(products.price * golds.qty) as total_rp'),db::raw('(products.weight * golds.qty ) as total_wg'))
+        ->join('products','products.id','=','corders.prod_id')
+        ->join('golds','golds.id','=','corders.gold_id')
+        ->where('corders.status',1)->get();
+
+        // dd($Corder);
+        // dd($Corder->toArray());
+        $goldq = $golds->toArray();
+        $goldw = $Corder->toArray();
+        $gold = new Collection();
+        foreach($goldq as $item){
+                    $gold->push((object)[
+                        "id" => $item['id'],
+                        "image" => $item['image'],
+                        "name" => $item['name'],
+                        "weight" => $item['weight'],
+                        "price" => $item['price'],
+                        "status" => $item['status'],
+                        "created_at" => $item['created_at'],
+                        "updated_at" => $item['updated_at'],
+                        "is_reseller" => $item['is_reseller'],
+                        "stok" => $item['stok'],
+                        "is_custom" => $item['is_custom'],
+                        "qty" => $item['qty'],
+                        "total_rp" => $item['total_rp'],
+                        "total_wg" => $item['total_wg'],
+    
+                    ]);
+    
+                }
+        foreach($goldw as $item){
+                    $gold->push((object)[
+                        "id" => $item['id'],
+                        "image" => $item['image'],
+                        "name" => $item['cname'],
+                        "weight" => $item['weight'],
+                        "price" => $item['price'],
+                        "status" => $item['status'],
+                        "created_at" => $item['created_at'],
+                        "updated_at" => $item['updated_at'],
+                        "is_reseller" => $item['is_reseller'],
+                        "stok" => $item['stok'],
+                        "is_custom" => $item['is_custom'],
+                        "qty" => $item['qty'],
+                        "total_rp" => $item['total_rp'],
+                        "total_wg" => $item['total_wg'],
+    
+                    ]);
+    
+                }
+        
         return view('templates.basic.user.gold',compact('page_title', 'empty_message','gold'));
     }
 

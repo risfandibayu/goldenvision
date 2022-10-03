@@ -22,7 +22,7 @@ class ProductController extends Controller
     public function products(){
         $page_title = 'Products';
         $empty_message = 'No Products found';
-        $products = Product::paginate(getPaginate());
+        $products = Product::where('is_custom','!=',1)->paginate(getPaginate());
         return view('admin.product.index', compact('page_title','products', 'empty_message'));
     }
 
@@ -61,7 +61,9 @@ class ProductController extends Controller
         // dd($request->file('images'));
         $prod->price            = $request->price;
         $prod->weight           = $request->weight;
+        $prod->stok             = $request->stok;
         $prod->status           = $request->status?1:0;
+        $prod->is_reseller      = $request->reseller?1:0;
         $prod->save();
 
         $notify[] = ['success', 'New Plan created successfully'];
@@ -92,7 +94,9 @@ class ProductController extends Controller
         // dd($request->file('images'));
         $prod->price            = $request->price;
         $prod->weight           = $request->weight;
+        $prod->stok           = $request->stok;
         $prod->status           = $request->status?1:0;
+        $prod->is_reseller         = $request->reseller?1:0;
         $prod->save();
 
         $notify[] = ['success', 'Product edited successfully'];

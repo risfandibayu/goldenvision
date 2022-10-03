@@ -287,6 +287,13 @@
                         <span class="menu-title">@lang('User Golds')</span>
                     </a>
                 </li>
+                <li class="sidebar-menu-item {{menuActive('admin.custom.order*')}}">
+                    <a href="{{route('admin.custom.order')}}" class="nav-link ">
+                        {{-- <i class="las la-paper-plane"></i> --}}
+                        <i class="menu-icon las la-shopping-cart"></i>
+                        <span class="menu-title">@lang('Custom Order')</span>
+                    </a>
+                </li>
                 <li class="sidebar-menu-item {{menuActive('admin.exchange*')}}">
                     <a href="{{route('admin.exchange')}}" class="nav-link ">
                         {{-- <i class="las la-paper-plane"></i> --}}

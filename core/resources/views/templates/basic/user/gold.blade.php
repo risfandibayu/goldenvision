@@ -55,9 +55,9 @@
                     </table><!-- table end -->
                 </div>
             </div>
-            <div class="card-footer py-4">
+            {{-- <div class="card-footer py-4">
                 {{ $gold->links($activeTemplate .'user.partials.paginate') }}
-            </div>
+            </div> --}}
         </div><!-- card end -->
     </div>
 </div>
