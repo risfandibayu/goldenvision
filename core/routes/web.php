@@ -361,6 +361,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('exchange/reject/{id}', 'ExchangeController@reject')->name('exchange.reject');
         Route::post('exchange/accept/{id}', 'ExchangeController@verify')->name('exchange.accept');
 
+        Route::get('delivery', 'deliveryController@index')->name('delivery');
+        Route::post('delivery/deliver', 'deliveryController@delivery')->name('deliver.deliver');
+
         // SEO
         Route::get('seo', 'FrontendController@seoEdit')->name('seo');
 
@@ -432,6 +435,9 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('add_rekening', 'UserController@add_rekening')->name('add_rekening');
             Route::get('change-password', 'UserController@changePassword')->name('change-password');
             Route::post('change-password', 'UserController@submitPassword');
+
+            Route::post('add_address', 'AlamatController@add_address')->name('add_address');
+            Route::post('edit_address', 'AlamatController@edit_address')->name('edit_address');
 
             //2FA
             Route::get('twofactor', 'UserController@show2faForm')->name('twofactor');
@@ -507,6 +513,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('report/referral/commission', 'UserReportController@refCom')->name('report.refCom');
                 Route::get('report/binary/commission', 'UserReportController@binaryCom')->name('report.binaryCom');
                 Route::get('report/exchange/log', 'UserReportController@exchangeLog')->name('report.exchangeLog');
+                Route::get('report/delivery/log', 'UserReportController@deliveryLog')->name('report.deliveryLog');
 
                 Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
 
@@ -517,6 +524,7 @@ Route::name('user.')->prefix('user')->group(function () {
             });
 
             Route::post('gold_exchange', 'UserController@goldExchange')->name('gold.exchange');
+            Route::post('gold_delivery', 'SendgoldController@goldDelivery')->name('gold.delivery');
 
             Route::get('/cek_pos/{id}', 'UserController@cek_pos')->name('cek_pos');
             Route::get('/cek_tree/{id}', 'UserController@cek_tree')->name('cek_tree');

@@ -31,17 +31,33 @@
                                 <td data-label="@lang('Total')">{{nb($gd->total_rp)}} IDR</td>
                                 <td data-label="@lang('Weight Total')">{{nbk($gd->total_wg)}} gr</td>
                                 <td data-label="@lang('Action')">
-                                <button class="btn btn--sm btn--primary exchange"
-                                data-id="{{ $gd->id }}"
-                                        data-name="{{ $gd->name }}"
-                                        data-price="{{ $gd->price }}"
-                                        data-weight="{{ $gd->weight }}"
-                                        data-tweight="{{ $gd->total_wg }}"
-                                        data-image="{{ getImage('assets/images/product/'. $gd->image,  null, true)}}"
-                                >
-                                    <i class="las la-sync"></i> 
-                                    Exchange
-                                </button>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn--sm btn--primary delivery"
+                                            data-gid="{{ $gd->gid }}"
+                                                    data-name="{{ $gd->name }}"
+                                                    data-price="{{ $gd->price }}"
+                                                    data-weight="{{ $gd->weight }}"
+                                                    data-tweight="{{ $gd->total_wg }}"
+                                                    data-image="{{ getImage('assets/images/product/'. $gd->image,  null, true)}}">
+                                                <i class="las la-truck"></i> 
+                                                Delivery
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn--sm btn--primary exchange"
+                                            data-id="{{ $gd->id }}"
+                                                    data-name="{{ $gd->name }}"
+                                                    data-price="{{ $gd->price }}"
+                                                    data-weight="{{ $gd->weight }}"
+                                                    data-tweight="{{ $gd->total_wg }}"
+                                                    data-image="{{ getImage('assets/images/product/'. $gd->image,  null, true)}}">
+                                                <i class="las la-sync"></i> 
+                                                Exchange
+                                            </button>
+                                        </div>
+                                    </div>
+                                
                                 </td>
 
                             </tr>
@@ -112,6 +128,53 @@
             </div>
         </div>
     </div>
+
+<div class="modal fade" id="gold-delivery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" > Confirm Devlivery <span id="prod_name"></span> ?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                </div>
+                <form method="post" action="{{route('user.gold.delivery')}}">
+                {{-- <form method="post"> --}}
+                    {{-- <div class="modal-body"> --}}
+                        {{-- </div> --}}
+                    @csrf
+                    <div class="modal-body row">
+                        <div class="px-100">
+                            <img src="" alt="" id="img" class="img-fluid">
+                        </div>
+                        <input type="hidden" name="gid" id="gid">
+                        {{-- <h5 class="text-center col-12"><span id="price"></span> {{$general->cur_text}} / Item</h5> --}}
+                        <h5 class="text-center col-12">Your Gold Weight Total : <span id="tweight"></span> gr</h5>
+                        <div class="form-group col-12">
+                            <label for="">QTY</label>
+                            <input class="form-control" type="number" name="qty" id="qty" min="1" placeholder="QTY" required>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Address</label>
+                            <select name="alamat" id="alamat" class="form-control"  required>
+                                <option value="" hidden selected>-- Chosse Address --</option>
+                                @foreach ($alamat as $item)
+                                    <option value="{{$item->alamat}}">{{$item->alamat}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--danger" data-dismiss="modal"><i class="fa fa-times"></i>
+                            @lang('Close')</button>
+
+                        <button type="submit" class="btn btn--success"><i
+                                class="lab la-telegram-plane"></i> @lang('Delivery')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('script')
@@ -150,6 +213,22 @@
                 // }
 
                 // modal.find('input[name=id]').val($(this).data('id'));
+                modal.modal('show');
+            });
+
+            $('.delivery').on('click', function () {
+                // console.log($(this).data('weight'));
+                var modal = $('#gold-delivery');
+                modal.find('#img').attr("src",$(this).data('image'));
+                modal.find('#prod_name').html($(this).data('name'));
+                modal.find('#gid').val($(this).data('gid'));
+                modal.find('#prices').val($(this).data('price'));
+                modal.find('#price').html($(this).data('price'));
+                modal.find('#weight').val($(this).data('weight'));
+                modal.find('#tweight').html($(this).data('tweight'));
+                modal.find('#product_id').val($(this).data('id'));
+                modal.find('#product_name').val($(this).data('name'));
+
                 modal.modal('show');
             });
 

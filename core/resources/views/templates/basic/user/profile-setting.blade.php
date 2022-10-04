@@ -292,7 +292,8 @@
                                     value="{{auth()->user()->firstname}}" required> --}}
                                 <select name="bank_name" id="bank_name" class="form-control form-control-lg">
                                     @foreach ($bank as $item)
-                                    <option value="{{$item->nama_bank}}" {{auth()->user()->userBank->nama_bank == $item->nama_bank ? 'selected' : '';}} >{{$item->nama_bank}}</option>
+                                    <option value="{{$item->nama_bank}}" {{auth()->user()->userBank->nama_bank ==
+                                        $item->nama_bank ? 'selected' : '';}} >{{$item->nama_bank}}</option>
                                     @endforeach
 
                                 </select>
@@ -301,7 +302,8 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City') <small>(Optional)</small></label>
+                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City')
+                                    <small>(Optional)</small></label>
                                 <input class="form-control form-control-lg" type="text" name="kota_cabang"
                                     value="{{auth()->user()->userBank->kota_cabang}}" placeholder="Bank KCP Jakarta">
                             </div>
@@ -326,7 +328,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -358,9 +360,10 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City') <small>(Optional)</small></label>
-                                <input class="form-control form-control-lg" type="text" name="kota_cabang"
-                                    value="" placeholder="Bank KCP Jakarta">
+                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City')
+                                    <small>(Optional)</small></label>
+                                <input class="form-control form-control-lg" type="text" name="kota_cabang" value=""
+                                    placeholder="Bank KCP Jakarta">
                             </div>
                         </div>
                     </div>
@@ -369,19 +372,19 @@
                             <div class="form-group">
                                 <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
                                         class="text-danger">*</span></label>
-                                <input class="form-control form-control-lg" type="text" name="acc_name"
-                                    value="" required placeholder="Account Name">
+                                <input class="form-control form-control-lg" type="text" name="acc_name" value=""
+                                    required placeholder="Account Name">
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
                                 <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
-                                    class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="text" placeholder="Account Number" name="acc_number"
-                                    value="" required>
-                                </div>
+                                        class="text-danger">*</span></label>
+                                <input class="form-control form-control-lg" type="text" placeholder="Account Number"
+                                    name="acc_number" value="" required>
                             </div>
+                        </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-12">
@@ -394,12 +397,128 @@
                 </form>
                 @endif
 
-                
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-3 col-lg-5 col-md-5">
+    </div>
+
+    <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h5 class="card-title mb-50 border-bottom pb-2">{{auth()->user()->fullname}} @lang('Shipping
+                            Address Information')</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn--primary add-address">Add New Address</button>
+                    </div>
+                </div>
+                <div class="table-responsive--sm table-responsive">
+                    <table class="table table--light style--two">
+                        <thead>
+                            <tr>
+                                <th scope="col">@lang('No')</th>
+                                <th scope="col">@lang('Alamat')</th>
+                                <th scope="col">@lang('Action')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 0; ?>
+                            @foreach ($alamat as $item)
+                            <?php $no++; ?>
+                            <tr>
+                                <td>{{$no}}</td>
+                                <td>{{$item->alamat}}</td>
+                                <td data-label="@lang('Action')">
+                                    <button type="button" class="icon-btn editaddress" data-toggle="tooltip"
+                                    data-id="{{ $item->id }}"
+                                        data-alamat="{{ $item->alamat }}"
+                                        data-original-title="Edit">
+                                        <i class="la la-pencil"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table><!-- table end -->
+                </div>
+
+
             </div>
         </div>
     </div>
 </div>
 
+
+<div id="add-address" class="modal  fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@lang('Add New Address')</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{{route('user.add_address')}}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="font-weight-bold"> @lang('Address')</label>
+                            {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                                onchange="loadFile(event)" name="images" required> --}}
+                            <Textarea id="alamat" name="alamat" rows="4"
+                                placeholder="Jalan, No Rumah, RT, RW , Kec/Kota, Kab, No Pos"></Textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-block btn btn--primary">@lang('Submit')</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div id="edit-address" class="modal  fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@lang('Edit Address')</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{{route('user.edit_address')}}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" class="id" name="id" id="id">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="font-weight-bold"> @lang('Address')</label>
+                            {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                                onchange="loadFile(event)" name="images" required> --}}
+                            <Textarea class="alamat" id="alamat" name="alamat" rows="4"
+                                placeholder="Jalan, No Rumah, RT, RW , Kec/Kota, Kab, No Pos"></Textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-block btn btn--primary">@lang('Submit')</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('breadcrumb-plugins')
@@ -424,6 +543,17 @@
             }
         };
 
+        $('.add-address').on('click', function () {
+                var modal = $('#add-address');
+                modal.modal('show');
+        });
+        $('.editaddress').on('click', function () {
+            // console.log($(this).data('alamat'));
+                var modal = $('#edit-address');
+                modal.find('.id').val($(this).data('id'));
+                modal.find('.alamat').val($(this).data('alamat'));
+                modal.modal('show');
+        });
 
 </script>
 @endpush

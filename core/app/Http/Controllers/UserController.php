@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\GoogleAuthenticator;
 use App\Models\AdminNotification;
+use App\Models\alamat;
 use App\Models\BvLog;
 use App\Models\Deposit;
 use App\Models\GeneralSetting;
@@ -53,6 +54,7 @@ class UserController extends Controller
         $data['bank'] = bank::all();
         $data['bank_user'] = rekening::where('user_id',Auth::user()->id)->first();
         $data['user'] = Auth::user();
+        $data['alamat'] = alamat::where('user_id',Auth::user()->id)->get();
         return view($this->activeTemplate. 'user.profile-setting', $data);
     }
 
@@ -1209,11 +1211,12 @@ class UserController extends Controller
     public function goldInvest(){
         $page_title = 'Gold Invest';
         $empty_message = 'Gold Invest Not found.';
-        $golds  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->where('products.is_custom','!=',1)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
+        $alamat = alamat::where('user_id',Auth::user()->id)->get();
+        $golds  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->where('products.is_custom','!=',1)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.id as gid','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
         ->get();
         // ->paginate(getPaginate());
         $Corder = corder::where('corders.user_id',Auth::user()->id)
-        ->select('products.*','corders.name as cname','golds.qty',db::raw('(products.price * golds.qty) as total_rp'),db::raw('(products.weight * golds.qty ) as total_wg'))
+        ->select('products.*','corders.name as cname','golds.id as gid','golds.qty',db::raw('(products.price * golds.qty) as total_rp'),db::raw('(products.weight * golds.qty ) as total_wg'))
         ->join('products','products.id','=','corders.prod_id')
         ->join('golds','golds.id','=','corders.gold_id')
         ->where('corders.status',1)->get();
@@ -1226,6 +1229,7 @@ class UserController extends Controller
         foreach($goldq as $item){
                     $gold->push((object)[
                         "id" => $item['id'],
+                        "gid" => $item['gid'],
                         "image" => $item['image'],
                         "name" => $item['name'],
                         "weight" => $item['weight'],
@@ -1246,6 +1250,7 @@ class UserController extends Controller
         foreach($goldw as $item){
                     $gold->push((object)[
                         "id" => $item['id'],
+                        "gid" => $item['gid'],
                         "image" => $item['image'],
                         "name" => $item['cname'],
                         "weight" => $item['weight'],
@@ -1264,7 +1269,7 @@ class UserController extends Controller
     
                 }
         
-        return view('templates.basic.user.gold',compact('page_title', 'empty_message','gold'));
+        return view('templates.basic.user.gold',compact('page_title', 'empty_message','gold','alamat'));
     }
 
     public function goldExchange(Request $request){

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GoldExchange;
+use App\Models\sendgold;
 use App\Models\Transaction;
 use App\Models\Withdrawal;
 use App\Models\WithdrawMethod;
@@ -159,6 +160,32 @@ class UserReportController extends Controller
         $data['search'] = $search;
         $data['empty_message'] = "No Data Found!";
         return view($this->activeTemplate . 'user.exchangeGold', $data);
+    }
+    public function deliveryLog(Request $request){
+        $search = $request->search;
+
+        // if ($search) {
+        //     $data['page_title'] = "Gold Delivery search : " . $search;
+        //     $data['delivery'] = sendgold::where('user_id',Auth::user()->id)->where('trx', 'like', "%$search%")
+        //     ->join('products','products.id','=','gold_exchanges.prod_id')
+        //     ->select('gold_exchanges.*','products.name')
+        //     ->orderBy('gold_exchanges.created_at','DESC')
+        //     ->paginate(getPaginate());
+        // } else {
+            $data['page_title'] = "Gold Exchange Log";
+            $data['delivery'] = sendgold::where('sendgolds.user_id',Auth::user()->id)
+            ->join('golds','golds.id','=','sendgolds.gold_id')
+            ->join('products','products.id','=','golds.prod_id')
+            ->leftjoin('corders','corders.gold_id','=','golds.id')
+            ->select('sendgolds.*','golds.is_custom','products.name as pname', 'products.weight as pweight','corders.name as cname')
+            ->orderBy('sendgolds.created_at','DESC')
+            ->paginate(getPaginate());
+
+            // dd($data['delivery']);
+        // }
+        $data['search'] = $search;
+        $data['empty_message'] = "No Data Found!";
+        return view($this->activeTemplate . 'user.deliveryGold', $data);
     }
 
 }

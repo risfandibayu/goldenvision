@@ -301,6 +301,13 @@
                         <span class="menu-title">@lang('Exchange')</span>
                     </a>
                 </li>
+                <li class="sidebar-menu-item {{menuActive('admin.delivery*')}}">
+                    <a href="{{route('admin.delivery')}}" class="nav-link ">
+                        {{-- <i class="las la-paper-plane"></i> --}}
+                        <i class="menu-icon las la-truck"></i>
+                        <span class="menu-title">@lang('Delivery')</span>
+                    </a>
+                </li>
 
 
                 <li class="sidebar-menu-item sidebar-dropdown">
