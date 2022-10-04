@@ -42,10 +42,12 @@ class UserReportController extends Controller
         $search = $request->search;
         if ($search) {
             $data['page_title'] = "Invest search : " . $search;
-            $data['transactions'] = auth()->user()->transactions()->where('remark', 'purchased_plan')->where('trx', 'like', "%$search%")->orwhere('remark', 'purchased_product')->where('trx', 'like', "%$search%")->latest()->paginate(getPaginate());
+            // $data['transactions'] = auth()->user()->transactions()->where('remark', 'purchased_plan')->where('trx', 'like', "%$search%")->orwhere('remark', 'purchased_product')->where('trx', 'like', "%$search%")->latest()->paginate(getPaginate());\
+            $data['transactions'] = Transaction::where('user_id',Auth::user()->id)->where('remark', 'purchased_plan')->where('trx', 'like', "%$search%")->orwhere('remark', 'purchased_product')->where('user_id',Auth::user()->id)->where('trx', 'like', "%$search%")->latest()->paginate(getPaginate());
         } else {
             $data['page_title'] = 'Invest Log';
-            $data['transactions'] = auth()->user()->transactions()->where('remark', 'purchased_plan')->orwhere('remark', 'purchased_product')->latest()->paginate(getPaginate());
+            // $data['transactions'] = auth()->user()->transactions()->where('remark', 'purchased_plan')->orwhere('remark', 'purchased_product')->latest()->paginate(getPaginate());
+            $data['transactions'] = Transaction::where('user_id',Auth::user()->id)->where('remark', 'purchased_plan')->orwhere('remark', 'purchased_product')->where('user_id',Auth::user()->id)->latest()->paginate(getPaginate());
         }
         $data['search'] = $search;
 
