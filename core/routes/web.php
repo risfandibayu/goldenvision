@@ -361,8 +361,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('exchange/reject/{id}', 'ExchangeController@reject')->name('exchange.reject');
         Route::post('exchange/accept/{id}', 'ExchangeController@verify')->name('exchange.accept');
 
-        Route::get('delivery', 'deliveryController@index')->name('delivery');
-        Route::post('delivery/deliver', 'deliveryController@delivery')->name('deliver.deliver');
+        Route::get('delivery', 'DeliveryController@index')->name('delivery');
+        Route::post('delivery/deliver', 'DeliveryController@delivery')->name('deliver.deliver');
 
         // SEO
         Route::get('seo', 'FrontendController@seoEdit')->name('seo');
