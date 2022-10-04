@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\Gold;
+use App\Models\GoldExchange;
 use App\Models\sendgold;
 use Illuminate\Http\Request;
 
@@ -36,4 +36,5 @@ class DeliveryController extends Controller
         $notify[] = ['success', 'Gold Deliver successfully'];
         return back()->withNotify($notify);
     }
+
 }
