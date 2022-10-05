@@ -109,10 +109,10 @@ class ProductController extends Controller
             }
 
             $gold = Gold::where('user_id',Auth::user()->id)->first();
-            $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->first();
-            $gold2 = Gold::where('user_id',Auth::user()->id)->where('prod_id',2)->first();
-            $gold3 = Gold::where('user_id',Auth::user()->id)->where('prod_id',3)->first();
-            $gold4 = Gold::where('user_id',Auth::user()->id)->where('prod_id',4)->first();
+            $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->where('from_bro','=',1)->first();
+            $gold2 = Gold::where('user_id',Auth::user()->id)->where('prod_id',2)->where('from_bro','=',1)->first();
+            $gold3 = Gold::where('user_id',Auth::user()->id)->where('prod_id',3)->where('from_bro','=',1)->first();
+            $gold4 = Gold::where('user_id',Auth::user()->id)->where('prod_id',4)->where('from_bro','=',1)->first();
 
             if($gold){
                 if($gold1){
