@@ -82,7 +82,7 @@ class ProductController extends Controller
             $product->save();
         }
 
-        if (($product->price * $request->qty) > 11000000) {
+        if (($product->price * $request->qty) >= 11000000) {
             # code...
 
 

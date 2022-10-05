@@ -115,7 +115,7 @@ class CorderController extends Controller
         $prod = Product::where('id','=',$cor->prod_id)->first();
         $user = User::where('id','=',$cor->user_id)->first();
 
-        if (($prod->price * $cor->qty) > 11000000) {
+        if (($prod->price * $cor->qty) >= 11000000) {
             # code...
             $user->bro_qty += intval(($prod->price * $cor->qty) / 11000000);
             $user->save();
