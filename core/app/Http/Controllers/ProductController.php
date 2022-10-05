@@ -51,6 +51,8 @@ class ProductController extends Controller
             return back()->withNotify($notify);
         }
 
+        // dd(intval(($product->price * $request->qty) / 11000000));
+
         $gold = Gold::where('user_id',Auth::user()->id)->where('prod_id',$request->product_id)->first();
 
         // if($gold){
@@ -79,6 +81,111 @@ class ProductController extends Controller
             $product->stok -= $request->qty;
             $product->save();
         // }
+
+        if (($product->price * $request->qty) > 11000000) {
+            # code...
+
+
+            $user->bro_qty += intval(($product->price * $request->qty) / 11000000);
+            $user->save();
+
+            $qty = intval(($product->price * $request->qty) / 11000000);
+
+            if (date('Y-m-d,H:i:s') > '2022-09-02,23:59:59') {
+                # code...
+                // dd('s');
+                $g1 = 50;
+                $g2 = 20;
+                $g3 = 5;
+                $g4 = 2;
+                $tot = 77;
+            }else{
+                // dd('w');
+                $g1 = 70;
+                $g2 = 20;
+                $g3 = 7;
+                $g4 = 2;
+                $tot = 99;
+            }
+
+            $gold = Gold::where('user_id',Auth::user()->id)->first();
+            $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->first();
+            $gold2 = Gold::where('user_id',Auth::user()->id)->where('prod_id',2)->first();
+            $gold3 = Gold::where('user_id',Auth::user()->id)->where('prod_id',3)->first();
+            $gold4 = Gold::where('user_id',Auth::user()->id)->where('prod_id',4)->first();
+
+            if($gold){
+                if($gold1){
+                    $gold1->qty += $g1 * $qty;
+                    $gold1->save();
+                }else{
+                    $newg = new Gold();
+                    $newg->user_id = Auth::user()->id;
+                    $newg->prod_id = 1;
+                    $newg->qty = $g1 * $qty;
+                    $newg->save();
+                }
+
+                if($gold2){
+                    $gold2->qty += $g2 * $qty;
+                    $gold2->save();
+                }else{
+                    $newg = new Gold();
+                    $newg->user_id = Auth::user()->id;
+                    $newg->prod_id = 2;
+                    $newg->qty = $g2 * $qty;
+                    $newg->save();
+                }
+
+                if($gold3){
+                    $gold3->qty += $g3 * $qty;
+                    $gold3->save();
+                }else{
+                    $newg = new Gold();
+                    $newg->user_id = Auth::user()->id;
+                    $newg->prod_id = 3;
+                    $newg->qty = $g3 * $qty;
+                    $newg->save();
+                }
+
+                if($gold4){
+                    $gold4->qty += $g4 * $qty;
+                    $gold4->save();
+                }else{
+                    $newg = new Gold();
+                    $newg->user_id = Auth::user()->id;
+                    $newg->prod_id = 4;
+                    $newg->qty = $g4 * $qty;
+                    $newg->save();
+                }
+
+
+            }else{
+                $newg = new Gold();
+                $newg->user_id = Auth::user()->id;
+                $newg->prod_id = 1;
+                $newg->qty = $g1 * $qty;
+                $newg->save();
+
+                $newg = new Gold();
+                $newg->user_id = Auth::user()->id;
+                $newg->prod_id = 2;
+                $newg->qty = $g2 * $qty;
+                $newg->save();
+
+                $newg = new Gold();
+                $newg->user_id = Auth::user()->id;
+                $newg->prod_id = 3;
+                $newg->qty = $g3 * $qty;
+                $newg->save();
+
+                $newg = new Gold();
+                $newg->user_id = Auth::user()->id;
+                $newg->prod_id = 4;
+                $newg->qty = $g4 * $qty;
+                $newg->save();
+            }
+        }
 
         $trx = $user->transactions()->create([
             'amount' => $product->price * $request->qty,
