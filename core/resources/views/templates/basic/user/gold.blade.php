@@ -4,6 +4,78 @@
 
 <div class="row">
 
+    <div class="col-lg-12 mb-20">
+        <div class="card b-radius--10 ">
+            <div class="card-body p-0">
+
+                <div class="table-responsive--sm table-responsive">
+                    <table class="table table--light style--two">
+                        <thead>
+                        <tr>
+                            <th scope="col">@lang('Name')</th>
+                            <th scope="col">@lang('Price')</th>
+                            <th scope="col">@lang('Type')</th>
+                            <th scope="col">@lang('Qty')</th>
+                            <th scope="col">@lang('Total')</th>
+                            <th scope="col">@lang('Weight Total')</th>
+                            {{-- <th scope="col">@lang('Action')</th> --}}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($gold_bro as $gd)
+                            <tr>
+                                <td data-label="@lang('Name')">{{$gd->name}}</td>
+                                <td data-label="@lang('Price')">{{nb($gd->price)}} IDR</td>
+                                <td data-label="@lang('Type')">{{nbk($gd->weight)}} gr</td>
+                                <td data-label="@lang('Qty')">{{nb($gd->qty)}} pcs</td>
+                                <td data-label="@lang('Total')">{{nb($gd->total_rp)}} IDR</td>
+                                <td data-label="@lang('Weight Total')">{{nbk($gd->total_wg)}} gr</td>
+                                {{-- <td data-label="@lang('Action')">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn--sm btn--primary delivery"
+                                            data-gid="{{ $gd->gid }}"
+                                                    data-name="{{ $gd->name }}"
+                                                    data-price="{{ $gd->price }}"
+                                                    data-weight="{{ $gd->weight }}"
+                                                    data-tweight="{{ $gd->total_wg }}"
+                                                    data-image="{{ getImage('assets/images/product/'. $gd->image,  null, true)}}">
+                                                <i class="las la-truck"></i> 
+                                                Delivery
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn--sm btn--primary exchange"
+                                            data-id="{{ $gd->id }}"
+                                                    data-name="{{ $gd->name }}"
+                                                    data-price="{{ $gd->price }}"
+                                                    data-weight="{{ $gd->weight }}"
+                                                    data-tweight="{{ $gd->total_wg }}"
+                                                    data-image="{{ getImage('assets/images/product/'. $gd->image,  null, true)}}">
+                                                <i class="las la-sync"></i> 
+                                                Exchange
+                                            </button>
+                                        </div>
+                                    </div>
+                                
+                                </td> --}}
+
+                            </tr>
+                        @empty
+                            <tr>
+                                <td class="text-muted text-center" colspan="100%">{{ __($empty_message) }}</td>
+                            </tr>
+                        @endforelse
+
+                        </tbody>
+                    </table><!-- table end -->
+                </div>
+            </div>
+            {{-- <div class="card-footer py-4">
+                {{ $gold->links($activeTemplate .'user.partials.paginate') }}
+            </div> --}}
+        </div><!-- card end -->
+    </div>
     <div class="col-lg-12">
         <div class="card b-radius--10 ">
             <div class="card-body p-0">

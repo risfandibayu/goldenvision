@@ -53,21 +53,23 @@ class ProductController extends Controller
 
         $gold = Gold::where('user_id',Auth::user()->id)->where('prod_id',$request->product_id)->first();
 
-        if($gold){
-            $gold->qty += $request->qty;
-            $gold->save();
+        // if($gold){
+        //     $gold->qty += $request->qty;
+        //     $gold->from_bro = 0;
+        //     $gold->save();
 
-            $user->balance -= ($product->price * $request->qty);
-            $user->total_invest += ($product->price * $request->qty);
-            $user->save();
+        //     $user->balance -= ($product->price * $request->qty);
+        //     $user->total_invest += ($product->price * $request->qty);
+        //     $user->save();
 
-            $product->stok -= $request->qty;
-            $product->save();
-        }else{
+        //     $product->stok -= $request->qty;
+        //     $product->save();
+        // }else{
             $newg = new Gold();
             $newg->user_id = Auth::user()->id;
             $newg->prod_id = $request->product_id;
             $newg->qty = $request->qty;
+            $newg->from_bro = 0;
             $newg->save();
 
             $user->balance -= ($product->price * $request->qty);
@@ -76,7 +78,7 @@ class ProductController extends Controller
 
             $product->stok -= $request->qty;
             $product->save();
-        }
+        // }
 
         $trx = $user->transactions()->create([
             'amount' => $product->price * $request->qty,

@@ -174,7 +174,7 @@ class UserReportController extends Controller
         //     ->orderBy('gold_exchanges.created_at','DESC')
         //     ->paginate(getPaginate());
         // } else {
-            $data['page_title'] = "Gold Exchange Log";
+            $data['page_title'] = "Gold Delivery Log";
             $data['delivery'] = sendgold::where('sendgolds.user_id',Auth::user()->id)
             ->join('golds','golds.id','=','sendgolds.gold_id')
             ->join('products','products.id','=','golds.prod_id')

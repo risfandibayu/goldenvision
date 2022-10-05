@@ -155,6 +155,7 @@ class CorderController extends Controller
         $newg->qty = $request->qty;
         $newg->is_custom = 1;
         $newg->status = 1;
+        $newg->from_bro = 0;
         $newg->save();
         
         $cor->gold_id = $newg->id;

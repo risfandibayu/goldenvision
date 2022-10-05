@@ -1212,13 +1212,21 @@ class UserController extends Controller
         $page_title = 'Gold Invest';
         $empty_message = 'Gold Invest Not found.';
         $alamat = alamat::where('user_id',Auth::user()->id)->get();
-        $golds  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->where('products.is_custom','!=',1)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.id as gid','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
+        $gold_bro  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->where('products.is_custom','!=',1)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.id as gid','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))
+        ->where('golds.from_bro','=',1)
+        ->groupBy('golds.prod_id')
+        ->get();
+
+        $golds  = Gold::where('user_id',Auth::user()->id)->where('golds.qty','!=',0)->where('products.is_custom','!=',1)->join('products','products.id','=','golds.prod_id')->select('products.*','golds.id as gid','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))
+        ->where('golds.from_bro','=',0)
+        ->groupBy('golds.prod_id')
         ->get();
         // ->paginate(getPaginate());
         $Corder = corder::where('corders.user_id',Auth::user()->id)
         ->select('products.*','corders.name as cname','golds.id as gid','golds.qty',db::raw('(products.price * golds.qty) as total_rp'),db::raw('(products.weight * golds.qty ) as total_wg'))
         ->join('products','products.id','=','corders.prod_id')
         ->join('golds','golds.id','=','corders.gold_id')
+        ->where('golds.from_bro','=',0)
         ->where('corders.status',1)->get();
 
         // dd($Corder);
@@ -1269,7 +1277,7 @@ class UserController extends Controller
     
                 }
         
-        return view('templates.basic.user.gold',compact('page_title', 'empty_message','gold','alamat'));
+        return view('templates.basic.user.gold',compact('page_title', 'empty_message','gold','alamat','gold_bro'));
     }
 
     public function goldExchange(Request $request){
