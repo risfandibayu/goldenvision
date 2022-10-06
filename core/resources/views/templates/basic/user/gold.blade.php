@@ -103,8 +103,8 @@
                                 <td data-label="@lang('Total')">{{nb($gd->total_rp)}} IDR</td>
                                 <td data-label="@lang('Weight Total')">{{nbk($gd->total_wg)}} gr</td>
                                 <td data-label="@lang('Action')">
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                    {{-- <div class="row">
+                                        <div class="col-md-6"> --}}
                                             <button class="btn btn--sm btn--primary delivery"
                                             data-gid="{{ $gd->gid }}"
                                                     data-name="{{ $gd->name }}"
@@ -115,7 +115,7 @@
                                                 <i class="las la-truck"></i> 
                                                 Delivery
                                             </button>
-                                        </div>
+                                        {{-- </div>
                                         <div class="col-md-6">
                                             <button class="btn btn--sm btn--primary exchange"
                                             data-id="{{ $gd->id }}"
@@ -128,7 +128,7 @@
                                                 Exchange
                                             </button>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 
                                 </td>
 

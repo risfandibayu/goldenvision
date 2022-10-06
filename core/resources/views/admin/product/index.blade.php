@@ -30,7 +30,7 @@
                                 <td data-label="@lang('Name')">{{ __($product->name) }}</td>
                                 <td data-label="@lang('Type')">{{ $product->weight }} Gram</td>
                                 <td data-label="@lang('Price')">{{ getAmount($product->price) }} {{$general->cur_text}}
-                                <td data-label="@lang('Type')">
+                                <td data-label="@lang('Stock')">
                                     @if ($product->stok == 0)
                                     <small class="text-danger font-italic font-weight-bold">out of stock!</small>
                                     @else

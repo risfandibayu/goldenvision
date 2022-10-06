@@ -38,7 +38,7 @@
                                     </td>
                                     <td data-label="@lang('Qty')">{{ nb($ex->qty) }}</td>
                                     <td data-label="@lang('Weight')">{{ nbk($ex->pweight * $ex->qty) }} gr</td>
-                                    <td data-label="@lang('Qty')">{{ nb($ex->ongkir) }}</td>
+                                    <td data-label="@lang('Shipping Cost')">{{ nb($ex->ongkir) }}</td>
                                     <td data-label="@lang('Status')">
                                         @if($ex->status == 1)
                                             <span class="badge badge--success">@lang('Complete. On Delivery')</span>
