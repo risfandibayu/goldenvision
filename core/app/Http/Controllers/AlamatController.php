@@ -86,9 +86,20 @@ class AlamatController extends Controller
     }
 
     public function add_address(Request $request){
+
+        $this->validate($request, [
+            'nama_penerima' => 'required',
+            'no_telp' => 'required',
+            'alamat' => 'required',
+            'kode_pos' => 'required',
+        ]);
+        
         $alm = new alamat();
         $alm->user_id = Auth::user()->id;
+        $alm->nama_penerima = $request->nama_penerima;
+        $alm->no_telp = $request->no_telp;
         $alm->alamat = $request->alamat;
+        $alm->kode_pos = $request->kode_pos;
         $alm->save();
 
         $notify[] = ['success', 'Add New Address Successfully!'];
@@ -96,9 +107,19 @@ class AlamatController extends Controller
     }
 
     public function edit_address(Request $request){
+        $this->validate($request, [
+            'nama_penerima' => 'required',
+            'no_telp' => 'required',
+            'alamat' => 'required',
+            'kode_pos' => 'required',
+        ]);
+        
         $alm = alamat::where('id',$request->id)->first();
         $alm->user_id = Auth::user()->id;
+        $alm->nama_penerima = $request->nama_penerima;
+        $alm->no_telp = $request->no_telp;
         $alm->alamat = $request->alamat;
+        $alm->kode_pos = $request->kode_pos;
         $alm->save();
 
         $notify[] = ['success', 'Edit Address Successfully!'];

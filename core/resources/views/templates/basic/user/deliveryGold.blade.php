@@ -15,6 +15,7 @@
                                 <th scope="col">@lang('Delivery ID')</th>
                                 <th scope="col">@lang('Product')</th>
                                 <th scope="col">@lang('Qty')</th>
+                                <th scope="col">@lang('Address')</th>
                                 <th scope="col">@lang('Weight')</th>
                                 {{-- <th scope="col">@lang('Amount')</th> --}}
                                 <th scope="col">@lang('Shipping Cost')</th>
@@ -37,6 +38,7 @@
                                         @endif
                                     </td>
                                     <td data-label="@lang('Qty')">{{ nb($ex->qty) }}</td>
+                                    <td data-label="@lang('Address')">{{ Str::limit($ex->alamat,40) }}</td>
                                     <td data-label="@lang('Weight')">{{ nbk($ex->pweight * $ex->qty) }} gr</td>
                                     <td data-label="@lang('Shipping Cost')">{{ nb($ex->ongkir) }}</td>
                                     <td data-label="@lang('Status')">

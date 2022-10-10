@@ -422,8 +422,11 @@
                     <table class="table table--light style--two">
                         <thead>
                             <tr>
-                                <th scope="col">@lang('No')</th>
-                                <th scope="col">@lang('Alamat')</th>
+                                <th scope="col">@lang('#')</th>
+                                <th scope="col">@lang('Recipient`s name')</th>
+                                <th scope="col">@lang('Recipient`s phone number')</th>
+                                <th scope="col">@lang('Full Address')</th>
+                                <th scope="col">@lang('Postal Code')</th>
                                 <th scope="col">@lang('Action')</th>
                             </tr>
                         </thead>
@@ -433,11 +436,17 @@
                             <?php $no++; ?>
                             <tr>
                                 <td>{{$no}}</td>
+                                <td>{{$item->nama_penerima}}</td>
+                                <td>{{$item->no_telp}}</td>
                                 <td>{{$item->alamat}}</td>
+                                <td>{{$item->kode_pos}}</td>
                                 <td data-label="@lang('Action')">
                                     <button type="button" class="icon-btn editaddress" data-toggle="tooltip"
                                     data-id="{{ $item->id }}"
                                         data-alamat="{{ $item->alamat }}"
+                                        data-nama_penerima="{{ $item->nama_penerima }}"
+                                        data-no_telp="{{ $item->no_telp }}"
+                                        data-kode_pos="{{ $item->kode_pos }}"
                                         data-original-title="Edit">
                                         <i class="la la-pencil"></i>
                                     </button>
@@ -468,15 +477,32 @@
             <form method="post" action="{{route('user.add_address')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label class="font-weight-bold"> @lang('Address')</label>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold"> @lang('Recipient`s name')</label>
                             {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
                                 onchange="loadFile(event)" name="images" required> --}}
-                            <Textarea id="alamat" name="alamat" rows="4"
-                                placeholder="Jalan, No Rumah, RT, RW , Kec/Kota, Kab, No Pos"></Textarea>
+                            <input type="text" class="form-control" name="nama_penerima" placeholder="Nama Penerima" required>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold"> @lang('Recipient`s phone number')</label>
+                            {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                                onchange="loadFile(event)" name="images" required> --}}
+                            <input type="text" class="form-control" name="no_telp" placeholder="Nomor Telepon Penerima" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold"> @lang('Full Address')</label>
+                            {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                            onchange="loadFile(event)" name="images" required> --}}
+                            <Textarea id="alamat" name="alamat" rows="4"
+                            placeholder="Jalan, No Rumah, RT, RW , Kec/Kota, Kab" required></Textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold"> @lang('Postal Code')</label>
+                            {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                                onchange="loadFile(event)" name="images" required> --}}
+                            <input type="text" class="form-control" name="kode_pos" placeholder="Kode Pos Penerima" required>
+                        </div>
 
                 </div>
                 <div class="modal-footer">
@@ -500,14 +526,37 @@
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" class="id" name="id" id="id">
-                    <div class="form-row">
+                    {{-- <div class="form-row">
                         <div class="form-group col">
                             <label class="font-weight-bold"> @lang('Address')</label>
-                            {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
-                                onchange="loadFile(event)" name="images" required> --}}
                             <Textarea class="alamat" id="alamat" name="alamat" rows="4"
                                 placeholder="Jalan, No Rumah, RT, RW , Kec/Kota, Kab, No Pos"></Textarea>
                         </div>
+                    </div> --}}
+                    <div class="form-group">
+                        <label class="font-weight-bold"> @lang('Recipient`s name')</label>
+                        {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                            onchange="loadFile(event)" name="images" required> --}}
+                        <input type="text" class="form-control nama_penerima" id="nama_penerima" name="nama_penerima" placeholder="Nama Penerima" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold"> @lang('Recipient`s phone number')</label>
+                        {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                            onchange="loadFile(event)" name="images" required> --}}
+                        <input type="text" class="form-control no_telp" id="no_telp" name="no_telp" placeholder="Nomor Telepon Penerima" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold"> @lang('Full Address')</label>
+                        {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                        onchange="loadFile(event)" name="images" required> --}}
+                        <Textarea class="alamat" id="alamat" name="alamat" rows="4"
+                        placeholder="Jalan, No Rumah, RT, RW , Kec/Kota, Kab" required></Textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold"> @lang('Postal Code')</label>
+                        {{-- <input class="form-control form-control-lg" type="file" accept="image/*"
+                            onchange="loadFile(event)" name="images" required> --}}
+                        <input type="text" class="form-control kode_pos" id="kode_pos" name="kode_pos" placeholder="Kode Pos Penerima" required>
                     </div>
 
                 </div>
@@ -552,6 +601,9 @@
                 var modal = $('#edit-address');
                 modal.find('.id').val($(this).data('id'));
                 modal.find('.alamat').val($(this).data('alamat'));
+                modal.find('.nama_penerima').val($(this).data('nama_penerima'));
+                modal.find('.no_telp').val($(this).data('no_telp'));
+                modal.find('.kode_pos').val($(this).data('kode_pos'));
                 modal.modal('show');
         });
 

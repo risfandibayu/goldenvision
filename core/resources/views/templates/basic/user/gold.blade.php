@@ -231,7 +231,7 @@
                             <select name="alamat" id="alamat" class="form-control"  required>
                                 <option value="" hidden selected>-- Chosse Address --</option>
                                 @foreach ($alamat as $item)
-                                    <option value="{{$item->alamat}}">{{$item->alamat}}</option>
+                                    <option value="{{$item->id}}">{{$item->nama_penerima .' | '. Str::limit($item->alamat,20)}}</option>
                                 @endforeach
                             </select>
                         </div>
