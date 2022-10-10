@@ -156,7 +156,14 @@ class SendgoldController extends Controller
                 return redirect()->back()->withNotify($notify);
             }else{
                 // dd((int)$response['RPX']['DATA']['PRICE'] - 20000);
-                $sg->ongkir = (int)$response['RPX']['DATA']['PRICE'] - 20000;
+                if ((int)$response['RPX']['DATA']['PRICE'] > 20000) {
+                    # code...
+                    $sg->ongkir = (int)$response['RPX']['DATA']['PRICE'] - 20000;
+                }else{
+                    $sg->ongkir = (int)$response['RPX']['DATA']['PRICE'];
+                    
+                }
+
                 if($user->balance < $sg->ongkir){
                     $notify[] = ['error', 'Your balance is not enough for postage payment'];
                     return redirect()->back()->withNotify($notify);
