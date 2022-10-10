@@ -160,7 +160,7 @@ class SendgoldController extends Controller
                     # code...
                     $sg->ongkir = (int)$response['RPX']['DATA']['PRICE'] - 20000;
                 }else{
-                    $sg->ongkir = (int)$response['RPX']['DATA']['PRICE'];
+                    $sg->ongkir = 0;
                     
                 }
 
