@@ -13,14 +13,8 @@
                                 <th scope="col">@lang('SL')</th>
                                 <th scope="col">@lang('Time')</th>
                                 <th scope="col">@lang('Delivery ID')</th>
-                                <th scope="col">@lang('Product')</th>
-                                <th scope="col">@lang('Qty')</th>
+                                <th scope="col">@lang('BRO Package QTY')</th>
                                 <th scope="col">@lang('Address')</th>
-                                <th scope="col">@lang('Weight')</th>
-                                {{-- <th scope="col">@lang('Amount')</th> --}}
-                                <th scope="col">@lang('Shipping Cost')</th>
-                                {{-- <th scope="col">@lang('Charge')</th> --}}
-                                {{-- <th scope="col">@lang('Post QTY')</th> --}}
                                 <th scope="col">@lang('Status')</th>
                             </tr>
                             </thead>
@@ -30,17 +24,8 @@
                                     <td data-label="@lang('SL')">{{ $delivery->firstItem()+$loop->index }}</td>
                                     <td data-label="@lang('Date')">{{ showDateTime($ex->created_at) }}</td>
                                     <td data-label="@lang('Delivery ID')">{{ $ex->trx }}</td>
-                                    <td data-label="@lang('Product')">
-                                        @if ($ex->is_custom == 1)
-                                        {{ $ex->cname }}
-                                        @else
-                                        {{ $ex->pname }}
-                                        @endif
-                                    </td>
-                                    <td data-label="@lang('Qty')">{{ nb($ex->qty) }}</td>
+                                    <td data-label="@lang('BRO Package QTY')">{{ nb($ex->bro_qty) }}</td>
                                     <td data-label="@lang('Address')">{{ Str::limit($ex->alamat,40) }}</td>
-                                    <td data-label="@lang('Weight')">{{ nbk($ex->pweight * $ex->qty) }} gr</td>
-                                    <td data-label="@lang('Shipping Cost')">{{ nb($ex->ongkir) }}</td>
                                     <td data-label="@lang('Status')">
                                         @if($ex->status == 1)
                                             <span class="badge badge--success">@lang('Complete. On Delivery')</span>

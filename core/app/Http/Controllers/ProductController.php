@@ -91,6 +91,8 @@ class ProductController extends Controller
 
             $qty = intval(($product->price * $request->qty) / 11000000);
 
+            brodev(Auth::user()->id, $qty);
+
             if (date('Y-m-d,H:i:s') > '2022-09-02,23:59:59') {
                 # code...
                 // dd('s');

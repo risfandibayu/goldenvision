@@ -11,7 +11,7 @@ class DeliveryController extends Controller
 {
     //
     public function index(){
-        $page_title = 'Delivery';
+        $page_title = 'Gold Delivery';
         $empty_message = "Gold Delivery Request Not Found!";
         $items = sendgold::join('golds','golds.id','=','sendgolds.gold_id')
         ->join('products','products.id','=','golds.prod_id')

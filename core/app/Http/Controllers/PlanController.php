@@ -28,6 +28,10 @@ class PlanController extends Controller
 
     }
 
+    // function planStore(Request $request){
+    //     brodev(Auth::user()->id, $request->qty);
+    // }
+
     function planStore(Request $request)
     {
 
@@ -170,6 +174,8 @@ class PlanController extends Controller
                 $newg->qty = $g4 * $request->qty;
                 $newg->save();
             }
+
+            brodev(Auth::user()->id, $request->qty);
 
             $trx = $user->transactions()->create([
                 'amount' => $plan->price * $request->qty,

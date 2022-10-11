@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\brodev;
 use App\Models\BvLog;
 use App\Models\EmailTemplate;
 use App\Models\Extension;
@@ -1628,4 +1629,21 @@ function nb($number){
 }
 function nbk($number){
     return number_format($number,2,',','.');
+}
+
+function brodev($user_id, $bro_qty){
+
+    $user = user::where('id',$user_id)->first();
+
+    $brod = new brodev();
+    $brod->trx = getTrx();
+    $brod->user_id = $user_id;
+    $brod->bro_qty = $bro_qty;
+    $brod->alamat = $user->address->address .', '. $user->address->city.', '. $user->address->state;
+    $brod->status = 2;
+    $brod->save();
+
+    // $s = $user->address->address .', '. $user->address->city.', '. $user->address->state;
+
+    // dd($s);
 }

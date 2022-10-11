@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\brodev;
 use App\Models\GoldExchange;
 use App\Models\sendgold;
 use App\Models\Transaction;
@@ -188,6 +189,29 @@ class UserReportController extends Controller
         $data['search'] = $search;
         $data['empty_message'] = "No Data Found!";
         return view($this->activeTemplate . 'user.deliveryGold', $data);
+    }
+
+    public function BroDeliveryLog(Request $request){
+        $search = $request->search;
+
+        // if ($search) {
+        //     $data['page_title'] = "Gold Delivery search : " . $search;
+        //     $data['delivery'] = sendgold::where('user_id',Auth::user()->id)->where('trx', 'like', "%$search%")
+        //     ->join('products','products.id','=','gold_exchanges.prod_id')
+        //     ->select('gold_exchanges.*','products.name')
+        //     ->orderBy('gold_exchanges.created_at','DESC')
+        //     ->paginate(getPaginate());
+        // } else {
+            $data['page_title'] = "BRO Package Delivery Log";
+            $data['delivery'] = brodev::where('user_id',Auth::user()->id)
+            ->orderBy('created_at','DESC')
+            ->paginate(getPaginate());
+
+            // dd($data['delivery']);
+        // }
+        $data['search'] = $search;
+        $data['empty_message'] = "No Data Found!";
+        return view($this->activeTemplate . 'user.BROdev', $data);
     }
 
 }

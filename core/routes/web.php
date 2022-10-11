@@ -363,6 +363,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('delivery', 'DeliveryController@index')->name('delivery');
         Route::post('delivery/deliver', 'DeliveryController@delivery')->name('deliver.deliver');
+        Route::get('BroDelivery', 'BrodevController@index')->name('BroDelivery');
+        Route::post('BroDelivery/deliver', 'BrodevController@delivery')->name('BroDeliver.deliver');
 
         // SEO
         Route::get('seo', 'FrontendController@seoEdit')->name('seo');
@@ -514,6 +516,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('report/binary/commission', 'UserReportController@binaryCom')->name('report.binaryCom');
                 Route::get('report/exchange/log', 'UserReportController@exchangeLog')->name('report.exchangeLog');
                 Route::get('report/delivery/log', 'UserReportController@deliveryLog')->name('report.deliveryLog');
+                Route::get('report/Brodelivery/log', 'UserReportController@BroDeliveryLog')->name('report.BroDeliveryLog');
 
                 Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
 
