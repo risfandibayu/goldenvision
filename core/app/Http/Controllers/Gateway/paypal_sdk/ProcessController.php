@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Gateway\paypal_sdk_2;
+namespace App\Http\Controllers\Gateway\paypal_sdk;
 
 use App\Models\Deposit;
 use App\Models\GatewayCurrency;

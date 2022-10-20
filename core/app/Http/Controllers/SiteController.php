@@ -93,7 +93,8 @@ class SiteController extends Controller
         $data['page_title'] = 'Home';
         $data['sections'] = Page::where('tempname',$this->activeTemplate)->where('slug','home')->firstOrFail();
         $data['prod'] = Product::where('status',1)->where('is_custom',0)->where('is_reseller',0)->get();
-        return view('new.index',$data);
+
+        return view('landing.index',$data);
     }
 
     public function pages($slug)
