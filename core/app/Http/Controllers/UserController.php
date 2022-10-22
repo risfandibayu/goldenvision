@@ -36,7 +36,6 @@ class UserController extends Controller
     }
     public function home()
     {
-
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
         $data['totalWithdraw']      = Withdrawal::where('user_id', auth()->id())->where('status', 1)->sum('amount');
@@ -747,7 +746,7 @@ class UserController extends Controller
         // $dd3 = array();
         // $dd4 = array();
         // $dd5 = array();
-        $level = user::where('pos_id',Auth::user()->id)->select('id')->get(); 
+        $level = user::where('pos_id',Auth::user()->id)->select('id')->get();
         if($level){
             foreach ($level as $key => $value) {
                 $dd[] = $value->id;
@@ -755,9 +754,9 @@ class UserController extends Controller
         }
 
         // foreach ($level as $get_bv->bv => $value) {
-        for ($i=0; $i < $get_bv->bv; $i++) { 
+        for ($i=0; $i < $get_bv->bv; $i++) {
             # code...
-            $level[$i] = user::whereIn('pos_id',$dd)->select('id')->get(); 
+            $level[$i] = user::whereIn('pos_id',$dd)->select('id')->get();
             if($level[$i]){
                 foreach ($level[$i] as $key => $value) {
                     $dd[] = $value->id;
@@ -767,7 +766,7 @@ class UserController extends Controller
             # code...
         // }
         // foreach ($level3 as $key => $value) {
-        //     $level4 = user::whereIn('ref_id',$dd)->select('id')->get(); 
+        //     $level4 = user::whereIn('ref_id',$dd)->select('id')->get();
         //     if($level4){
         //         foreach ($level4 as $key => $value) {
         //             $dd[] = $value->id;
@@ -776,19 +775,19 @@ class UserController extends Controller
         //     # code...
         // }
         // dd($dd);
-        // $level4 = user::whereIn('ref_id',$dd2)->select('id')->get(); 
+        // $level4 = user::whereIn('ref_id',$dd2)->select('id')->get();
         // if($level4){
         //     foreach ($level4 as $key => $value) {
         //         $dd3[] = $value->id;
         //     }
         // }
-        // $level5 = user::whereIn('ref_id',$dd3)->select('id')->get(); 
+        // $level5 = user::whereIn('ref_id',$dd3)->select('id')->get();
         // if($level5){
         //     foreach ($level5 as $key => $value) {
         //         $dd4[] = $value->id;
         //     }
         // }
-        // $level6 = user::whereIn('ref_id',$dd4)->select('id')->get(); 
+        // $level6 = user::whereIn('ref_id',$dd4)->select('id')->get();
         // if($level6){
         //     foreach ($level6 as $key => $value) {
         //         $dd5[] = $value->id;
@@ -893,34 +892,34 @@ class UserController extends Controller
         <div class='row text-center justify-content-center llll'>
             <!-- <div class='col'> -->
             <div class='w-2 pleft'>
-                ".showSingleUserinTree2($tree['b'],$id)." 
+                ".showSingleUserinTree2($tree['b'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-2 pright'>
-                ".showSingleUserinTree2($tree['c'],$id)." 
+                ".showSingleUserinTree2($tree['c'],$id)."
             </div>
         </div>
         <div class='row text-center justify-content-center'>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2($tree['d'],$id)." 
+                ".showSingleUserinTree2($tree['d'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2($tree['e'],$id)." 
+                ".showSingleUserinTree2($tree['e'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2($tree['f'],$id)." 
+                ".showSingleUserinTree2($tree['f'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2($tree['g'],$id)." 
+                ".showSingleUserinTree2($tree['g'],$id)."
             </div>
             <!-- <div class='col'> -->
 
         </div>
-        
+
         <div class='row text-center justify-content-center llll'>
             <!-- <div class='col'> -->
             <div class='w-8'>
@@ -957,7 +956,7 @@ class UserController extends Controller
 
 
         </div>
-        
+
         ";
 
         if ($cek_awal) {
@@ -968,7 +967,7 @@ class UserController extends Controller
                     # code...
                 }else{
                     echo json_encode(["response" => '2','tree'=>$response_tree]);
-                    
+
                 }
             }else{
                 if ($cek_awal_kanan) {
@@ -997,7 +996,7 @@ class UserController extends Controller
         // }
         // $cek_bawah_kanan = User::where('ref_id',$cek_awal->ref_id)->where('pos_id',$cek_awal->pos_id+1)->where('position',2)->first();
         // $cek_bawah_kiri = User::where('ref_id',$cek_awal->ref_id)->where('pos_id',$cek_awal->pos_id+1)->where('position',1)->first();
-        
+
         // $cek_bawah = User::where('pos_id',$user->pos_id+1)->where('position',2)
         // ->orwhere('pos_id',$user->pos_id+1)->where('position',1)
         // // ->orwhere('ref_id',$id)
@@ -1012,7 +1011,7 @@ class UserController extends Controller
         //     if ($cek_bawah_kiri) {
         //         $cek_bawah_kanan = User::where('pos_id',$user->pos_id+1)->where('position',2)->first();
         //         if ($cek_bawah_kanan) {
-                    
+
         //             // dd('Penuh');
         //             echo json_encode(["response" => '3']);
         //         }else{
@@ -1055,7 +1054,7 @@ class UserController extends Controller
         //         }else{
         //             echo json_encode(["response" => '2']);
         //         }
-                
+
         //         # code...
         //     }else{
         //         $cek_ref_bawah_kanan = user::where('ref_id',$id)->where('position',2)->first();
@@ -1106,7 +1105,7 @@ class UserController extends Controller
         $user_extras->user_id = $user->id;
         $user_extras->save();
         updatePaidCount2($user->id);
-            
+
         // updateFreeCount($user->id);
         // dd($user);
         $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
@@ -1117,7 +1116,7 @@ class UserController extends Controller
         $page_title = 'Data Verifications';
         return view('templates.basic.user.kyc',compact('page_title'));
     }
-    
+
     public function submitVerification(Request $request)
     {
         $request->validate([
@@ -1251,9 +1250,9 @@ class UserController extends Controller
                         "qty" => $item['qty'],
                         "total_rp" => $item['total_rp'],
                         "total_wg" => $item['total_wg'],
-    
+
                     ]);
-    
+
                 }
         foreach($goldw as $item){
                     $gold->push((object)[
@@ -1272,11 +1271,11 @@ class UserController extends Controller
                         "qty" => $item['qty'],
                         "total_rp" => $item['total_rp'],
                         "total_wg" => $item['total_wg'],
-    
+
                     ]);
-    
+
                 }
-        
+
         return view('templates.basic.user.gold',compact('page_title', 'empty_message','gold','alamat','gold_bro'));
     }
 

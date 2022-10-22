@@ -9,12 +9,12 @@
     <div class="sidebar__inner">
         <div class="sidebar__logo">
             <a href="{{route('admin.dashboard')}}" class="sidebar__main-logo"><img
-                    src="{{getImage(imagePath()['logoIcon']['path'] .'/logo.png')}}" alt="@lang('image')"></a>
+                    src="{{ asset('assets/images/logo.jpg') }}" alt="@lang('image')"></a>
             <a href="{{route('admin.dashboard')}}" class="sidebar__logo-shape"><img
-                    src="{{getImage(imagePath()['logoIcon']['path'] .'/favicon.png')}}" alt="@lang('image')"></a>
+                    src="{{ asset('assets/images/logo.jpg') }}" alt="@lang('image')"></a>
             <button type="button" class="navbar__expand"></button>
         </div>
- 
+
         <div class="sidebar__menu-wrapper" id="sidebar__menuWrapper">
             <ul class="sidebar__menu">
                 <li class="sidebar-menu-item {{menuActive('admin.dashboard')}}">
@@ -66,7 +66,7 @@
                         <span class="menu-title">@lang('Product')</span>
                     </a>
                 </li>
-                
+
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{menuActive('admin.users*',3)}}">
                         <i class="menu-icon las la-users"></i>

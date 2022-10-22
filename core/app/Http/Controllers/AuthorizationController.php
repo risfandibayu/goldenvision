@@ -46,7 +46,8 @@ class AuthorizationController extends Controller
                 $page_title = 'Email verification form';
 
                 $content = Frontend::where('data_keys', 'email_verify_page.content')->first();
-                return view($this->activeTemplate.'user.auth.authorization.email', compact('user', 'page_title', 'content'));
+
+                return view('landing.authorization.email', compact('user', 'page_title', 'content'));
             }elseif (!$user->sv) {
                 if (!$this->checkValidCode($user, $user->ver_code)) {
                     $user->ver_code = verificationCode(6);

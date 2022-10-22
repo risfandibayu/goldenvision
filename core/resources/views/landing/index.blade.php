@@ -72,7 +72,7 @@
 												<a class="nav-link" href="#page-faq" data-gal='m_PageScroll2id' data-ps2id-offset="70">FAQ</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link" href="#">Login | Register</a>
+												<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-login-register">Login | Register</a>
 											</li>
 										</ul>
 										<div class="pb-3 pb-xl-0"></div>
@@ -83,6 +83,251 @@
 						</div>
 					</div>
 				</div>
+            </div>
+        </div>
+
+        <div class="modal fade modal-medium" id="modal-login-register" tabindex="-1" role="dialog" aria-labelledby="modal-login-register" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body z-bigger">
+                        <div class="container-fluid">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="uil uil-multiply"></i>
+                            </button>
+                            <div class="text-center">
+                                <h5 class="mb-2">Login / Register</h5>
+                            </div>
+                            <div>
+                                <ul class="nav nav-pills mb-3 login-register-menu" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="pills-login-tab" data-toggle="pill" href="#pills-login" role="tab" aria-controls="pills-login" aria-selected="true">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-register-tab" data-toggle="pill" href="#pills-register" role="tab" aria-controls="pills-register" aria-selected="false">Register</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade active show" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
+                                        <form method="post" action="{{ route('user.login') }}">
+                                            @csrf
+
+                                            <div>
+                                                <div class="form-group">
+                                                    <input
+                                                        type="text"
+                                                        class="form-style form-style-with-icon {{ $errors->has('no_bro') ? 'is-invalid' : '' }}"
+                                                        placeholder="@lang('Username/E-mail/BRO Number')"
+                                                        autocomplete="off"
+                                                        name="username"
+                                                        value="{{ old('username') }}"
+                                                    >
+                                                    <i class="input-icon uil uil-user-circle"></i>
+                                                    @error('no_bro')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="form-group">
+                                                    <input
+                                                        type="password"
+                                                        class="form-style form-style-with-icon {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                                        placeholder="@lang('Password')"
+                                                        autocomplete="off"
+                                                        name="password"
+                                                    >
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                    @error('password')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            @if(reCaptcha())
+                                                <div class="form-group my-3">
+                                                    @php echo reCaptcha(); @endphp
+                                                </div>
+                                            @endif
+
+                                            <div class="col-lg-12 form-group my-3">
+                                                @include($activeTemplate.'partials.custom-captcha')
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <button class="btn btn-primary btn-fluid">Login</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
+                                        <form method="post" action="{{route('user.register')}}">
+                                            @csrf
+
+                                            <div>
+                                                <div class="form-group">
+                                                    <label>@lang('First Name')</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-style {{ $errors->has('firstname') ? 'is-invalid' : '' }}"
+                                                        placeholder="@lang('First Name')"
+                                                        name="firstname"
+                                                        autocomplete="off"
+                                                        value="{{ old('firstname') }}"
+                                                    >
+                                                    @error('firstname')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="form-group">
+                                                    <label>@lang('Last Name')</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-style {{ $errors->has('lastname') ? 'is-invalid' : '' }}"
+                                                        placeholder="@lang('Last Name')"
+                                                        name="lastname"
+                                                        autocomplete="off"
+                                                        value="{{ old('lastname') }}"
+                                                    >
+                                                    @error('lastname')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="form-group">
+                                                    <label>@lang('Email')</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-style {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                                        placeholder="Email"
+                                                        name="email"
+                                                        value="{{ old('email') }}"
+                                                        autocomplete="off"
+                                                    >
+                                                    @error('email')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="form-group">
+                                                    <label>@lang('Username')</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-style {{ $errors->has('username') ? 'is-invalid' : '' }}"
+                                                        placeholder="@lang('Username')"
+                                                        autocomplete="off"
+                                                        value="{{ old('username') }}"
+                                                        name="username"
+                                                    >
+                                                    @error('username')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="form-group">
+                                                    <label>@lang('Phone Number')</label>
+                                                    <div class="row m-0">
+                                                        <div class="col-3 m-0 p-0">
+                                                            <select class="form-style" name="country_code">
+                                                                @include('partials.country_code')
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-9 m-0 p-0">
+                                                            <input
+                                                                type="text"
+                                                                class="form-style {{ $errors->has('mobile') ? 'is-invalid' : '' }}"
+                                                                placeholder="@lang('Phone Number')"
+                                                                autocomplete="off"
+                                                                name="mobile"
+                                                                value="{{ old('mobile') }}"
+                                                            >
+                                                            @error('mobile')
+                                                                <small class="text-danger">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="form-group">
+                                                    <label>@lang('Country')</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-style {{ $errors->has('country') ? 'is-invalid' : '' }}"
+                                                        name="country"
+                                                        placeholder="@lang('Country')"
+                                                        readonly
+                                                        autocomplete="off"
+                                                        value="{{ old('country') }}"
+                                                    >
+                                                    @error('country')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="form-group">
+                                                    <label>@lang('Password')</label>
+                                                    <input
+                                                        type="password"
+                                                        class="form-style {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                                        placeholder="@lang('Password')"
+                                                        autocomplete="off"
+                                                        name="password"
+                                                    >
+                                                    @error('password')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="form-group">
+                                                    <label>@lang('Confirm Password')</label>
+                                                    <input
+                                                        type="password"
+                                                        class="form-style {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
+                                                        placeholder="@lang('Confirm Password')"
+                                                        autocomplete="off"
+                                                        name="password_confirmation"
+                                                    >
+                                                    @error('password_confirmation')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                @include($activeTemplate.'partials.custom-captcha')
+                                            </div>
+
+                                            @if($general->agree_policy)
+                                                <div class="mt-4">
+                                                    <div class="form-group">
+                                                        <input type="checkbox" id="checkbox-1" name="agree">
+                                                        <label class="checkbox mb-0 font-weight-500 size-15" for="checkbox-1">
+                                                            I accept the <a href="#" class="link link-dark-primary" data-hover="Terms and Conditions">Terms and Conditions</a> and <a href="#" class="link link-dark-primary" data-hover="Privacy Policy">Privacy Policy</a>
+                                                        </label>
+                                                        <br />
+                                                        @error('agree')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            <div class="mt-4">
+                                                <button class="btn btn-primary btn-fluid">Register</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- </div> --}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -337,21 +582,8 @@
 		<!-- Footer
 		================================================== -->
 
-		<div class="section over-hide padding-top pb-4 bg-dark-blue section-background-8" id="footer">
-			<div class="section-1400">
-				<div class="container-fluid">
-					<div class="row text-center text-md-left">
-						<div class="col-md order-md-first">
-							<p class="mb-0 size-14 color-gray-dark mt-1 font-weight-500">© {{ \Carbon\Carbon::now()->format('Y') }} Masterplan. All Rights Reserved.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+        @include($activeTemplate . 'partials/landing/footer')
 	</div>
-
-
-
 
 	<!-- JAVASCRIPT
     ================================================== -->
@@ -360,6 +592,32 @@
 	<script src="{{ asset('assets/landing/js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('assets/landing/js/plugins.js') }}"></script>
 	<script src="{{ asset('assets/landing/js/custom.js') }}"></script>
+
+    <script>
+        $('select[name=country_code]').change(function() {
+            $('input[name=country]').val($('select[name=country_code] :selected').data('country'));
+        }).change();
+
+        @if($errors->any())
+            $('#modal-login-register').modal();
+
+            @if($form = session('form'))
+                @if($form == 'register')
+                    $('#pills-login-tab').removeClass('active');
+                    $('#pills-register-tab').addClass('active');
+
+                    $('#pills-login').removeClass('active show');
+                    $('#pills-register').addClass('active show');
+                @elseif($form == 'register')
+                    $('#pills-login-tab').addClass('active');
+                    $('#pills-register-tab').removeClass('active');
+
+                    $('#pills-login').addClass('active show');
+                    $('#pills-register').removeClass('active show');
+                @endif
+            @endif
+        @endif
+    </script>
 <!-- End Document
 ================================================== -->
 </body>

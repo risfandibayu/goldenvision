@@ -20,7 +20,10 @@ class Authenticate
         if (Auth::check()) {
             return $next($request);
         }
-        return redirect()->route('user.login');
+
+        $request->session()->flash('form', 'login');
+
+        return redirect()->route('home');
     }
 
 

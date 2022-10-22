@@ -1936,7 +1936,8 @@ pre {
 	outline: none;
 	box-shadow: 0 4px 8px 0 rgba(21,21,21,.03);
 }
-.form-style:invalid {
+.form-style:invalid,
+.form-style.is-invalid {
 	border-color: var(--red);
 }
 .form-group input:-ms-input-placeholder  {
@@ -4077,6 +4078,15 @@ figure.vimeo:hover a:after, figure.youtube:hover a:after{
 .nav-pills .show > .nav-link {
 	color: var(--white);
 	background-color: var(--dark-blue);
+}
+
+.nav-pills.login-register-menu .nav-item {
+	width: 50%;
+}
+.nav-pills.login-register-menu .nav-link {
+	width: 100%;
+	display: block;
+	text-align: center;
 }
 
 /* #Navigation
@@ -8533,7 +8543,7 @@ body.modal-open {
 	background-repeat: no-repeat;
 	background-size: 100% auto;
 	background-position: top center;
-	background-color: var(--darker);
+	background-color: var(--white);
 }
 .section-background-25 {
 	background-repeat: no-repeat;

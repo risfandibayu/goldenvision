@@ -64,8 +64,6 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-
-
         $this->validateLogin($request);
 
         if(isset($request->captcha)){
@@ -136,7 +134,7 @@ class LoginController extends Controller
         request()->session()->invalidate();
 
         $notify[] = ['success', 'You have been logged out.'];
-        return redirect()->route('user.login')->withNotify($notify);
+        return redirect()->route('home')->withNotify($notify);
     }
 
 

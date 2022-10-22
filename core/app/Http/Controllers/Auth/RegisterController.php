@@ -133,11 +133,17 @@ class RegisterController extends Controller
         return $validate;
     }
 
-    
+
 
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $request->session()->flash('form', 'register');
+        }
+
+        $validator->validate();
 
         $general = GeneralSetting::first();
 
