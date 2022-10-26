@@ -64,7 +64,6 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        dd($request->all());
         $this->validateLogin($request);
 
         if(isset($request->captcha)){
