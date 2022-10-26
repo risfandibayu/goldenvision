@@ -1,15 +1,15 @@
 
 <div class="sidebar capsule--rounded bg_img overlay"
      {{-- data-background="{{asset('assets/admin/images/sidebar/2.jpg')}}" --}}
-    style="background-color: #3d312a !important;"
+    style="background-color: black !important;"
      >
     <button class="res-sidebar-close-btn"><i class="las la-times"></i></button>
     <div class="sidebar__inner">
         <div class="sidebar__logo">
             <a href="{{route('user.home')}}" class="sidebar__main-logo"><img
-                    src="{{getImage(imagePath()['logoIcon']['path'] .'/logo.png')}}" alt="@lang('image')"></a>
+                    src="{{ asset('assets/images/logo.jpg') }}" alt="@lang('image')"></a>
             <a href="{{route('user.home')}}" class="sidebar__logo-shape"><img
-                    src="{{getImage(imagePath()['logoIcon']['path'] .'/favicon.png')}}" alt="@lang('image')"></a>
+                    src="{{ asset('assets/images/logo.jpg') }}" alt="@lang('image')"></a>
             <button type="button" class="navbar__expand"></button>
         </div>
         <div class="sidebar__menu-wrapper" id="sidebar__menuWrapper">
@@ -53,7 +53,7 @@
                     </a>
                 </li>
                 @if (auth()->user()->bro_qty + 1 > 1)
-                    
+
                 <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
                     <a href="{{route('user.user_boom')}}" class="nav-link ">
                         <i class="menu-icon las la-users-cog"></i>
@@ -88,7 +88,7 @@
                         </a>
                     </li>
                 {{-- @endif --}}
-                
+
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.binary.summery') }}">
                     <a href="{{ route('user.binary.summery') }}" class="nav-link">
                         <i class=" menu-icon las la-chart-area"></i>

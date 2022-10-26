@@ -3,7 +3,7 @@
 
 <div class="sidebar capsule--rounded bg_img overlay"
      {{-- data-background="{{asset('assets/admin/images/sidebar/2.jpg')}}" --}}
-    style="background-color: #3d312a !important;"
+    style="background-color: black !important;"
      >
     <button class="res-sidebar-close-btn"><i class="las la-times"></i></button>
     <div class="sidebar__inner">
