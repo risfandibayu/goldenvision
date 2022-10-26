@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -404,11 +406,11 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
 Route::name('user.')->group(function () {
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-    Route::post('/login', 'Auth\LoginController@login');
-    Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+    Route::post('/login', [LoginController::class,'login']);
+    Route::get('logout', [LoginController::class,'logout'])->name('logout');
 
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-    Route::post('register', 'Auth\RegisterController@register')->middleware('regStatus');
+    Route::post('register', [RegisterController::class,'register'])->middleware('regStatus');
 
 
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');

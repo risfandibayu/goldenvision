@@ -137,6 +137,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+      
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
