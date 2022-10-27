@@ -46,12 +46,12 @@
                         <span class="menu-title">@lang('Plan')</span>
                     </a>
                 </li>
-                <li class="sidebar-menu-item {{menuActive('user.product.index')}}">
+                {{-- <li class="sidebar-menu-item {{menuActive('user.product.index')}}">
                     <a href="{{route('user.product.index')}}" class="nav-link ">
                         <i class="menu-icon las la-archive"></i>
                         <span class="menu-title">@lang('Product')</span>
                     </a>
-                </li>
+                </li> --}}
                 @if (auth()->user()->bro_qty + 1 > 1)
 
                 <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
@@ -81,12 +81,12 @@
                             <span class="menu-title">@lang('My Tree')</span>
                         </a>
                     </li>
-                    <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
+                    {{-- <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
                         <a href="{{ route('user.gold.invest') }}" class="nav-link">
                             <i class="menu-icon las la-coins"></i>
                             <span class="menu-title">@lang('Gold Investment')</span>
                         </a>
-                    </li>
+                    </li> --}}
                 {{-- @endif --}}
 
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.binary.summery') }}">
@@ -113,7 +113,7 @@
                         <span class="menu-title">@lang('Balance Transfer')</span>
                     </a>
                 </li> --}}
-                <li class="sidebar-menu-item sidebar-dropdown">
+                {{-- <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{menuActive('user.report*',3)}} my-2">
                         <i class="menu-icon las la-exchange-alt"></i>
                         <span class="menu-title">@lang('Reports') / @lang('Logs')</span>
@@ -165,12 +165,12 @@
                                     <span class="menu-title">@lang('BRO Pack Delivery Log')</span>
                                 </a>
                             </li>
-                            {{-- <li class="sidebar-menu-item {{menuActive('user.report.refCom')}}">
+                            <li class="sidebar-menu-item {{menuActive('user.report.refCom')}}">
                                 <a href="{{route('user.report.refCom')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Referral Commissions')</span>
                                 </a>
-                            </li> --}}
+                            </li>
                             <li class="sidebar-menu-item {{menuActive('user.report.binaryCom')}}">
                                 <a href="{{route('user.report.binaryCom')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
@@ -180,7 +180,7 @@
 
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.twofactor') }}">
                     <a href="{{ route('user.twofactor') }}" class="nav-link">
