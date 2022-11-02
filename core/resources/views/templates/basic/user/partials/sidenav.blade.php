@@ -1,15 +1,15 @@
 
 <div class="sidebar capsule--rounded bg_img overlay"
      {{-- data-background="{{asset('assets/admin/images/sidebar/2.jpg')}}" --}}
-    style="background-color: black !important;"
+    style="background-color: #141414 !important;"
      >
     <button class="res-sidebar-close-btn"><i class="las la-times"></i></button>
     <div class="sidebar__inner">
         <div class="sidebar__logo">
             <a href="{{route('user.home')}}" class="sidebar__main-logo"><img
-                    src="{{ asset('assets/images/logo.jpg') }}" alt="@lang('image')"></a>
+                    src="{{ asset('assets/images/logo-dark.png') }}" alt="@lang('image')"></a>
             <a href="{{route('user.home')}}" class="sidebar__logo-shape"><img
-                    src="{{ asset('assets/images/logo.jpg') }}" alt="@lang('image')"></a>
+                    src="{{ asset('assets/images/logo-dark.png') }}" alt="@lang('image')"></a>
             <button type="button" class="navbar__expand"></button>
         </div>
         <div class="sidebar__menu-wrapper" id="sidebar__menuWrapper">

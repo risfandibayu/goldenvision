@@ -332,13 +332,13 @@
     @endif
 
     @if (Auth::user()->plan_id != 0)
-    <div class="col-lg-3 col-md-3 col-12 mb-30">
+    <div class="col-lg-4 col-md-4 col-12 mb-30">
         <div class="card card-header-actions">
             <div class="card-header" style="font-weight: 600;">
-                BRO Number
+                MP Number
             </div>
             <div class="card-body text-center bg--gradi-9 border-3">
-                <h2 style="font-weight: 700;color: black;">{{Auth::user()->no_bro}}</h2>
+                <h2 style="font-weight: 700;color: black;">MP{{Auth::user()->no_bro}}</h2>
             </div>
         </div>
     </div>
@@ -422,7 +422,7 @@
     @endif
 
     @if ($emas)
-        
+
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
         <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow">
             <div class="icon">

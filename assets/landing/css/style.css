@@ -4146,7 +4146,7 @@ figure.vimeo:hover a:after, figure.youtube:hover a:after{
 .cbp-af-header.header-dark {
 	-webkit-transition : all 0.3s ease-out;
 	transition : all 0.3s ease-out;
-	background-color: var(--dark-blue);
+	background-color: #141414;
 }
 .cbp-af-header.header-dark.cbp-af-header-shrink {
 	background-color: var(--dark-blue);

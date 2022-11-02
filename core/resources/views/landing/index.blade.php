@@ -28,10 +28,10 @@
 
     <!-- Favicons
  ================================================== -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.jpg') }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/images/logo.jpg') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/images/logo.jpg') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/images/logo.jpg') }}">
+    <link rel="icon" type="image/jpg" href="{{ asset('assets/images/favicon.jpg') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon.jpg') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/images/favicon.jpg') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/images/favicon.jpg') }}">
 
 
 </head>
@@ -43,7 +43,7 @@
         <!-- Navigation
   ================================================== -->
 
-        <div class="navigation-wrap cbp-af-header header-dark header-transparent one-page-nav">
+        <div class="navigation-wrap cbp-af-header header-dark one-page-nav">
             <div class="padding-on-scroll">
                 <div class="section-1400">
                     <div class="container-fluid">
@@ -52,7 +52,7 @@
                                 <nav class="navbar navbar-expand-xl navbar-light">
 
                                     <a class="navbar-brand animsition-link" href="{{ route('home') }}">
-                                        <img src="{{ asset('assets/images/logo.jpg') }}" alt="logo">
+                                        <img src="{{ asset('assets/images/logo-dark.png') }}" alt="Masterplan">
                                     </a>
 
                                     <button class="navbar-toggler" type="button" data-toggle="collapse"

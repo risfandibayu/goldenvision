@@ -69,7 +69,7 @@
 } */
     /* .btn-11:active{
   box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+              -4px -4px 6px 0 rgba(116, 125, 136, .2),
     inset -4px -4px 6px 0 rgba(255,255,255,.2),
     inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
 } */
@@ -186,7 +186,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('No BRO')<span
+                                <label class="form-control-label font-weight-bold">@lang('No MP')<span
                                         class="text-danger">*</span></label>
                                 <input class="form-control form-control-lg" type="email"
                                     value="{{auth()->user()->no_bro}}" readonly>
