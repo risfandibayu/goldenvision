@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $general->sitename($page_title ?? '404 | page not found') }}</title>
-  <link rel="shortcut icon" type="image/png" href="{{getImage(imagePath()['logoIcon']['path'] .'/favicon.png')}}">
+  <link rel="icon" type="image/jpg" href="{{ asset('assets/images/favicon.jpg') }}">
+  {{-- <link rel="shortcut icon" type="image/png" href="{{getImage(imagePath()['logoIcon']['path'] .'/favicon.png')}}"> --}}
   <!-- bootstrap 4  -->
   <link rel="stylesheet" href="{{asset('assets/global/css/bootstrap.min.css')}}">
   <!-- dashdoard main css -->
