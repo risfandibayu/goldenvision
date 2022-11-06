@@ -764,7 +764,7 @@ function sendGeneralEmail($email, $subject, $message, $receiver_name = '')
     if ($general->en != 1 || !$general->email_from) {
         return;
     }
-    
+
 
     $message = shortCodeReplacer("{{message}}", $message, $general->email_template);
     $message = shortCodeReplacer("{{name}}", $receiver_name, $message);
@@ -1289,7 +1289,7 @@ function showSingleUserinTree($user)
 
         $res .= "<div class=\"user\" type=\"button\">";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
-        $res .= "<p class=\"user-name\">BRO</p>";
+        $res .= "<p class=\"user-name\">MP</p>";
     }
 
     $res .= " </div>";
@@ -1374,7 +1374,7 @@ function showSingleUserinTree2($user,$id)
 
         $res .= "<div class=\"user\" >";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
-        $res .= "<p class=\"user-name\">BRO</p>";
+        $res .= "<p class=\"user-name\">MP</p>";
         // $users = user::where('pos_id',$id)->first();
         // if($users){
 
@@ -1465,7 +1465,7 @@ function showSingleUserinTree3($user,$pos_id,$id)
 
         $res .= "<div class=\"user\" >";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
-        $res .= "<p class=\"user-name\">BRO</p>";
+        $res .= "<p class=\"user-name\">MP</p>";
         // $users = user::where('pos_id',$id)->first();
         // if($users){
 
@@ -1557,29 +1557,29 @@ function generateUniqueNoBro()
         <div class='row text-center justify-content-center llll'>
             <!-- <div class='col'> -->
             <div class='w-2 pleft'>
-                ".showSingleUserinTree3($tree['b'],$user->pos_id,$user->id)." 
+                ".showSingleUserinTree3($tree['b'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-2 pright'>
-                ".showSingleUserinTree3($tree['c'],$user->pos_id,$user->id)." 
+                ".showSingleUserinTree3($tree['c'],$user->pos_id,$user->id)."
             </div>
         </div>
         <div class='row text-center justify-content-center'>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree3($tree['d'],$user->pos_id,$user->id)." 
+                ".showSingleUserinTree3($tree['d'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree3($tree['e'],$user->pos_id,$user->id)." 
+                ".showSingleUserinTree3($tree['e'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree3($tree['f'],$user->pos_id,$user->id)." 
+                ".showSingleUserinTree3($tree['f'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree3($tree['g'],$user->pos_id,$user->id)." 
+                ".showSingleUserinTree3($tree['g'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
 

@@ -68,12 +68,12 @@ class PlanController extends Controller
         $user = User::find(Auth::id());
         $ref_user = User::where('no_bro', $request->referral)->first();
         if ($ref_user == null) {
-            $notify[] = ['error', 'Invalid BRO Number.'];
+            $notify[] = ['error', 'Invalid MP Number.'];
             return back()->withNotify($notify);
         }
 
         if($ref_user->no_bro == $user->no_bro){
-            $notify[] = ['error', 'Invalid Input BRO Number. You can`t input your own BRO number'];
+            $notify[] = ['error', 'Invalid Input MP Number. You can`t input your own MP number'];
             return back()->withNotify($notify);
         }
 
@@ -84,7 +84,7 @@ class PlanController extends Controller
         }
 
             $oldPlan = $user->plan_id;
-            
+
             $pos = getPosition($ref_user->id, $request->position);
             $user->no_bro       = generateUniqueNoBro();
             $user->ref_id= $ref_user->id;
@@ -180,7 +180,7 @@ class PlanController extends Controller
             $trx = $user->transactions()->create([
                 'amount' => $plan->price * $request->qty,
                 'trx_type' => '-',
-                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' BRO and Get '.$request->qty * $tot .' Pieces Gold',
+                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' MP and Get '.$request->qty * $tot .' Pieces Gold',
                 'remark' => 'purchased_plan',
                 'trx' => getTrx(),
                 'post_balance' => getAmount($user->balance),
@@ -189,7 +189,7 @@ class PlanController extends Controller
             // dd($user);
 
             sendEmail2($user->id, 'plan_purchased', [
-                'plan' => $plan->name. ' For '.$request->qty.' BRO and Get '.$request->qty * $tot .' Pieces Gold',
+                'plan' => $plan->name. ' For '.$request->qty.' MP and Get '.$request->qty * $tot .' Pieces Gold',
                 'amount' => getAmount($plan->price * $request->qty),
                 'currency' => $gnl->cur_text,
                 'trx' => $trx->trx,

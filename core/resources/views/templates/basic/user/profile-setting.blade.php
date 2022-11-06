@@ -121,9 +121,9 @@
                         {{-- @if (auth()->user()->plan_id != 0)
 
                         <li class="list-group-item d-flex justify-content-between">
-                            <span>@lang('BRO')</span>
+                            <span>@lang('MP')</span>
                             <div class="custom-btn btn-11 text-center"><span style="font-weight: 700">
-                                    {{auth()->user()->bro_qty + 1}} BRO </span></div>
+                                    {{auth()->user()->bro_qty + 1}} MP </span></div>
                         </li>
                         @endif --}}
                         <li class="list-group-item d-flex justify-content-between">

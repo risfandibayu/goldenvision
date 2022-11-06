@@ -69,7 +69,7 @@
 } */
     /* .btn-11:active{
   box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+              -4px -4px 6px 0 rgba(116, 125, 136, .2),
     inset -4px -4px 6px 0 rgba(255,255,255,.2),
     inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
 } */
@@ -141,11 +141,11 @@
                                 {{getAmount($user->userExtra->bv_left + $user->userExtra->bv_right)}} </a></span>
                     </li> --}}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('BRO Left User')
+                        @lang('MP Left User')
                         <span class="font-weight-bold">{{$user->userExtra->left}}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('BRO Right User')
+                        @lang('MP Right User')
                         <span class="font-weight-bold">{{$user->userExtra->right}}</span>
                     </li>
                     {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -159,9 +159,9 @@
                     {{-- @if ($user->plan_id != 0)
 
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>@lang('BRO')</span>
+                        <span>@lang('MP')</span>
                         <div class="custom-btn btn-11 text-center"><span style="font-weight: 700">
-                                {{$user->bro_qty}} BRO </span></div>
+                                {{$user->bro_qty}} MP </span></div>
                     </li>
                     @endif --}}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -243,10 +243,10 @@
                         <div class="numbers">
                             <span class="amount">{{$user->userExtra->left + $user->userExtra->right}}</span>
                             {{-- <span class="amount">{{$user->bro_qty + 1}}</span> --}}
-                            <span class="currency-sign">BRO</span>
+                            <span class="currency-sign">MP</span>
                         </div>
                         <div class="desciption">
-                            <span>@lang('Total BRO')</span>
+                            <span>@lang('Total MP')</span>
                         </div>
                     </div>
                 </div>
@@ -480,7 +480,7 @@
                         @if ($user->plan_id != 0)
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('No BRO') <span
+                                <label class="form-control-label font-weight-bold">@lang('No MP') <span
                                         class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="no_bro" value="{{$user->no_bro}}"
                                     readonly>
@@ -613,7 +613,7 @@
                             <div class="form-group ">
                                 <label class="form-control-label font-weight-bold">@lang('Bank name')<span
                                         class="text-danger">*</span></label>
-                                <select name="bank_name" id="bank_name" class="form-control" required> 
+                                <select name="bank_name" id="bank_name" class="form-control" required>
                                     @foreach ($bank as $item)
                                     <option value="{{$item->nama_bank}}" {{$user->userBank->nama_bank ==
                                         $item->nama_bank ? 'selected' : '';}} >{{$item->nama_bank}}</option>
@@ -842,9 +842,9 @@
                     <div class="form-row">
 
                         <div class="form-group col-md-12">
-                            <label>@lang('BRO Number')<span class="text-danger">*</span></label>
+                            <label>@lang('MP Number')<span class="text-danger">*</span></label>
                             <div class="input-group has_append">
-                                <input type="text" name="no_bro" class="form-control" placeholder="BRO Number as parent"
+                                <input type="text" name="no_bro" class="form-control" placeholder="MP Number as parent"
                                     required>
                             </div>
                         </div>

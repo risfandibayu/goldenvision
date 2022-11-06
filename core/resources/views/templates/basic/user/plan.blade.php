@@ -10,7 +10,7 @@
                     <h2 class="package-name mb-20 text-"><strong>@lang($data->name)</strong></h2>
                     <span
                         class="price text--dark font-weight-bold d-block">{{$general->cur_sym}}{{nb(getAmount($data->price))}}</span>
-                    <p>/ BRO</p>
+                    <p>/ MP</p>
                     <hr>
                     <ul class="package-features-list mt-30">
                         {{-- <li><i class="fas fa-check bg--success"></i> <span>@lang('Business Volume (BV)'):
@@ -58,20 +58,20 @@
                         {{-- </div> --}}
                     @csrf
                     <div class="modal-body row">
-                        <h5 class="text-center col-12">{{getAmount($data->price)}} {{$general->cur_text}} / BRO</h5>
+                        <h5 class="text-center col-12">{{getAmount($data->price)}} {{$general->cur_text}} / MP</h5>
                         <input type="hidden" name="prices" value="{{getAmount($data->price)}}">
                         <input type="hidden" name="plan_id" value="{{$data->id}}">
                         <div class="form-group col-6">
                             <label for="">QTY</label>
-                            <input class="form-control" type="number" name="qty" id="qty" min="1" value="1" placeholder="BRO qty" required>
+                            <input class="form-control" type="number" name="qty" id="qty" min="1" value="1" placeholder="MP qty" required>
                         </div>
                         <div class="form-group col-6">
                             <label for="">total</label>
                             <input class="form-control" type="number" name="total" value="{{getAmount($data->price)}}" placeholder="total" disabled>
                         </div>
                         <div class="col-6">
-                            <label for="ref_name" class="form--label-2">@lang('Referral BRO Number (Upline)')</label>
-                            <input type="text" name="referral" class="referral form-control form--control-2" value="{{old('referral')}}" id="ref_name" placeholder="@lang('Enter Referral BRO Number')*" required>
+                            <label for="ref_name" class="form--label-2">@lang('Referral MP Number (Upline)')</label>
+                            <input type="text" name="referral" class="referral form-control form--control-2" value="{{old('referral')}}" id="ref_name" placeholder="@lang('Enter Referral MP Number')*" required>
                         </div>
                         <div class="col-6">
                             <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
@@ -84,7 +84,7 @@
                             <span id="position-test">
                                 <span class="text-danger">
                                     @if(!old('position'))
-                                        @lang('Please enter referral BRO Number first')
+                                        @lang('Please enter referral MP Number first')
                                     @endif
                                 </span>
                             </span>
@@ -172,12 +172,12 @@
 @endsection
 @push('script')
 <script>
-    $('input[name=qty]').on('keyup change',function() { 
+    $('input[name=qty]').on('keyup change',function() {
         // alert('okl');
         $('input[name=total]').val($('input[name=qty]').val() * $('input[name=prices]').val());
     });
 </script>
-    
+
 <script>
     (function($) {
         "use strict";

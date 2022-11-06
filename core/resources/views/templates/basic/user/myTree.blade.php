@@ -7,7 +7,7 @@
 @section('panel')
 
     <div class="card">
-        
+
         {{-- <div class=" row">
             <div class="col-md-11 col-8"></div>
 
@@ -175,7 +175,7 @@
                                 <br>
                                 <span class="user-status tree_phone"></span>
                                 <br>
-                                
+
                                 <span class="user-status tree_status"></span>
                                 <span class="user-status tree_plan"></span>
                             </div>
@@ -204,7 +204,7 @@
                                 </tr> --}}
 
                                 <tr>
-                                    <td>@lang('BRO Member')</td>
+                                    <td>@lang('MP Member')</td>
                                     <td><span class="lpaid"></span></td>
                                     <td><span class="rpaid"></span></td>
                                 </tr>

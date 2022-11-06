@@ -12,7 +12,7 @@
             <tr>
                 <th scope="col">@lang('User')</th>
                 <th scope="col">@lang('Username')</th>
-                <th scope="col">@lang('BRO')</th>
+                <th scope="col">@lang('MP')</th>
                 <th scope="col">@lang('Email')</th>
                 <th scope="col">@lang('Phone')</th>
                 <th scope="col">@lang('Joined At')</th>
@@ -25,7 +25,7 @@
                             <span class="name">{{$user->fullname}}</span>
                     </td>
                     <td data-label="@lang('Username')">{{ $user->username }}</td>
-                    <td data-label="@lang('BRO')">
+                    <td data-label="@lang('MP')">
                         @if ($user->no_bro == 0)
                         <small>Not subscribed yet</small>
                         @else

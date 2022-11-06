@@ -85,8 +85,8 @@ class BrodevController extends Controller
     }
 
     public function index(){
-        $page_title = 'BRO Package Delivery';
-        $empty_message = "BRO Package Delivery Request Not Found!";
+        $page_title = 'MP Package Delivery';
+        $empty_message = "MP Package Delivery Request Not Found!";
         $items = brodev::orderBy('created_at','DESC')
         ->paginate(getPaginate());
         return view('admin.delivery.BroDelivery',compact('page_title','items','empty_message'));
@@ -99,7 +99,7 @@ class BrodevController extends Controller
         $sg->status = 1;
         $sg->save();
 
-        $notify[] = ['success', 'BRO Package Deliver successfully'];
+        $notify[] = ['success', 'MP Package Deliver successfully'];
         return back()->withNotify($notify);
     }
 }

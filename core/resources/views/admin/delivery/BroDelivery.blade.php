@@ -13,7 +13,7 @@
                                     <th scope="col">@lang('Time')</th>
                                     <th scope="col">@lang('Delivery ID')</th>
                                     <th scope="col">@lang('User')</th>
-                                    <th scope="col">@lang('BRO Package Qty')</th>
+                                    <th scope="col">@lang('MP Package Qty')</th>
                                     <th scope="col">@lang('Address')</th>
                                     <th scope="col">@lang('Status')</th>
                                     <th scope="col">@lang('Action')</th>
@@ -26,7 +26,7 @@
                                     <td data-label="@lang('Date')">{{ showDateTime($ex->created_at) }}</td>
                                     <td data-label="@lang('Delivery ID')">{{ $ex->trx }}</td>
                                     <td data-label="@lang('User')">{{ $ex->user->username }}</td>
-                                    <td data-label="@lang('BRO Package Qty')">{{ $ex->bro_qty }}</td>
+                                    <td data-label="@lang('MP Package Qty')">{{ $ex->bro_qty }}</td>
                                     <td data-label="@lang('Address')">{{ Str::limit($ex->alamat,40) }}<button class="btn--info btn-rounded  badge detailAlm"
                                         data-alamat="{{$ex->alamat}}"><i
                                         class="fa fa-info"></i></button></td>
@@ -155,7 +155,7 @@
             </div>
         </div>
     </div>
-     
+
 @endsection
 @push('script')
 <script>
@@ -181,7 +181,7 @@
         //         modal.find('#product_id').val($(this).data('id'));
         //         modal.find('#product_name').val($(this).data('name'));
 
-        //         modal.find('#qty').on('keyup change',function() { 
+        //         modal.find('#qty').on('keyup change',function() {
         // // alert('okl');
         //             modal.find('#total').val(modal.find('#qty').val() * modal.find('#weight').val().replace(/(\.\d{2})\d+/g, '$1'));
         //             modal.find('#total_rp').val(modal.find('#qty').val() * modal.find('#prices').val());
@@ -219,7 +219,7 @@
                 modal.modal('show');
             });
 
-            
+
         })(jQuery);
 
 </script>

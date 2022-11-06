@@ -139,8 +139,8 @@ class CronController extends Controller
                         $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
                         // $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
                         $user_plan = user::where('users.id',$user)
-                        ->join('plans','plans.id','=','users.plan_id')->first();                        
-                        
+                        ->join('plans','plans.id','=','users.plan_id')->first();
+
                         $pairs = intval($weak / 3);
                         $pair = intval($weak / 3);
 
@@ -164,7 +164,7 @@ class CronController extends Controller
                             //     $payment = User::find($uex->user_id);
                             //     $payment->balance += $bonus;
                             //     $payment->save();
-    
+
                             //     $trx = new Transaction();
                             //     $trx->user_id = $payment->id;
                             //     $trx->amount = $bonus;
@@ -173,13 +173,13 @@ class CronController extends Controller
                             //     $trx->post_balance = $payment->balance;
                             //     $trx->remark = 'binary_commission';
                             //     $trx->trx = getTrx();
-                            //     $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+                            //     $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
                             //     $trx->save();
 
                             //     $uex->paid_left = 0;
                             //     $uex->paid_right = 0;
                             //     $uex->save();
-    
+
                             //     sendEmail2($user, 'matching_bonus', [
                             //             'amount' => $bonus,
                             //             'currency' => $gnl->cur_text,
@@ -195,7 +195,7 @@ class CronController extends Controller
                             $payment = User::find($uex->user_id);
                             $payment->balance += $bonus;
                             $payment->total_binary_com += $bonus;
-                            
+
 
                             $trx = new Transaction();
                             $trx->user_id = $payment->id;
@@ -213,7 +213,7 @@ class CronController extends Controller
                                 $paid_bv = $uex->paid_left + $uex->paid_right;
                             // }else{
                             // }
-                            
+
                                 // sendEmail2($user, 'matching_bonus', [
                                 //         'amount' => $bonus,
                                 //         'currency' => $gnl->cur_text,
@@ -221,13 +221,13 @@ class CronController extends Controller
                                 //         'post_balance' => $payment->balance,
                                 //         'trx' =>  $trx->trx,
                                 // ]);
-                            
+
                             // if ($pair >= 10) {
                                 $payment->save();
 
-                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . intval($uex->paid_left) + intval($uex->paid_right) . ' BRO.';
+                                $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . intval($uex->paid_left) + intval($uex->paid_right) . ' MP.';
                                 $trx->save();
-                                
+
                                 $uex->paid_left = 0;
                                 $uex->paid_right = 0;
                                 $uex->level_binary = 0;
@@ -244,7 +244,7 @@ class CronController extends Controller
                             }else{
                                 if (strtolower(Date('D')) == 'wed' && Date('H') == "01" ) {
                                     # code...
-                                
+
                                 $paid_bv = $pair * 6;
                                 // sendEmail2($user, 'matching_bonus', [
                                 //     'amount' => $bonus,
@@ -256,9 +256,9 @@ class CronController extends Controller
                                 $payment->save();
 
                                     if($uex->level_binary != 0 && $pairs != $uex->level_binary){
-                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' BRO.';
+                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
                                     }else{
-                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
 
                                     }
                                 $trx->save();
@@ -274,7 +274,7 @@ class CronController extends Controller
                                 }
                             }
 
-                            
+
                         }
         }
         return $cron;
@@ -294,7 +294,7 @@ class CronController extends Controller
     //                     $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
     //                     // $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
     //                     $user_plan = user::where('users.id',$user)
-    //                     ->join('plans','plans.id','=','users.plan_id')->first();                        
+    //                     ->join('plans','plans.id','=','users.plan_id')->first();
     //                     $pair = intval($weak / 3);
     //                     $bonus = intval($pair * ($user_plan->tree_com * 6));
 
@@ -310,7 +310,7 @@ class CronController extends Controller
     //                         $trx->post_balance = $payment->balance;
     //                         $trx->remark = 'binary_commission';
     //                         $trx->trx = getTrx();
-    //                         $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+    //                         $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
     //                         $trx->save();
 
     //                         $uex->level_binary = $pair;

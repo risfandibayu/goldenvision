@@ -209,7 +209,7 @@ class ManageUsersController extends Controller
         $totalTransaction   = Transaction::where('user_id',$user->id)->count();
 
         $totalBvCut         = BvLog::where('user_id',$user->id)->where('trx_type', '-')->sum('amount');
-        
+
         $emas               = Gold::where('user_id',$user->id)->where('golds.status','=','0')->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('COALESCE(SUM(products.price * golds.qty),0) as total_rp'),db::raw('COALESCE(sum(products.weight * golds.qty ),0) as total_wg'))->groupBy('golds.user_id')->first();
         return view('admin.users.detail', compact('page_title','ref_id','user','totalDeposit',
             'totalWithdraw','totalTransaction',  'totalBvCut','emas','bank'));
@@ -276,13 +276,13 @@ class ManageUsersController extends Controller
         ]);
 
         $rek = rekening::where('user_id',$id)->first();
-        
+
         if ($rek) {
             # code...
             $reks = rekening::where('user_id',$id)->first();
         }else{
             $reks = new rekening();
-            $reks->user_id = $id; 
+            $reks->user_id = $id;
         }
         $reks->nama_bank = $request->bank_name;
         $reks->nama_akun = $request->acc_name;
@@ -290,7 +290,7 @@ class ManageUsersController extends Controller
         $reks->kota_cabang = $request->kota_cabang;
         $reks->save();
 
-        
+
 
         $notify[] = ['success', 'User Bank Account detail has been updated'];
         return redirect()->back()->withNotify($notify);
@@ -592,10 +592,10 @@ class ManageUsersController extends Controller
         $parent = user::where('no_bro',$request->no_bro)->first();
         //bro tidak ditemukan
         if (!$parent) {
-            $notify[] = ['error', 'BRO number not found'];
+            $notify[] = ['error', 'MP number not found'];
             return response()->json($notify);
         }
-        
+
         $parentextra = UserExtra::where('user_id',$parent->id)->first();
 
         $lparent = user::where('pos_id',$parent->id)->where('position',1)->first();
@@ -604,21 +604,21 @@ class ManageUsersController extends Controller
         //slot penuh
         if ($lparent && $rparent) {
             # code...
-            $notify[] = ['error', 'BRO number has not empty slot'];
+            $notify[] = ['error', 'MP number has not empty slot'];
             return response()->json($notify);
         }
 
         //kiri penuh
         if ($lparent && $request->position == 1) {
             # code...
-            $notify[] = ['error', 'Left slot BRO number has not empty'];
+            $notify[] = ['error', 'Left slot MP number has not empty'];
             return response()->json($notify);
         }
 
         //kanan penuh
         if ($rparent && $request->position == 2) {
             # code...
-            $notify[] = ['error', 'Right slot BRO number has not empty'];
+            $notify[] = ['error', 'Right slot MP number has not empty'];
             return response()->json($notify);
         }
         // $count = ($userextra->left + $userextra->right) + 1;
@@ -702,7 +702,7 @@ class ManageUsersController extends Controller
         $userextra->left = $request->left;
         $userextra->paid_right = $request->right;
         $userextra->right = $request->right;
-        $userextra->save();            
+        $userextra->save();
 
         $notify[] = ['success', 'Update Counting Successfully'];
         return response()->json($notify);

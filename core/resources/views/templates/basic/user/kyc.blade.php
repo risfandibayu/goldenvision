@@ -3,7 +3,7 @@
 @section('panel')
 
     <div class="row mb-none-30">
-        
+
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-30">
             <div class="card">
@@ -35,7 +35,7 @@
                             @if (auth()->user()->plan_id != 0)
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('No BRO')<span class="text-danger">*</span></label>
+                                    <label class="form-control-label font-weight-bold">@lang('No MP')<span class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="email" value="{{auth()->user()->no_bro}}" readonly>
                                 </div>
                             </div>

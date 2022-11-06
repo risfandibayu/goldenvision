@@ -13,7 +13,7 @@
                                 <th scope="col">@lang('SL')</th>
                                 <th scope="col">@lang('Time')</th>
                                 <th scope="col">@lang('Delivery ID')</th>
-                                <th scope="col">@lang('BRO Package QTY')</th>
+                                <th scope="col">@lang('MP Package QTY')</th>
                                 <th scope="col">@lang('Address')</th>
                                 <th scope="col">@lang('Status')</th>
                             </tr>
@@ -24,7 +24,7 @@
                                     <td data-label="@lang('SL')">{{ $delivery->firstItem()+$loop->index }}</td>
                                     <td data-label="@lang('Date')">{{ showDateTime($ex->created_at) }}</td>
                                     <td data-label="@lang('Delivery ID')">{{ $ex->trx }}</td>
-                                    <td data-label="@lang('BRO Package QTY')">{{ nb($ex->bro_qty) }}</td>
+                                    <td data-label="@lang('MP Package QTY')">{{ nb($ex->bro_qty) }}</td>
                                     <td data-label="@lang('Address')">{{ Str::limit($ex->alamat,40) }}</td>
                                     <td data-label="@lang('Status')">
                                         @if($ex->status == 1)

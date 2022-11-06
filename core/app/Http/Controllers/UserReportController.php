@@ -202,7 +202,7 @@ class UserReportController extends Controller
         //     ->orderBy('gold_exchanges.created_at','DESC')
         //     ->paginate(getPaginate());
         // } else {
-            $data['page_title'] = "BRO Package Delivery Log";
+            $data['page_title'] = "MP Package Delivery Log";
             $data['delivery'] = brodev::where('user_id',Auth::user()->id)
             ->orderBy('created_at','DESC')
             ->paginate(getPaginate());

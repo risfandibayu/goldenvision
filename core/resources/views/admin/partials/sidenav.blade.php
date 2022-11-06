@@ -312,7 +312,7 @@
                     <a href="{{route('admin.BroDelivery')}}" class="nav-link ">
                         {{-- <i class="las la-paper-plane"></i> --}}
                         <i class="menu-icon las la-truck"></i>
-                        <span class="menu-title">@lang('BRO Pack Delivery')</span>
+                        <span class="menu-title">@lang('MP Pack Delivery')</span>
                     </a>
                 </li>
 

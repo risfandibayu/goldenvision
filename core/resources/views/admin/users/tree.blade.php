@@ -114,7 +114,7 @@
                                 <br>
                                 <span class="user-status tree_phone"></span>
                                 <br>
-                                
+
                                 <span class="user-status tree_status"></span>
                                 <span class="user-status tree_plan"></span>
                             </div>
@@ -139,11 +139,11 @@
                                     <td><span class="rfree"></span></td>
                                 </tr> --}}
                                 <tr>
-                                    <td>@lang('BRO Member')</td>
+                                    <td>@lang('MP Member')</td>
                                     <td><span class="lpaid"></span></td>
                                     <td><span class="rpaid"></span></td>
                                 </tr>
-                                
+
                             </table>
                             <a href="" target="_blank" class="mt-2 btn btn--secondary btn-block btn-sm tree_login_url">Login as User</a>
                             <a href="" target="_blank" class="mt-2 btn btn--info btn-block btn-sm tree_detail_url">Detail User</a>
@@ -169,13 +169,13 @@
                 <form id="userPlace" class="userPlace">
                     <div class="modal-body">
                         <div class="form-row">
-    
+
                             <input hidden type="text" name="id" id="id" class="id">
                             <div class="form-group col-md-12">
-                                <label>@lang('BRO Number')<span class="text-danger">*</span></label>
+                                <label>@lang('MP Number')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
                                     <input type="text" name="no_bro" class="form-control no_bro"
-                                        placeholder="BRO Number as parent" required>
+                                        placeholder="MP Number as parent" required>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
@@ -210,20 +210,20 @@
                 <form id="updateCounting" class="updateCounting">
                     <div class="modal-body">
                         <div class="form-row">
-    
+
                             <input hidden type="text" name="id" id="id" class="id">
                             <div class="form-group col-md-12">
                                 <label>@lang('Left')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
                                     <input type="number" name="left" class="form-control left"
-                                        placeholder="BRO Left Count" required>
+                                        placeholder="MP Left Count" required>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
                                 <label>@lang('Right')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
                                     <input type="number" name="right" class="form-control right"
-                                        placeholder="BRO Right Count" required>
+                                        placeholder="MP Right Count" required>
                                 </div>
                             </div>
                         </div>

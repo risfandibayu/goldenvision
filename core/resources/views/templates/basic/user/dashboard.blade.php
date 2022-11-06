@@ -370,7 +370,7 @@
                     text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.007);
                     -webkit-background-clip: text;
                        -moz-background-clip: text;
-                            background-clip: text;  ">{{auth()->user()->bro_qty}} BRO</span>
+                            background-clip: text;  ">{{auth()->user()->bro_qty}} MP</span>
                 </div>
             </div> --}}
             <div class="icon">
@@ -379,10 +379,10 @@
             <div class="details">
                 <div class="numbers" >
                     <span class="amount">{{nb(auth()->user()->userExtra->left + auth()->user()->userExtra->right)}}</span>
-                    <span class="currency-sign">BRO</span>
+                    <span class="currency-sign">MP</span>
                 </div>
                 <div class="desciption">
-                    <span class="text--small">Total BRO Joined</span>
+                    <span class="text--small">Total MP Joined</span>
                 </div>
             </div>
             <br>
@@ -400,7 +400,7 @@
                     text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.007);
                     -webkit-background-clip: text;
                        -moz-background-clip: text;
-                            background-clip: text;  ">{{auth()->user()->bro_qty}} BRO</span>
+                            background-clip: text;  ">{{auth()->user()->bro_qty}} MP</span>
                 </div>
             </div>
             <div class="icon">
@@ -409,7 +409,7 @@
             <div class="details">
                 <div class="numbers" >
                     <span class="amount">{{nb(auth()->user()->bro_qty + 1)}}</span>
-                    <span class="currency-sign">BRO</span>
+                    <span class="currency-sign">MP</span>
                 </div>
                 <div class="desciption">
                     <span class="text--small">Business Right Owner</span>

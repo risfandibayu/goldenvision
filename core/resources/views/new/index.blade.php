@@ -235,8 +235,8 @@
       <div class="row">
         <div class="owl-carousel">
           @foreach ($prod as $item)
-              
-          
+
+
           <div class="item" style="padding: 20px;">
             <div class="member" data-aos="zoom-in" data-aos-delay="400">
               <div class="pic"><img src="{{ getImage('assets/images/product/'. $item->image,  null, true)}}" class="img-fluid" alt="Image {{$item->name}}"></div>
@@ -273,13 +273,13 @@
               <h4 class="title"><a href="">Aman</a></h4>
               <p class="description">Emas dinilai sangat aman untuk dijadikan sebagai instrumen investasi. Jika kita memiliki uang dan hanya disimpan ditabungan, maka uang tersebut bisa perlahan menghilang. Hal tersebut dikarenakan adanya biaya administrasi, pajak, suku bunga, dan biaya lain-lain.</p>
             </div>
-  
+
             <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
               <div class="icon"><i class="bx bx-shield"></i></div>
               <h4 class="title"><a href="">Terlindungi</a></h4>
               <p class="description">Inflasi dan deflasi merupakan masalah klasik yang sudah ada sejak dahulu kala. Dua kondisi ini bisa membuat nilai aset menurun. Maka dari itu, salah satu cara untuk mencegah hal tersebut yaitu dengan berinvestasi pada instrumen investasi, salah satunya emas.</p>
             </div>
-  
+
             <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
               <div class="icon"><i class='bx bx-donate-blood'></i></div>
               <h4 class="title"><a href="">Mudah Dicairkan</a></h4>
@@ -305,8 +305,8 @@
             <p class="description">Manfaat emas dalam bidang investasi lainnya yaitu memiliki harga yang stabil. Emas memiliki risiko lebih rendah, keamanan ketat, dan keuntungan yang lebih besar dibandingkan instrumen investasi lainnya. Harganya yang stabil membuat emas menjadi instrumen investasi yang menguntungkan.</p>
           </div>
         </div>
-         
-          
+
+
 
         </div>
       </div>
@@ -323,7 +323,7 @@
 
       <div class="faq-list">
         <ul>
-          <li data-aos="fade-up" style="background: #f5f5f5;"> 
+          <li data-aos="fade-up" style="background: #f5f5f5;">
             <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">Apa Itu Microgold ?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
             <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
               <p>
@@ -442,12 +442,12 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
               •	Login Akun kamu dan pastikan akun kamu sudah dilakukan verifikasi. <br>
               •	Klik Plan pada halaman dashboard Microgold Anda. <br>
               •	Klik Subscribe. <br>
-              •	Masukan jumlah BRO yang Anda beli. <br>
-              •	Masukan BRO dari Upline Anda. <br>
+              •	Masukan jumlah MP yang Anda beli. <br>
+              •	Masukan MP dari Upline Anda. <br>
               •	Pilih posisi Anda Kanan/kiri.<br>
-              •	Klik Subsribe. <br> 
+              •	Klik Subsribe. <br>
               •	Selamat Anda sudah bisa langsung pasang dan atur pohon Anda. <br>
-              •	Klik menu Manage User jika Anda membeli lebih dari 1 BRO. <br>
+              •	Klik menu Manage User jika Anda membeli lebih dari 1 MP. <br>
 
               </p>
             </div>
@@ -470,7 +470,7 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
             <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-9" class="collapsed">Cara Merefer Dengan No Upline Dan Nomor Bro Kanan Kirinya <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
             <div id="faq-list-9" class="collapse" data-bs-parent=".faq-list">
               <p>
-                •	Upline cukup memberikan nomor BRO miliknya kecalon downline. <br>
+                •	Upline cukup memberikan nomor MP miliknya kecalon downline. <br>
                 •	Calon downline otomatis akan langsung berada di bawahnya
               </p>
             </div>
@@ -535,7 +535,7 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
   <script>
     $(document).ready(function() {
- 
+
  $(".owl-carousel").owlCarousel({
 
      autoPlay: 3000,
@@ -560,11 +560,11 @@ Pembeli produk microgold  bisa menyimpan emas ukuran micro yang nanti bisa di tu
             nav:true,
         }
      }
-    
-    
-     
-     
-     
+
+
+
+
+
 
  });
 

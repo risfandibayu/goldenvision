@@ -10,7 +10,7 @@
                             <tr>
                                 <th scope="col">@lang('User')</th>
                                 <th scope="col">@lang('Username')</th>
-                                <th scope="col">@lang('BRO')</th>
+                                <th scope="col">@lang('MP')</th>
                                 <th scope="col">@lang('Email')</th>
                                 <th scope="col">@lang('Phone')</th>
                                 <th scope="col">@lang('Joined At')</th>
@@ -29,7 +29,7 @@
                                     </div>
                                 </td>
                                 <td data-label="@lang('Username')"><a href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a></td>
-                                <td data-label="@lang('BRO')">
+                                <td data-label="@lang('MP')">
                                     @if ($user->no_bro == 0)
                                     <small>Not subscribed yet</small>
                                     @else
@@ -67,9 +67,9 @@
 
 
 
-@push('breadcrumb-plugins') 
+@push('breadcrumb-plugins')
 <div class="row">
-    
+
     <div class="col-md-10 col-9">
 
         <form action="{{ route('admin.users.search', $scope ?? str_replace('admin.users.', '', request()->route()->getName())) }}" method="GET" class="form-inline float-sm-right bg--white">
@@ -87,7 +87,7 @@
             <input hidden type="text" name="search" class="form-control" placeholder="@lang('Username or email')" value="{{ $search ?? '' }}">
             <input hidden type="text" name="page" class="form-control" placeholder="@lang('Username or email')" value="{{ $page_title ?? '' }}">
             <button class="btn btn--primary" type="submit">Export</button>
-        </form>    
+        </form>
     </div>
 </div>
 @endpush

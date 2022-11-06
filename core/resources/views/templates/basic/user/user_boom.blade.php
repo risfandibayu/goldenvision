@@ -5,7 +5,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 <style>
-    a{ 
+    a{
         text-decoration: none;
         background-color: transparent;
     }
@@ -27,9 +27,9 @@
                     ?>
                     @if ($tmp)
                     {{-- {{ $tmp->email }} --}}
-                    <a style="color: black;    width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">BRO - {{$tmp->no_bro}} <i class="las la-check" style="color: rgb(60, 226, 255)"></i></a>
+                    <a style="color: black;    width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">MP - {{$tmp->no_bro}} <i class="las la-check" style="color: rgb(60, 226, 255)"></i></a>
                     @else
-                    <a style="color: black;     width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">BRO - (Number) <i class="las la-pen" style="color: yellow"></i></a>
+                    <a style="color: black;     width: -webkit-fill-available;" class="nav-item nav-link tab" id="nav-user-tab"  data-toggle="tab" href="#nav-user{{$i}}" role="tab" aria-controls="nav-user{{$i}}" aria-selected="true">MP - (Number) <i class="las la-pen" style="color: yellow"></i></a>
                     @endif
                     @endfor
 
@@ -65,7 +65,7 @@
                               <option value="" hidden>{{$tmp->us}}</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="position1">Position</label>
                             <select class="form-select form-control" disabled>
@@ -83,7 +83,7 @@
                             <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="{{$tmp->username}}">
                           </div>
                         <div class="form-group">
-                            <label for="exampleInputusername">BRO Number</label>
+                            <label for="exampleInputusername">MP Number</label>
                             <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="{{$tmp->no_bro}}">
                         </div>
                         <div class="form-group">
@@ -106,7 +106,7 @@
                               @foreach($ref_user as $refus)
                                     @if($refus->pos == "Leader")
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}" style="font-weight: 700">{{$refus->no_bro}}
-                                               
+
                                     @else
                                     <option value="{{$refus->id}}" data-value="{{$refus->id}}">{{$refus->no_bro}}
                                     @endif
@@ -120,7 +120,7 @@
                                                     - Under {{$refus->usa}}  (Right)
                                                     @endif
                                                 @endif
-                                            
+
                                         {{-- @else --}}
                                         {{-- @endif --}}
                                     </option>
@@ -144,8 +144,8 @@
                             <input readonly type="text" class="form-control" name="username" id="exampleInputusername" placeholder="Username" value="{{$ref->username}}{{$i}}">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputusername">BRO Number</label>
-                            <input readonly type="text" class="form-control" name="no_bro" id="exampleInputno_bro" placeholder="no_bro" value="Random BRO Number">
+                            <label for="exampleInputusername">MP Number</label>
+                            <input readonly type="text" class="form-control" name="no_bro" id="exampleInputno_bro" placeholder="no_bro" value="Random MP Number">
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Email address</label>
@@ -174,10 +174,10 @@
                     </div>
                 </div>
                 @endfor
-                
+
             </div>
         {{-- </div> --}}
-        
+
     </div>
 </div>
 
@@ -189,11 +189,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 {{-- <script>
     $.ajax({
-    type:"GET", 
-    url: "http://fantasy.premierleague.com/web/api/elements/100/", 
+    type:"GET",
+    url: "http://fantasy.premierleague.com/web/api/elements/100/",
     success: function(data) {
             $("body").append(JSON.stringify(data));
-        }, 
+        },
     error: function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status);
         },
@@ -202,7 +202,7 @@
 </script> --}}
 <script>
     var base_uri = $('#base_url').val();
-    
+
     $('.ref_username').on('change', function() {
     // console.log(base_uri);
         // var posa = $('.position').val();
@@ -212,12 +212,12 @@
         var id = $(this).find(':selected').data('value');
         // console.log(id);
         $.ajax({
-        type:"GET", 
-        url: "{{url('/user/cek_pos')}}/"+id, 
+        type:"GET",
+        url: "{{url('/user/cek_pos')}}/"+id,
         success: function(data) {
                 // $("body").append(JSON.stringify(data));
                 // console.log(data.response);
-                
+
                 if (data.response == 0) {
                     var options =  '<option value="" hidden>-- Select Position --</option><option value="1">Left</option><option value="2">Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
@@ -233,24 +233,24 @@
                     $('.tree').attr("hidden",false).html(data.tree);
                     var pilih = `
                 <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'>
-                    <p class='user-name'>BRO</p> 
+                    <p class='user-name'>MP</p>
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
-                    </div> <span class='line'></span> 
+                    </div> <span class='line'></span>
             `;
                     $('.pleft').html(pilih);
-                    
+
                 }
                 else if (data.response == 2) {
-                    
+
                     var options =  '<option value="" hidden>-- Select Position --</option><option value="2" selected>Right</option>';
                     $('.position').prop('disabled', false).prop('required', true);
                     $('.alr').attr("hidden",true);
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                     var pilih = `
-                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BRO</p>
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>MP</p>
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
-                    </div> <span class='line'></span> 
+                    </div> <span class='line'></span>
             `;
                     $('.pright').html(pilih);
                 }else{
@@ -260,7 +260,7 @@
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                 }
-            }, 
+            },
         error: function(jqXHR, textStatus, errorThrown) {
                 alert(jqXHR.status);
             },
@@ -270,17 +270,17 @@
     // function posa(){
     //     var pos = $('.position').find('option:selected').val();
     //     console.log(pos);
-        
+
     // };
 
     $('.position').on('change', function() {
         var pos = $(this).find('option:selected').val();
         var pilih = `
-                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>BRO</p>
-                    <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p> </div> <span class='line'></span> 
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>MP</p>
+                    <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p> </div> <span class='line'></span>
             `;
         var def = `
-                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='no-user'><p class='user-name'>BRO</p> </div> <span class='line'></span> 
+                <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='no-user'><p class='user-name'>MP</p> </div> <span class='line'></span>
             `;
         // console.log(pos);
 
@@ -305,8 +305,8 @@
         {
             // console.log(id);
         $.ajax({
-        type:"GET", 
-        url: "{{url('/user/cek_pos')}}/"+id, 
+        type:"GET",
+        url: "{{url('/user/cek_pos')}}/"+id,
         success: function(data) {
                 // $("body").append(JSON.stringify(data));
                 // console.log(data.response);
@@ -327,9 +327,9 @@
                     $('.tree').attr("hidden",false).html(data.tree);
                     var pilih = `
                 <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'>
-                    <p class='user-name'>BRO</p> 
+                    <p class='user-name'>MP</p>
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
-                    </div> <span class='line'></span> 
+                    </div> <span class='line'></span>
             `;
                     $('.pleft').html(pilih);
                 }
@@ -341,9 +341,9 @@
                     $('.tree').attr("hidden",false).html(data.tree);
                     var pilih = `
                 <div class='user'><img src='`+base_uri+`/assets/images/avatar.png' alt='*' class='select-user'>
-                    <p class='user-name'>BRO</p> 
+                    <p class='user-name'>MP</p>
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
-                    </div> <span class='line'></span> 
+                    </div> <span class='line'></span>
             `;
                     $('.pright').html(pilih);
                 }else{
@@ -353,7 +353,7 @@
                     $('.position').html(options);
                     $('.tree').attr("hidden",false).html(data.tree);
                 }
-            }, 
+            },
         error: function(jqXHR, textStatus, errorThrown) {
                 alert(jqXHR.status);
             },

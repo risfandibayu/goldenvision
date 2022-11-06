@@ -162,7 +162,7 @@
                             <li class="sidebar-menu-item {{menuActive('user.report.BroDeliveryLog')}}">
                                 <a href="{{route('user.report.BroDeliveryLog')}}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('BRO Pack Delivery Log')</span>
+                                    <span class="menu-title">@lang('MP Pack Delivery Log')</span>
                                 </a>
                             </li>
                             <li class="sidebar-menu-item {{menuActive('user.report.refCom')}}">
