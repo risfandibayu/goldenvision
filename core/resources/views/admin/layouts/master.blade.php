@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $general->sitename($page_title ?? '') }}</title>
     <!-- site favicon -->
-	<link rel="icon" type="image/jpg" href="{{ asset('assets/images/favicon.jpg') }}">
+	<link rel="icon" type="image/png" href="{{ asset('assets/images/favicon-new.png') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
     <!-- bootstrap 4  -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/vendor/grid.min.css') }}">

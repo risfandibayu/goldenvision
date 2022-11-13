@@ -9,9 +9,9 @@
     <div class="sidebar__inner">
         <div class="sidebar__logo">
             <a href="{{route('admin.dashboard')}}" class="sidebar__main-logo"><img
-                    src="{{ asset('assets/images/logo-dark.png') }}" alt="@lang('image')"></a>
+                    src="{{ asset('assets/images/logo-new.png') }}" alt="@lang('image')"></a>
             <a href="{{route('admin.dashboard')}}" class="sidebar__logo-shape"><img
-                    src="{{ asset('assets/images/logo-dark.png') }}" alt="@lang('image')"></a>
+                    src="{{ asset('assets/images/logo-new.png') }}" alt="@lang('image')"></a>
             <button type="button" class="navbar__expand"></button>
         </div>
 

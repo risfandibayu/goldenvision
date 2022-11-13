@@ -28,10 +28,10 @@
 
     <!-- Favicons
  ================================================== -->
-    <link rel="icon" type="image/jpg" href="{{ asset('assets/images/favicon.jpg') }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon.jpg') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/images/favicon.jpg') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/images/favicon.jpg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon-new.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon-new.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/images/favicon-new.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/images/favicon-new.png') }}">
 
 
 </head>
@@ -52,7 +52,7 @@
                                 <nav class="navbar navbar-expand-xl navbar-light">
 
                                     <a class="navbar-brand animsition-link" href="{{ route('home') }}">
-                                        <img src="{{ asset('assets/images/logo-dark.png') }}" alt="Masterplan">
+                                        <img src="{{ asset('assets/images/logo-new.png') }}" alt="Masterplan">
                                     </a>
 
                                     <button class="navbar-toggler" type="button" data-toggle="collapse"
