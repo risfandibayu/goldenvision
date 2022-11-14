@@ -104,7 +104,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('profile', 'AdminController@profileUpdate')->name('profile.update');
         Route::get('password', 'AdminController@password')->name('password');
         Route::post('password', 'AdminController@passwordUpdate')->name('password.update');
-        
+
 
         //Manage Survey
         Route::get('survey/category/all', 'SurveyController@allCategory')->name('survey.category.all');
@@ -151,6 +151,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('user/gold_invest', 'ManageUsersController@userGold')->name('invest.gdetail');
         Route::get('user/gold_invest_export', 'ManageUsersController@exportUserGold')->name('invest.gdetail.export');
         Route::get('user/gold_invest_detail/{id}', 'ManageUsersController@goldDetail')->name('users.invest.detail');
+        Route::get('user/gold-reward', 'ManageUsersController@userGoldReward')->name('users.reward.gold');
+        Route::get('user/{user}/add-gold-reward', 'ManageUsersController@addUserGoldReward')->name('users.reward.add-gold');
+        Route::post('user/{user}/add-gold-reward', 'ManageUsersController@storeUserGoldReward')->name('users.reward.store-weekly-gold');
         Route::get('user/referral/{id}', 'ManageUsersController@userRef')->name('users.ref');
         Route::post('user/update/{id}', 'ManageUsersController@update')->name('users.update');
         Route::post('user/rek/{id}', 'ManageUsersController@rek')->name('users.rek');
@@ -249,7 +252,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('via/{method}/{type?}', 'DepositController@depViaMethod')->name('method');
             Route::get('/{scope}/search', 'DepositController@search')->name('search');
             Route::get('date-search/{scope}', 'DepositController@dateSearch')->name('dateSearch');
-            
+
             Route::get('export', 'DepositController@export')->name('export');
 
         });
@@ -293,7 +296,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('report/login/history', 'ReportController@loginHistory')->name('report.login.history');
         Route::get('report/login/ipHistory/{ip}', 'ReportController@loginIpHistory')->name('report.login.ipHistory');
-        
+
         Route::get('report/export', 'ReportController@export')->name('report.export');
 
 
@@ -433,6 +436,8 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::middleware(['checkStatus'])->group(function () {
             Route::get('dashboard', 'UserController@home')->name('home');
 
+            Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
+
             Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
             Route::post('profile-setting', 'UserController@submitProfile');
             Route::post('edit_rekening', 'UserController@edit_rekening')->name('edit_rekening');
@@ -453,7 +458,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
 
             Route::get('/Product', 'ProductController@productIndex')->name('product.index');
-            
+
             // Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::get('/referral-log', 'UserController@referralCom')->name('referral.log');
 
@@ -489,7 +494,7 @@ Route::name('user.')->prefix('user')->group(function () {
             // Route::get('thank-you', 'Gateway\PaymentController@thankyou')->name('deposit.manual.thankyou');
             // Route::get('cancel-payment', 'Gateway\PaymentController@cancelpayment')->name('deposit.manual.cancel');
             // Route::get('callback-url', 'Gateway\PaymentController@callback')->name('deposit.manual.callback');
-            
+
             // Withdraw
             // Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
             Route::post('withdraw', 'UserController@withdrawStore')->name('withdraw.money');

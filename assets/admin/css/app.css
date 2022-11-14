@@ -2074,6 +2074,10 @@ p, li, a {
     background-color: #d7385e !important;
 }
 
+.bg--21 {
+    background-color: #B78628 !important;
+}
+
 .bg--gradi-1, .overlay--gradi-1[class*="overlay"]::before {
     background: #4776E6 !important;
     background: -webkit-linear-gradient(to top, #8E54E9, #4776E6) !important;
@@ -2378,6 +2382,12 @@ p, li, a {
     background: #4776E6 !important;
     background: -webkit-linear-gradient(to bottom, #8E54E9, #4776E6) !important;
     background: linear-gradient(to bottom, #8E54E9, #4776E6) !important;
+}
+
+.bg--gradi-51, .overlay--gradi-51[class*="overlay"]::before {
+    background: #B78628 !important;
+    background: -webkit-linear-gradient(to bottom, #DBA514, #B78628) !important;
+    background: linear-gradient(to bottom, #DBA514, #B78628) !important;
 }
 
 /* background-color css end */

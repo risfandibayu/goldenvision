@@ -258,9 +258,47 @@
 
 @endpush
 @section('panel')
+<div class="row mb-4">
+    <div class="col-lg-12">
+        @if (\App\Models\User::canClaimDailyGold(Auth::id()))
+            <div class="w-full">
+                <div class="modal modal-sm" style="margin: 0 auto;" tabindex="-1" id="modal-daily-checkin" tabindex="-1" aria-labelledby="modal-daily-checkin" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Check-In Now</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Click the button below to get your daily gold.</p>
+                            </div>
+                            <form action="{{ route('user.daily-checkin') }}" method="post">
+                                @csrf
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Check-In</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning alert-dismissible fade show p-3" role="alert">
+                <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Check-In and get your 0.005gr gold right now.
+                &nbsp; <a href="#" class="alert-link" data-toggle="modal" data-target="#modal-daily-checkin">CHECK IN</a>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+    </div>
+</div>
 <div class="row">
     @if(Auth::user()->is_kyc == 0)
-    <div class="col-lg-3 col-md-3 col-12 mb-30">
+    <div class="col-lg-8 col-md-8 col-12 mb-30">
         <div class="card card-header-actions">
             <div class="card-header" style="font-weight: 600;">
                 Account Verification
@@ -278,7 +316,7 @@
         </div>
     </div>
     @elseif(Auth::user()->is_kyc == 1)
-    <div class="col-lg-3 col-md-3 col-12 mb-30">
+    <div class="col-lg-8 col-md-8 col-12 mb-30">
         <div class="card card-header-actions">
             <div class="card-header" style="font-weight: 600;">
                 Account Verification
@@ -295,7 +333,7 @@
         </div>
     </div>
     @elseif(Auth::user()->is_kyc == 2)
-    <div class="col-lg-3 col-md-3 col-12 mb-30">
+    <div class="col-lg-8 col-md-8 col-12 mb-30">
         <div class="card card-header-actions">
             <div class="card-header" style="font-weight: 600;">
                 Account Verification
@@ -312,7 +350,7 @@
         </div>
     </div>
     @elseif(Auth::user()->is_kyc == 3)
-    <div class="col-lg-3 col-md-3 col-12 mb-30">
+    <div class="col-lg-8 col-md-8 col-12 mb-30">
         <div class="card card-header-actions">
             <div class="card-header" style="font-weight: 600;">
                 Account Verification
@@ -358,6 +396,26 @@
         </div>
     </div>
     @endif --}}
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+        <div class="dashboard-w1  h-100 w-100 bg--gradi-51 b-radius--10 box-shadow">
+            <div class="icon">
+                <i class="las la-gem"></i>
+            </div>
+            <div class="details">
+                <div class="numbers">
+                    <span class="amount">{{ auth()->user()->total_golds }}</span>
+                    <span class="currency-sign">Gram</span>
+                </div>
+                <div class="desciption">
+                    <span class="text--small">{{ auth()->user()->total_daily_golds }} Daily Gold</span> <br />
+                    <span class="text--small">{{ auth()->user()->total_weekly_golds }} Weekly Gold</span>
+                </div>
+            </div>
+            <br>
+            <a href="{{ route('user.my.tree') }}" class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+        </div>
+    </div>
+
     @if (auth()->user()->plan_id != 0)
 
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">

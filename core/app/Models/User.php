@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\UserGoldReward;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -80,6 +83,70 @@ class User extends Authenticatable
         return $this->belongsTo(Plan::class);
     }
 
+    public function golds()
+    {
+        return $this->hasMany(UserGold::class);
+    }
+
+    public function dailyGolds()
+    {
+        return $this->golds()->where('type', UserGoldReward::Daily->value);
+    }
+
+    public function weeklyGolds()
+    {
+        return $this->golds()->where('type', UserGoldReward::Weekly->value);
+    }
+
+    public function getTotalDailyGoldsAttribute()
+    {
+        return $this->dailyGolds()->sum('golds') ?: 0;
+    }
+
+    public function getTotalWeeklyGoldsAttribute()
+    {
+        return $this->weeklyGolds()->sum('golds') ?: 0;
+    }
+
+    public function getTotalGoldsAttribute()
+    {
+        return $this->golds()->sum('golds') ?: 0;
+    }
+
+    public function getCanAddWeeklyGoldAttribute()
+    {
+        // return $this->total_weekly_golds ?: 0 < 0.50 && $this->total_daily_golds
+    }
+
+    public static function hasClaimedDailyGold($id)
+    {
+        return (new static)
+            ->newModelQuery()
+            ->where('id', $id)
+            ->whereHas(
+                'dailyGolds',
+                fn ($builder) => $builder->whereDate('created_at', Carbon::now()->format('Y-m-d'))
+            )
+            ->exists();
+    }
+
+    public static function canClaimDailyGold($id)
+    {
+        $golds = (new static)
+            ->newModelQuery()
+            ->withCount('dailyGolds')
+            ->find($id);
+
+        return ($golds?->daily_golds_count < 100) && (! static::hasClaimedDailyGold($id));
+    }
+
+    public static function canAddWeeklyGold($id)
+    {
+        return (UserGold::dailyGoldsOf($id)->count() === 100) && (
+            UserGold::weeklyGoldsOf($id)->sum('golds') < 0.50
+        );
+    }
+
 
 
 
@@ -117,6 +184,23 @@ class User extends Authenticatable
     public function scopeSmsVerified()
     {
         return $this->where('sv', 1);
+    }
+
+    public function scopeWithGoldsTotal($builder)
+    {
+        $builder->addSelect([
+            'total_daily_golds' => $this->aggregateGoldsReward(UserGoldReward::Daily),
+            'total_weekly_golds' => $this->aggregateGoldsReward(UserGoldReward::Weekly)
+        ]);
+    }
+
+    protected function aggregateGoldsReward(UserGoldReward $reward)
+    {
+        return fn ($builder) => $builder
+            ->from('user_golds')
+            ->selectRaw('sum(golds)')
+            ->whereColumn('user_golds.user_id', 'users.id')
+            ->where('type', $reward->value);
     }
 
 }

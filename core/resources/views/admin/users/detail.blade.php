@@ -383,6 +383,25 @@
                 </div>
             </div>
 
+            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                <div class="dashboard-w1 bg--21 b-radius--10 box-shadow has--link">
+                    <a href="#" class="item--link"></a>
+                    <div class="icon">
+                        <i class="la la-gem"></i>
+                    </div>
+                    <div class="details">
+                        <div class="numbers">
+                            <span class="amount">{{ $user->total_golds }}</span>
+                            <span class="currency-sign">Gram</span>
+                        </div>
+                        <div class="desciption">
+                            <span class="text--small">{{ $user->total_daily_golds }} Daily Gold</span> <br />
+                            <span class="text--small">{{ $user->total_weekly_golds }} Weekly Gold</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {{-- <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--19 b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.report.single.bvLog', $user->id)}}?type=cutBV" class="item--link"></a>

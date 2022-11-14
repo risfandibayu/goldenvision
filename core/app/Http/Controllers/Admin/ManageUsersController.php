@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserGoldReward;
 use App\Exports\ExportUser;
 use App\Exports\ExptUserGold;
 use App\Exports\ExptUserQuery;
@@ -20,12 +21,14 @@ use App\Models\User;
 use App\Models\UserLogin;
 use App\Models\Survey;
 use App\Models\UserExtra;
+use App\Models\UserGold;
 use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ManageUsersController extends Controller
@@ -751,5 +754,64 @@ class ManageUsersController extends Controller
     }
 
 
+    public function userGoldReward(Request $request){
+        $search = $request->search;
+        $page_title = 'User Golds Reward';
+        $empty_message = 'No user found';
+
+        $users = User::query()
+            ->select([
+                'id', 'username', 'firstname', 'lastname', 'email'
+            ])
+            ->when(
+                $request->search,
+                fn ($builder, $search) => $builder
+                    ->where('email', 'like', '%'.$search.'%')
+                    ->orWhere('username', 'like', '%'.$search.'%')
+            )
+            ->withGoldsTotal()
+            ->withCount('dailyGolds')
+            ->paginate(getPaginate());
+
+        return view(
+            'admin.users.gold-reward',
+            compact('page_title','search', 'empty_message', 'users')
+        );
+    }
+
+    public function addUserGoldReward(User $user)
+    {
+        $page_title = 'Give Gold Reward To ' . $user->fullname;
+
+        return view(
+            'admin.users.add-gold-reward',
+            compact('page_title', 'user')
+        );
+    }
+
+    public function storeUserGoldReward(User $user, Request $request)
+    {
+        $validated = $request->validate([
+            'gold' => ['required', 'numeric', 'max:0.50']
+        ]);
+
+        $gold = (float) $validated['gold'];
+
+        if (!User::canAddWeeklyGold($user->id)) {
+            return Redirect::route('admin.users.reward.gold')->with('notify', [
+                ['warning', 'User has reached the limit of weekly gold reward']
+            ]);
+        }
+        $user->golds()->create([
+            'type'  => UserGoldReward::Weekly->value,
+            'golds' => ($user->total_weekly_golds + $gold) > 0.50
+                ? 0.50 - $user->total_weekly_golds
+                : $gold
+        ]);
+
+        return Redirect::route('admin.users.reward.gold')->with('notify', [
+            ['success', 'Successfully add user weekly gold reward']
+        ]);
+    }
 }
 

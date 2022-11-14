@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserGoldReward;
 use App\Lib\GoogleAuthenticator;
 use App\Models\AdminNotification;
 use App\Models\alamat;
@@ -20,13 +21,17 @@ use App\Models\Gold;
 use App\Models\GoldExchange;
 use App\Models\rekening;
 use App\Models\UserExtra;
+use App\Models\UserGold;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Image;
 use Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -1366,4 +1371,23 @@ class UserController extends Controller
         // dd($request->all());
     }
 
+    public function dailyCheckIn(Request $request)
+    {
+        $user = $request->user();
+
+        if (! User::canClaimDailyGold($user->id)) {
+            return Redirect::back()->with('notify',[
+                ['warning', 'You already claimed your daily gold or your quota has reached the limit.']
+            ]);
+        }
+
+        $user->golds()->create([
+            'type'  => UserGoldReward::Daily->value,
+            'golds' => 0.005
+        ]);
+
+        return redirect()->back()->with('notify', [
+            ['success', 'Successfully Claimed Your Daily Gold Check-In']
+        ]);
+    }
 }
