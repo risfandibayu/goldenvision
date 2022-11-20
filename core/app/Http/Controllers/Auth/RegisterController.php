@@ -55,6 +55,8 @@ class RegisterController extends Controller
 
     public function showRegistrationForm(Request $request)
     {
+        return view('landing.register');
+
         $content = Frontend::where('data_keys', 'sign_up.content')->first();
         $info = json_decode(json_encode(getIpInfo()), true);
         $country_code = @implode(',', $info['code']);
@@ -137,7 +139,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-      
+
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {

@@ -8539,7 +8539,8 @@ body.modal-open {
 	background-position: center;
 	background-image: url('../img/background-23.jpg');
 }
-.section-background-24 {
+.section-background-24,
+.section-background-login {
 	background-repeat: no-repeat;
 	background-size: 100% auto;
 	background-position: top center;
@@ -10589,6 +10590,9 @@ body.triger-anime .load-anime-top {
 		-webkit-background-clip: text;
 		background-position: bottom center;
 		background-size: cover;
+	}
+	.section-background-login {
+		background-image: url('../img/login-bg.jpg');
 	}
 }
 

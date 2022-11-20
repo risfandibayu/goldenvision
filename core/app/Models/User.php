@@ -132,12 +132,14 @@ class User extends Authenticatable
 
     public static function canClaimDailyGold($id)
     {
-        $golds = (new static)
+        $user = (new static)
             ->newModelQuery()
             ->withCount('dailyGolds')
             ->find($id);
 
-        return ($golds?->daily_golds_count < 100) && (! static::hasClaimedDailyGold($id));
+        return  ($user?->daily_golds_count < 100) &&
+                (! static::hasClaimedDailyGold($id)) &&
+                ($user?->is_kyc == 2);
     }
 
     public static function canAddWeeklyGold($id)

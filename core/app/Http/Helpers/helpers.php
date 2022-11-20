@@ -1534,7 +1534,12 @@ function randomNumber($length) {
 function generateUniqueNoBro()
     {
         do {
-            $code = rand(22900000, 22999999);
+            $now = Carbon::now();
+            $prefix = substr($now->year, -2) . $now->format('m');
+            $last = user::latest('no_bro')->first();
+            $lastNoBro = (int) substr($last?->no_bro ?: 0, -4);
+            $incr = str_pad($lastNoBro + 1, 4, '0', STR_PAD_LEFT);
+            $code = $prefix . $incr;
         } while (user::where("no_bro", "=", $code)->first());
         return $code;
     }

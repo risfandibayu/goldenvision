@@ -566,7 +566,8 @@ Route::get('/blog', 'SiteController@blog')->name('blog');
 Route::get('/blog/details/{slug}/{id}', 'SiteController@singleBlog')->name('singleBlog');
 
 Route::get('/home2', 'SiteController@index2')->name('home2');
-Route::get('/', 'SiteController@index')->name('home');
+Route::get('/', 'SiteController@index')->name('home'); // Disabled temporary
+Route::redirect('/', '/login');
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
 
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholderImage');
