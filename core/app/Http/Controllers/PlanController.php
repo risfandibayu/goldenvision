@@ -9,13 +9,14 @@ use App\Models\Plan;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
+use App\Services\Tree\Enums\TreePosition;
+use App\Services\Tree\TreeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
-
-    public function __construct()
+    public function __construct(public TreeService $treeService)
     {
         $this->activeTemplate = activeTemplate();
     }
@@ -96,6 +97,12 @@ class PlanController extends Controller
             $user->bro_qty = $request->qty - 1;
             $user->save();
 
+
+            $this->treeService->calculateUplineMemberBonus(
+                $user,
+                $ref_user,
+                TreePosition::from((int) $request->position)
+            );
 
             $gold = Gold::where('user_id',Auth::user()->id)->first();
             $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->first();
