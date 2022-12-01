@@ -6,7 +6,7 @@
 @section('css')
 <style>
     .register-bg {
-        background: url('/assets/landing/img/register-bg.jpg') no-repeat center fixed;
+        /* background: url('/assets/landing/img/register-bg.jpg') no-repeat center fixed; */
         background-size: cover;
         object-fit: contain;
     }
