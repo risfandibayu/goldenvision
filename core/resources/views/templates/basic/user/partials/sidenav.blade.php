@@ -1,21 +1,17 @@
-
-<div class="sidebar capsule--rounded bg_img overlay"
-     {{-- data-background="{{asset('assets/admin/images/sidebar/2.jpg')}}" --}}
-    style="background-color: #141414 !important;"
-     >
+<div class="sidebar capsule--rounded bg_img overlay" {{-- data-background="{{asset('assets/admin/images/sidebar/2.jpg')}}" --}} style="background-color: #141414 !important;">
     <button class="res-sidebar-close-btn"><i class="las la-times"></i></button>
     <div class="sidebar__inner">
         <div class="sidebar__logo">
-            <a href="{{route('user.home')}}" class="sidebar__main-logo"><img
+            <a href="{{ route('user.home') }}" class="sidebar__main-logo"><img
                     src="{{ asset('assets/images/logo-new.png') }}" alt="@lang('image')"></a>
-            <a href="{{route('user.home')}}" class="sidebar__logo-shape"><img
+            <a href="{{ route('user.home') }}" class="sidebar__logo-shape"><img
                     src="{{ asset('assets/images/logo-new.png') }}" alt="@lang('image')"></a>
             <button type="button" class="navbar__expand"></button>
         </div>
         <div class="sidebar__menu-wrapper" id="sidebar__menuWrapper">
             <ul class="sidebar__menu">
-                <li class="sidebar-menu-item {{menuActive('user.home')}}">
-                    <a href="{{route('user.home')}}" class="nav-link ">
+                <li class="sidebar-menu-item {{ menuActive('user.home') }}">
+                    <a href="{{ route('user.home') }}" class="nav-link ">
                         <i class="menu-icon las la-home"></i>
                         <span class="menu-title">@lang('Dashboard')</span>
                     </a>
@@ -31,7 +27,7 @@
                                 ->count();
                 @endphp
 
-                @if($survey_notice || $get_survey)
+                @if ($survey_notice || $get_survey)
                     <li class="sidebar-menu-item {{menuActive('user.survey*')}}">
                         <a href="{{route('user.survey')}}" class="nav-link ">
                             <i class="lar la-question-circle menu-icon"></i>
@@ -40,26 +36,33 @@
                     </li>
                 @endif --}}
 
-                <li class="sidebar-menu-item {{menuActive('user.plan.index')}}">
-                    <a href="{{route('user.plan.index')}}" class="nav-link ">
+                <li class="sidebar-menu-item {{ menuActive('user.plan.index') }}">
+                    <a href="{{ route('user.plan.index') }}" class="nav-link ">
                         <i class="menu-icon las la-lightbulb"></i>
                         <span class="menu-title">@lang('Plan')</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-menu-item {{menuActive('user.product.index')}}">
-                    <a href="{{route('user.product.index')}}" class="nav-link ">
-                        <i class="menu-icon las la-archive"></i>
-                        <span class="menu-title">@lang('Product')</span>
-                    </a>
-                </li> --}}
+                @if (auth()->user()->is_stockiest == 1)
+                    <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
+                        <a href="#" class="nav-link ">
+                            <i class="menu-icon las la-archive"></i>
+                            <span class="menu-title">@lang('Product')</span>
+                        </a>
+                    </li>
+                    {{-- <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
+                            <a href="{{ route('user.product.index') }}" class="nav-link ">
+                                <i class="menu-icon las la-archive"></i>
+                                <span class="menu-title">@lang('Product')</span>
+                            </a>
+                        </li> --}}
+                @endif
                 @if (auth()->user()->bro_qty + 1 > 1)
-
-                <li class="sidebar-menu-item {{menuActive('user.user_boom')}}">
-                    <a href="{{route('user.user_boom')}}" class="nav-link ">
-                        <i class="menu-icon las la-users-cog"></i>
-                        <span class="menu-title">@lang('Manage User')</span>
-                    </a>
-                </li>
+                    <li class="sidebar-menu-item {{ menuActive('user.user_boom') }}">
+                        <a href="{{ route('user.user_boom') }}" class="nav-link ">
+                            <i class="menu-icon las la-users-cog"></i>
+                            <span class="menu-title">@lang('Manage User')</span>
+                        </a>
+                    </li>
                 @endif
 
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.bv.log') }}">
@@ -75,13 +78,13 @@
                     </a>
                 </li> --}}
                 {{-- @if (Auth::user()->is_mlm == 1) --}}
-                    <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
-                        <a href="{{ route('user.my.tree') }}" class="nav-link">
-                            <i class="menu-icon las la-tree"></i>
-                            <span class="menu-title">@lang('My Tree')</span>
-                        </a>
-                    </li>
-                    {{-- <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
+                <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
+                    <a href="{{ route('user.my.tree') }}" class="nav-link">
+                        <i class="menu-icon las la-tree"></i>
+                        <span class="menu-title">@lang('My Tree')</span>
+                    </a>
+                </li>
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
                         <a href="{{ route('user.gold.invest') }}" class="nav-link">
                             <i class="menu-icon las la-coins"></i>
                             <span class="menu-title">@lang('Gold Investment')</span>
@@ -224,4 +227,3 @@
         </div>
     </div>
 </div>
-

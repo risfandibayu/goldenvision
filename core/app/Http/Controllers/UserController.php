@@ -17,6 +17,7 @@ use App\Models\Survey;
 use App\Models\Answer;
 use App\Models\bank;
 use App\Models\corder;
+use App\Models\DailyGold;
 use App\Models\Gold;
 use App\Models\GoldExchange;
 use App\Models\rekening;
@@ -50,6 +51,10 @@ class UserController extends Controller
         $data['total_ref']          = User::where('ref_id', auth()->id())->count();
         $data['totalBvCut']         = BvLog::where('user_id', auth()->id())->where('trx_type', '-')->sum('amount');
         $data['emas']               = Gold::where('user_id',Auth::user()->id)->where('golds.status','=','0')->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.user_id')->first();
+        $gold = DailyGold::orderByDesc('id')->first();  
+        $userGold = auth()->user()->total_golds;
+        $goldRange = $gold->per_gram * $userGold;
+        $data['goldBonus']          = $goldRange;
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
     public function profile()
