@@ -1149,6 +1149,54 @@ function referralCommission($user_id, $details)
 
 }
 
+function referralCommission2($user_id, $details)
+{
+
+    $user = User::find($user_id);
+    $refer = User::find($user->ref_id);
+    if ($refer) {
+        $plan = Plan::find($refer->plan_id);
+        if ($plan) {
+            $uex = UserExtra::where('user_id',$refer->id)->first();
+            if ($uex->left > 3 && $uex->right > 3) {
+                # code...
+                $amount = 20000;
+            }else{
+                $amount = 15000;
+            }
+
+            $refer->balance += $amount;
+            $refer->total_ref_com += $amount;
+            $refer->save();
+
+            $trx = $refer->transactions()->create([
+                'amount' => $amount,
+                'charge' => 0,
+                'trx_type' => '+',
+                'details' => $details,
+                'remark' => 'referral_commission',
+                'trx' => getTrx(),
+                'post_balance' => getAmount($refer->balance),
+
+            ]);
+
+            $gnl = GeneralSetting::first();
+
+            notify($refer, 'referral_commission', [
+                'trx' => $trx->trx,
+                'amount' => getAmount($amount),
+                'currency' => $gnl->cur_text,
+                'username' => $user->username,
+                'post_balance' => getAmount($refer->balance),
+            ]);
+
+        }
+
+    }
+
+
+}
+
 /*
 ===============TREEE===============
 */

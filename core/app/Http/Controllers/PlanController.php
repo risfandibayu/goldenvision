@@ -205,7 +205,7 @@ class PlanController extends Controller
             if ($oldPlan == 0) {
                 updatePaidCount2($user->id);
             }
-            // $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
+            $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
 
             // updateBV($user->id, $plan->bv, $details);
 
@@ -213,7 +213,7 @@ class PlanController extends Controller
             //     treeComission($user->id, $plan->tree_com, $details);
             // }
 
-            // referralCommission($user->id, $details);
+            referralCommission2($user->id, $details);
 
             $notify[] = ['success', 'Purchased ' . $plan->name . ' Successfully'];
             return redirect()->route('user.home')->withNotify($notify);
