@@ -392,7 +392,7 @@
                         <p>Your data has been successfully verified <i class="fa fa-check-circle text-success"></i></p>
                     </div>
                     <div class="card-footer text-center">
-                        <b>Komisi referal!</b>
+                        <b>Akumulasi Komisi</b>
                         <p>Ketika Sudah Mencapai Rp. 10,000,000 Anda Wajib Melakukan Repeat Order Ke
                             Produk Masterplan Lainnya (saat ini {{ $persen_bonus }}% dari target)</p>
                         <div class="d-flex justify-content-center">
@@ -547,7 +547,7 @@
     </div> --}}
         @endif
 
-        @if ($emas)
+        {{-- @if ($emas)
             <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow">
                     <div class="icon">
@@ -567,7 +567,7 @@
                         class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
@@ -685,7 +685,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-money-bill-wave"></i>
@@ -703,7 +703,7 @@
                 <a href="{{ route('user.report.invest') }}"
                     class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
-        </div>
+        </div> --}}
 
         {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
         <div class="dashboard-w1 bg--12 b-radius--10 box-shadow">
@@ -867,7 +867,7 @@
                         kiri dan kanan.</h6>
                     <hr class="text-light">
                     <div class="row d-flex justify-content-center text-center">
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-4 mt-3 text-center">
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="{{ asset('assets/turki.jpg') }}" alt="Card image cap">
                                 <div class="card-body">
@@ -879,7 +879,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 mt-3">
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="{{ asset('assets/cars.jpeg') }}" alt="Card image cap">
                                 <div class="card-body">
