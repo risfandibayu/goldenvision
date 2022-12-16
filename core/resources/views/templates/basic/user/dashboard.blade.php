@@ -465,7 +465,7 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{ auth()->user()->total_golds }}</span>
+                        <span class="amount">{{ nbk(auth()->user()->total_golds) }}</span>
                         <span class="currency-sign">Gram</span>
                     </div>
                     <div class="desciption">
