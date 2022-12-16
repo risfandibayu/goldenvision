@@ -472,9 +472,9 @@
                         <span class="text--small">Equal To {{ nb($goldBonus) }} IDR</span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small ">{{ auth()->user()->total_daily_golds }} Daily Gold</span>
+                        <span class="text--small ">{{ nbk(auth()->user()->total_daily_golds) }} Daily Gold</span>
                         |
-                        <span class="text--small ">{{ auth()->user()->total_weekly_golds }} Weekly Gold</span>
+                        <span class="text--small ">{{ nb(auth()->user()->total_weekly_golds) }} Weekly Gold</span>
                     </div>
                 </div>
                 <br>
