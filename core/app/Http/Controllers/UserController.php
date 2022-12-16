@@ -24,6 +24,7 @@ use App\Models\rekening;
 use App\Models\UserExtra;
 use App\Models\UserGold;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Failed;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -55,6 +56,7 @@ class UserController extends Controller
         $userGold = auth()->user()->total_golds;
         $goldRange = $gold->per_gram * $userGold;
         $data['goldBonus']          = $goldRange;
+        $data['persen_bonus']       = auth()->user()->total_binary_com / 10000000 * 100;
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
     public function profile()
@@ -1376,6 +1378,23 @@ class UserController extends Controller
         // dd($request->all());
     }
 
+    public function updateStockiest($id){
+        $activeUser = Auth::user()->id;
+        if($activeUser == $id){
+            return response()->json(['status'=>201,'msg'=>'Failed, Unauthorized!'],201);
+        }
+        $user = User::find($id);
+        $is_stockiest = $user->is_stockiest;
+        if($is_stockiest){
+            $new = 0;
+        }else{
+            $new = 1;
+        }
+        $user->is_stockiest = $new;
+        $user->save();
+        return response()->json(['status'=>200,'msg'=>'success update'],200);
+    }
+
     public function dailyCheckIn(Request $request)
     {
         $user = $request->user();
@@ -1386,13 +1405,106 @@ class UserController extends Controller
             ]);
         }
 
-        $user->golds()->create([
-            'type'  => UserGoldReward::Daily->value,
-            'golds' => 0.005
-        ]);
+        
+        //send to same bank account;
+        try {
+            $userBank = rekening::where('user_id',$user->id)->first();
+            if($userBank){
+                $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                                    ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
+                foreach ($checkSame as $key => $value) {
+                    $user = User::find($value->user_id);
+                        $user->golds()->create([
+                            'type'  => UserGoldReward::Daily->value,
+                            'golds' => 0.005
+                        ]);
+                }
+            }else{
+                $user->golds()->create([
+                    'type'  => UserGoldReward::Daily->value,
+                    'golds' => 0.005
+                ]);
+            }
 
-        return redirect()->back()->with('notify', [
-            ['success', 'Successfully Claimed Your Daily Gold Check-In']
-        ]);
+            return redirect()->back()->with('notify', [
+                ['success', 'Successfully Claimed Your Daily Gold Check-In']
+            ]);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+    }
+     public function addSubBalance(Request $request, $id)
+    {
+        // dd($request->all());
+        $request->validate(['amount' => 'required|numeric|gt:0']);
+
+        $user = User::findOrFail($id);
+        $userStockiest = Auth::user();
+        $amount = getAmount($request->amount);
+        $general = GeneralSetting::first(['cur_text','cur_sym']);
+        $trx = getTrx();
+        
+        if ($request->act) {
+            if(($userStockiest->balance - $amount) >= 0 ){
+                $notify[] = ['error', $user->username . ' has insufficient balance.'];
+                return back()->withNotify($notify);
+            }
+            $user->balance += $amount;
+            $user->save();
+            $userStockiest->balance -= $amount;
+            $userStockiest->save();
+
+            $notify[] = ['success', $general->cur_sym . $amount . ' has been added to ' . $user->username . ' balance'];
+ 
+
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $amount;
+            $transaction->post_balance = getAmount($user->balance);
+            $transaction->charge = 0;
+            $transaction->trx_type = '+';
+            $transaction->detais = 'Added Balance Via Stockiest';
+            $transaction->trx =  $trx;
+            $transaction->save();
+
+
+            notify($user, 'BAL_ADD', [
+                'trx' => $trx,
+                'amount' => $amount,
+                'currency' => $general->cur_text,
+                'post_balance' => getAmount($user->balance),
+            ]);
+
+        } else {
+            if ($amount > $user->balance) {
+                $notify[] = ['error', $user->username . ' has insufficient balance.'];
+                return back()->withNotify($notify);
+            }
+            $user->balance -= $amount;
+            $user->save();
+            $userStockiest->balance += $amount;
+            $userStockiest->save();
+
+
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $amount;
+            $transaction->post_balance = getAmount($user->balance);
+            $transaction->charge = 0;
+            $transaction->trx_type = '-';
+            $transaction->details = 'Subtract Balance Via Stockiest';
+            $transaction->trx =  $trx;
+            $transaction->save();
+
+
+            notify($user, 'BAL_SUB', [
+                'trx' => $trx,
+                'amount' => $amount,
+                'currency' => $general->cur_text,
+                'post_balance' => getAmount($user->balance)
+            ]);
+            $notify[] = ['success', $general->cur_sym . $amount . ' has been subtracted from ' . $user->username . ' balance'];
+        }
+        return back()->withNotify($notify);
     }
 }

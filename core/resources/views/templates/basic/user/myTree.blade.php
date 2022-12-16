@@ -1,11 +1,10 @@
 @extends($activeTemplate . 'user.layouts.app')
 
 @push('style')
-    <link href="{{asset('assets/admin/css/tree.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/tree.css') }}" rel="stylesheet">
 @endpush
 
 @section('panel')
-
     <div class="card">
 
         {{-- <div class=" row">
@@ -13,6 +12,7 @@
 
             <a href="{{ url()->previous() }}" style="margin-left: -19px;margin-top:5px;" class="col-md-1 col-4 btn btn--secondary">Back</a>
         </div> --}}
+        <div class="active-user-none" data-id="{{ auth()->user()->id }}"></div>
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
             <div class="w-1">
@@ -152,7 +152,7 @@
 
 
     <div class="modal fade user-details-modal-area" id="exampleModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -164,12 +164,15 @@
                 <div class="modal-body">
                     <div class="user-details-modal">
                         <div class="user-details-header ">
-                            <div class="thumb"><img src="#" alt="*" class="tree_image w-h-100-p"
-                                ></div>
+                            <div class="thumb">
+                                <img src="#" alt="*" class="tree_image w-h-100-p">
+
+                            </div>
                             <div class="content">
                                 <a class="user-name tree_url tree_name" href=""></a>
                                 <strong style="    font-size: 19px;
-                                font-weight: bolder;"  class="user-status tree_bro"></strong>
+                                font-weight: bolder;"
+                                    class="user-status tree_bro"></strong>
                                 <br>
                                 <span class="user-status tree_email"></span>
                                 <br>
@@ -177,8 +180,11 @@
                                 <br>
 
                                 <span class="user-status tree_status"></span>
-                                <span class="user-status tree_plan"></span>
+                                <span class="user-status tree_plan mb-3"></span>
+
+
                             </div>
+
                         </div>
                         <div class="user-details-body text-center">
 
@@ -187,7 +193,8 @@
 
                             <table class="table table-bordered">
                                 <tr>
-                                    <th>&nbsp;</th>
+                                    <th>
+                                    </th>
                                     <th>@lang('LEFT')</th>
                                     <th>@lang('RIGHT')</th>
                                 </tr>
@@ -209,52 +216,178 @@
                                     <td><span class="rpaid"></span></td>
                                 </tr>
                             </table>
-                            <a href="" class="mt-4 btn btn--secondary btn-block btn-sm tree_url">See Tree</a>
-
+                            <hr>
+                            <span class="mt-4">
+                                <div class="form-group d-none" id="is_true">
+                                    <label class="form-control-label font-weight-bold">@lang('Stockiest Status')
+                                    </label><br>
+                                    <input type="checkbox" id="is_stockiest_true" data-width="100%" data-onstyle="-success"
+                                        data-offstyle="-danger" data-toggle="toggle" data-on="Active" data-off="Deactive"
+                                        name="is_stockiest" checked>
+                                </div>
+                                <div class="form-group d-none" id="is_false">
+                                    <label class="form-control-label font-weight-bold">@lang('Stockiest Status')
+                                    </label><br>
+                                    <input type="checkbox" id="is_stockiest_false" data-width="100%" data-onstyle="-success"
+                                        data-offstyle="-danger" data-toggle="toggle" data-on="Active" data-off="Deactive"
+                                        name="is_stockiest">
+                                </div>
+                            </span>
+                            <hr>
+                            <a href="#" class="mt-4 btn btn--warning btn-block btn-sm btnAddSubs">Add/Substract
+                                Balance</a>
+                            <a href="" class=" btn btn--primary btn-block btn-sm tree_url">See Tree</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="addSubModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('Add / Subtract Balance')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {{-- <form action="{{ route('admin.users.addSubBalance', $user->id) }}" method="POST"> --}}
+                <form action="" method="POST" id="formSubBalance">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="checkbox" data-width="100%" data-height="44px" data-onstyle="-success"
+                                    data-offstyle="-danger" data-toggle="toggle" data-on="Add Balance"
+                                    data-off="Subtract Balance" name="act" checked>
+                            </div>
 
 
-
+                            <div class="form-group col-md-12">
+                                <label>@lang('Amount')<span class="text-danger">*</span></label>
+                                <div class="input-group has_append">
+                                    <input type="text" name="amount" class="form-control"
+                                        placeholder="Please provide positive amount">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">IDR</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Submit')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('script')
     <script>
         "use strict";
-        (function ($) {
-            $('.showDetails').on('click', function () {
-                var modal = $('#exampleModalCenter');
+        (function($) {
+            const userID = $('.active-user-none').data('id');
 
+            $('.showDetails').on('click', function() {
+                var modal = $('#exampleModalCenter');
+                let id = $(this).data('id');
+                $('#is_stockiest_true').attr('data-id');
+                $('#is_stockiest_false').attr('data-id');
+                $('#is_true').addClass('d-none');
+                $('#is_false').addClass('d-none');
+                if (id == userID) {
+                    $('.btnAddSubs').addClass('d-none');
+                } else {
+                    $('.btnAddSubs').removeClass('d-none');
+                }
                 $('.tree_name').text($(this).data('name'));
-                $('.tree_url').attr({"href": $(this).data('treeurl')});
+                $('.tree_url')
+                    .attr({
+                        "href": $(this).data('treeurl')
+                    });
                 $('.tree_status').text($(this).data('status'));
                 $('.tree_plan').text($(this).data('plan'));
-                $('.tree_phone').text('+' + $(this).data('mobile'));
-                $('.tree_email').text($(this).data('email'));
+                $(
+                    '.tree_phone').text('+' + $(this).data('mobile'));
+                $('.tree_email').text($(this).data(
+                    'email'));
                 $('.tree_bro').text($(this).data('bro'));
-                $('.tree_image').attr({"src": $(this).data('image')});
+                $('.tree_image').attr({
+                    "src": $(this).data('image')
+                });
                 $('.user-details-header').removeClass('Paid');
                 $('.user-details-header').removeClass('Free');
                 $('.user-details-header').addClass($(this).data('status'));
-                $('.tree_ref').text($(this).data('refby'));
+                $('.tree_ref').text($(this).data(
+                    'refby'));
                 $('.lbv').text($(this).data('lbv'));
                 $('.rbv').text($(this).data('rbv'));
-                $('.lpaid').text($(this).data('lpaid'));
+                $('.lpaid')
+                    .text($(this).data('lpaid'));
                 $('.rpaid').text($(this).data('rpaid'));
-                $('.lfree').text($(this).data('lfree'));
+                $('.lfree').text($(this)
+                    .data('lfree'));
                 $('.rfree').text($(this).data('rfree'));
-                $('#exampleModalCenter').modal('show');
+                $('#exampleModalCenter').modal(
+                    'show');
+                $('.btnAddSubs').attr('data-id', id);
+                $('#is_stockiest_true').attr('data-id', id);
+                $('#is_stockiest_false').attr('data-id', id);
+
+                const is_stockiest = $(this).data('is_stockiest');
+                if (is_stockiest) {
+                    $('#is_true').removeClass('d-none');
+                    $('#is_false').addClass('d-none');
+                } else {
+                    $('#is_true').addClass('d-none');
+                    $('#is_false').removeClass('d-none');
+
+                }
+
             });
+            $('.btnAddSubs').on('click', function() {
+                let userID = $(this).data('id');
+                const url = "{{ url('user/add-sub-balance') }}" + '/' + userID;
+
+                $('#exampleModalCenter').modal('hide');
+                $('#addSubModal').modal('show');
+                $('#formSubBalance').attr('action', url)
+            })
+            $('#is_stockiest_true').on('change', function() {
+                const status = 0;
+                const id = $(this).data('id');
+                $.ajax({
+                    url: "{{ url('user/update-stockiest') }}" + '/' + id,
+                    cache: false,
+                    success: function(rs) {
+                        location.reload();
+                    }
+                });
+            })
+            $('#is_stockiest_false').on('change', function() {
+                const status = 1;
+                const id = $(this).data('id');
+                $.ajax({
+                    url: "{{ url('user/update-stockiest') }}" + '/' + id,
+                    cache: false,
+                    success: function(rs) {
+                        if (rs.status == 200) {
+                            location.reload();
+                        } else {
+                            alert(rs.msg);
+                        }
+                    }
+                });
+            })
         })(jQuery);
     </script>
-
 @endpush
 @push('breadcrumb-plugins')
-    <form action="{{route('user.other.tree.search')}}" method="GET" class="form-inline float-right bg--white">
+    <form action="{{ route('user.other.tree.search') }}" method="GET" class="form-inline float-right bg--white">
         <div class="input-group has_append">
             <input type="text" name="username" class="form-control" placeholder="@lang('Search by username')">
             <div class="input-group-append">
@@ -263,6 +396,3 @@
         </div>
     </form>
 @endpush
-
-
-

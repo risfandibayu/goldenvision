@@ -118,6 +118,43 @@
             margin: 1rem 0
         }
 
+        .animated-progress {
+            width: 600px;
+            height: 30px;
+            border-radius: 5px;
+            margin: 20px 10px;
+            border: 1px solid rgb(8, 37, 201);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .animated-progress span {
+            height: 100%;
+            display: block;
+            width: 0;
+            color: rgb(255, 251, 251);
+            line-height: 30px;
+            position: absolute;
+            text-align: end;
+            padding-right: 5px;
+        }
+
+        .progress-blue span {
+            background-color: blue;
+        }
+
+        .progress-green span {
+            background-color: green;
+        }
+
+        .progress-purple span {
+            background-color: indigo;
+        }
+
+        .progress-red span {
+            background-color: red;
+        }
+
         @keyframes animate {
             from {
                 transform: scale(1, 0);
@@ -332,7 +369,7 @@
                 </div>
             </div>
         @elseif(Auth::user()->is_kyc == 2)
-            <div class="col-lg-8 col-md-8 col-12 mb-30">
+            {{-- <div class="col-lg-8 col-md-8 col-12 mb-30">
                 <div class="card card-header-actions">
                     <div class="card-header" style="font-weight: 600;">
                         Account Verification
@@ -345,6 +382,29 @@
                             <div class="progress-step progress-step-active bg-success" data-title="Verified"></div>
                         </div>
                         <p>Your data has been successfully verified.</p>
+                    </div>
+                </div>
+            </div> --}}
+            <div class="col-lg-8 col-md-8 col-12 mb-30">
+                <div class="card card-header-actions">
+                    <div class="card-header text-center" style="font-weight: 600;">
+                        Account Verification
+                        <p>Your data has been successfully verified <i class="fa fa-check-circle text-success"></i></p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <b>Komisi referal!</b>
+                        <p>Ketika Sudah Mencapai Rp. 10,000,000 Anda Wajib Melakukan Repeat Order Ke
+                            Produk Masterplan Lainnya (saat ini {{ $persen_bonus }}% dari target)</p>
+                        <div class="d-flex justify-content-center">
+                            <div class="animated-progress progress-blue">
+                                <span data-progress="{{ $persen_bonus }}"></span>
+                            </div>
+                        </div>
+                        @if ($persen_bonus >= 70)
+                            <a href="{{ route('user.product.index') }}" class="btn btn--success btn-sm">
+                                <i class="las la-archive"></i>
+                                Repeat Order</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -377,10 +437,13 @@
                     <div class="card-body text-center bg--gradi-9 border-3">
                         <h2 style="font-weight: 700;color: black;">M{{ Auth::user()->no_bro }}</h2>
                     </div>
+
                 </div>
+
             </div>
         @endif
     </div>
+
     <div class="row mb-none-30">
 
 
@@ -706,10 +769,11 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{ auth()->user()->userExtra->left }}</span>
+                        <span class="amount">{{ auth()->user()->userExtra->left }} :
+                            {{ auth()->user()->userExtra->right }}</span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small">@lang('Total Left')</span>
+                        <span class="text--small">@lang('Total Left : Total Right')</span>
                     </div>
                 </div>
                 <br>
@@ -718,24 +782,6 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
-            <div class="dashboard-w1 bg--10 b-radius--10 box-shadow">
-                <div class="icon">
-                    <i class="fa fa-arrow-circle-right"></i>
-                </div>
-                <div class="details">
-                    <div class="numbers">
-                        <span class="amount">{{ auth()->user()->userExtra->right }}</span>
-                    </div>
-                    <div class="desciption">
-                        <span class="text--small">@lang('Total Right')</span>
-                    </div>
-                </div>
-                <br>
-                <a href="{{ route('user.my.tree') }}"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-            </div>
-        </div>
 
 
         {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
@@ -813,5 +859,64 @@
             </div>
         </div>
     </div> --}}
+        <div class="col-xl-12 col-lg-12 col-sm-12 mb-30">
+            <div class="card bg--gradi-51">
+                <div class="card-header">
+                    <h2 class="card-title text-center text-light">Reward List</h2>
+                    <h6 class="card-title text-center text-light mt-n3">List Reward yang bisa di claim dari total jumlah
+                        kiri dan kanan.</h6>
+                    <hr class="text-light">
+                    <div class="row d-flex justify-content-center text-center">
+                        <div class="col-md-4 text-center">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{{ asset('assets/turki.jpg') }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">150 Kiri : 150 Kanan</h5>
+                                    <p class="card-text">Dapatkan Reward <b>Trip Ke Turki</b> Dengan 150:150 Downline</p>
+                                    <a href="#"
+                                        class="btn btn-primary  @if (auth()->user()->userExtra->left <= 150 && auth()->user()->userExtra->right <= 150) disabled @endif">Ambil
+                                        Reward</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{{ asset('assets/cars.jpeg') }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">999 Kiri : 999 Kanan</h5>
+                                    <p class="card-text">Dapatkan Reward <b>Mobil Wuling Almaz</b> Dengan 999:999
+                                        Downline
+                                    </p>
+                                    <a href="#"
+                                        class="btn btn-primary @if (auth()->user()->userExtra->left <= 999 && auth()->user()->userExtra->right <= 999) disabled @endif">Ambil
+                                        Reward</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <ul class="list-group">
+                        <li class="list-group-item">150 kiri 150 kanan
+                            <a href="#" class="btn btn-success btn-sm"></a>
+                        </li>
+                        <li class="list-group-item">999 kiri 999 kanan
+                            <a href="#" class="btn btn-success btn-sm">Ambil 1 Unit Wuling Almaz</a>
+                        </li>
+                    </ul> --}}
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(".animated-progress span").each(function() {
+            $(this).animate({
+                    width: $(this).attr("data-progress") + "%",
+                },
+                1000
+            );
+            $(this).text($(this).attr("data-progress") + "%");
+        });
+    </script>
+@endpush

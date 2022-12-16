@@ -43,18 +43,18 @@
                     </a>
                 </li>
                 @if (auth()->user()->is_stockiest == 1)
-                    <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
+                    {{-- <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
                         <a href="#" class="nav-link ">
                             <i class="menu-icon las la-archive"></i>
                             <span class="menu-title">@lang('Product')</span>
                         </a>
+                    </li> --}}
+                    <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
+                        <a href="{{ route('user.product.index') }}" class="nav-link ">
+                            <i class="menu-icon las la-archive"></i>
+                            <span class="menu-title">@lang('Product')</span>
+                        </a>
                     </li>
-                    {{-- <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
-                            <a href="{{ route('user.product.index') }}" class="nav-link ">
-                                <i class="menu-icon las la-archive"></i>
-                                <span class="menu-title">@lang('Product')</span>
-                            </a>
-                        </li> --}}
                 @endif
                 @if (auth()->user()->bro_qty + 1 > 1)
                     <li class="sidebar-menu-item {{ menuActive('user.user_boom') }}">
@@ -98,12 +98,14 @@
                         <span class="menu-title">@lang('Binary Summery')</span>
                     </a>
                 </li> --}}
-                <li class="sidebar-menu-item {{ menuActive('user.deposit') }}">
-                    <a href="{{ route('user.deposit') }}" class="nav-link">
-                        <i class=" menu-icon las la-credit-card"></i>
-                        <span class="menu-title">@lang('Deposit Now')</span>
-                    </a>
-                </li>
+                @if (auth()->user()->is_stockiest == 1)
+                    <li class="sidebar-menu-item {{ menuActive('user.deposit') }}">
+                        <a href="{{ route('user.deposit') }}" class="nav-link">
+                            <i class=" menu-icon las la-credit-card"></i>
+                            <span class="menu-title">@lang('Deposit Now')</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="sidebar-menu-item {{ menuActive('user.withdraw') }}">
                     <a href="{{ route('user.withdraw') }}" class="nav-link">
                         <i class="menu-icon las la-cloud-download-alt"></i>

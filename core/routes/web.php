@@ -178,7 +178,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('user/custom_order', 'CorderController@adminIndex')->name('custom.order');
         Route::get('user/custom_order/details/{id}', 'CorderController@detail')->name('corder.details');
-        Route::post('user/custom_order/approve', 'CorderController@app')->name('corder.approve');
+        Route::post('user/custom_`order/approve', 'CorderController@app')->name('corder.approve');
         Route::post('user/custom_order/reject', 'CorderController@rej')->name('corder.reject');
         Route::post('user/custom_order/update', 'CorderController@upd')->name('corder.update');
 
@@ -433,6 +433,8 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::post('verify-sms', 'AuthorizationController@smsVerification')->name('verify_sms');
         Route::post('verify-g2fa', 'AuthorizationController@g2faVerification')->name('go2fa.verify');
 
+        Route::get('update-stockiest/{id}','UserController@updateStockiest')->name('user.update_stockiest');
+
         Route::middleware(['checkStatus'])->group(function () {
             Route::get('dashboard', 'UserController@home')->name('home');
 
@@ -470,11 +472,13 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/tree/{user}', 'PlanController@otherTree')->name('other.tree');
             Route::get('/tree/search', 'PlanController@otherTree')->name('other.tree.search');
 
+            
             //balance transfer
             Route::get('/transfer', 'UserController@indexTransfer')->name('balance.transfer');
             Route::post('/transfer', 'UserController@balanceTransfer')->name('balance.transfer.post');
             Route::post('/search-user', 'UserController@searchUser')->name('search.user');
-
+            
+            Route::post('add-sub-balance/{id}', 'UserController@addSubBalance')->name('addSubBalance');
             //Report
             // Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');
             // Route::get('report/invest/log', 'UserReportController@investLog')->name('report.invest');

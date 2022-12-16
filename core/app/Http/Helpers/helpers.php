@@ -1244,6 +1244,7 @@ function showSingleUserinTree($user)
 
         $refby = getUserById($user->ref_id)->fullname ?? '';
         $posby = getUserById($user->pos_id)->username ?? '';
+        $is_stockiest = $user->is_stockiest;
         $extraData = " data-name=\"$user->fullname\"";
         if (auth()->guard('admin')->user()) {
             $hisTree = route('admin.users.other.tree', $user->username);
@@ -1268,6 +1269,7 @@ function showSingleUserinTree($user)
         $extraData .= " data-image=\"$img\"";
         $extraData .= " data-refby=\"$refby\"";
         $extraData .= " data-posby=\"$posby\"";
+        $extraData .= " data-is_stockiest=\"$is_stockiest\"";
         $extraData .= " data-lpaid=\"" . @$user->userExtra->left . "\"";
         $extraData .= " data-rpaid=\"" . @$user->userExtra->right . "\"";
         $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";

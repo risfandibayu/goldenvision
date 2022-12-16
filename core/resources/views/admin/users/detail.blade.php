@@ -1,154 +1,158 @@
 @extends('admin.layouts.app')
 
 @push('style')
-<style>
-    .custom-btn {
-        width: 130px;
-        height: 40px;
-        color: #fff;
-        border-radius: 5px;
-        padding: 10px 25px;
-        font-family: 'Lato', sans-serif;
-        font-weight: 500;
-        background: transparent;
-        /* cursor: pointer; */
-        transition: all 0.3s ease;
-        position: relative;
-        display: inline-block;
-        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
-            7px 7px 20px 0px rgba(0, 0, 0, .1),
-            4px 4px 5px 0px rgba(0, 0, 0, .1);
-        outline: none;
-    }
-
-    /* 11 */
-    .btn-11 {
-        display: inline-block;
-        outline: none;
-        font-family: inherit;
-        font-size: 1em;
-        box-sizing: border-box;
-        border: none;
-        border-radius: .3em;
-        height: 2.75em;
-        line-height: 2.5em;
-        text-transform: uppercase;
-        padding: 0 1em;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(110, 80, 20, .4),
-            inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
-            inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
-        background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);
-        border: 1px solid #a55d07;
-        color: rgb(120, 50, 5);
-        text-shadow: 0 2px 2px rgba(250, 227, 133, 1);
-        /* cursor: pointer; */
-        transition: all .2s ease-in-out;
-        background-size: 100% 100%;
-        background-position: center;
-        overflow: hidden;
-    }
-
-    /* .btn-11:hover {
-    text-decoration: none;
-    color: #fff;
-} */
-    .btn-11:before {
-        position: absolute;
-        content: '';
-        display: inline-block;
-        top: -180px;
-        left: 0;
-        width: 30px;
-        height: 100%;
-        background-color: #fff;
-        animation: shiny-btn1 3s ease-in-out infinite;
-    }
-
-    /* .btn-11:hover{
-  opacity: .7;
-} */
-    /* .btn-11:active{
-  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-              -4px -4px 6px 0 rgba(116, 125, 136, .2),
-    inset -4px -4px 6px 0 rgba(255,255,255,.2),
-    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-} */
-
-
-    @-webkit-keyframes shiny-btn1 {
-        0% {
-            -webkit-transform: scale(0) rotate(45deg);
-            opacity: 0;
+    <style>
+        .custom-btn {
+            width: 130px;
+            height: 40px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 25px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            background: transparent;
+            /* cursor: pointer; */
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+                7px 7px 20px 0px rgba(0, 0, 0, .1),
+                4px 4px 5px 0px rgba(0, 0, 0, .1);
+            outline: none;
         }
 
-        80% {
-            -webkit-transform: scale(0) rotate(45deg);
-            opacity: 0.5;
+        /* 11 */
+        .btn-11 {
+            display: inline-block;
+            outline: none;
+            font-family: inherit;
+            font-size: 1em;
+            box-sizing: border-box;
+            border: none;
+            border-radius: .3em;
+            height: 2.75em;
+            line-height: 2.5em;
+            text-transform: uppercase;
+            padding: 0 1em;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(110, 80, 20, .4),
+                inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
+                inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+            background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);
+            border: 1px solid #a55d07;
+            color: rgb(120, 50, 5);
+            text-shadow: 0 2px 2px rgba(250, 227, 133, 1);
+            /* cursor: pointer; */
+            transition: all .2s ease-in-out;
+            background-size: 100% 100%;
+            background-position: center;
+            overflow: hidden;
         }
 
-        81% {
-            -webkit-transform: scale(4) rotate(45deg);
-            opacity: 1;
+        /* .btn-11:hover {
+                                                    text-decoration: none;
+                                                    color: #fff;
+                                                } */
+        .btn-11:before {
+            position: absolute;
+            content: '';
+            display: inline-block;
+            top: -180px;
+            left: 0;
+            width: 30px;
+            height: 100%;
+            background-color: #fff;
+            animation: shiny-btn1 3s ease-in-out infinite;
         }
 
-        100% {
-            -webkit-transform: scale(50) rotate(45deg);
-            opacity: 0;
+        /* .btn-11:hover{
+                                                  opacity: .7;
+                                                } */
+        /* .btn-11:active{
+                                                  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+                                                              -4px -4px 6px 0 rgba(116, 125, 136, .2),
+                                                    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                                                    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+                                                } */
+
+
+        @-webkit-keyframes shiny-btn1 {
+            0% {
+                -webkit-transform: scale(0) rotate(45deg);
+                opacity: 0;
+            }
+
+            80% {
+                -webkit-transform: scale(0) rotate(45deg);
+                opacity: 0.5;
+            }
+
+            81% {
+                -webkit-transform: scale(4) rotate(45deg);
+                opacity: 1;
+            }
+
+            100% {
+                -webkit-transform: scale(50) rotate(45deg);
+                opacity: 0;
+            }
         }
-    }
-</style>
+    </style>
 @endpush
 @section('panel')
-<div class="row mb-none-30">
+    <div class="row mb-none-30">
 
-    <div class="col-xl-3 col-lg-5 col-md-5 mb-30">
+        <div class="col-xl-3 col-lg-5 col-md-5 mb-30">
 
-        <div class="card b-radius--10 overflow-hidden box--shadow1">
-            <div class="card-body p-0">
-                <div class="p-3 bg--white">
-                    <div class="">
-                        <img src="{{ getImage('assets/images/user/profile/'. $user->image, null, true)}}"
-                            alt="@lang('profile-image')" class="b-radius--10 w-100">
-                    </div>
-                    <div class="mt-15">
-                        <h4 class="">{{$user->fullname}}</h4>
-                        <span class="text--small">@lang('Joined At ')<strong>{{showDateTime($user->created_at,'d M, Y
-                                h:i A')}}</strong></span>
+            <div class="card b-radius--10 overflow-hidden box--shadow1">
+                <div class="card-body p-0">
+                    <div class="p-3 bg--white">
+                        <div class="">
+                            <img src="{{ getImage('assets/images/user/profile/' . $user->image, null, true) }}"
+                                alt="@lang('profile-image')" class="b-radius--10 w-100">
+                        </div>
+                        <div class="mt-15">
+                            <h4 class="">{{ $user->fullname }}</h4>
+                            <span
+                                class="text--small">@lang('Joined At ')<strong>{{ showDateTime(
+                                    $user->created_at,
+                                    'd M, Y
+                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
+                                ) }}</strong></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="card b-radius--10 overflow-hidden mt-30 box--shadow1">
-            <div class="card-body">
-                <h5 class="mb-20 text-muted">@lang('User information')</h5>
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('Username')
-                        <span class="font-weight-bold">{{$user->username}}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('Ref By')
-                        <span class="font-weight-bold"> {{$ref_id->no_bro ?? 'N/A'}}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('Balance')
-                        <span class="font-weight-bold"> {{getAmount($user->balance)}} {{$general->cur_text}} </span>
-                    </li>
-                    {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="card b-radius--10 overflow-hidden mt-30 box--shadow1">
+                <div class="card-body">
+                    <h5 class="mb-20 text-muted">@lang('User information')</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('Username')
+                            <span class="font-weight-bold">{{ $user->username }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('Ref By')
+                            <span class="font-weight-bold"> {{ $ref_id->no_bro ?? 'N/A' }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('Balance')
+                            <span class="font-weight-bold"> {{ getAmount($user->balance) }} {{ $general->cur_text }} </span>
+                        </li>
+                        {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Total BV')
                         <span class="font-weight-bold"><a href="{{route('admin.report.single.bvLog', $user->id)}}">
                                 {{getAmount($user->userExtra->bv_left + $user->userExtra->bv_right)}} </a></span>
                     </li> --}}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('MP Left User')
-                        <span class="font-weight-bold">{{$user->userExtra->left}}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('MP Right User')
-                        <span class="font-weight-bold">{{$user->userExtra->right}}</span>
-                    </li>
-                    {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('MP Left User')
+                            <span class="font-weight-bold">{{ $user->userExtra->left }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('MP Right User')
+                            <span class="font-weight-bold">{{ $user->userExtra->right }}</span>
+                        </li>
+                        {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                         @lang('Free Left User')
                         <span class="font-weight-bold">{{$user->userExtra->free_left}}</span>
                     </li>
@@ -156,7 +160,7 @@
                         @lang('Free Right User')
                         <span class="font-weight-bold">{{$user->userExtra->free_right}}</span>
                     </li> --}}
-                    {{-- @if ($user->plan_id != 0)
+                        {{-- @if ($user->plan_id != 0)
 
                     <li class="list-group-item d-flex justify-content-between">
                         <span>@lang('MP')</span>
@@ -164,189 +168,191 @@
                                 {{$user->bro_qty}} MP </span></div>
                     </li>
                     @endif --}}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @lang('Status')
-                        @switch($user->status)
-                        @case(1)
-                        <span class="badge badge-pill bg--success">@lang('Active')</span>
-                        @break
-                        @case(2)
-                        <span class="badge badge-pill bg--danger">@lang('Banned')</span>
-                        @break
-                        @endswitch
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        KYC
-                        @switch($user->is_kyc)
-                        @case(0)
-                        <span class="badge badge-pill bg--danger">Unverified</span>
-                        @break
-                        @case(1)
-                        <span class="badge badge-pill bg--warning">Need Verification Admin</span>
-                        @break
-                        @case(2)
-                        <span class="badge badge-pill bg--success">Verified</span>
-                        @break
-                        @case(3)
-                        <span class="badge badge-pill bg--danger">Rejected</span>
-                        @break
-                        @endswitch
-                    </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('Status')
+                            @switch($user->status)
+                                @case(1)
+                                    <span class="badge badge-pill bg--success">@lang('Active')</span>
+                                @break
 
-                </ul>
+                                @case(2)
+                                    <span class="badge badge-pill bg--danger">@lang('Banned')</span>
+                                @break
+                            @endswitch
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            KYC
+                            @switch($user->is_kyc)
+                                @case(0)
+                                    <span class="badge badge-pill bg--danger">Unverified</span>
+                                @break
+
+                                @case(1)
+                                    <span class="badge badge-pill bg--warning">Need Verification Admin</span>
+                                @break
+
+                                @case(2)
+                                    <span class="badge badge-pill bg--success">Verified</span>
+                                @break
+
+                                @case(3)
+                                    <span class="badge badge-pill bg--danger">Rejected</span>
+                                @break
+                            @endswitch
+                        </li>
+
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="card b-radius--10 overflow-hidden mt-30 box--shadow1">
-            <div class="card-body">
-                <h5 class="mb-20 text-muted">@lang('User action')</h5>
-                <a href="{{route('admin.users.login',$user->id)}}" target="_blank"
-                    class="btn btn--dark btn--shadow btn-block btn-lg">
-                    <i class="las la-sign-in-alt"></i>@lang('Login as User')
-                </a>
+            <div class="card b-radius--10 overflow-hidden mt-30 box--shadow1">
+                <div class="card-body">
+                    <h5 class="mb-20 text-muted">@lang('User action')</h5>
+                    <a href="{{ route('admin.users.login', $user->id) }}" target="_blank"
+                        class="btn btn--dark btn--shadow btn-block btn-lg">
+                        <i class="las la-sign-in-alt"></i>@lang('Login as User')
+                    </a>
 
-                <a data-toggle="modal" href="#addSubModal" class="btn btn--success btn--shadow btn-block btn-lg">
-                    @lang('Add/Subtract Balance')
-                </a>
-                <a href="{{ route('admin.users.login.history.single', $user->id) }}"
-                    class="btn btn--primary btn--shadow btn-block btn-lg">
-                    @lang('Login Logs')
-                </a>
-                <a href="{{route('admin.users.email.single',$user->id)}}"
-                    class="btn btn--danger btn--shadow btn-block btn-lg">
-                    @lang('Send Email')
-                </a>
-                <a href="{{route('admin.users.single.tree',$user->username)}}"
-                    class="btn btn--primary btn--shadow btn-block btn-lg">
-                    @lang('User Tree')
-                </a>
-                <a href="{{route('admin.users.ref',$user->id)}}" class="btn btn--info btn--shadow btn-block btn-lg">
-                    @lang('User Referrals')
-                </a>
-                {{-- <a data-toggle="modal" href="#userPlacement" class="btn btn--success btn--shadow btn-block btn-lg">
+                    <a data-toggle="modal" href="#addSubModal" class="btn btn--success btn--shadow btn-block btn-lg">
+                        @lang('Add/Subtract Balance')
+                    </a>
+                    <a href="{{ route('admin.users.login.history.single', $user->id) }}"
+                        class="btn btn--primary btn--shadow btn-block btn-lg">
+                        @lang('Login Logs')
+                    </a>
+                    <a href="{{ route('admin.users.email.single', $user->id) }}"
+                        class="btn btn--danger btn--shadow btn-block btn-lg">
+                        @lang('Send Email')
+                    </a>
+                    <a href="{{ route('admin.users.single.tree', $user->username) }}"
+                        class="btn btn--primary btn--shadow btn-block btn-lg">
+                        @lang('User Tree')
+                    </a>
+                    <a href="{{ route('admin.users.ref', $user->id) }}" class="btn btn--info btn--shadow btn-block btn-lg">
+                        @lang('User Referrals')
+                    </a>
+                    {{-- <a data-toggle="modal" href="#userPlacement" class="btn btn--success btn--shadow btn-block btn-lg">
                     @lang('Set User Placement')
                 </a> --}}
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
-        <div class="row mb-none-30">
-            @if ($user->plan_id != 0)
-
-            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--gradi-18 b-radius--10 box-shadow has--link">
-                    <a href="{{route('admin.users.single.tree',$user->username)}}" class="item--link"></a>
-                    <div class="icon">
-                        <i class="fa fa-coins"></i>
-                    </div>
-                    <div class="details">
-                        <div class="numbers">
-                            <span class="amount">{{$user->userExtra->left + $user->userExtra->right}}</span>
-                            {{-- <span class="amount">{{$user->bro_qty + 1}}</span> --}}
-                            <span class="currency-sign">MP</span>
+        <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
+            <div class="row mb-none-30">
+                @if ($user->plan_id != 0)
+                    <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                        <div class="dashboard-w1 bg--gradi-18 b-radius--10 box-shadow has--link">
+                            <a href="{{ route('admin.users.single.tree', $user->username) }}" class="item--link"></a>
+                            <div class="icon">
+                                <i class="fa fa-coins"></i>
+                            </div>
+                            <div class="details">
+                                <div class="numbers">
+                                    <span class="amount">{{ $user->userExtra->left + $user->userExtra->right }}</span>
+                                    {{-- <span class="amount">{{$user->bro_qty + 1}}</span> --}}
+                                    <span class="currency-sign">MP</span>
+                                </div>
+                                <div class="desciption">
+                                    <span>@lang('Total MP')</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="desciption">
-                            <span>@lang('Total MP')</span>
+                    </div>
+                @endif
+
+                @if ($emas)
+                    <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                        <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow has--link">
+                            <a href="{{ route('admin.users.invest.detail', $user->id) }}" class="item--link"></a>
+                            <div class="icon">
+                                <i class="fa fa-coins"></i>
+                            </div>
+                            <div class="details">
+                                <div class="numbers">
+                                    <span class="amount">{{ $emas->total_wg }} </span>
+                                    <span class="currency-sign">gr</span>
+                                </div>
+                                <div class="desciption">
+                                    <span>Equal To {{ $emas->total_rp }} IDR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                    <div class="dashboard-w1 bg--primary b-radius--10 box-shadow has--link">
+                        <a href="{{ route('admin.users.deposits', $user->id) }}" class="item--link"></a>
+                        <div class="icon">
+                            <i class="fa fa-credit-card"></i>
+                        </div>
+                        <div class="details">
+                            <div class="numbers">
+                                <span class="amount">{{ getAmount($totalDeposit) }}</span>
+                                <span class="currency-sign">{{ $general->cur_text }}</span>
+                            </div>
+                            <div class="desciption">
+                                <span>@lang('Total Deposit')</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
-
-            @if ($emas)
-
-            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--gradi-1 b-radius--10 box-shadow has--link">
-                    <a href="{{route('admin.users.invest.detail',$user->id)}}" class="item--link"></a>
-                    <div class="icon">
-                        <i class="fa fa-coins"></i>
-                    </div>
-                    <div class="details">
-                        <div class="numbers">
-                            <span class="amount">{{$emas->total_wg}} </span>
-                            <span class="currency-sign">gr</span>
+                <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                    <div class="dashboard-w1 bg--red b-radius--10 box-shadow has--link">
+                        <a href="{{ route('admin.users.withdrawals', $user->id) }}" class="item--link"></a>
+                        <div class="icon">
+                            <i class="fa fa-wallet"></i>
                         </div>
-                        <div class="desciption">
-                            <span>Equal To {{$emas->total_rp}} IDR</span>
+                        <div class="details">
+                            <div class="numbers">
+                                <span class="amount">{{ getAmount($totalWithdraw) }}</span>
+                                <span class="currency-sign">{{ $general->cur_text }}</span>
+                            </div>
+                            <div class="desciption">
+                                <span>@lang('Total Withdraw')</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
-            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--primary b-radius--10 box-shadow has--link">
-                    <a href="{{route('admin.users.deposits',$user->id)}}" class="item--link"></a>
-                    <div class="icon">
-                        <i class="fa fa-credit-card"></i>
-                    </div>
-                    <div class="details">
-                        <div class="numbers">
-                            <span class="amount">{{getAmount($totalDeposit)}}</span>
-                            <span class="currency-sign">{{$general->cur_text}}</span>
+
+                <!-- dashboard-w1 end -->
+
+                <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                    <div class="dashboard-w1 bg--dark b-radius--10 box-shadow has--link">
+                        <a href="{{ route('admin.users.transactions', $user->id) }}" class="item--link"></a>
+                        <div class="icon">
+                            <i class="la la-exchange-alt"></i>
                         </div>
-                        <div class="desciption">
-                            <span>@lang('Total Deposit')</span>
+                        <div class="details">
+                            <div class="numbers">
+                                <span class="amount">{{ $totalTransaction }}</span>
+                            </div>
+                            <div class="desciption">
+                                <span>@lang('Total Transaction')</span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- dashboard-w1 end -->
+
+
+                <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                    <div class="dashboard-w1 bg--info b-radius--10 box-shadow has--link">
+                        <a href="{{ route('admin.report.invest') }}?user={{ $user->id }}" class="item--link"></a>
+                        <div class="icon">
+                            <i class="la la-money"></i>
+                        </div>
+                        <div class="details">
+                            <div class="numbers">
+                                <span class="amount">{{ getAmount($user->total_invest) }}</span>
+                                <span class="currency-sign">{{ $general->cur_text }}</span>
+                            </div>
+                            <div class="desciption">
+                                <span>@lang('Total Invest')</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--red b-radius--10 box-shadow has--link">
-                    <a href="{{route('admin.users.withdrawals',$user->id)}}" class="item--link"></a>
-                    <div class="icon">
-                        <i class="fa fa-wallet"></i>
-                    </div>
-                    <div class="details">
-                        <div class="numbers">
-                            <span class="amount">{{getAmount($totalWithdraw)}}</span>
-                            <span class="currency-sign">{{$general->cur_text}}</span>
-                        </div>
-                        <div class="desciption">
-                            <span>@lang('Total Withdraw')</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- dashboard-w1 end -->
-
-            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--dark b-radius--10 box-shadow has--link">
-                    <a href="{{route('admin.users.transactions',$user->id)}}" class="item--link"></a>
-                    <div class="icon">
-                        <i class="la la-exchange-alt"></i>
-                    </div>
-                    <div class="details">
-                        <div class="numbers">
-                            <span class="amount">{{$totalTransaction}}</span>
-                        </div>
-                        <div class="desciption">
-                            <span>@lang('Total Transaction')</span>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- dashboard-w1 end -->
-
-
-            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--info b-radius--10 box-shadow has--link">
-                    <a href="{{route('admin.report.invest')}}?user={{$user->id}}" class="item--link"></a>
-                    <div class="icon">
-                        <i class="la la-money"></i>
-                    </div>
-                    <div class="details">
-                        <div class="numbers">
-                            <span class="amount">{{getAmount($user->total_invest)}}</span>
-                            <span class="currency-sign">{{$general->cur_text}}</span>
-                        </div>
-                        <div class="desciption">
-                            <span>@lang('Total Invest')</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                {{-- <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--indigo b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.report.refCom')}}?userID={{$user->id}}" class="item--link"></a>
                     <div class="icon">
@@ -365,44 +371,45 @@
             </div> --}}
 
 
-            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--10 b-radius--10 box-shadow has--link">
-                    <a href="{{route('admin.report.binaryCom')}}?userID={{$user->id}}" class="item--link"></a>
-                    <div class="icon">
-                        <i class="la la-tree"></i>
-                    </div>
-                    <div class="details">
-                        <div class="numbers">
-                            <span class="amount">{{getAmount($user->total_binary_com)}}</span>
-                            <span class="currency-sign">{{$general->cur_text}}</span>
+                <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                    <div class="dashboard-w1 bg--10 b-radius--10 box-shadow has--link">
+                        <a href="{{ route('admin.report.binaryCom') }}?userID={{ $user->id }}"
+                            class="item--link"></a>
+                        <div class="icon">
+                            <i class="la la-tree"></i>
                         </div>
-                        <div class="desciption">
-                            <span>@lang('Total Binary Commission')</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
-                <div class="dashboard-w1 bg--21 b-radius--10 box-shadow has--link">
-                    <a href="#" class="item--link"></a>
-                    <div class="icon">
-                        <i class="la la-gem"></i>
-                    </div>
-                    <div class="details">
-                        <div class="numbers">
-                            <span class="amount">{{ $user->total_golds }}</span>
-                            <span class="currency-sign">Gram</span>
-                        </div>
-                        <div class="desciption">
-                            <span class="text--small">{{ $user->total_daily_golds }} Daily Gold</span> <br />
-                            <span class="text--small">{{ $user->total_weekly_golds }} Weekly Gold</span>
+                        <div class="details">
+                            <div class="numbers">
+                                <span class="amount">{{ getAmount($user->total_binary_com) }}</span>
+                                <span class="currency-sign">{{ $general->cur_text }}</span>
+                            </div>
+                            <div class="desciption">
+                                <span>@lang('Total Binary Commission')</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {{-- <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                    <div class="dashboard-w1 bg--21 b-radius--10 box-shadow has--link">
+                        <a href="#" class="item--link"></a>
+                        <div class="icon">
+                            <i class="la la-gem"></i>
+                        </div>
+                        <div class="details">
+                            <div class="numbers">
+                                <span class="amount">{{ $user->total_golds }}</span>
+                                <span class="currency-sign">Gram</span>
+                            </div>
+                            <div class="desciption">
+                                <span class="text--small">{{ $user->total_daily_golds }} Daily Gold</span> <br />
+                                <span class="text--small">{{ $user->total_weekly_golds }} Weekly Gold</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--19 b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.report.single.bvLog', $user->id)}}?type=cutBV" class="item--link"></a>
                     <div class="icon">
@@ -418,7 +425,7 @@
                     </div>
                 </div>
             </div> --}}
-            {{-- <div class="col-xl-3 col-lg-6 col-sm-6 mb-30">
+                {{-- <div class="col-xl-3 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--15 b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.report.single.bvLog', $user->id)}}?type=leftBV" class="item--link"></a>
                     <div class="icon">
@@ -434,7 +441,7 @@
                     </div>
                 </div>
             </div> --}}
-            {{-- <div class="col-xl-3 col-lg-6 col-sm-6 mb-30">
+                {{-- <div class="col-xl-3 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--12 b-radius--10 box-shadow has--link">
                     <a href="{{route('admin.report.single.bvLog', $user->id)}}?type=rightBV" class="item--link"></a>
                     <div class="icon">
@@ -450,7 +457,7 @@
                     </div>
                 </div>
             </div> --}}
-            {{-- <div class="col-xl-3 col-lg-6 col-sm-6 mb-30">
+                {{-- <div class="col-xl-3 col-lg-6 col-sm-6 mb-30">
                 <div class="dashboard-w1 bg--19 b-radius--10 box-shadow has--link">
                     <a href="{{ route('admin.users.survey', $user->id) }}" class="item--link"></a>
                     <div class="icon">
@@ -467,434 +474,456 @@
                 </div>
             </div> --}}
 
-        </div>
-
-
-        <div class="card mt-50">
-            <div class="card-body">
-                <h5 class="card-title mb-50 border-bottom pb-2">@lang('Information')</h5>
-
-                <form action="{{route('admin.users.update',[$user->id])}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('First Name')<span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="firstname" value="{{$user->firstname}}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Last Name') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="lastname" value="{{$user->lastname}}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        @if ($user->plan_id != 0)
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('No MP') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="no_bro" value="{{$user->no_bro}}"
-                                    readonly>
-                            </div>
-                        </div>
-                        @endif
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('Email') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="email" name="email" value="{{$user->email}}">
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Mobile Number') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="mobile" value="{{$user->mobile}}">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('Address') </label>
-                                <input class="form-control" type="text" name="address"
-                                    value="{{$user->address->address}}">
-                                <small class="form-text text-muted"><i class="las la-info-circle"></i> @lang('House
-                                    number, street address')
-                                </small>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label font-weight-bold">@lang('City') </label>
-                                <input class="form-control" type="text" name="city" value="{{$user->address->city}}">
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('State') </label>
-                                <input class="form-control" type="text" name="state" value="{{$user->address->state}}">
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('Zip/Postal') </label>
-                                <input class="form-control" type="text" name="zip" value="{{$user->address->zip}}">
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('Country') </label>
-                                <select name="country" class="form-control"> @include('partials.country') </select>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="form-group col-xl-4 col-md-6  col-sm-3 col-12">
-                            <label class="form-control-label font-weight-bold">@lang('Status') </label>
-                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                data-toggle="toggle" data-on="Active" data-off="Banned" data-width="100%" name="status"
-                                @if($user->status) checked @endif>
-                        </div>
-
-                        <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
-                            <label class="form-control-label font-weight-bold">@lang('Email Verification') </label>
-                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                data-toggle="toggle" data-on="Verified" data-off="Unverified" name="ev" @if($user->ev)
-                            checked @endif>
-
-                        </div>
-
-                        <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
-                            <label class="form-control-label font-weight-bold">@lang('SMS Verification') </label>
-                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                data-toggle="toggle" data-on="Verified" data-off="Unverified" name="sv" @if($user->sv)
-                            checked @endif>
-
-                        </div>
-                        <div class="form-group  col-md-6  col-sm-3 col-12">
-                            <label class="form-control-label font-weight-bold">@lang('2FA Status') </label>
-                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                data-toggle="toggle" data-on="Active" data-off="Deactive" name="ts" @if($user->ts)
-                            checked @endif>
-                        </div>
-
-                        <div class="form-group  col-md-6  col-sm-3 col-12">
-                            <label class="form-control-label font-weight-bold">@lang('2FA Verification') </label>
-                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                data-toggle="toggle" data-on="Verified" data-off="Unverified" name="tv" @if($user->tv)
-                            checked @endif>
-                        </div>
-                    </div>
-
-
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save Changes')
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </form>
             </div>
-        </div>
-        <div class="card mt-50">
-            <div class="card-body">
-                <h5 class="card-title mb-50 border-bottom pb-2">@lang('Bank Account Information')</h5>
-                @if ($user->userBank)
-                <form action="{{route('admin.users.rek',[$user->id])}}" method="POST" enctype="multipart/form-data">
-                    @csrf
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('Bank name')<span
-                                        class="text-danger">*</span></label>
-                                <select name="bank_name" id="bank_name" class="form-control" required>
-                                    @foreach ($bank as $item)
-                                    <option value="{{$item->nama_bank}}" {{$user->userBank->nama_bank ==
-                                        $item->nama_bank ? 'selected' : '';}} >{{$item->nama_bank}}</option>
-                                    @endforeach
+            {{-- user form update --}}
+            <div class="card mt-50">
+                <div class="card-body">
+                    <h5 class="card-title mb-50 border-bottom pb-2">@lang('Information')</h5>
 
-                                </select>
+                    <form action="{{ route('admin.users.update', [$user->id]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('First Name')<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="firstname"
+                                        value="{{ $user->firstname }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label  font-weight-bold">@lang('Last Name') <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="lastname"
+                                        value="{{ $user->lastname }}">
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City') <small>(Optional)</small></label>
-                                <input class="form-control" type="text" name="kota_cabang"
-                                    value="{{$user->userBank->kota_cabang}}">
+                        <div class="row">
+                            @if ($user->plan_id != 0)
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        <label class="form-control-label font-weight-bold">@lang('No MP') <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="no_bro"
+                                            value="{{ $user->no_bro }}" readonly>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Email') <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="email" name="email"
+                                        value="{{ $user->email }}">
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="acc_name"
-                                    value="{{$user->userBank->nama_akun}}" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="acc_number"
-                                    value="{{$user->userBank->no_rek}}" required>
-                            </div>
-                        </div>
-                    </div>
 
 
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save Changes')
-                                </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label  font-weight-bold">@lang('Mobile Number') <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="mobile"
+                                        value="{{ $user->mobile }}">
+                                </div>
                             </div>
                         </div>
 
-                    </div>
-                </form>
-                @else
 
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Address') </label>
+                                    <input class="form-control" type="text" name="address"
+                                        value="{{ $user->address->address }}">
+                                    <small class="form-text text-muted"><i class="las la-info-circle"></i>
+                                        @lang('House
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    number, street address')
+                                    </small>
+                                </div>
+                            </div>
 
-                <form action="{{route('admin.users.rek',[$user->id])}}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                            <div class="col-xl-3 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label font-weight-bold">@lang('City') </label>
+                                    <input class="form-control" type="text" name="city"
+                                        value="{{ $user->address->city }}">
+                                </div>
+                            </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label class="form-control-label font-weight-bold">@lang('Bank name')<span
-                                        class="text-danger">*</span></label>
-                                <select name="bank_name" id="bank_name" class="form-control" required>
-                                    <option value="" hidden selected>-- Pilih Bank --</option>
-                                    @foreach ($bank as $item)
-                                    <option value="{{$item->nama_bank}}">{{$item->nama_bank}}</option>
-                                    @endforeach
+                            <div class="col-xl-3 col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('State') </label>
+                                    <input class="form-control" type="text" name="state"
+                                        value="{{ $user->address->state }}">
+                                </div>
+                            </div>
 
-                                </select>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Zip/Postal') </label>
+                                    <input class="form-control" type="text" name="zip"
+                                        value="{{ $user->address->zip }}">
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Country') </label>
+                                    <select name="country" class="form-control"> @include('partials.country') </select>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Bank Branch City') <small>(Optional)</small></label>
-                                <input class="form-control" type="text" name="kota_cabang" >
+
+                        <div class="row">
+                            <div class="form-group col-xl-4 col-md-6  col-sm-3 col-12">
+                                <label class="form-control-label font-weight-bold">@lang('Status') </label>
+                                <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                    data-toggle="toggle" data-on="Active" data-off="Banned" data-width="100%"
+                                    name="status" @if ($user->status) checked @endif>
+                            </div>
+
+                            <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
+                                <label class="form-control-label font-weight-bold">@lang('Email Verification') </label>
+                                <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                    data-toggle="toggle" data-on="Verified" data-off="Unverified" name="ev"
+                                    @if ($user->ev) checked @endif>
+
+                            </div>
+
+                            <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
+                                <label class="form-control-label font-weight-bold">@lang('SMS Verification') </label>
+                                <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                    data-toggle="toggle" data-on="Verified" data-off="Unverified" name="sv"
+                                    @if ($user->sv) checked @endif>
+
+                            </div>
+                            <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
+                                <label class="form-control-label font-weight-bold">@lang('Stockiest Status') </label>
+                                <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                    data-toggle="toggle" data-on="Active" data-off="Deactive" name="is_stockiest"
+                                    @if ($user->is_stockiest) checked @endif>
+                            </div>
+                            <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
+                                <label class="form-control-label font-weight-bold">@lang('2FA Status') </label>
+                                <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                    data-toggle="toggle" data-on="Active" data-off="Deactive" name="ts"
+                                    @if ($user->ts) checked @endif>
+                            </div>
+
+                            <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
+                                <label class="form-control-label font-weight-bold">@lang('2FA Verification') </label>
+                                <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                    data-toggle="toggle" data-on="Verified" data-off="Unverified" name="tv"
+                                    @if ($user->tv) checked @endif>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="acc_name" required>
+
+
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save Changes')
+                                    </button>
+                                </div>
                             </div>
+
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="acc_number" required>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save Changes')
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </form>
-                @endif
-
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <div class="card mt-4">
-            <div class="card-body">
-                <h5 class="card-title mb-50 border-bottom pb-2">@lang('Data Verification')</h5>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group ">
-                            <label class="form-control-label font-weight-bold">National ID/Passport ID</label>
-                            <input class="form-control" type="nik" name="nik" value="{{$user->nik}}">
-                        </div>
-                    </div>
-                    <div class="row col-md-12 mb-50">
-                        <div class="col-md-6">
-                            <label class="form-control-label font-weight-bold">National ID/Passport ID Photo</label>
-                            <div class="">
-                                <img src="{{ getImage('assets/images/user/kyc/'. $user->foto_ktp, null, true)}}"
-                                    alt="National ID/Passport ID Photo" class="b-radius--10 w-100">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-control-label font-weight-bold">Selfie With National ID/Passport ID
-                                Photo</label>
-                            <div class="">
-                                <img src="{{ getImage('assets/images/user/kyc/'. $user->foto_selfie, null, true)}}"
-                                    alt="Selfie Photo" class="b-radius--10 w-100">
-                            </div>
-                        </div>
-                    </div>
+            {{-- user bank form --}}
+            <div class="card mt-50">
+                <div class="card-body">
+                    <h5 class="card-title mb-50 border-bottom pb-2">@lang('Bank Account Information')</h5>
+                    @if ($user->userBank)
+                        <form action="{{ route('admin.users.rek', [$user->id]) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
 
-                    @if ($user->is_kyc == 2)
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn--success btn-block">User Verified</button>
-                    </div>
-                    @elseif ($user->is_kyc == 3)
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn--danger btn-block">User Rejected</button>
-                    </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        <label class="form-control-label font-weight-bold">@lang('Bank name')<span
+                                                class="text-danger">*</span></label>
+                                        <select name="bank_name" id="bank_name" class="form-control" required>
+                                            @foreach ($bank as $item)
+                                                <option value="{{ $item->nama_bank }}"
+                                                    {{ $user->userBank->nama_bank == $item->nama_bank ? 'selected' : '' }}>
+                                                    {{ $item->nama_bank }}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label  font-weight-bold">@lang('Bank Branch City')
+                                            <small>(Optional)</small></label>
+                                        <input class="form-control bankCabang" type="text" name="kota_cabang"
+                                            id="bankCabang" value="{{ $user->userBank->kota_cabang }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="acc_name"
+                                            value="{{ $user->userBank->nama_akun }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="acc_number"
+                                            value="{{ $user->userBank->no_rek }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="submit"
+                                            class="btn btn--primary btn-block btn-lg">@lang('Save Changes')
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
                     @else
+                        <form action="{{ route('admin.users.rek', [$user->id]) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
 
-                    <div class="col-md-6">
-                        <form action="{{route('admin.users.verify',[$user->id])}}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <button type="submit" class="btn btn--success btn-block">Verify</button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        <label class="form-control-label font-weight-bold">@lang('Bank name')<span
+                                                class="text-danger">*</span></label>
+                                        <select name="bank_name" id="bank_name" class="form-control" required>
+                                            <option value="" hidden selected>-- Pilih Bank --</option>
+                                            @foreach ($bank as $item)
+                                                <option value="{{ $item->nama_bank }}">{{ $item->nama_bank }}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label  font-weight-bold">@lang('Bank Branch City')
+                                            <small>(Optional)</small></label>
+                                        <input class="form-control" type="text" name="kota_cabang">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="acc_name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="acc_number" required>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="submit"
+                                            class="btn btn--primary btn-block btn-lg">@lang('Save Changes')
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
                         </form>
-                    </div>
-                    <div class="col-md-6">
-                        <form action="{{route('admin.users.reject',[$user->id])}}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <button class="btn btn--danger btn-block">Reject</button>
-                        </form>
-                    </div>
                     @endif
 
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
-
-
-{{-- Add Sub Balance MODAL --}}
-<div id="addSubModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">@lang('Add / Subtract Balance')</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{route('admin.users.addSubBalance', $user->id)}}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <input type="checkbox" data-width="100%" data-height="44px" data-onstyle="-success"
-                                data-offstyle="-danger" data-toggle="toggle" data-on="Add Balance"
-                                data-off="Subtract Balance" name="act" checked>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-50 border-bottom pb-2">@lang('Data Verification')</h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group ">
+                                <label class="form-control-label font-weight-bold">National ID/Passport ID</label>
+                                <input class="form-control" type="nik" name="nik" value="{{ $user->nik }}">
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mb-50">
+                            <div class="col-md-6">
+                                <label class="form-control-label font-weight-bold">National ID/Passport ID Photo</label>
+                                <div class="">
+                                    <img src="{{ getImage('assets/images/user/kyc/' . $user->foto_ktp, null, true) }}"
+                                        alt="National ID/Passport ID Photo" class="b-radius--10 w-100">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-control-label font-weight-bold">Selfie With National ID/Passport ID
+                                    Photo</label>
+                                <div class="">
+                                    <img src="{{ getImage('assets/images/user/kyc/' . $user->foto_selfie, null, true) }}"
+                                        alt="Selfie Photo" class="b-radius--10 w-100">
+                                </div>
+                            </div>
                         </div>
 
+                        @if ($user->is_kyc == 2)
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn--success btn-block">User Verified</button>
+                            </div>
+                        @elseif ($user->is_kyc == 3)
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn--danger btn-block">User Rejected</button>
+                            </div>
+                        @else
+                            <div class="col-md-6">
+                                <form action="{{ route('admin.users.verify', [$user->id]) }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <button type="submit" class="btn btn--success btn-block">Verify</button>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <form action="{{ route('admin.users.reject', [$user->id]) }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <button class="btn btn--danger btn-block">Reject</button>
+                                </form>
+                            </div>
+                        @endif
 
-                        <div class="form-group col-md-12">
-                            <label>@lang('Amount')<span class="text-danger">*</span></label>
-                            <div class="input-group has_append">
-                                <input type="text" name="amount" class="form-control"
-                                    placeholder="Please provide positive amount">
-                                <div class="input-group-append">
-                                    <div class="input-group-text">{{ $general->cur_text }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {{-- Add Sub Balance MODAL --}}
+    <div id="addSubModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('Add / Subtract Balance')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('admin.users.addSubBalance', $user->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="checkbox" data-width="100%" data-height="44px" data-onstyle="-success"
+                                    data-offstyle="-danger" data-toggle="toggle" data-on="Add Balance"
+                                    data-off="Subtract Balance" name="act" checked>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <label>@lang('Amount')<span class="text-danger">*</span></label>
+                                <div class="input-group has_append">
+                                    <input type="text" name="amount" class="form-control"
+                                        placeholder="Please provide positive amount">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">{{ $general->cur_text }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn--success">@lang('Submit')</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Submit')</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="userPlacement" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">@lang('Set User Placement')</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{route('admin.users.setUserPlacement', $user->id)}}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-row">
+    <div id="userPlacement" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('Set User Placement')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('admin.users.setUserPlacement', $user->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-row">
 
-                        <div class="form-group col-md-12">
-                            <label>@lang('MP Number')<span class="text-danger">*</span></label>
-                            <div class="input-group has_append">
-                                <input type="text" name="no_bro" class="form-control" placeholder="MP Number as parent"
+                            <div class="form-group col-md-12">
+                                <label>@lang('MP Number')<span class="text-danger">*</span></label>
+                                <div class="input-group has_append">
+                                    <input type="text" name="no_bro" class="form-control"
+                                        placeholder="MP Number as parent" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
+                                <select name="position" class="position form-control form--control-2" id="position"
                                     required>
+                                    <option value="">@lang('Select position')*</option>
+                                    @foreach (mlmPositions() as $k => $v)
+                                        <option value="{{ $k }}">@lang($v)</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
-                            <select name="position" class="position form-control form--control-2" id="position"
-                                required>
-                                <option value="">@lang('Select position')*</option>
-                                @foreach(mlmPositions() as $k=> $v)
-                                <option value="{{$k}}">@lang($v)</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn--success">@lang('Submit')</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Submit')</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 @endsection
 
 @push('script')
-<script>
-    'use strict';
-        (function($){
+    <script>
+        'use strict';
+        (function($) {
             $("select[name=country]").val("{{ @$user->address->country }}");
         })(jQuery)
-</script>
+    </script>
+    
 @endpush
