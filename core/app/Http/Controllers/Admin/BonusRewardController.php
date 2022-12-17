@@ -51,7 +51,7 @@ class BonusRewardController extends Controller
             $image = $request->file('images');
             $filename = time() . '_image_' . strtolower(str_replace(" ", "",$prod->name)) . '.jpg';
             $location = 'assets/images/product/' . $filename;
-            $prod->image = $filename;
+            $prod->images = $filename;
 
             $path = './assets/images/product/';
 
