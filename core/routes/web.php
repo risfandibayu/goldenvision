@@ -471,6 +471,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/bv-log', 'PlanController@bvlog')->name('bv.log');
             Route::get('/referrals', 'PlanController@myRefLog')->name('my.ref');
             Route::get('/tree', 'PlanController@myTree')->name('my.tree');
+            Route::get('/all-users', 'UserController@allInUsers')->name('all.users');
             Route::get('/tree/{user}', 'PlanController@otherTree')->name('other.tree');
             Route::get('/tree/search', 'PlanController@otherTree')->name('other.tree.search');
 

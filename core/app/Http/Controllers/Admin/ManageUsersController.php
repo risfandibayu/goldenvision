@@ -40,6 +40,12 @@ class ManageUsersController extends Controller
         $users = User::latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
+    public function allInUsers(){
+        $page_title = 'All Users';
+        $empty_message = 'No user found';
+        $users = User::where('no_bro',0)->latest()->paginate(getPaginate());
+        return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
+    }
 
     public function exportallUsers(Request $request){
         if ($request->search) {

@@ -59,6 +59,14 @@ class UserController extends Controller
         $data['persen_bonus']       = auth()->user()->total_binary_com / 10000000 * 100;
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
+
+     public function allInUsers(){
+        $page_title = 'All Users';
+        $empty_message = 'No user found';
+        $users = User::where('no_bro',0)->latest()->paginate(getPaginate());
+        return view('admin.users.users-list', compact('page_title', 'empty_message', 'users'));
+    }
+
     public function profile()
     {
         $data['page_title'] = "Profile Setting";
@@ -1433,7 +1441,7 @@ class UserController extends Controller
             dd($th->getMessage());
         }
     }
-     public function addSubBalance(Request $request, $id)
+    public function addSubBalance(Request $request, $id)
     {
         // dd($request->all());
         $request->validate(['amount' => 'required|numeric|gt:0']);

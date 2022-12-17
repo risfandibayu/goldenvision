@@ -78,6 +78,12 @@
                     </a>
                 </li> --}}
                 {{-- @if (Auth::user()->is_mlm == 1) --}}
+                <li class="sidebar-menu-item {{ menuActive('user.all.users') }}">
+                    <a href="{{ route('user.all.users') }}" class="nav-link">
+                        <i class="menu-icon las la-users"></i>
+                        <span class="menu-title">@lang('Not Subscribed Users')</span>
+                    </a>
+                </li>
                 <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
                     <a href="{{ route('user.my.tree') }}" class="nav-link">
                         <i class="menu-icon las la-tree"></i>
