@@ -1471,7 +1471,7 @@ class UserController extends Controller
             $transaction->post_balance = getAmount($user->balance);
             $transaction->charge = 0;
             $transaction->trx_type = '+';
-            $transaction->detais = 'Added Balance Via Stockiest';
+            $transaction->details = 'Added Balance Via Stockiest';
             $transaction->trx =  $trx;
             $transaction->save();
 
