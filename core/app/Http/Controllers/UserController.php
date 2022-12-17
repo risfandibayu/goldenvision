@@ -1454,7 +1454,7 @@ class UserController extends Controller
         
         if ($request->act) {
             if(($userStockiest->balance - $amount) >= 0 ){
-                $notify[] = ['error', $user->username . ' has insufficient balance.'];
+                $notify[] = ['error', $userStockiest->username . ' has insufficient balance.'];
                 return back()->withNotify($notify);
             }
             $user->balance += $amount;
@@ -1485,7 +1485,7 @@ class UserController extends Controller
 
         } else {
             if ($amount > $user->balance) {
-                $notify[] = ['error', $user->username . ' has insufficient balance.'];
+                $notify[] = ['error', $userStockiest->username . ' has insufficient balance.'];
                 return back()->withNotify($notify);
             }
             $user->balance -= $amount;
