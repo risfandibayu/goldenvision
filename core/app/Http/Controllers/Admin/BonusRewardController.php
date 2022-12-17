@@ -69,7 +69,7 @@ class BonusRewardController extends Controller
         // dd($request->file('images'));
         $prod->kiri            = $request->kiri;
         $prod->kanan           = $request->kanan;
-        $prod->reward           = $request->reward;
+        $prod->reward           = $request->bonus;
         $prod->save();
 
         $notify[] = ['success', 'New Reward created successfully'];
