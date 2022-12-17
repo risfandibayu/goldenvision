@@ -47,7 +47,6 @@ class BonusRewardController extends Controller
     public function store(Request $request)
     {
         $prod = new BonusReward();
-        $prod->name             = $request->name;
         if ($request->hasFile('images')) {
             $image = $request->file('images');
             $filename = time() . '_image_' . strtolower(str_replace(" ", "",$prod->name)) . '.jpg';
