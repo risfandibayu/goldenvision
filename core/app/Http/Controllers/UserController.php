@@ -1453,7 +1453,7 @@ class UserController extends Controller
         $trx = getTrx();
         
         if ($request->act) {
-            if(($userStockiest->balance - $amount) >= 0 ){
+            if(($userStockiest->balance - $amount) < 0 ){
                 $notify[] = ['error', $userStockiest->username . ' has insufficient balance.'];
                 return back()->withNotify($notify);
             }
