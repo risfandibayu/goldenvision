@@ -23,7 +23,7 @@
                                         <td data-label="@lang('No')">{{ $key + 1 }}</td>
                                         <td data-label="@lang('Image')">
                                             <img style="width: 300px"
-                                                src="{{ getImage('assets/images/product/' . $k->image, null, true) }}"
+                                                src="{{ asset('assets/images/product/' . $k->images) }}"
                                                 alt="Image {{ $k->name }}" class="img-fluid">
                                         </td>
                                         <td data-label="@lang('kiri')">
@@ -197,7 +197,7 @@
 @push('breadcrumb-plugins')
     <a href="javascript:void(0)" class="btn btn-sm btn--success add-product"><i
             class="fa fa-fw fa-plus"></i>@lang('Add
-                                                                                                                                                                                                                                                                                                                                                                                                                            New')</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    New')</a>
 @endpush
 
 @push('script')
