@@ -66,7 +66,7 @@
                 <li class="sidebar-menu-item @if (Request::url() == url('admin/bonus-reward')) active @endif">
                     <a href="{{ url('admin/bonus-reward') }}" class="nav-link ">
                         {{-- <i class="las la-paper-plane"></i> --}}
-                        <i class="menu-icon las la-coin"></i>
+                        <i class="menu-icon las la-coins"></i>
                         <span class="menu-title">@lang('Reward')</span>
                     </a>
                 </li>
