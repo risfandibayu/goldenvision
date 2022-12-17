@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BonusRewardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\DB;
@@ -190,6 +191,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         // mlm plan
         Route::get('product', 'ProductController@products')->name('product');
+        Route::resource('bonus-reward', 'BonusRewardController');
         Route::post('products/store', 'ProductController@productsStore')->name('products.store');
 
         Route::post('products/update', 'ProductController@productsUpdate')->name('products.update');
