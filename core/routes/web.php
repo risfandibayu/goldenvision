@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BonusRewardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -10,7 +11,9 @@ use Illuminate\Support\Facades\URL;
 // Route::get('/mysql', function(){
 //     $pdo = DB::connection('mysql');
 //     dd($pdo);
-// });
+// })
+Route::get('update-all-users',[UserController::class,'updateBro']);
+
 Route::get('/cek_url', function(){
     dd(URL::to('/'));
 });
