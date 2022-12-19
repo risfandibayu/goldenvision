@@ -1459,6 +1459,7 @@ class UserController extends Controller
             }
             $user->balance += $amount;
             $user->save();
+            
             $userStockiest->balance -= $amount;
             $userStockiest->save();
 
