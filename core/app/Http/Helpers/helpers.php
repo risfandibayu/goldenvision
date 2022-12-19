@@ -1585,11 +1585,15 @@ function generateUniqueNoBro()
     {
         do {
             $now = Carbon::now();
-            $prefix = substr($now->year, -2) . $now->format('m');
-            $last = user::latest('no_bro')->first();
-            $lastNoBro = (int) substr($last?->no_bro ?: 0, -4);
-            $incr = str_pad($lastNoBro + 1, 4, '0', STR_PAD_LEFT);
-            $code = $prefix . $incr;
+            // $prefix = substr($now->year, -2) . $now->format('m');
+            // $last = user::latest('no_bro')->first();
+            // $lastNoBro = (int) substr($last?->no_bro ?: 0, -4);
+            // $incr = str_pad($lastNoBro + 1, 4, '0', STR_PAD_LEFT);
+            // $code = $prefix . $incr;
+            $year = $now->format('y');
+            $month = $now->month;
+            $last = rand(1, 9999);
+            $code = 'M2929'.$year.$month.$last;
         } while (user::where("no_bro", "=", $code)->first());
         return $code;
     }
