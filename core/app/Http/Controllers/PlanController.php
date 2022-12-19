@@ -98,11 +98,11 @@ class PlanController extends Controller
             $user->save();
 
 
-            $this->treeService->calculateUplineMemberBonus(
-                $user,
-                $ref_user,
-                TreePosition::from((int) $request->position)
-            );
+            // $this->treeService->calculateUplineMemberBonus(
+            //     $user,
+            //     $ref_user,
+            //     TreePosition::from((int) $request->position)
+            // );
 
             $gold = Gold::where('user_id',Auth::user()->id)->first();
             $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->first();
