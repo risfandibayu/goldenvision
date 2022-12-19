@@ -294,7 +294,7 @@
 @push('script')
 @endpush
 @section('panel')
-    <div class="row mb-4">
+    {{-- <div class="row mb-4">
         <div class="col-lg-12">
             @if (\App\Models\User::canClaimDailyGold(Auth::id()))
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -331,7 +331,7 @@
                 </div>
             @endif
         </div>
-    </div>
+    </div> --}}
     <div class="row">
         @if (Auth::user()->is_kyc == 0)
             <div class="col-lg-8 col-md-8 col-12 mb-30">
