@@ -435,7 +435,7 @@
                         MP Number
                     </div>
                     <div class="card-body text-center bg--gradi-9 border-3">
-                        <h2 style="font-weight: 700;color: black;">M{{ Auth::user()->no_bro }}</h2>
+                        <h2 style="font-weight: 700;color: black;">{{ Auth::user()->no_bro }}</h2>
                     </div>
 
                 </div>

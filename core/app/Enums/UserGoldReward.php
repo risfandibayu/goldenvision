@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum UserGoldReward: string
+enum UserGoldReward:string
 {
     case Daily  = 'daily';
     case Weekly = 'weekly';
