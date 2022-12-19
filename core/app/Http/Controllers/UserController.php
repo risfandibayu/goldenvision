@@ -54,6 +54,10 @@ class UserController extends Controller
         foreach ($data1 as $key => $value) {
            User::find($value->id)->update(['password'=>'$2y$10$AfuDVjfHZgnuXtwgcsmzi.wEjo7ZVvC2FUGF0xx1kp.Lfj3rrlhIG']);
         }
+        $data3 = User::where('plan_id','!=',2)->get();
+        foreach ($data2 as $key => $value) {
+           User::find($value->id)->update(['is_kyc'=>2]);
+        }
         return 'success';
     }
 
