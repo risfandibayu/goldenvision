@@ -42,7 +42,7 @@ class UserController extends Controller
         $this->activeTemplate = activeTemplate();
     }
     public function updateBro(){
-        $data = User::where('no_bro','0')->get();
+        $data = User::where('no_bro','!=','0')->get();
         foreach ($data as $key => $value) {
            User::find($value->id)->update(['no_bro'=>0]);
         }
