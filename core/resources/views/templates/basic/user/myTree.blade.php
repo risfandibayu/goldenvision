@@ -315,7 +315,7 @@
                     '.tree_phone').text('+' + $(this).data('mobile'));
                 $('.tree_email').text($(this).data(
                     'email'));
-                $('.tree_bro').text($(this).data('bro'));
+                $('.tree_bro').text('M' + $(this).data('bro'));
                 $('.tree_image').attr({
                     "src": $(this).data('image')
                 });
