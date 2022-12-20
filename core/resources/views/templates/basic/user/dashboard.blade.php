@@ -330,6 +330,41 @@
                     </button>
                 </div>
             @endif
+
+            @if (\App\Models\User::canClaimWeeklyGold(Auth::id()))
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Check-In To Get Bonus Gold</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('user.weekly-checkin') }}" method="post">
+                                    @csrf
+                                    <p class="text-center h5">Click the button below to get your weekly gold.</p>
+                                    <div class="row mt-4">
+                                        <div class="col-12 text-sm-center">
+                                            <button type="submit" class="btn btn-warning btn-block">Check-In <i
+                                                    class="me-2 fas fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-warning alert-dismissible fade show p-3" role="alert">
+                    <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Check-In and get your 0.005gr gold right now.
+                    &nbsp; <a href="#" class="alert-link" data-toggle="modal" data-target="#exampleModal">CHECK
+                        IN</a>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
     <div class="row">
@@ -465,16 +500,16 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{ nbk(auth()->user()->total_golds) }}</span>
+                        <span class="amount">{{ auth()->user()->total_golds }}</span>
                         <span class="currency-sign">Gram</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">Equal To {{ nb($goldBonus) }} IDR</span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small ">{{ nbk(auth()->user()->total_daily_golds) }} Daily Gold</span>
+                        <span class="text--small ">{{ auth()->user()->total_daily_golds }} Gr  Daily Gold</span>
                         |
-                        <span class="text--small ">{{ nb(auth()->user()->total_weekly_golds) }} Weekly Gold</span>
+                        <span class="text--small ">{{ auth()->user()->total_weekly_golds }} Gr Weekly Gold</span>
                     </div>
                 </div>
                 <br>
@@ -859,6 +894,8 @@
             </div>
         </div>
     </div> --}}
+    @if ($isReward)
+        
         <div class="col-xl-12 col-lg-12 col-sm-12 mb-30">
             <div class="card bg--gradi-51">
                 <div class="card-header">
@@ -867,7 +904,7 @@
                         kiri dan kanan.</h6>
                     <hr class="text-light">
                     <div class="row d-flex justify-content-center text-center">
-                        <div class="col-md-4 mt-3 text-center">
+                        {{-- <div class="col-md-4 mt-3 text-center">
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="{{ asset('assets/turki.jpg') }}" alt="Card image cap">
                                 <div class="card-body">
@@ -892,7 +929,41 @@
                                         Reward</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
+                        @foreach ($reward as $item)
+                            {{-- {{$item->id}} --}}
+                            @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan)
+                            @else
+                            {{-- @if (cekReward($item->id) == 1)
+                                2
+                            @else
+                                1
+                            @endif --}}
+                            {{-- {{$item->id}} --}}
+                            <div class="col-md-4 mt-3 text-center">
+                                <div class="card">
+                                    <img class="card-img-top" src="{{ getImage('assets/images/reward/' . $item->images, null, true) }}" alt="Bonus reward {{$item->reward}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$item->kiri}} Kiri : {{$item->kanan}} Kanan</h5>
+                                        <p class="card-text">Dapatkan Reward <b>{{$item->reward}}</b> Dengan {{$item->kiri}}:{{$item->kanan}} Downline</p>
+                                        @if (cekReward($item->id) == 1)
+                                        <button type="submit"
+                                        class="btn btn-primary btn-block" disabled>Reward Sudah Diklaim</button>
+                                        @else
+                                        <form method="post" action="{{route('user.claim.reward',$item->id)}}">
+                                            @csrf
+                                            <button type="submit"
+                                            class="btn btn-primary btn-block  @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan) disabled @endif">Ambil
+                                            Reward</button>
+                                        </form>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            @endif
+                        @endforeach
+                        {{-- @dump(auth()->user()->reward) --}}
                     </div>
                     {{-- <ul class="list-group">
                         <li class="list-group-item">150 kiri 150 kanan
@@ -906,6 +977,8 @@
             </div>
         </div>
     </div>
+    @endif
+
 @endsection
 
 @push('script')

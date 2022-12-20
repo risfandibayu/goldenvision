@@ -23,7 +23,7 @@
                                         <td data-label="@lang('No')">{{ $key + 1 }}</td>
                                         <td data-label="@lang('Image')">
                                             <img style="width: 300px"
-                                                src="{{ asset('assets/images/product/' . $k->images) }}"
+                                                src="{{ asset('assets/images/reward/' . $k->images) }}"
                                                 alt="Image {{ $k->name }}" class="img-fluid">
                                         </td>
                                         <td data-label="@lang('kiri')">
@@ -37,13 +37,14 @@
                                         </td>
 
                                         <td data-label="@lang('Action')">
-                                            {{-- <button type="button" class="icon-btn edit" data-toggle="tooltip"
-                                                data-id="{{ $product->id }}" data-name="{{ $product->name }}"
-                                                data-status="{{ $product->status }}" data-weight="{{ $product->weight }}"
-                                                data-image="{{ $product->image }}" data-price="{{ $product->price }}"
-                                                data-stok="{{ $product->stok }}" data-original-title="Edit">
+                                            <button type="button" class="icon-btn edit" data-toggle="tooltip"
+                                                data-id="{{ $k->id }}"
+                                                data-kiri="{{ $k->kiri }}"
+                                                data-kanan="{{ $k->kanan }}"
+                                                data-bonus="{{ $k->reward }}"
+                                                data-original-title="Edit">
                                                 <i class="la la-pencil"></i>
-                                            </button> --}}
+                                            </button>
                                         </td>
                                     </tr>
                                 @empty
@@ -76,64 +77,34 @@
                     </button>
 
                 </div>
-                <form method="post" action="" enctype="multipart/form-data">
+                <form method="post" action="{{ route('admin.reward.update') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
 
                         <input class="form-control plan_id" type="hidden" name="id">
                         <div class="form-row">
                             <div class="form-group col">
-                                <label class="font-weight-bold"> @lang('Product Image') <small>(recommended image ratio
+                                <label class="font-weight-bold"> @lang('Bonus Image') <small>(recommended image ratio
                                         9:16)</small></label>
-                                <input class="form-control form-control-lg image" type="file" accept="image/*"
-                                    onchange="loadFile(event)" name="images">
+                                <input class="form-control form-control-lg" type="file" accept="image/*"
+                                    onchange="loadFile(event)" name="images" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class="font-weight-bold"> @lang('Name')</label>
-                                <input type="text" class="form-control name" name="name" placeholder="Product ABC"
-                                    required>
+                                <label class="font-weight-bold"> @lang('Kiri')</label>
+                                <input type="number" class="form-control" name="kiri" placeholder="150" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="font-weight-bold"> @lang('Price') </label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend"><span class="input-group-text">{{ $general->cur_sym }}
-                                        </span></div>
-                                    <input type="text" class="form-control price" placeholder="10000" name="price"
-                                        required>
-                                </div>
+                                <label class="font-weight-bold"> @lang('Kanan') </label>
+                                <input type="number" class="form-control" placeholder="150" name="kanan" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col">
-                                <label class="font-weight-bold">@lang('Type')</label>
-                                <input type="number" class="form-control weight" name="weight" step="0.001"
-                                    placeholder="0.001" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label class="font-weight-bold">@lang('Stock')</label>
-                                <input type="number" class="form-control stok" name="stok" step="0"
-                                    placeholder="0">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label class="font-weight-bold">@lang('Status')</label>
-                                <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                    data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('Inactive')"
-                                    name="status" checked>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label class="font-weight-bold">@lang('Pricing For')</label>
-                                <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                    data-toggle="toggle" data-on="@lang('Reseller')" data-off="@lang('Public')"
-                                    name="reseller" checked>
+                                <label class="font-weight-bold">@lang('Bonus')</label>
+                                <input type="text" class="form-control" name="bonus" required>
                             </div>
                         </div>
                     </div>
@@ -207,23 +178,10 @@
             $('.edit').on('click', function() {
                 console.log($(this).data('image'));
                 var modal = $('#edit-product');
-                modal.find('.name').val($(this).data('name'));
-                modal.find('.price').val($(this).data('price'));
-                modal.find('.stok').val($(this).data('stok'));
-                modal.find('.weight').val($(this).data('weight'));
-                var input = modal.find('.image');
-                // input.setAttribute("value", "http://localhost/microgold/assets/images/avatar.png");
-
-                if ($(this).data('status')) {
-                    modal.find('.toggle').removeClass('btn--danger off').addClass('btn--success');
-                    modal.find('input[name="status"]').prop('checked', true);
-
-                } else {
-                    modal.find('.toggle').addClass('btn--danger off').removeClass('btn--success');
-                    modal.find('input[name="status"]').prop('checked', false);
-                }
-
                 modal.find('input[name=id]').val($(this).data('id'));
+                modal.find('input[name=kiri]').val($(this).data('kiri'));
+                modal.find('input[name=kanan]').val($(this).data('kanan'));
+                modal.find('input[name=bonus]').val($(this).data('bonus'));
                 modal.modal('show');
             });
 

@@ -194,6 +194,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // mlm plan
         Route::get('product', 'ProductController@products')->name('product');
         Route::resource('bonus-reward', 'BonusRewardController');
+        Route::post('bonus-reward/update', 'BonusRewardController@upreward')->name('reward.update');
         Route::post('products/store', 'ProductController@productsStore')->name('products.store');
 
         Route::post('products/update', 'ProductController@productsUpdate')->name('products.update');
@@ -443,6 +444,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('dashboard', 'UserController@home')->name('home');
 
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
+            Route::post('weekly-checkin', 'UserController@weeklyCheckIn')->name('weekly-checkin');
 
             Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
             Route::post('profile-setting', 'UserController@submitProfile');
@@ -453,6 +455,13 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::post('add_address', 'AlamatController@add_address')->name('add_address');
             Route::post('edit_address', 'AlamatController@edit_address')->name('edit_address');
+            
+
+            Route::get('reward', 'UrewardController@userReward')->name('reward');
+            Route::get('reward/print/{id}', 'UrewardController@printTicket')->name('ticket.print');
+            //Claimreward
+            Route::post('claim_reward/{id}', 'UrewardController@claimReward')->name('claim.reward');
+
 
             //2FA
             Route::get('twofactor', 'UserController@show2faForm')->name('twofactor');

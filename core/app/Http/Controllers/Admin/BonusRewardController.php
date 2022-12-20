@@ -50,10 +50,10 @@ class BonusRewardController extends Controller
         if ($request->hasFile('images')) {
             $image = $request->file('images');
             $filename = time() . '_image_' . strtolower(str_replace(" ", "",$prod->name)) . '.jpg';
-            $location = 'assets/images/product/' . $filename;
+            $location = 'assets/images/reward/' . $filename;
             $prod->images = $filename;
 
-            $path = './assets/images/product/';
+            $path = './assets/images/reward/';
 
             $link = $path . $prod->image;
             if (file_exists($link)) {
@@ -108,6 +108,39 @@ class BonusRewardController extends Controller
     public function update(Request $request, corder $corder)
     {
         //
+    }
+    public function upreward(Request $request)
+    {
+        //
+        // dd($request->all());
+        $prod = BonusReward::find($request->id);
+        if ($request->hasFile('images')) {
+            $image = $request->file('images');
+            $filename = time() . '_image_' . strtolower(str_replace(" ", "",$prod->name)) . '.jpg';
+            $location = 'assets/images/reward/' . $filename;
+            $prod->images = $filename;
+
+            $path = './assets/images/reward/';
+
+            $link = $path . $prod->image;
+            if (file_exists($link)) {
+                @unlink($link);
+            }
+            // $size = imagePath()['product']['size'];
+            $image = Image::make($image);
+            // $size = explode('x', strtolower($size));
+            // $image->crop($size[0], $size[1]);
+            $image->save($location);
+        }
+
+        // dd($request->file('images'));
+        $prod->kiri            = $request->kiri;
+        $prod->kanan           = $request->kanan;
+        $prod->reward           = $request->bonus;
+        $prod->save();
+
+        $notify[] = ['success', 'New Reward updated successfully'];
+        return back()->withNotify($notify);
     }
 
     /**

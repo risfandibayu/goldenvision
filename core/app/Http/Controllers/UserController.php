@@ -16,6 +16,7 @@ use App\Models\Withdrawal;
 use App\Models\Survey;
 use App\Models\Answer;
 use App\Models\bank;
+use App\Models\BonusReward;
 use App\Models\corder;
 use App\Models\DailyGold;
 use App\Models\Gold;
@@ -76,6 +77,8 @@ class UserController extends Controller
         $userGold = auth()->user()->total_golds;
         $goldRange = $gold->per_gram * $userGold;
         $data['goldBonus']          = $goldRange;
+        $data['reward']          = BonusReward::all();
+        $data['isReward']   = BonusReward::where('kiri','<=',auth()->user()->userExtra->left)->where('kanan','<=',auth()->user()->userExtra->right)->first();
         $data['persen_bonus']       = auth()->user()->total_binary_com / 10000000 * 100;
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
@@ -1456,6 +1459,45 @@ class UserController extends Controller
 
             return redirect()->back()->with('notify', [
                 ['success', 'Successfully Claimed Your Daily Gold Check-In']
+            ]);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+    }
+
+    public function weeklyCheckIn(Request $request)
+    {
+        $user = $request->user();
+
+        if (! User::canClaimWeeklyGold($user->id)) {
+            return Redirect::back()->with('notify',[
+                ['warning', 'You already claimed your weekly gold or your quota has reached the limit.']
+            ]);
+        }
+
+        
+        //send to same bank account;
+        try {
+            $userBank = rekening::where('user_id',$user->id)->first();
+            if($userBank){
+                $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                                    ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
+                foreach ($checkSame as $key => $value) {
+                    $user = User::find($value->user_id);
+                        $user->golds()->create([
+                            'type'  => UserGoldReward::Weekly->value,
+                            'golds' => 0.005
+                        ]);
+                }
+            }else{
+                $user->golds()->create([
+                    'type'  => UserGoldReward::Weekly->value,
+                    'golds' => 0.005
+                ]);
+            }
+
+            return redirect()->back()->with('notify', [
+                ['success', 'Successfully Claimed Your Weekly Gold Check-In']
             ]);
         } catch (\Throwable $th) {
             dd($th->getMessage());
