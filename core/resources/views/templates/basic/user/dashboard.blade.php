@@ -507,9 +507,9 @@
                         <span class="text--small">Equal To {{ nb($goldBonus) }} IDR</span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small ">{{ auth()->user()->total_daily_golds }} Daily Gold</span>
+                        <span class="text--small ">{{ auth()->user()->total_daily_golds }} Gr  Daily Gold</span>
                         |
-                        <span class="text--small ">{{ nb(auth()->user()->total_weekly_golds) }} Weekly Gold</span>
+                        <span class="text--small ">{{ auth()->user()->total_weekly_golds }} Gr Weekly Gold</span>
                     </div>
                 </div>
                 <br>
@@ -894,6 +894,8 @@
             </div>
         </div>
     </div> --}}
+    @if ($isReward)
+        
         <div class="col-xl-12 col-lg-12 col-sm-12 mb-30">
             <div class="card bg--gradi-51">
                 <div class="card-header">
@@ -902,7 +904,7 @@
                         kiri dan kanan.</h6>
                     <hr class="text-light">
                     <div class="row d-flex justify-content-center text-center">
-                        <div class="col-md-4 mt-3 text-center">
+                        {{-- <div class="col-md-4 mt-3 text-center">
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="{{ asset('assets/turki.jpg') }}" alt="Card image cap">
                                 <div class="card-body">
@@ -927,7 +929,25 @@
                                         Reward</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
+                        @foreach ($reward as $item)
+                            {{-- {{$item->id}} --}}
+                            @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan)
+                            @else
+                            <div class="col-md-4 mt-3 text-center">
+                                <div class="card">
+                                    <img class="card-img-top" src="{{ getImage('assets/images/reward/' . $item->images, null, true) }}" alt="Bonus reward {{$item->reward}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$item->kiri}} Kiri : {{$item->kanan}} Kanan</h5>
+                                        <p class="card-text">Dapatkan Reward <b>{{$item->reward}}</b> Dengan {{$item->kiri}}:{{$item->kanan}} Downline</p>
+                                        <a href="#"
+                                            class="btn btn-primary  @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan) disabled @endif">Ambil
+                                            Reward</a>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        @endforeach
                     </div>
                     {{-- <ul class="list-group">
                         <li class="list-group-item">150 kiri 150 kanan
@@ -941,6 +961,8 @@
             </div>
         </div>
     </div>
+    @endif
+
 @endsection
 
 @push('script')

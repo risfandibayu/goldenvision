@@ -16,6 +16,7 @@ use App\Models\Withdrawal;
 use App\Models\Survey;
 use App\Models\Answer;
 use App\Models\bank;
+use App\Models\BonusReward;
 use App\Models\corder;
 use App\Models\DailyGold;
 use App\Models\Gold;
@@ -76,6 +77,8 @@ class UserController extends Controller
         $userGold = auth()->user()->total_golds;
         $goldRange = $gold->per_gram * $userGold;
         $data['goldBonus']          = $goldRange;
+        $data['reward']          = BonusReward::all();
+        $data['isReward']   = BonusReward::where('kiri','<=',auth()->user()->userExtra->left)->where('kanan','<=',auth()->user()->userExtra->right)->first();
         $data['persen_bonus']       = auth()->user()->total_binary_com / 10000000 * 100;
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
