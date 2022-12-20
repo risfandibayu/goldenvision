@@ -456,6 +456,13 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::post('add_address', 'AlamatController@add_address')->name('add_address');
             Route::post('edit_address', 'AlamatController@edit_address')->name('edit_address');
+            
+
+            Route::get('reward', 'UrewardController@userReward')->name('reward');
+            Route::get('reward/print/{id}', 'UrewardController@printTicket')->name('ticket.print');
+            //Claimreward
+            Route::post('claim_reward/{id}', 'UrewardController@claimReward')->name('claim.reward');
+
 
             //2FA
             Route::get('twofactor', 'UserController@show2faForm')->name('twofactor');

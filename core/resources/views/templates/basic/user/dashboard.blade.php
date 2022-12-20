@@ -934,20 +934,36 @@
                             {{-- {{$item->id}} --}}
                             @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan)
                             @else
+                            {{-- @if (cekReward($item->id) == 1)
+                                2
+                            @else
+                                1
+                            @endif --}}
+                            {{-- {{$item->id}} --}}
                             <div class="col-md-4 mt-3 text-center">
                                 <div class="card">
                                     <img class="card-img-top" src="{{ getImage('assets/images/reward/' . $item->images, null, true) }}" alt="Bonus reward {{$item->reward}}">
                                     <div class="card-body">
                                         <h5 class="card-title">{{$item->kiri}} Kiri : {{$item->kanan}} Kanan</h5>
                                         <p class="card-text">Dapatkan Reward <b>{{$item->reward}}</b> Dengan {{$item->kiri}}:{{$item->kanan}} Downline</p>
-                                        <a href="#"
-                                            class="btn btn-primary  @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan) disabled @endif">Ambil
-                                            Reward</a>
+                                        @if (cekReward($item->id) == 1)
+                                        <button type="submit"
+                                        class="btn btn-primary btn-block" disabled>Reward Sudah Diklaim</button>
+                                        @else
+                                        <form method="post" action="{{route('user.claim.reward',$item->id)}}">
+                                            @csrf
+                                            <button type="submit"
+                                            class="btn btn-primary btn-block  @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan) disabled @endif">Ambil
+                                            Reward</button>
+                                        </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
+
                             @endif
                         @endforeach
+                        {{-- @dump(auth()->user()->reward) --}}
                     </div>
                     {{-- <ul class="list-group">
                         <li class="list-group-item">150 kiri 150 kanan

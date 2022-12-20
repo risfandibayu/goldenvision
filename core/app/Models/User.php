@@ -87,6 +87,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserGold::class);
     }
+    public function reward()
+    {
+        return $this->hasMany(ureward::class);
+    }
 
     public function dailyGolds()
     {

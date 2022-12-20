@@ -8,6 +8,7 @@ use App\Models\Frontend;
 use App\Models\GeneralSetting;
 use App\Models\Plan;
 use App\Models\SmsTemplate;
+use App\Models\ureward;
 use App\Models\User;
 use App\Models\UserExtra;
 use PHPMailer\PHPMailer\Exception;
@@ -1705,4 +1706,13 @@ function brodev($user_id, $bro_qty){
     // $s = $user->address->address .', '. $user->address->city.', '. $user->address->state;
 
     // dd($s);
+}
+
+function cekReward($id){
+    $ure = ureward::where('user_id',Auth::user()->id)->where('reward_id',$id)->first();
+    if ($ure) {
+        # code...
+        return true;
+    }
+    return false;
 }
