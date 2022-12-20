@@ -129,11 +129,8 @@ class CronController extends Controller
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
         // dd(Date('H:i') == "14:57");
-        $userx = UserExtra::where('user_extras.paid_left','>=',3)
-        ->where('user_extras.paid_right','>=',3)
-        ->join('users','users.id','=','user_extras.user_id')
-        ->where('users.plan_id','!=',0)
-        ->get();
+        $userx = UserExtra::where('paid_left','>=',3)
+        ->where('paid_right','>=',3)->get();
 
         // dd($userx);
         $cron = array();
@@ -142,7 +139,13 @@ class CronController extends Controller
                         $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
                         // $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
                         $user_plan = user::where('users.id',$user)
-                        ->join('plans','plans.id','=','users.plan_id')->first();                        
+                        ->join('plans','plans.id','=','users.plan_id')
+                        ->where('users.plan_id','!=',0)->first(); 
+                        
+                        if (!$user_plan) {
+                            # code...
+                            continue;
+                        }
                         
                         $pairs = intval($weak / 3);
                         $pair = intval($weak / 3);
