@@ -1592,7 +1592,7 @@ function generateUniqueNoBro()
             // $code = $prefix . $incr;
             $year = $now->format('y');
             $month = $now->month;
-            $last = rand(1, 9999);
+            $last = rand(1000, 9999);
             $code = 'M2929'.$year.$month.$last;
         } while (user::where("no_bro", "=", $code)->first());
         return $code;
