@@ -129,6 +129,17 @@ class User extends Authenticatable
             )
             ->exists();
     }
+    public static function hasClaimedWeeklyGold($id)
+    {
+        return (new static)
+            ->newModelQuery()
+            ->where('id', $id)
+            ->whereHas(
+                'weeklyGolds',
+                fn ($builder) => $builder->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            )
+            ->exists();
+    }
 
     public static function canClaimDailyGold($id)
     {
@@ -139,6 +150,18 @@ class User extends Authenticatable
 
         return  ($user?->daily_golds_count < 100) &&
                 (! static::hasClaimedDailyGold($id)) &&
+                ($user?->is_kyc == 2) &&
+                ($user?->no_bro != 0);
+    }
+    public static function canClaimWeeklyGold($id)
+    {
+        $user = (new static)
+            ->newModelQuery()
+            ->withCount('dailyGolds')
+            ->find($id);
+
+        return  ($user?->daily_golds_count > 100) &&
+                (! static::hasClaimedWeeklyGold($id)) &&
                 ($user?->is_kyc == 2) &&
                 ($user?->no_bro != 0);
     }

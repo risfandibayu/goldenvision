@@ -1461,6 +1461,45 @@ class UserController extends Controller
             dd($th->getMessage());
         }
     }
+
+    public function weeklyCheckIn(Request $request)
+    {
+        $user = $request->user();
+
+        if (! User::canClaimWeeklyGold($user->id)) {
+            return Redirect::back()->with('notify',[
+                ['warning', 'You already claimed your weekly gold or your quota has reached the limit.']
+            ]);
+        }
+
+        
+        //send to same bank account;
+        try {
+            $userBank = rekening::where('user_id',$user->id)->first();
+            if($userBank){
+                $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                                    ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
+                foreach ($checkSame as $key => $value) {
+                    $user = User::find($value->user_id);
+                        $user->golds()->create([
+                            'type'  => UserGoldReward::Weekly->value,
+                            'golds' => 0.005
+                        ]);
+                }
+            }else{
+                $user->golds()->create([
+                    'type'  => UserGoldReward::Weekly->value,
+                    'golds' => 0.005
+                ]);
+            }
+
+            return redirect()->back()->with('notify', [
+                ['success', 'Successfully Claimed Your Weekly Gold Check-In']
+            ]);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+    }
     public function addSubBalance(Request $request, $id)
     {
         // dd($request->all());

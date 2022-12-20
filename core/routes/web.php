@@ -444,6 +444,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('dashboard', 'UserController@home')->name('home');
 
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
+            Route::post('weekly-checkin', 'UserController@weeklyCheckIn')->name('weekly-checkin');
 
             Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
             Route::post('profile-setting', 'UserController@submitProfile');
