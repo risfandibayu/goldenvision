@@ -195,6 +195,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // mlm plan
         Route::get('product', 'ProductController@products')->name('product');
         Route::resource('bonus-reward', 'BonusRewardController');
+        Route::post('bonus-reward/update', 'BonusRewardController@upreward')->name('reward.update');
         Route::post('products/store', 'ProductController@productsStore')->name('products.store');
 
         Route::post('products/update', 'ProductController@productsUpdate')->name('products.update');
