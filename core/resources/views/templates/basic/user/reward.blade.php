@@ -13,8 +13,8 @@
                                 <th scope="col">@lang('#')</th>
                                 <th scope="col">@lang('Ticket ID')</th>
                                 <th scope="col">@lang('Reward')</th>
-                                <th scope="col">@lang('MP Kiri')</th>
-                                <th scope="col">@lang('MP Kanan')</th>
+                                {{-- <th scope="col">@lang('MP Kiri')</th> --}}
+                                {{-- <th scope="col">@lang('MP Kanan')</th> --}}
                                 <th scope="col">@lang('Action')</th>
                             </tr>
                             </thead>
@@ -24,8 +24,8 @@
                                     <td data-label="@lang('#')">{{ $reward->firstItem()+$loop->index }}</td>
                                     <td data-label="@lang('Reward')">{{ $ex->trx }}</td>
                                     <td data-label="@lang('Reward')">{{ $ex->rewa->reward }}</td>
-                                    <td data-label="@lang('MP Kiri')">{{ $ex->rewa->kiri }}</td>
-                                    <td data-label="@lang('MP Kanan')">{{ $ex->rewa->kanan }}</td>
+                                    {{-- <td data-label="@lang('MP Kiri')">{{ $ex->rewa->kiri }}</td> --}}
+                                    {{-- <td data-label="@lang('MP Kanan')">{{ $ex->rewa->kanan }}</td> --}}
                                     <td data-label="@lang('Action')">
                                         <a class="btn btn--success" href="{{ route('user.ticket.print', $ex->id) }}" target="_blank" class="print"><i class="las la-print"></i></a>
                                     </td>

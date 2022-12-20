@@ -92,6 +92,13 @@
                         <span class="menu-title">@lang('My Tree')</span>
                     </a>
                 </li>
+                <li class="sidebar-menu-item {{ menuActive('user.reward') }}">
+                    <a href="{{ route('user.reward') }}" class="nav-link">
+                        {{-- <i class="menu-icon las la-tree"></i> --}}
+                        <i class="menu-icon las la-scroll"></i>
+                        <span class="menu-title">@lang('Bonus Reward')</span>
+                    </a>
+                </li>
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
                         <a href="{{ route('user.gold.invest') }}" class="nav-link">
                             <i class="menu-icon las la-coins"></i>
