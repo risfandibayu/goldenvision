@@ -129,8 +129,11 @@ class CronController extends Controller
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
         // dd(Date('H:i') == "14:57");
-        $userx = UserExtra::where('paid_left','>=',3)
-        ->where('paid_right','>=',3)->get();
+        $userx = UserExtra::where('user_extras.paid_left','>=',3)
+        ->where('user_extras.paid_right','>=',3)
+        ->join('users','users.id','=','user_extras.user_id')
+        ->where('users.plan_id','!=',0)
+        ->get();
 
         // dd($userx);
         $cron = array();
