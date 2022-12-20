@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\URL;
 //     $pdo = DB::connection('mysql');
 //     dd($pdo);
 // })
-Route::get('update-all-users',[UserController::class,'updateBro']);
 
 Route::get('/cek_url', function(){
     dd(URL::to('/'));
