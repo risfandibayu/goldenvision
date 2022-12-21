@@ -102,7 +102,8 @@ class LoginController extends Controller
 
         $username = user::where('username',$login)->first();
 
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : ($username ? 'username' : 'no_bro');
+        // $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : ($username ? 'username' : 'no_bro');
+        $fieldType = ($username ? 'username' : 'no_bro');
         request()->merge([$fieldType => $login]);
         return $fieldType;
     }
