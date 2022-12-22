@@ -78,7 +78,7 @@
                     </a>
                 </li> --}}
                 {{-- @if (Auth::user()->is_mlm == 1) --}}
-                @if (auth()->user()->is_stockiest == 1)
+                @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null)
                     <li class="sidebar-menu-item {{ menuActive('user.all.users') }}">
                         <a href="{{ route('user.all.users') }}" class="nav-link">
                             <i class="menu-icon las la-users"></i>
