@@ -116,8 +116,8 @@
                                         <input type="text" name="count" hidden value="{{ $i }}">
                                         <div class="form-group">
                                             <label for="ref_username1">Parent Username</label>
-                                            <select class="form-select form-control ref_username" name="ref_username"
-                                                id="ref_username{{ $i }}" required>
+                                            <select class="form-select form-control ref_username select2"
+                                                name="ref_username" id="ref_username{{ $i }}" required>
                                                 <option value="" hidden>-- Select Parent Username --</option>
                                                 @foreach ($ref_user as $refus)
                                                     @if ($refus->pos == 'Leader')
@@ -131,7 +131,7 @@
                                                     @endif
                                                     {{-- @if ($refus->pos == $refus->pos_id) --}}
                                                     @if ($refus->pos == 'Leader')
-                                                            {{ $refus->no_bro . ' - ' . $refus->username }}
+                                                        {{ $refus->no_bro . ' - ' . $refus->username }}
                                                         (You)
                                                     @else
                                                         @if ($refus->position == 1)
