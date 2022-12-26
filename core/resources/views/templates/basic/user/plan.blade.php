@@ -120,8 +120,7 @@
                     </div>
                 </div>
             </div>
-        @endforeach
-    </div>
+        
 
     <div class="modal fade" id="bvInfoModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
