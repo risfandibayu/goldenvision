@@ -36,6 +36,7 @@
                 @else
                 <a data-toggle="modal" class="btn w-100 btn-outline--primary  mt-20 py-2 box--shadow1">@lang('Already
                     Subscribe')</a>
+                <a href="#confBuyMP{{$data->id}}" data-toggle="modal" class="btn  w-100 btn--primary  mt-20 py-2 box--shadow1">@lang('Buy MP')</a>
                 @endif
             </div>
 
@@ -101,8 +102,66 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="confBuyMP{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel1"> @lang('Confirm Purchase MP')?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                </div>
+                <form method="post"  action="{{route('user.plan.mppurchase')}}">
+                {{-- <form method="post"> --}}
+                    {{-- <div class="modal-body"> --}}
+                        {{-- </div> --}}
+                    @csrf
+                    <div class="modal-body row">
+                        <h5 class="text-center col-12"> {{getAmount($data->price)}} {{$general->cur_text}} / MP</h5>
+                        <input type="hidden" name="pricess" value="{{getAmount($data->price)}}">
+                        <input type="hidden" name="plan_id" value="{{$data->id}}">
+                        <div class="form-group col-6">
+                            <label for="">QTY</label>
+                            <input class="form-control" type="number" name="qtyy" id="qty" min="1" value="1" placeholder="MP qty" required>
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="">total</label>
+                            <input class="form-control" type="number" name="totall" value="" placeholder="total" disabled>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--danger" data-dismiss="modal"><i class="fa fa-times"></i>
+                            @lang('Close')</button>
+
+                        <button type="submit" class="btn btn--success"><i
+                                class="lab la-telegram-plane"></i> @lang('Buy')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div> 
     @endforeach
-</div>
+
+    {{-- <div class="col-xl-4 col-md-6 mb-30">
+        <div class="card">
+            <div class="card-body pt-5 pb-5 ">
+                <div class="pricing-table text-center mb-4">
+                    <h2 class="package-name mb-20 text-"><strong>Buy MP</strong></h2>
+                    <span
+                        class="price text--dark font-weight-bold d-block">12312</span>
+                    <p>/ MP</p>
+                    <hr>
+                </div>
+
+                <a href="#confBuyMP" data-toggle="modal" class="btn  w-100 btn-outline--primary  mt-20 py-2 box--shadow1">@lang('Buy')</a>
+            </div>
+
+        </div><!-- card end -->
+    </div> --}}
+
+    
 
 <div class="modal fade" id="bvInfoModal">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -175,6 +234,12 @@
     $('input[name=qty]').on('keyup change',function() {
         // alert('okl');
         $('input[name=total]').val($('input[name=qty]').val() * $('input[name=prices]').val());
+    });
+</script>
+<script>
+    $('input[name=qtyy]').on('keyup change',function() {
+        // alert('okl');
+        $('input[name=totall]').val($('input[name=qtyy]').val() * $('input[name=pricess]').val());
     });
 </script>
 
