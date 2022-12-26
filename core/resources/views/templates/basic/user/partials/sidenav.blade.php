@@ -78,11 +78,19 @@
                     </a>
                 </li> --}}
                 {{-- @if (Auth::user()->is_mlm == 1) --}}
-                @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null)
+                @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null || auth()->user()->no_bro !== '')
                     <li class="sidebar-menu-item {{ menuActive('user.all.users') }}">
                         <a href="{{ route('user.all.users') }}" class="nav-link">
                             <i class="menu-icon las la-users"></i>
                             <span class="menu-title">@lang('Not Subscribed Users')</span>
+                        </a>
+                    </li>
+                @endif
+                @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null || auth()->user()->no_bro !== '')
+                    <li class="sidebar-menu-item {{ menuActive('user.ref.tree') }}">
+                        <a href="{{ route('user.ref.tree') }}" class="nav-link">
+                            <i class="menu-icon las la-tree"></i>
+                            <span class="menu-title">@lang('Referals Tree')</span>
                         </a>
                     </li>
                 @endif

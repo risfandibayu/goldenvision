@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\BonusRewardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -35,6 +37,9 @@ Route::get('/voldemort/down', function(){
 });
 
 Route::get('/generateUniqueCode/{no_bro}', 'Auth\RegisterController@generateUniqueCode');
+Route::get('ref-user',function(){
+    return User::userTree(Auth::user()->id);
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -442,6 +447,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
         Route::middleware(['checkStatus'])->group(function () {
             Route::get('dashboard', 'UserController@home')->name('home');
+            Route::get('referals', 'UserController@ref')->name('ref.tree');
 
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
             Route::post('weekly-checkin', 'UserController@weeklyCheckIn')->name('weekly-checkin');

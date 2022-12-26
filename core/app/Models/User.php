@@ -233,4 +233,34 @@ class User extends Authenticatable
             ->where('type', $reward->value);
     }
 
+    public static function userTree($userId){
+        // dd($userId);
+        $group = [];
+        $user  = User::find($userId);
+        $user1 = User::where('ref_id',$user->id)->get();
+        $group[1] = $user1;
+        $user2 = [];
+        foreach ($user1 as $key => $value) {
+            $user2 = User::where('ref_id',$value->id)->get(); 
+        }
+        $group[2] = $user2;
+        $user3 = [];
+        foreach ($user2 as $key => $value) {
+            $user3 = User::where('ref_id',$value->id)->get(); 
+        }
+        $group[3] = $user3;
+        $user4 = [];
+        foreach ($user3 as $key => $value) {
+            $user4 = User::where('ref_id',$value->id)->get(); 
+        }
+        $group[4] = $user4;
+        $user5 = [];
+        foreach ($user4 as $key => $value) {
+            $user5 = User::where('ref_id',$value->id)->get(); 
+        }
+        $group[5] = $user5;
+        return $group;
+       
+    }
+
 }

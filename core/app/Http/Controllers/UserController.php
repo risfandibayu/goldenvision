@@ -83,6 +83,14 @@ class UserController extends Controller
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
 
+    public function ref(){
+        $user = Auth::user();
+        $data['page_title']     = "Referals Tree";
+        $data['referrals']      = User::userTree($user->id); 
+        return view($this->activeTemplate . 'user.referals', $data);
+
+    }
+
      public function allInUsers(){
         $page_title = 'All Users';
         $empty_message = 'No user found';
