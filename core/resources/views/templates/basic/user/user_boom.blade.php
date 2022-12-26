@@ -117,7 +117,7 @@
                                         <div class="form-group">
                                             <label for="ref_username1">Parent Username</label>
                                             <select class="form-select form-control ref_username select2"
-                                                name="ref_username" id="ref_username{{ $i }}" required>
+                                                name="ref_username" id="ref_username{{ $i }}" required onchange="selectFx(this)">
                                                 <option value="" hidden>-- Select Parent Username --</option>
                                                 @foreach ($ref_user as $refus)
                                                     @if ($refus->pos == 'Leader')
@@ -234,10 +234,78 @@
     });​​​​​​​​​​​​​​​
 </script> --}}
     <script>
+        $( document ).ready(function() {
+            console.log( "ready!" );
+            $('#nav-tabContent').on('select2:select','select2', function (e) {
+                var data = e.params.data;
+                console.log(data);
+            });
+        });
+        function selectFx(x){
+            var id = x.value;
+              $.ajax({
+                type: "GET",
+                url: "{{ url('/user/cek_pos') }}/" + id,
+                success: function(data) {
+                    // $("body").append(JSON.stringify(data));
+                    console.log(data.response);
+
+                    if (data.response == 0) {
+                        var options =
+                            '<option value="" hidden>-- Select Position --</option><option value="1">Left</option><option value="2">Right</option>';
+                        $('.position').prop('disabled', false).prop('required', true);
+                        $('.alr').attr("hidden", true);
+                        $('.position').html(options);
+                        $('.tree').attr("hidden", false).html(data.tree);
+                    } else if (data.response == 1) {
+                        var options =
+                            '<option value="" hidden>-- Select Position --</option><option value="1" selected>Left</option>';
+                        $('.position').prop('disabled', false).prop('required', true);
+                        $('.alr').attr("hidden", true);
+                        $('.position').html(options);
+                        $('.tree').attr("hidden", false).html(data.tree);
+                        var pilih = `
+                            <div class='user'><img src='` + base_uri + `/assets/images/avatar.png' alt='*' class='select-user'>
+                                <p class='user-name'>MP</p>
+                                <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
+                                </div> <span class='line'></span>
+                        `;
+                        $('.pleft').html(pilih);
+
+                    } else if (data.response == 2) {
+
+                        var options =
+                            '<option value="" hidden>-- Select Position --</option><option value="2" selected>Right</option>';
+                        $('.position').prop('disabled', false).prop('required', true);
+                        $('.alr').attr("hidden", true);
+                        $('.position').html(options);
+                        $('.tree').attr("hidden", false).html(data.tree);
+                        var pilih = `
+                            <div class='user'><img src='` + base_uri + `/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>MP</p>
+                                <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
+                                </div> <span class='line'></span>
+                        `;
+                        $('.pright').html(pilih);
+                    } else {
+                        var options = '<option value="" hidden>Full</option>';
+                        $('.position').prop('disabled', false).prop('required', true);
+                        $('.alr').attr("hidden", false).html('Please select Another Parent Username!.');
+                        $('.position').html(options);
+                        $('.tree').attr("hidden", false).html(data.tree);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert(jqXHR.status);
+                },
+                dataType: "json"
+            });
+        }
+        
         var base_uri = $('#base_url').val();
 
         $('.ref_username').on('change', function() {
-            // console.log(base_uri);
+            
+            console.log($(this).val());
             // var posa = $('.position').val();
             // console.log(posa);
             // var id = $('.ref_username').val();
