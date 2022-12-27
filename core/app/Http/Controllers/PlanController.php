@@ -32,6 +32,35 @@ class PlanController extends Controller
     // function planStore(Request $request){
     //     brodev(Auth::user()->id, $request->qty);
     // }
+    public function buyMpStore(Request $request){
+        // dd($request->all());
+        $this->validate($request, [
+            'qtyy' => 'required|integer|min:1',
+        ]);
+        $user = User::find(Auth::id());
+        $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
+        $gnl = GeneralSetting::first();
+        if ($user->balance < ($plan->price * $request->qtyy)) {
+            $notify[] = ['error', 'Insufficient Balance'];
+            return back()->withNotify($notify);
+        }
+
+        $user->bro_qty += $request->qtyy;
+        $user->save();
+
+        $trx = $user->transactions()->create([
+            'amount' => $plan->price * $request->qtyy,
+            'trx_type' => '-',
+            'details' => 'Purchased new MP quantity for '.$request->qtyy.' MP',
+            'remark' => 'purchased_plan',
+            'trx' => getTrx(),
+            'post_balance' => getAmount($user->balance),
+        ]);
+
+        $notify[] = ['success', 'Purchased new MP quantity for '.$request->qtyy.' MP Successfully'];
+        return redirect()->route('user.home')->withNotify($notify);
+
+    }
 
     function planStore(Request $request)
     {

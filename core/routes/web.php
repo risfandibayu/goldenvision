@@ -550,6 +550,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('report/Brodelivery/log', 'UserReportController@BroDeliveryLog')->name('report.BroDeliveryLog');
 
                 Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
+                Route::post('/buymp', 'PlanController@buyMpStore')->name('plan.mppurchase');
 
                 Route::middleware(['checkPaid'])->group(function () {
                 Route::get('/manage_user', 'UserController@user_boom')->name('user_boom');
