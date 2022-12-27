@@ -242,13 +242,13 @@ class ManageUsersController extends Controller
         $request->validate([
             'firstname' => 'required|max:60',
             'lastname' => 'required|max:60',
-            'email' => 'required|email|max:160|unique:users,email,' . $user->id,
+            'email' => 'required|email|max:160,' . $user->id,
         ]);
 
-        if ($request->email != $user->email && User::whereEmail($request->email)->whereId('!=', $user->id)->count() > 0) {
-            $notify[] = ['error', 'Email already exists.'];
-            return back()->withNotify($notify);
-        }
+        // if ($request->email != $user->email && User::whereEmail($request->email)->whereId('!=', $user->id)->count() > 0) {
+        //     $notify[] = ['error', 'Email already exists.'];
+        //     return back()->withNotify($notify);
+        // }
         if ($request->mobile != $user->mobile && User::where('mobile', $request->mobile)->whereId('!=', $user->id)->count() > 0) {
             $notify[] = ['error', 'Phone number already exists.'];
             return back()->withNotify($notify);
