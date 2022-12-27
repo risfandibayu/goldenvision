@@ -88,8 +88,8 @@ class PlanController extends Controller
 
             $pos = getPosition($ref_user->id, $request->position);
             $user->no_bro       = generateUniqueNoBro();
-            $user->ref_id= $ref_user->id;
-            $user->pos_id= $pos['pos_id'];
+            $user->ref_id= $ref_user->id; // ref id = sponsor
+            $user->pos_id= $pos['pos_id']; //pos id = upline
             $user->position= $request->position;
             $user->plan_id = $plan->id;
             $user->balance -= ($plan->price * $request->qty);

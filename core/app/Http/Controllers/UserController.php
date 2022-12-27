@@ -1163,8 +1163,11 @@ class UserController extends Controller
     }
 
     public function verification(){
-        $page_title = 'Data Verifications';
-        return view('templates.basic.user.kyc',compact('page_title'));
+        $data['page_title'] = 'Data Verifications';
+        $data['bank'] = bank::all();
+        $data['bank_user'] = rekening::where('user_id',Auth::user()->id)->first();
+        $data['user'] = Auth::user();
+        return view('templates.basic.user.kyc',$data);
     }
 
     public function submitVerification(Request $request)
@@ -1176,7 +1179,10 @@ class UserController extends Controller
             'state' => 'nullable|max:80',
             'zip' => 'nullable|max:40',
             'city' => 'nullable|max:50',
-            'image' => 'mimes:png,jpg,jpeg'
+            'image' => 'mimes:png,jpg,jpeg',
+            'bank_name' => 'required',
+            'acc_name' => 'required',
+            'acc_number' => 'required'
         ],[
             'firstname.required'=>'First Name Field is required',
             'lastname.required'=>'Last Name Field is required'
@@ -1199,7 +1205,14 @@ class UserController extends Controller
         ];
 
         $user = Auth::user();
-
+        
+        $rek = new rekening();
+        $rek->user_id = $user->id;
+        $rek->nama_bank = $request->bank_name;
+        $rek->nama_akun = $request->acc_name;
+        $rek->no_rek = $request->acc_number;
+        $rek->kota_cabang = $request->kota_cabang;
+        $rek->save();
         // if ($request->hasFile('image')) {
         //     $image = $request->file('image');
         //     $filename = time() . '_' . $user->username . '.jpg';
@@ -1252,6 +1265,7 @@ class UserController extends Controller
             $image->save($location);
         }
         $user->fill($in)->save();
+
         $notify[] = ['success', 'Data Verification send successfully.'];
         return redirect()->route('user.home')->withNotify($notify);
     }

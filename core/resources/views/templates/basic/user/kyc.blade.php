@@ -1,16 +1,15 @@
 @extends($activeTemplate . 'user.layouts.app')
 
 @section('panel')
-
     <div class="row mb-none-30">
 
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-30">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-50 border-bottom pb-2">{{auth()->user()->fullname}} @lang('Information')</h5>
+                    <h5 class="card-title mb-50 border-bottom pb-2">{{ auth()->user()->fullname }} @lang('Information')</h5>
 
-                    <form action="{{route('user.submitVerification')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('user.submitVerification') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -18,7 +17,7 @@
                                     <label class="form-control-label font-weight-bold">@lang('First Name') <span
                                             class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="text" name="firstname"
-                                           value="{{auth()->user()->firstname}}" required>
+                                        value="{{ auth()->user()->firstname }}" required>
                                 </div>
                             </div>
 
@@ -26,25 +25,30 @@
                                 <div class="form-group">
                                     <label class="form-control-label  font-weight-bold">@lang('Last Name') <span
                                             class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="text" name="lastname" value="{{auth()->user()->lastname}}" required>
+                                    <input class="form-control form-control-lg" type="text" name="lastname"
+                                        value="{{ auth()->user()->lastname }}" required>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             @if (auth()->user()->plan_id != 0)
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('No MP')<span class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="email" value="{{auth()->user()->no_bro}}" readonly>
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        <label class="form-control-label font-weight-bold">@lang('No MP')<span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control form-control-lg" type="email"
+                                            value="{{ auth()->user()->no_bro }}" readonly>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
 
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Email')<span class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="email" value="{{auth()->user()->email}}" readonly>
+                                    <label class="form-control-label font-weight-bold">@lang('Email')<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control form-control-lg" type="email"
+                                        value="{{ auth()->user()->email }}" readonly>
                                 </div>
                             </div>
 
@@ -53,13 +57,14 @@
                                     <label class="form-control-label  font-weight-bold">@lang('Mobile Number')<span
                                             class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="text"
-                                           value="{{auth()->user()->mobile}}" readonly>
+                                        value="{{ auth()->user()->mobile }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label  font-weight-bold">@lang('Avatar')</label>
-                                    <input class="form-control form-control-lg" type="file" accept="image/*"  onchange="loadFile(event)" name="image">
+                                    <input class="form-control form-control-lg" type="file" accept="image/*"
+                                        onchange="loadFile(event)" name="image">
                                 </div>
                             </div>
                         </div>
@@ -67,43 +72,43 @@
                             <div class="col-md-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Address')<span
-                                        class="text-danger">*</span> </label>
+                                            class="text-danger">*</span> </label>
                                     <input class="form-control form-control-lg" type="text" name="address"
-                                           value="{{auth()->user()->address->address}}" required>
-                                    <small class="form-text text-muted"><i
-                                            class="las la-info-circle"></i>@lang('House number, street address')
+                                        value="{{ auth()->user()->address->address }}" required>
+                                    <small class="form-text text-muted"><i class="las la-info-circle"></i>@lang('House number, street address')
                                     </small>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label font-weight-bold">@lang('City')<span
-                                        class="text-danger">*</span></label>
+                                            class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="text" name="city"
-                                           value="{{auth()->user()->address->city}}" required>
+                                        value="{{ auth()->user()->address->city }}" required>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('State')<span
-                                        class="text-danger">*</span></label>
+                                            class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="text" name="state"
-                                           value="{{auth()->user()->address->state}}" required>
+                                        value="{{ auth()->user()->address->state }}" required>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Zip/Postal')<span
-                                        class="text-danger">*</span></label>
+                                            class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="text" name="zip"
-                                           value="{{auth()->user()->address->zip}}" required>
+                                        value="{{ auth()->user()->address->zip }}" required>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Country')<span
-                                        class="text-danger">*</span></label>
-                                    <select name="country" class="form-control form-control-lg" required> @include('partials.country') </select>
+                                            class="text-danger">*</span></label>
+                                    <select name="country" class="form-control form-control-lg" required>
+                                        @include('partials.country') </select>
                                 </div>
                             </div>
                         </div>
@@ -111,23 +116,73 @@
                             <div class="col-xl-6 col-md-6 col-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">National ID/Passport ID<span
-                                        class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" value="{{auth()->user()->nik}}" type="text" name="nik"
-                                            required>
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control form-control-lg" value="{{ auth()->user()->nik }}"
+                                        type="text" name="nik" required>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-3 col-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">National ID/Passport ID Photo<span
-                                        class="text-danger">*</span></label>
-                                        <input class="form-control form-control-lg" type="file" accept="image/*"  onchange="loadFile(event)" name="ktp" required>
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control form-control-lg" type="file" accept="image/*"
+                                        onchange="loadFile(event)" name="ktp" required>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-3 col-12">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">Selfie with National ID/Passport ID<span
-                                        class="text-danger">*</span></label>
-                                        <input class="form-control form-control-lg" type="file" accept="image/*"  onchange="loadFile(event)" name="selfie" required>
+                                    <label class="form-control-label font-weight-bold">Selfie with National ID/Passport
+                                        ID<span class="text-danger">*</span></label>
+                                    <input class="form-control form-control-lg" type="file" accept="image/*"
+                                        onchange="loadFile(event)" name="selfie" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Bank Name') <span
+                                            class="text-danger">*</span></label>
+                                    {{-- <input class="form-control form-control-lg" type="text" name="firstname"
+                                    value="{{auth()->user()->firstname}}" required> --}}
+                                    <select name="bank_name" id="bank_name" class="form-control form-control-lg"
+                                        required>
+                                        <option value="" hidden selected>-- Pilih Bank --</option>
+                                        @foreach ($bank as $item)
+                                            <option value="{{ $item->nama_bank }}">{{ $item->nama_bank }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label  font-weight-bold">@lang('Bank Branch City')
+                                        <small>(Optional)</small></label>
+                                    <input class="form-control form-control-lg" type="text" name="kota_cabang"
+                                        value="" placeholder="Bank KCP Jakarta">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control form-control-lg" type="text" name="acc_name"
+                                        value="" required placeholder="Account Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control form-control-lg" type="text"
+                                        placeholder="Account Number" name="acc_number" value="" required>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +190,8 @@
                         <div class="row mt-4">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn--primary btn-block btn-lg">@lang('Save Changes')</button>
+                                    <button type="submit"
+                                        class="btn btn--primary btn-block btn-lg">@lang('Save Changes')</button>
                                 </div>
                             </div>
                         </div>
@@ -144,11 +200,11 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('breadcrumb-plugins')
-    <a href="{{route('user.change-password')}}" class="btn btn--success btn--shadow"><i class="fa fa-key"></i>@lang('Change Password')</a>
+    <a href="{{ route('user.change-password') }}" class="btn btn--success btn--shadow"><i
+            class="fa fa-key"></i>@lang('Change Password')</a>
 @endpush
 
 
@@ -156,7 +212,7 @@
 @push('script')
     <script>
         'use strict';
-        (function($){
+        (function($) {
             $("select[name=country]").val("{{ auth()->user()->address->country }}");
         })(jQuery)
 
@@ -167,7 +223,5 @@
                 URL.revokeObjectURL(output.src)
             }
         };
-
-
     </script>
 @endpush
