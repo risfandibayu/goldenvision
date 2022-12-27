@@ -69,10 +69,14 @@ class PlanController extends Controller
         $user = User::find(Auth::id());
         $ref_user = User::where('no_bro', $request->referral)->first();
         if ($ref_user == null) {
-            $notify[] = ['error', 'Invalid MP Number.'];
+            $notify[] = ['error', 'Invalid Upline MP Number.'];
             return back()->withNotify($notify);
         }
-
+        $sponsor = User::where('no_bro', $request->sponsor)->first();
+        if (!$sponsor) {
+            $notify[] = ['error', 'Invalid Sponsor MP Number.'];
+            return back()->withNotify($notify);
+        }
         if($ref_user->no_bro == $user->no_bro){
             $notify[] = ['error', 'Invalid Input MP Number. You can`t input your own MP number'];
             return back()->withNotify($notify);
@@ -88,8 +92,8 @@ class PlanController extends Controller
 
             $pos = getPosition($ref_user->id, $request->position);
             $user->no_bro       = generateUniqueNoBro();
-            $user->ref_id= $ref_user->id; // ref id = sponsor
-            $user->pos_id= $pos['pos_id']; //pos id = upline
+            $user->ref_id= $ref_user->id; // ref id = upline
+            $user->pos_id= $sponsor->id; //pos id = sponsor
             $user->position= $request->position;
             $user->plan_id = $plan->id;
             $user->balance -= ($plan->price * $request->qty);
