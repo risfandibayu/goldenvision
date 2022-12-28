@@ -137,6 +137,7 @@ class CronController extends Controller
         foreach ($userx as $uex) {
                         $user = $uex->user_id;
                         $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+                        $weaks = $uex->left < $uex->right ? $uex->left : $uex->right;
                         // $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
                         $user_plan = user::where('users.id',$user)
                         ->join('plans','plans.id','=','users.plan_id')
@@ -146,68 +147,81 @@ class CronController extends Controller
                             # code...
                             continue;
                         }
+                        if ($weaks >= 30) {
+                            # code...
+                            // continue;
+                            $pairs = intval($weak);
+                            $pair = intval($weak);
+                        }else{
+                            $pairs = intval($weak)-3;
+                            $pair = intval($weak)-3;
+
+                        }
+
+                        if ($pair < 1) {
+                            # code...
+                            continue; 
+                        }
                         
-                        $pairs = intval($weak / 3);
-                        $pair = intval($weak / 3);
 
                         if($uex->level_binary != 0 && $pairs != $uex->level_binary){
-                            // $pair = intval($weak / 3) - $uex->level_binary;
+                            // $pair = intval($weak) - $uex->level_binary;
                             if ($pair > $uex->level_binary) {
-                                if ($pair - $uex->level_binary >= 10) {
+                                if ($pair - $uex->level_binary >= 30) {
                                     # code...
-                                    $pair = 10;
-                                    $bonus = intval(($pair) * ($user_plan->tree_com * 6));
+                                    $pair = 30;
+                                    $bonus = intval(($pair) * ($user_plan->tree_com * 2));
                                 }else{
 
-                                    if ($pair >= 10) {
-                                        $pair = 10;
-                                        $bonus = intval(($pair - $uex->level_binary) * ($user_plan->tree_com * 6));
+                                    if ($pair >= 30) {
+                                        $pair = 30;
+                                        $bonus = intval(($pair - $uex->level_binary) * ($user_plan->tree_com * 2));
                                     }else{
-                                        $bonus = intval(($pair - $uex->level_binary) * ($user_plan->tree_com * 6));
+                                        $bonus = intval(($pair - $uex->level_binary) * ($user_plan->tree_com * 2));
                                     }
                                 }
 
                             }else{
-                                if ($pair >= 10) {
-                                    $pair = 10;
-                                    $bonus = intval(($uex->level_binary - $pair ) * ($user_plan->tree_com * 6));
+                                if ($pair >= 30) {
+                                    $pair = 30;
+                                    $bonus = intval(($uex->level_binary - $pair ) * ($user_plan->tree_com * 2));
                                 }else{
-                                    $bonus = intval(($uex->level_binary - $pair ) * ($user_plan->tree_com * 6));
+                                    $bonus = intval(($uex->level_binary - $pair ) * ($user_plan->tree_com * 2));
                                 }
                             }
                         }else{
-                            if ($pair >= 10) {
+                            if ($pair >= 30) {
                                 # code...
-                                $pair = 10;
-                                $bonus = intval($pair * ($user_plan->tree_com * 6));
+                                $pair = 30;
+                                $bonus = intval($pair * ($user_plan->tree_com * 2));
                             }else{
-                                $bonus = intval($pair * ($user_plan->tree_com * 6));
+                                $bonus = intval($pair * ($user_plan->tree_com * 2));
                             }
                         }
 
                         $pair2[] = $pair == $uex->level_binary;
 
-                        if ($pair >= 10) {
-                            $pair = 10;
+                        if ($pair >= 30) {
+                            $pair = 30;
                         }
 
                         // if($uex->level_binary != 0 && $pairs != $uex->level_binary){
-                        //     // $pair = intval($weak / 3) - $uex->level_binary;
+                        //     // $pair = intval($weak) - $uex->level_binary;
                         //     if ($pair > $uex->level_binary) {
-                        //         $bonus = intval(($pair - $uex->level_binary) * ($user_plan->tree_com * 6));
+                        //         $bonus = intval(($pair - $uex->level_binary) * ($user_plan->tree_com * 2));
                         //     }else{
-                        //         $bonus = intval(($uex->level_binary - $pair ) * ($user_plan->tree_com * 6));
+                        //         $bonus = intval(($uex->level_binary - $pair ) * ($user_plan->tree_com * 2));
                         //     }
                         // }else{
-                        //     $bonus = intval($pair * ($user_plan->tree_com * 6));
+                        //     $bonus = intval($pair * ($user_plan->tree_com * 2));
                         // }
-                        // $bonus = intval($pair * ($user_plan->tree_com * 6));
+                        // $bonus = intval($pair * ($user_plan->tree_com * 2));
 
                         // dd(is_numeric($uex->paid_left));
 
 
                         if ($pair == $uex->level_binary) {
-                            // if ($uex->level_binary == 10) {
+                            // if ($uex->level_binary == 30) {
                             //     $payment = User::find($uex->user_id);
                             //     $payment->balance += $bonus;
                             //     $payment->save();
@@ -220,7 +234,7 @@ class CronController extends Controller
                             //     $trx->post_balance = $payment->balance;
                             //     $trx->remark = 'binary_commission';
                             //     $trx->trx = getTrx();
-                            //     $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+                            //     $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' BRO.';
                             //     $trx->save();
 
                             //     $uex->paid_left = 0;
@@ -230,7 +244,7 @@ class CronController extends Controller
                             //     sendEmail2($user, 'matching_bonus', [
                             //             'amount' => $bonus,
                             //             'currency' => $gnl->cur_text,
-                            //             'paid_bv' => $pair * 6,
+                            //             'paid_bv' => $pair * 2,
                             //             'post_balance' => $payment->balance,
                             //             'trx' =>  $trx->trx,
                             //     ]);
@@ -253,7 +267,7 @@ class CronController extends Controller
                             $trx->remark = 'binary_commission';
                             $trx->trx = getTrx();
 
-                            if ($pair >= 10) {
+                            if ($pair >= 30) {
                                 
                                     if ($uex->last_flush_out) {
                                         if (Carbon::parse($uex->last_flush_out)->format('Y-m-d') != Carbon::now()->toDateString()) {
@@ -273,9 +287,9 @@ class CronController extends Controller
                                         
                                             if($uex->level_binary == 0){
                                                 $payment->save();
-                                                $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
+                                                $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
                                             // }else{
-                                            //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
+                                            //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
                                             // }
 
                                         // }
@@ -297,7 +311,7 @@ class CronController extends Controller
 
                                                 
                                                     $payment->save();
-                                                    $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
+                                                    $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
 
                                                     $trx->save();
                                                 
@@ -331,13 +345,13 @@ class CronController extends Controller
                                                     //         'trx' =>  $trx->trx,
                                                     // ]);
                                                 
-                                                // if ($pair >= 10) {
+                                                // if ($pair >= 30) {
                                                 $payment->save();
 
                                                 if($uex->level_binary == 0){
-                                                    $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
+                                                    $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
                                                 }else{
-                                                    $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
+                                                    $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
                                                 }
                                                 $trx->save();
                                                 
@@ -371,21 +385,21 @@ class CronController extends Controller
                                                 //         'trx' =>  $trx->trx,
                                                 // ]);
                                             
-                                            // if ($pair >= 10) {
+                                            // if ($pair >= 30) {
                                             
 
                                                 if($uex->level_binary == 0){
                                                     $payment->save();
-                                                    $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
+                                                    $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
                                                 // }else{
-                                                //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
+                                                //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
                                                 // }
 
                                             // }
                                                     $trx->save();
                                                     
-                                                    $uex->paid_left = 0;
-                                                    $uex->paid_right = 0;
+                                                    $uex->paid_left -= 30;
+                                                    $uex->paid_right -= 30;
                                                     $uex->level_binary = 0;
                                                     $uex->last_flush_out = Carbon::now()->toDateTimeString();
                                                     $uex->save();
@@ -398,7 +412,7 @@ class CronController extends Controller
                                                     
                                                 }else{
                                                         $payment->save();
-                                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
+                                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
 
                                                         $trx->save();
                                                     
@@ -423,7 +437,7 @@ class CronController extends Controller
                             }else{
                                     # code...
                                 
-                                $paid_bv = $pair * 6;
+                                $paid_bv = $pair * 2;
                                 // sendEmail2($user, 'matching_bonus', [
                                 //     'amount' => $bonus,
                                 //     'currency' => $gnl->cur_text,
@@ -434,9 +448,9 @@ class CronController extends Controller
                                 $payment->save();
 
                                     if($uex->level_binary != 0 && $pairs != $uex->level_binary){
-                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
+                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
                                     }else{
-                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
+                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
 
                                     }
                                 $trx->save();
@@ -471,8 +485,8 @@ class CronController extends Controller
     //                     // $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
     //                     $user_plan = user::where('users.id',$user)
     //                     ->join('plans','plans.id','=','users.plan_id')->first();
-    //                     $pair = intval($weak / 3);
-    //                     $bonus = intval($pair * ($user_plan->tree_com * 6));
+    //                     $pair = intval($weak);
+    //                     $bonus = intval($pair * ($user_plan->tree_com * 2));
 
     //                         $payment = User::find($uex->user_id);
     //                         $payment->balance += $bonus;
@@ -486,7 +500,7 @@ class CronController extends Controller
     //                         $trx->post_balance = $payment->balance;
     //                         $trx->remark = 'binary_commission';
     //                         $trx->trx = getTrx();
-    //                         $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
+    //                         $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
     //                         $trx->save();
 
     //                         $uex->level_binary = $pair;
@@ -495,7 +509,7 @@ class CronController extends Controller
     //                         sendEmail2($user, 'matching_bonus', [
     //                                 'amount' => $bonus,
     //                                 'currency' => $gnl->cur_text,
-    //                                 'paid_bv' => $pair * 6,
+    //                                 'paid_bv' => $pair * 2,
     //                                 'post_balance' => $payment->balance,
     //                                 'trx' =>  $trx->trx,
     //                             ]);
