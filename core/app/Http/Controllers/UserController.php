@@ -78,13 +78,10 @@ class UserController extends Controller
         $goldRange = $gold->per_gram * $userGold;
         $data['goldBonus']          = $goldRange;
         $data['reward']          = BonusReward::all();
-        $br = BonusReward::where('kiri','<=',auth()->user()->userExtra->left)->where('kanan','<=',auth()->user()->userExtra->right)->first();
-        if(!$br){
-            $bonus = null;
-        }else{
-            $bonus = $br;
-        }
-        $data['isReward']   = $bonus;
+        $kiri = auth()->user()->userExtra->left == null?0:auth()->user()->userExtra->left;
+        $kanan = auth()->user()->userExtra->right ==null?0:auth()->user()->userExtra->right;
+    
+        $data['isReward']   = BonusReward::where('kiri','<=',$kiri)->where('kanan','<=',$kanan)->first();;
         $data['persen_bonus']       = auth()->user()->total_binary_com / 10000000 * 100;
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
