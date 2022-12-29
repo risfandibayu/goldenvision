@@ -332,7 +332,8 @@
             @endif
 
             @if (\App\Models\User::canClaimWeeklyGold(Auth::id()))
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -507,7 +508,7 @@
                         <span class="text--small">Equal To {{ nb($goldBonus) }} IDR</span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small ">{{ auth()->user()->total_daily_golds }} Gr  Daily Gold</span>
+                        <span class="text--small ">{{ auth()->user()->total_daily_golds }} Gr Daily Gold</span>
                         |
                         <span class="text--small ">{{ auth()->user()->total_weekly_golds }} Gr Weekly Gold</span>
                     </div>
@@ -720,7 +721,7 @@
             </div>
         </div>
 
-        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-money-bill-wave"></i>
@@ -738,26 +739,26 @@
                 <a href="{{ route('user.report.invest') }}"
                     class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
-        </div> --}}
+        </div>
 
-        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
-        <div class="dashboard-w1 bg--12 b-radius--10 box-shadow">
-            <div class="icon">
-                <i class="las la-money-bill"></i>
-            </div>
-            <div class="details">
-                <div class="numbers">
-                    <span class="amount">{{getAmount(auth()->user()->total_ref_com)}}</span>
-                    <span class="currency-sign">{{$general->cur_text}}</span>
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--12 b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="las la-money-bill"></i>
                 </div>
-                <div class="desciption">
-                    <span class="text--small">@lang('Total Referral Commission')</span>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="amount">{{ getAmount(auth()->user()->total_ref_com) }}</span>
+                        <span class="currency-sign">{{ $general->cur_text }}</span>
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Referral Commission')</span>
+                    </div>
+                    <a href="{{ route('user.report.refCom') }}"
+                        class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
-                <a href="{{route('user.report.refCom')}}"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
-    </div> --}}
 
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--info b-radius--10 box-shadow">
@@ -894,17 +895,17 @@
             </div>
         </div>
     </div> --}}
-    @if ($isReward)
-        
-        <div class="col-xl-12 col-lg-12 col-sm-12 mb-30">
-            <div class="card bg--gradi-51">
-                <div class="card-header">
-                    <h2 class="card-title text-center text-light">Reward List</h2>
-                    <h6 class="card-title text-center text-light mt-n3">List Reward yang bisa di claim dari total jumlah
-                        kiri dan kanan.</h6>
-                    <hr class="text-light">
-                    <div class="row d-flex justify-content-center text-center">
-                        {{-- <div class="col-md-4 mt-3 text-center">
+        @if ($isReward)
+            <div class="col-xl-12 col-lg-12 col-sm-12 mb-30">
+                <div class="card bg--gradi-51">
+                    <div class="card-header">
+                        <h2 class="card-title text-center text-light">Reward List</h2>
+                        <h6 class="card-title text-center text-light mt-n3">List Reward yang bisa di claim dari total
+                            jumlah
+                            kiri dan kanan.</h6>
+                        <hr class="text-light">
+                        <div class="row d-flex justify-content-center text-center">
+                            {{-- <div class="col-md-4 mt-3 text-center">
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="{{ asset('assets/turki.jpg') }}" alt="Card image cap">
                                 <div class="card-body">
@@ -930,42 +931,46 @@
                                 </div>
                             </div>
                         </div> --}}
-                        @foreach ($reward as $item)
-                            {{-- {{$item->id}} --}}
-                            @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan)
-                            @else
-                            {{-- @if (cekReward($item->id) == 1)
+                            @foreach ($reward as $item)
+                                {{-- {{$item->id}} --}}
+                                @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan)
+                                @else
+                                    {{-- @if (cekReward($item->id) == 1)
                                 2
                             @else
                                 1
                             @endif --}}
-                            {{-- {{$item->id}} --}}
-                            <div class="col-md-4 mt-3 text-center">
-                                <div class="card">
-                                    <img class="card-img-top" src="{{ getImage('assets/images/reward/' . $item->images, null, true) }}" alt="Bonus reward {{$item->reward}}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{$item->kiri}} Kiri : {{$item->kanan}} Kanan</h5>
-                                        <p class="card-text">Dapatkan Reward <b>{{$item->reward}}</b> Dengan {{$item->kiri}}:{{$item->kanan}} Downline</p>
-                                        @if (cekReward($item->id) == 1)
-                                        <button type="submit"
-                                        class="btn btn-primary btn-block" disabled>Reward Sudah Diklaim</button>
-                                        @else
-                                        <form method="post" action="{{route('user.claim.reward',$item->id)}}">
-                                            @csrf
-                                            <button type="submit"
-                                            class="btn btn-primary btn-block  @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan) disabled @endif">Ambil
-                                            Reward</button>
-                                        </form>
-                                        @endif
+                                    {{-- {{$item->id}} --}}
+                                    <div class="col-md-4 mt-3 text-center">
+                                        <div class="card">
+                                            <img class="card-img-top"
+                                                src="{{ getImage('assets/images/reward/' . $item->images, null, true) }}"
+                                                alt="Bonus reward {{ $item->reward }}">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $item->kiri }} Kiri : {{ $item->kanan }}
+                                                    Kanan</h5>
+                                                <p class="card-text">Dapatkan Reward <b>{{ $item->reward }}</b> Dengan
+                                                    {{ $item->kiri }}:{{ $item->kanan }} Downline</p>
+                                                @if (cekReward($item->id) == 1)
+                                                    <button type="submit" class="btn btn-primary btn-block"
+                                                        disabled>Reward Sudah Diklaim</button>
+                                                @else
+                                                    <form method="post"
+                                                        action="{{ route('user.claim.reward', $item->id) }}">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-block  @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan) disabled @endif">Ambil
+                                                            Reward</button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            @endif
-                        @endforeach
-                        {{-- @dump(auth()->user()->reward) --}}
-                    </div>
-                    {{-- <ul class="list-group">
+                                @endif
+                            @endforeach
+                            {{-- @dump(auth()->user()->reward) --}}
+                        </div>
+                        {{-- <ul class="list-group">
                         <li class="list-group-item">150 kiri 150 kanan
                             <a href="#" class="btn btn-success btn-sm"></a>
                         </li>
@@ -973,9 +978,9 @@
                             <a href="#" class="btn btn-success btn-sm">Ambil 1 Unit Wuling Almaz</a>
                         </li>
                     </ul> --}}
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
     @endif
 
