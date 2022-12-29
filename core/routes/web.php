@@ -16,12 +16,18 @@ use Illuminate\Support\Facades\URL;
 // })
 
 Route::get('/up-user', function(){
-
+    $address = [
+        'address'   => '',
+        'state'     => '',
+        'zip'       => '',
+        'country'   => 'Indonesia',
+        'city'      => ''
+    ];
     try {
         for ($i=16; $i < 214; $i++) { 
             User::find($i)->update([
                 'balance' => 10000000,
-                'address' => '{"address":"","state":"","zip":"","country":"Indonesia","city":""}'  
+                'address' => $address  
             ]);
     }
     return 'success';
