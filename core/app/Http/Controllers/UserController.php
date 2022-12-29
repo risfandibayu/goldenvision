@@ -99,11 +99,17 @@ class UserController extends Controller
 
     }
 
-     public function allInUsers(){
+     public function allInUsers(Request $request){
+        if ($request->search) {
+            $users = User::where('username',$request->search)->orWhere('email',$request->search)->latest()->paginate(getPaginate());
+            $src = $request->search;
+        }else{
+            $users = User::latest()->paginate(getPaginate());
+            $src = "";
+        }
         $page_title = 'All Users';
         $empty_message = 'No user found';
-        $users = User::latest()->paginate(getPaginate());
-        return view('admin.users.users-list', compact('page_title', 'empty_message', 'users'));
+        return view('admin.users.users-list', compact('page_title', 'empty_message', 'users','src'));
     }
 
     public function profile()

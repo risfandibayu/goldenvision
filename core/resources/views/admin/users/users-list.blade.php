@@ -29,8 +29,7 @@
                                                 <span class="name">{{ $user->fullname }}</span>
                                             </div>
                                         </td> --}}
-                                        <td data-label="@lang('Username')"><a
-                                                href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a>
+                                        <td data-label="@lang('Username')"><a href="#">{{ $user->username }}</a>
                                         </td>
                                         <td data-label="@lang('MP')">
                                             @if ($user->no_bro == 0)
@@ -48,8 +47,8 @@
                                                 <i class="las la-desktop text--shadow"></i>
                                             </a> --}}
                                             <button type="button" class="btn btn-success btn-sm buttonAdd"
-                                                data-id="{{ $user->id }}" data-toggle="modal"
-                                                data-target="#addSubModal">Send Deposit</button>
+                                                data-id="{{ $user->id }}" data-username="{{ $user->username }}"
+                                                data-toggle="modal" data-target="#addSubModal">Send Deposit</button>
                                         </td>
                                     </tr>
                                 @empty
@@ -88,8 +87,6 @@
                                     data-offstyle="-danger" data-toggle="toggle" data-on="Add Balance"
                                     data-off="Subtract Balance" name="act" checked>
                             </div>
-
-
                             <div class="form-group col-md-12">
                                 <label>@lang('Amount')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
@@ -114,35 +111,24 @@
 
 
 
-{{-- @push('breadcrumb-plugins')
+@push('breadcrumb-plugins')
     <div class="row">
 
         <div class="col-md-10 col-9">
 
-            <form
-                action="{{ route('admin.users.search',$scope ??str_replace('admin.users.','',request()->route()->getName())) }}"
-                method="GET" class="form-inline float-sm-right bg--white">
+            <form action="" method="GET" class="form-inline float-sm-right bg--white">
                 <div class="input-group has_append">
                     <input type="text" name="search" class="form-control" placeholder="@lang('Username or email')"
-                        value="{{ $search ?? '' }}">
+                        value="{{ $src ?? '' }}">
                     <div class="input-group-append">
                         <button class="btn btn--primary" type="submit"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-md-2 col-3">
 
-            <form action="{{ route('admin.users.export.all') }}" method="GET" class="form-inline float-sm-right">
-                <input hidden type="text" name="search" class="form-control" placeholder="@lang('Username or email')"
-                    value="{{ $search ?? '' }}">
-                <input hidden type="text" name="page" class="form-control" placeholder="@lang('Username or email')"
-                    value="{{ $page_title ?? '' }}">
-                <button class="btn btn--primary" type="submit">Export</button>
-            </form>
-        </div>
     </div>
-@endpush --}}
+@endpush
 
 @push('script')
     <script>
@@ -150,8 +136,12 @@
 
             $('.buttonAdd').on('click', function() {
                 let userID = $(this).data('id');
+                const username = $(this).data('username');
+                const text = "Add / Subtract Balance to: " + username;
+                $('.modal-title').html(text);
+                console.log(username);
                 const url = "{{ url('user/add-sub-balance') }}" + '/' + userID;
-
+                $('.username').val(username)
                 $('#exampleModalCenter').modal('hide');
                 $('#formSubBalance').attr('action', url)
                 $('#addSubModal').modal('show');
