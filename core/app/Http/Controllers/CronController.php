@@ -147,7 +147,7 @@ class CronController extends Controller
                             # code...
                             continue;
                         }
-                        if ($weaks >= 30) {
+                        if ($weaks >= 30 || $uex->is_gold == 1) {
                             # code...
                             // continue;
                             $pairs = intval($weak);

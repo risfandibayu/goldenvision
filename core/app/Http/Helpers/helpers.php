@@ -1159,7 +1159,7 @@ function referralCommission2($user_id, $details)
         $plan = Plan::find($refer->plan_id);
         if ($plan) {
             $uex = UserExtra::where('user_id',$refer->id)->first();
-            if ($uex->left > 3 && $uex->right > 3) {
+            if ($uex->left > 3 && $uex->right > 3 || $uex->is_gold == 1) {
                 # code...
                 $amount = 20000;
             }else{
