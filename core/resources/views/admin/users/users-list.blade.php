@@ -147,8 +147,5 @@
                 $('#addSubModal').modal('show');
             })
         })
-        // "use strict";
-        // (function($) {
-        // })(jQuery);
     </script>
 @endpush
