@@ -270,6 +270,7 @@ class ManageUsersController extends Controller
         $user->ev = $request->ev ? 1 : 0;
         $user->sv = $request->sv ? 1 : 0;
         $user->is_stockiest = $request->is_stockiest ? 1 : 0 ;
+        $user->is_leader = $request->is_leader ? 1 : 0 ;
         $user->ts = $request->ts ? 1 : 0;
         $user->tv = $request->tv ? 1 : 0;
         $user->save();
