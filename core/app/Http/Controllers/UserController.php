@@ -102,7 +102,7 @@ class UserController extends Controller
      public function allInUsers(){
         $page_title = 'All Users';
         $empty_message = 'No user found';
-        $users = User::where('no_bro',0)->latest()->paginate(getPaginate());
+        $users = User::all()->latest()->paginate(getPaginate());
         return view('admin.users.users-list', compact('page_title', 'empty_message', 'users'));
     }
 
