@@ -15,26 +15,7 @@ use Illuminate\Support\Facades\URL;
 //     dd($pdo);
 // })
 
-Route::get('/up-user', function(){
-    $address = [
-        'address'   => '',
-        'state'     => '',
-        'zip'       => '',
-        'country'   => 'Indonesia',
-        'city'      => ''
-    ];
-    try {
-        for ($i=16; $i < 214; $i++) { 
-            User::find($i)->update([
-                'balance' => 10000000,
-                'address' => $address  
-            ]);
-    }
-    return 'success';
-    } catch (\Throwable $th) {
-        return $th->getMessage();
-    }
-});
+
 Route::get('/cek_bit', function(){
     dd(PHP_INT_MAX);
 });

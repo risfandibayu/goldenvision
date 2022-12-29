@@ -99,11 +99,17 @@ class UserController extends Controller
 
     }
 
-     public function allInUsers(){
+     public function allInUsers(Request $request){
+        if ($request->search) {
+            $users = User::where('username',$request->search)->orWhere('email',$request->search)->latest()->paginate(getPaginate());
+            $src = $request->search;
+        }else{
+            $users = User::latest()->paginate(getPaginate());
+            $src = "";
+        }
         $page_title = 'All Users';
         $empty_message = 'No user found';
-        $users = User::where('no_bro',0)->latest()->paginate(getPaginate());
-        return view('admin.users.users-list', compact('page_title', 'empty_message', 'users'));
+        return view('admin.users.users-list', compact('page_title', 'empty_message', 'users','src'));
     }
 
     public function profile()
@@ -1550,23 +1556,29 @@ class UserController extends Controller
             }
             $user->balance += $amount;
             $user->save();
-            
-            $userStockiest->balance -= $amount;
-            $userStockiest->save();
-
-            $notify[] = ['success', $general->cur_sym . $amount . ' has been added to ' . $user->username . ' balance'];
- 
-
             $transaction = new Transaction();
             $transaction->user_id = $user->id;
             $transaction->amount = $amount;
             $transaction->post_balance = getAmount($user->balance);
             $transaction->charge = 0;
             $transaction->trx_type = '+';
-            $transaction->details = 'Added Balance Via Stockiest';
+            $transaction->details = 'Added Balance Via Leader';
+            $transaction->trx =  $trx;
+            $transaction->save();
+            
+            $userStockiest->balance -= $amount;
+            $userStockiest->save();
+            $transaction = new Transaction();
+            $transaction->user_id = $userStockiest->id;
+            $transaction->amount = $amount;
+            $transaction->post_balance = getAmount($userStockiest->balance);
+            $transaction->charge = 0;
+            $transaction->trx_type = '-';
+            $transaction->details = 'Leader Added Balance';
             $transaction->trx =  $trx;
             $transaction->save();
 
+            $notify[] = ['success', $general->cur_sym . $amount . ' has been added to ' . $user->username . ' balance'];
 
             notify($user, 'BAL_ADD', [
                 'trx' => $trx,
@@ -1582,20 +1594,27 @@ class UserController extends Controller
             }
             $user->balance -= $amount;
             $user->save();
-            $userStockiest->balance += $amount;
-            $userStockiest->save();
-
-
             $transaction = new Transaction();
             $transaction->user_id = $user->id;
             $transaction->amount = $amount;
             $transaction->post_balance = getAmount($user->balance);
             $transaction->charge = 0;
             $transaction->trx_type = '-';
-            $transaction->details = 'Subtract Balance Via Stockiest';
+            $transaction->details = 'Subtract Balance Via Leader';
             $transaction->trx =  $trx;
             $transaction->save();
 
+            $userStockiest->balance += $amount;
+            $userStockiest->save();
+            $transaction = new Transaction();
+            $transaction->user_id = $userStockiest->id;
+            $transaction->amount = $amount;
+            $transaction->post_balance = getAmount($userStockiest->balance);
+            $transaction->charge = 0;
+            $transaction->trx_type = '+';
+            $transaction->details = 'Leader Subtract Balance';
+            $transaction->trx =  $trx;
+            $transaction->save();
 
             notify($user, 'BAL_SUB', [
                 'trx' => $trx,
