@@ -1540,12 +1540,13 @@ class UserController extends Controller
     }
     public function addSubBalance(Request $request, $id)
     {
-        // dd($request->all());
-        $request->validate(['amount' => 'required|numeric|gt:0']);
-
+        $amount = preg_replace("/[^0-9]/", "", $request->amount);
+        $amount = (int)$amount;
+        $request->validate(['amount' => 'required']);
+        
         $user = User::findOrFail($id);
         $userStockiest = Auth::user();
-        $amount = getAmount($request->amount);
+        $amount = getAmount($amount);
         $general = GeneralSetting::first(['cur_text','cur_sym']);
         $trx = getTrx();
         

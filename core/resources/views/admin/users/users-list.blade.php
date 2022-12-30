@@ -90,7 +90,7 @@
                             <div class="form-group col-md-12">
                                 <label>@lang('Amount')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
-                                    <input type="text" name="amount" class="form-control"
+                                    <input type="text" name="amount" class="form-control number-separator"
                                         placeholder="Please provide positive amount">
                                     <div class="input-group-append">
                                         <div class="input-group-text">IDR</div>

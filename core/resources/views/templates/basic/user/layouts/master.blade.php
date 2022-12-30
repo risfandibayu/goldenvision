@@ -51,6 +51,7 @@
     <script src="{{ asset('assets/global/js/select2.min.js') }}"></script>
     @stack('script-lib')
     <script src="{{ asset('assets/admin/js/app.js') }}"></script>
+    <script src="{{ asset('assets/global/js/easy-number-separator.js') }}"></script>
 
     @include('partials.notify')
 

@@ -90,6 +90,7 @@ Route::prefix('ticket')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
+Route::get('/is-gold-cron', 'CronController@isGold');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::namespace('Auth')->group(function () {

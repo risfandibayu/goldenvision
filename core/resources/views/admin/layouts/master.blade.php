@@ -47,6 +47,7 @@
 
     <!-- jQuery library -->
     <script src="{{ asset('assets/global/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/global/js/easy-number-separator.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <!-- bootstrap js -->
     <script src="{{ asset('assets/admin/js/vendor/bootstrap.bundle.min.js') }}"></script>
