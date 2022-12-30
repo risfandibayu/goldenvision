@@ -141,66 +141,66 @@
                         <span class="menu-title">@lang('Balance Transfer')</span>
                     </a>
                 </li> --}}
-                {{-- <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{menuActive('user.report*',3)}} my-2">
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('user.report*', 3) }} my-2">
                         <i class="menu-icon las la-exchange-alt"></i>
                         <span class="menu-title">@lang('Reports') / @lang('Logs')</span>
                     </a>
-                    <div class="sidebar-submenu {{menuActive('user.report*',2)}} ">
+                    <div class="sidebar-submenu {{ menuActive('user.report*', 2) }} ">
                         <ul>
-                            <li class="sidebar-menu-item {{menuActive('user.report.transactions')}} ">
-                                <a href="{{route('user.report.transactions')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.transactions') }} ">
+                                <a href="{{ route('user.report.transactions') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Transactions Log')</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-menu-item {{menuActive('user.report.deposit')}}">
-                                <a href="{{route('user.report.deposit')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.deposit') }}">
+                                <a href="{{ route('user.report.deposit') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Deposit Log')</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-menu-item {{menuActive('user.report.withdraw')}}">
-                                <a href="{{route('user.report.withdraw')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.withdraw') }}">
+                                <a href="{{ route('user.report.withdraw') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Withdraw Log')</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-menu-item {{menuActive('user.report.invest')}}">
-                                <a href="{{route('user.report.invest')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.invest') }}">
+                                <a href="{{ route('user.report.invest') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Invest Log')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{menuActive('user.report.exchangeLog')}}">
-                                <a href="{{route('user.report.exchangeLog')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.exchangeLog') }}">
+                                <a href="{{ route('user.report.exchangeLog') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Gold Exchange Log')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{menuActive('user.report.deliveryLog')}}">
-                                <a href="{{route('user.report.deliveryLog')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.deliveryLog') }}">
+                                <a href="{{ route('user.report.deliveryLog') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Gold Delivery Log')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{menuActive('user.report.BroDeliveryLog')}}">
-                                <a href="{{route('user.report.BroDeliveryLog')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.BroDeliveryLog') }}">
+                                <a href="{{ route('user.report.BroDeliveryLog') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('MP Pack Delivery Log')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{menuActive('user.report.refCom')}}">
-                                <a href="{{route('user.report.refCom')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.refCom') }}">
+                                <a href="{{ route('user.report.refCom') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Referral Commissions')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{menuActive('user.report.binaryCom')}}">
-                                <a href="{{route('user.report.binaryCom')}}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.report.binaryCom') }}">
+                                <a href="{{ route('user.report.binaryCom') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Binary Commission')</span>
                                 </a>
@@ -208,7 +208,7 @@
 
                         </ul>
                     </div>
-                </li> --}}
+                </li>
 
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.twofactor') }}">
                     <a href="{{ route('user.twofactor') }}" class="nav-link">
