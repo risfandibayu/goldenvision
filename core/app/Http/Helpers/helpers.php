@@ -1289,12 +1289,12 @@ function showSingleUserinTree($user)
         //     $planName = $user->plan->name;
         // }
         if($user->userExtra->is_gold){
-            $userType = "gold-user";
+            $userType = "paid-user";
             $stShow = "Paid";
             $planName = '';
             $test = $user->userExtra->is_gold;
         }else{
-             $userType = "silver-user";
+             $userType = "free-user";
              $stShow = "Paid";
             $planName = '';
             $test = $user->userExtra->is_gold;
