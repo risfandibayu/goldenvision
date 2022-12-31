@@ -88,9 +88,17 @@
                                     data-off="Subtract Balance" name="act" checked>
                             </div>
                             <div class="form-group col-md-12">
+                                <label>@lang('Titik')<span class="text-danger">*</span></label>
+                                <div class="input-group has_append">
+                                    <input type="text" id="titik" class="titik form-control number-separator"
+                                        placeholder="">
+
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
                                 <label>@lang('Amount')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
-                                    <input type="text" name="amount" class="form-control number-separator"
+                                    <input type="text" name="amount" class="amount form-control number-separator"
                                         placeholder="Please provide positive amount">
                                     <div class="input-group-append">
                                         <div class="input-group-text">IDR</div>
@@ -139,13 +147,22 @@
                 const username = $(this).data('username');
                 const text = "Add / Subtract Balance to: " + username;
                 $('.modal-title').html(text);
-                console.log(username);
                 const url = "{{ url('user/add-sub-balance') }}" + '/' + userID;
                 $('.username').val(username)
                 $('#exampleModalCenter').modal('hide');
                 $('#formSubBalance').attr('action', url)
                 $('#addSubModal').modal('show');
             })
+            $('.titik').on('keyup', function() {
+                const num = $(this).val();
+                console.log(num);
+                const angka = numberWithCommas(num * 350000);
+                $(".amount").val(angka);
+            })
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
         })
     </script>
 @endpush

@@ -49,9 +49,9 @@
         }
 
         /* .btn-11:hover {
-                                                                text-decoration: none;
-                                                                color: #fff;
-                                                            } */
+                                                                                text-decoration: none;
+                                                                                color: #fff;
+                                                                            } */
         .btn-11:before {
             position: absolute;
             content: '';
@@ -65,14 +65,14 @@
         }
 
         /* .btn-11:hover{
-                                                              opacity: .7;
-                                                            } */
+                                                                              opacity: .7;
+                                                                            } */
         /* .btn-11:active{
-                                                              box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-                                                                          -4px -4px 6px 0 rgba(116, 125, 136, .2),
-                                                                inset -4px -4px 6px 0 rgba(255,255,255,.2),
-                                                                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-                                                            } */
+                                                                              box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+                                                                                          -4px -4px 6px 0 rgba(116, 125, 136, .2),
+                                                                                inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                                                                                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+                                                                            } */
 
 
         @-webkit-keyframes shiny-btn1 {
@@ -116,7 +116,7 @@
                                 class="text--small">@lang('Joined At ')<strong>{{ showDateTime(
                                     $user->created_at,
                                     'd M, Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
                                 ) }}</strong></span>
                         </div>
                     </div>
@@ -547,7 +547,7 @@
                                         value="{{ $user->address->address }}">
                                     <small class="form-text text-muted"><i class="las la-info-circle"></i>
                                         @lang('House
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            number, street address')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            number, street address')
                                     </small>
                                 </div>
                             </div>
@@ -858,12 +858,20 @@
                                     data-offstyle="-danger" data-toggle="toggle" data-on="Add Balance"
                                     data-off="Subtract Balance" name="act" checked>
                             </div>
+                            <div class="form-group col-md-12">
+                                <label>@lang('Titik')<span class="text-danger">*</span></label>
+                                <div class="input-group has_append">
+                                    <input type="text" id="titik" class="form-control number-separator"
+                                        placeholder="">
 
+                                </div>
+                            </div>
 
                             <div class="form-group col-md-12">
                                 <label>@lang('Amount')<span class="text-danger">*</span></label>
                                 <div class="input-group has_append">
-                                    <input type="text" name="amount" class="form-control number-separator"
+                                    <input type="text" name="amount" id="amountId"
+                                        class="form-control number-separator"
                                         placeholder="Please provide positive amount">
                                     <div class="input-group-append">
                                         <div class="input-group-text">{{ $general->cur_text }}</div>
@@ -930,6 +938,15 @@
         'use strict';
         (function($) {
             $("select[name=country]").val("{{ @$user->address->country }}");
+            $('#titik').on('keyup', function() {
+                const num = $(this).val();
+                const angka = numberWithCommas(num * 350000);
+                $("#amountId").val(angka);
+            })
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
         })(jQuery)
     </script>
 @endpush

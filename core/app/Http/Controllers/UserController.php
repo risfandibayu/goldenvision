@@ -1170,6 +1170,14 @@ class UserController extends Controller
         $user_extras->save();
         updatePaidCount2($user->id);
 
+        $userrek = rekening::where('user_id',auth()->user()->id)->first();
+        $rek = new rekening();
+        $rek->user_id       = $user->id;
+        $rek->nama_bank     = $userrek->nama_bank;
+        $rek->nama_akun     = $userrek->nama_akun;
+        $rek->no_rek        = $userrek->no_rek;
+        $rek->kota_cabang   = $userrek->kota_cabang;
+        $rek->save();
         // updateFreeCount($user->id);
         // dd($user);
         $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
@@ -1563,7 +1571,7 @@ class UserController extends Controller
             $transaction->post_balance = getAmount($user->balance);
             $transaction->charge = 0;
             $transaction->trx_type = '+';
-            $transaction->details = 'Added Balance Via Leader';
+            $transaction->details = 'Added Balance Via Leader: '.$userStockiest->username;
             $transaction->trx =  $trx;
             $transaction->save();
             
@@ -1575,7 +1583,7 @@ class UserController extends Controller
             $transaction->post_balance = getAmount($userStockiest->balance);
             $transaction->charge = 0;
             $transaction->trx_type = '-';
-            $transaction->details = 'Leader Added Balance';
+            $transaction->details = 'Leader Added Balance to: '.$user->username;
             $transaction->trx =  $trx;
             $transaction->save();
 
@@ -1601,7 +1609,7 @@ class UserController extends Controller
             $transaction->post_balance = getAmount($user->balance);
             $transaction->charge = 0;
             $transaction->trx_type = '-';
-            $transaction->details = 'Subtract Balance Via Leader';
+            $transaction->details = 'Subtract Balance By Leader: '.$userStockiest->username;
             $transaction->trx =  $trx;
             $transaction->save();
 
@@ -1613,7 +1621,7 @@ class UserController extends Controller
             $transaction->post_balance = getAmount($userStockiest->balance);
             $transaction->charge = 0;
             $transaction->trx_type = '+';
-            $transaction->details = 'Leader Subtract Balance';
+            $transaction->details = 'Leader Subtract Balance: '.$user->username;
             $transaction->trx =  $trx;
             $transaction->save();
 
