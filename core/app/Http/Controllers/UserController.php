@@ -95,6 +95,7 @@ class UserController extends Controller
         $user = Auth::user();
         $data['page_title']     = "Referals Tree";
         $data['referrals']      = User::userTree($user->id); 
+        // dd($data);
         return view($this->activeTemplate . 'user.referals', $data);
 
     }
@@ -1169,6 +1170,9 @@ class UserController extends Controller
         $user_extras->user_id = $user->id;
         $user_extras->save();
         updatePaidCount2($user->id);
+        $details = $user->username . ' Placed Successfully';
+
+        referralCommission2($user->id, $details);
 
         // updateFreeCount($user->id);
         // dd($user);

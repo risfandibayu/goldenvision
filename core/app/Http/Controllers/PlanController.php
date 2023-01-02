@@ -246,7 +246,7 @@ class PlanController extends Controller
             //     treeComission($user->id, $plan->tree_com, $details);
             // }
 
-            referralCommission2($user->id, $details,$request->qty);
+            referralCommission2($user->id, $details);
 
             $notify[] = ['success', 'Purchased ' . $plan->name . ' Successfully'];
             return redirect()->route('user.home')->withNotify($notify);

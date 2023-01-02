@@ -1150,7 +1150,7 @@ function referralCommission($user_id, $details)
 
 }
 
-function referralCommission2($user_id, $details,$qty)
+function referralCommission2($user_id, $details)
 {
 
     $user = User::find($user_id);
@@ -1161,9 +1161,9 @@ function referralCommission2($user_id, $details,$qty)
             $uex = UserExtra::where('user_id',$refer->id)->first();
             if ($uex->left > 3 && $uex->right > 3 || $uex->is_gold == 1) {
                 # code...
-                $amount = 20000 * $qty;
+                $amount = 20000;
             }else{
-                $amount = 15000 * $qty;
+                $amount = 15000;
             }
 
             $refer->balance += $amount;
