@@ -1279,14 +1279,26 @@ function showSingleUserinTree($user)
 {
     $res = '';
     if ($user) {
-        if ($user->plan_id == 0) {
-            $userType = "free-user";
-            $stShow = "Free";
-            $planName = '';
-        } else {
+        // if ($user->plan_id == 0) {
+        //     $userType = "free-user";
+        //     $stShow = "Free";
+        //     $planName = '';
+        // } else {
+        //     $userType = "paid-user";
+        //     $stShow = "Paid";
+        //     $planName = $user->plan->name;
+        // }
+        if($user->userExtra->is_gold){
             $userType = "paid-user";
             $stShow = "Paid";
-            $planName = $user->plan->name;
+            $planName = '';
+            $test = $user->userExtra->is_gold;
+        }else{
+             $userType = "free-user";
+             $stShow = "Paid";
+            $planName = '';
+            $test = $user->userExtra->is_gold;
+
         }
 
         $img = getImage('assets/images/user/profile/'. $user->image, null, true);
@@ -1327,13 +1339,24 @@ function showSingleUserinTree($user)
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
         $res .= "<div class=\"user \" type=\"button\" >";
-        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType showDetails\" $extraData>";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $test  showDetails\" $extraData>";
+        
         if (auth()->guard('admin')->user()) {
-        $res .= "<p class=\"user-name\">$user->username</p>";
+            // if(auth()->user()->userExtra->is_gold){
+            //     $res .= "<span class=\"badge badge-warning mt-n3\">$user->username</span>";
+            // }else{
+            //     $res .= "<span class=\"badge badge-light\">$user->username</span>";
+            // }
+            $res .= "<p class=\"user-name\">$user->username</p>";
         } else {
+            // if(auth()->user()->userExtra->is_gold){
+            //     $res .= "<span class=\"badge badge-warning mt-n3\">$user->username</span>";
+            // }else{
+            //     $res .= "<span class=\"badge badge-light\">$user->username</span>";
+            // }
             $res .= "<p class=\"user-name\">$user->username</p>";
         }
-            $res .= "<p class=\"user-name\" style=\"padding-top:20px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\">Explore Tree</a></p>";
+        $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\">Explore Tree</a></p>";
 
     } else {
         $img = getImage('assets/images/user/profile/', null, true);

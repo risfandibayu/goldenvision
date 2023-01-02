@@ -517,10 +517,15 @@ class CronController extends Controller
     //     // dd($dd);
     // }
 
-    public function updateUserAddress(){
-
-        for ($i=16; $i < 213; $i++) { 
-            echo $i;
+    public function isGold(){
+        $user = UserExtra::where('is_gold',0)->get();
+        foreach ($user as $key => $value) {
+            $ex = UserExtra::find($value->id);
+            if($ex->left >= 3 && $ex->right >= 3){
+                $ex->update([
+                    'is_gold' => 1
+                ]);
+            }
         }
     }
 }

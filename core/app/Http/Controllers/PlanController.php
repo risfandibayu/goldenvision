@@ -69,6 +69,7 @@ class PlanController extends Controller
             'plan_id' => 'required|integer',
             'referral' => 'required',
             'position' => 'required',
+            'qty' => 'required',
         ]);
         // dd($request->all());
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
@@ -121,13 +122,13 @@ class PlanController extends Controller
 
             $pos = getPosition($ref_user->id, $request->position);
             $user->no_bro       = generateUniqueNoBro();
-            $user->ref_id= $sponsor->id; // ref id = upline
-            $user->pos_id= $ref_user->id; //pos id = sponsor
-            $user->position= $request->position;
-            $user->plan_id = $plan->id;
-            $user->balance -= ($plan->price * $request->qty);
+            $user->ref_id       = $sponsor->id; // ref id = sponsor
+            $user->pos_id       = $ref_user->id; //pos id = upline
+            $user->position     = $request->position;
+            $user->plan_id      = $plan->id;
+            $user->balance      -= ($plan->price * $request->qty);
             $user->total_invest += ($plan->price * $request->qty);
-            $user->bro_qty = $request->qty - 1;
+            $user->bro_qty      = $request->qty - 1;
             $user->save();
 
 
@@ -238,6 +239,7 @@ class PlanController extends Controller
             if ($oldPlan == 0) {
                 updatePaidCount2($user->id);
             }
+            
             $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
 
             // updateBV($user->id, $plan->bv, $details);

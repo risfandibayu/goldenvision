@@ -310,10 +310,11 @@ class ManageUsersController extends Controller
 
     public function addSubBalance(Request $request, $id)
     {
-        $request->validate(['amount' => 'required|numeric|gt:0']);
-
+        $request->validate(['amount' => 'required']);
+        $amount = preg_replace("/[^0-9]/", "", $request->amount);
+        $amount = (int)$amount;
         $user = User::findOrFail($id);
-        $amount = getAmount($request->amount);
+        $amount = getAmount($amount);
         $general = GeneralSetting::first(['cur_text','cur_sym']);
         $trx = getTrx();
 

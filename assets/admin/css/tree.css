@@ -153,7 +153,11 @@
         height: 0;
     }
     .user .user-name {
-        display: none;
+        /* display: none; */
+         font-size: 9px;
+    }
+    .user .user-btn{
+         display: none;
     }
 }
 
@@ -300,10 +304,16 @@
     z-index: 2;
 }
 .paid-user {
-    border: 5px solid #2ecc71;
+    border: 5px solid #FFD700;
 }
 .free-user {
-    border: 5px solid #101536;
+    border: 5px solid #C0C0C0;
+}
+.gold-user {
+    border: 5px solid #FFD700;
+}
+.silver-user {
+    border: 5px solid #C0C0C0;
 }
 .no-user {
     border: 5px solid #ddd;
