@@ -6,6 +6,7 @@ use App\Models\brodev;
 use App\Models\GoldExchange;
 use App\Models\sendgold;
 use App\Models\Transaction;
+use App\Models\UserGold;
 use App\Models\Withdrawal;
 use App\Models\WithdrawMethod;
 use Illuminate\Http\Request;
@@ -127,6 +128,16 @@ class UserReportController extends Controller
         return view($this->activeTemplate . 'user.deposit_history', $data);
     }
 
+    public function dailyGoldLog(Request $request)
+    {
+        $user = Auth::user();
+        $data['page_title'] = 'Daily Gold Log';
+        $data['logs'] = UserGold::where('user_id',$user->id)->latest()->paginate(getPaginate());
+        $data['empty_message'] = 'No history found.';
+
+
+        return view($this->activeTemplate . 'user.gold_history', $data);
+    }
 
     public function withdrawLog(Request $request)
     {

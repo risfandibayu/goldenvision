@@ -539,6 +539,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
                 Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');
                 Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');
+                Route::get('report/gold/log', 'UserReportController@dailyGoldLog')->name('report.gold');
                 Route::get('report/invest/log', 'UserReportController@investLog')->name('report.invest');
                 Route::get('report/transactions/log', 'UserReportController@transactions')->name('report.transactions');
                 Route::get('report/withdraw/log', 'UserReportController@withdrawLog')->name('report.withdraw');
@@ -591,7 +592,7 @@ Route::get('/blog/details/{slug}/{id}', 'SiteController@singleBlog')->name('sing
 
 Route::get('/home2', 'SiteController@index2')->name('home2');
 Route::get('/', 'SiteController@index')->name('home'); // Disabled temporary
-Route::redirect('/', '/login');
+Route::redirect('/','/login' );
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
 
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholderImage');

@@ -494,7 +494,7 @@
         </div>
     </div>
     @endif --}}
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center text-center">
             <div class="dashboard-w1  h-100 w-100 bg--gradi-51 b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-gem"></i>
@@ -508,19 +508,19 @@
                         <span class="text--small">Equal To {{ nb($goldBonus) }} IDR</span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small ">{{ auth()->user()->total_daily_golds }} Gr Daily Gold</span>
+                        <span class="text--small ">{{ auth()->user()->total_daily_golds }}gr Daily</span>
                         |
-                        <span class="text--small ">{{ auth()->user()->total_weekly_golds }} Gr Weekly Gold</span>
+                        <span class="text--small ">{{ auth()->user()->total_weekly_golds }}gr Weekly</span>
                     </div>
                 </div>
                 <br>
-                <a href="{{ route('user.my.tree') }}"
+                <a href="{{ route('user.report.gold') }}"
                     class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
 
         @if (auth()->user()->plan_id != 0)
-            <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+            <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center text-center">
                 <div class="dashboard-w1  h-100 w-100 bg--gradi-18 b-radius--10 box-shadow">
                     {{-- <div class="details">
                 <div class="numbers">
@@ -552,7 +552,7 @@
                 </div>
             </div>
 
-            {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+            {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center text-center">
         <div class="dashboard-w1  h-100 w-100 bg--gradi-18 b-radius--10 box-shadow">
             <div class="details">
                 <div class="numbers">
@@ -605,8 +605,8 @@
             </div>
         @endif --}}
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
-            <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+            <div class="dashboard-w1 h-100 w-100 bg--success b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-wallet"></i>
                 </div>
@@ -625,8 +625,8 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
-            <div class="dashboard-w1 bg--primary b-radius--10 box-shadow">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+            <div class="dashboard-w1 h-100 w-100 bg--primary b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-cloud-upload-alt "></i>
                 </div>
@@ -645,7 +645,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--10 b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-cloud-download-alt"></i>
@@ -664,7 +664,7 @@
                     class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--teal b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-check"></i>
@@ -683,7 +683,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--warning b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-spinner"></i>
@@ -702,7 +702,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--danger b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-ban"></i>
@@ -721,7 +721,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las la-money-bill-wave"></i>
@@ -741,26 +741,9 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
-            <div class="dashboard-w1 bg--12 b-radius--10 box-shadow">
-                <div class="icon">
-                    <i class="las la-money-bill"></i>
-                </div>
-                <div class="details">
-                    <div class="numbers">
-                        <span class="amount">{{ getAmount(auth()->user()->total_ref_com) }}</span>
-                        <span class="currency-sign">{{ $general->cur_text }}</span>
-                    </div>
-                    <div class="desciption">
-                        <span class="text--small">@lang('Total Referral Commission')</span>
-                    </div>
-                    <a href="{{ route('user.report.refCom') }}"
-                        class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--info b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-tree"></i>
@@ -779,8 +762,64 @@
                     class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
-
-        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+            <div class="dashboard-w1 bg--12 b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="las la-money-bill"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="amount">{{ nb(getAmount(auth()->user()->total_ref_com)) }}</span>
+                        <span class="currency-sign">{{ $general->cur_text }}</span>
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Bonus Sponsor')</span>
+                    </div>
+                    <a href="{{ route('user.report.refCom') }}"
+                        class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+            <div class="dashboard-w1 bg--info b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="fa fa-tree"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="amount">{{ nb(getAmount(auth()->user()->total_ref_com)) }}</span>
+                        <span class="currency-sign">{{ $general->cur_text }}</span>
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Bonus Sponsor')</span>
+                    </div>
+                </div>
+                <br>
+                <a href="{{ route('user.report.binaryCom') }}"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
+            </div>
+        </div> --}}
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+            <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="fa fa-tree"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span
+                            class="amount">{{ nb(getAmount(auth()->user()->total_binary_com + auth()->user()->total_ref_com)) }}</span>
+                        <span class="currency-sign">{{ $general->cur_text }}</span>
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Bonus All')</span>
+                    </div>
+                </div>
+                <br>
+                <a href="{{ route('user.report.binaryCom') }}"
+                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
+            </div>
+        </div>
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--3 b-radius--10 box-shadow">
             <div class="icon">
                 <i class="las la-users"></i>
@@ -798,7 +837,7 @@
         </div>
     </div> --}}
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--15 b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-arrow-circle-left"></i>
@@ -820,7 +859,7 @@
 
 
 
-        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--17 b-radius--10 box-shadow">
             <div class="icon">
                 <i class="las la-cart-arrow-down"></i>
@@ -840,7 +879,7 @@
     </div>
 
 
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--19 b-radius--10 box-shadow">
             <div class="icon">
                 <i class="las la-arrow-alt-circle-left"></i>
@@ -858,7 +897,7 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--11 b-radius--10 box-shadow">
             <div class="icon">
                 <i class="las la-arrow-alt-circle-right"></i>
@@ -877,7 +916,7 @@
     </div>
 
 
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--13 b-radius--10 box-shadow">
             <div class="icon">
                 <i class="las la-hand-holding-usd"></i>
