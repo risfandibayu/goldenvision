@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
 use Carbon\Carbon;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -517,7 +518,7 @@ class CronController extends Controller
     //     // dd($dd);
     // }
 
-    public function isGold(){
+    public function oldGold(){
         $user = UserExtra::where('is_gold',0)->get();
         foreach ($user as $key => $value) {
             $ex = UserExtra::find($value->id);
@@ -528,4 +529,39 @@ class CronController extends Controller
             }
         }
     }
+    public function isGold(){
+        $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',0)->get();
+        $record = 0;
+        $true = 0;
+        $false = 0;
+        foreach ($users as $key => $value) {
+            $userID = $value->id;
+            $user = User::where('ref_id',$userID)->get();
+            $kiri = 0;
+            $kanan = 0;
+            foreach ($user as $key => $value) {
+                if($value->position==1){
+                    $kiri += 1;
+                }elseif ($value->position==2) {
+                    $kanan += 1;
+                }
+                
+            }
+            $userex = UserExtra::where('user_id',$userID)->first();
+            if($kiri >= 3 && $kanan >= 3){
+                $userex->update([
+                    'is_gold'   =>1,
+                ]);
+                $true += 1;
+            }
+            $record += 1;
+        }
+        return [
+            'status'=>'success',
+            'record'=> $record,
+            'gold'  => $true,
+        ];
+    }
+
+
 }
