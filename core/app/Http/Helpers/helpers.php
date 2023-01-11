@@ -1109,6 +1109,35 @@ function treeComission($id, $amount, $details)
 
 }
 
+function treeFilter($id, $upid)
+{
+    $fromUser = User::find($id);
+
+    if($id==$upid){
+        return true;
+    }
+
+    while ($id != "" || $id != "0") {
+        if (isUserExists($id)) {
+            $posid = getPositionId($id);
+            if ($posid == "0") {
+                break;
+            }
+
+            $posUser = User::find($posid);
+            if ($posid == $upid) {
+                return true;
+                break;
+            }
+            $id = $posid;
+        } else {
+            break;
+        }
+    }
+    return false;
+
+}
+
 function referralCommission($user_id, $details)
 {
 

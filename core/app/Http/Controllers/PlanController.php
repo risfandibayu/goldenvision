@@ -98,9 +98,23 @@ class PlanController extends Controller
 
         $user = User::find(Auth::id());
         $ref_user = User::where('no_bro', $request->referral)->first();
-        if ($ref_user == null) {
+        if ($ref_user == null && $request->referral) {
             $notify[] = ['error', 'Invalid Upline MP Number.'];
             return back()->withNotify($notify);
+        }
+        if ($ref_user) {
+            # code...
+            $cek_pos = User::where('pos_id', $ref_user->id)->where('position',$request->position)->first();
+    
+            if(!treeFilter($ref_user->id,$ref_user->id)){
+                $notify[] = ['error', 'Refferal and Upline BRO number not in the same tree.'];
+                return back()->withNotify($notify);
+            }
+            
+            if ($cek_pos) {
+                $notify[] = ['error', 'Node you input is already filled.'];
+                return back()->withNotify($notify);
+            }
         }
         $sponsor = User::where('no_bro', $request->sponsor)->first();
         if (!$sponsor) {

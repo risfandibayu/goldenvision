@@ -72,10 +72,10 @@
                                         required>
                                 </div>
                                 <div class="col-6">
-                                    <label for="ref_name" class="form--label-2">@lang('Referral MP Number (Upline)')</label>
+                                    <label for="ref_name" class="form--label-2">@lang('Referral MP Number (Upline)')<small>(Optional)</small></label>
                                     <input type="text" name="referral" class="referral form-control form--control-2"
-                                        value="{{ old('referral') }}" id="ref_name" placeholder="@lang('Enter Upline MP Number')*"
-                                        required>
+                                        value="{{ old('referral') }}" id="up_name" placeholder="@lang('Enter Upline MP Number')"
+                                        >
                                 </div>
 
                                 <div class="form-group col-6">
