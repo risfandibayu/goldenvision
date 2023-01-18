@@ -235,7 +235,7 @@ class PlanController extends Controller
             $trx = $user->transactions()->create([
                 'amount' => $plan->price * $request->qty,
                 'trx_type' => '-',
-                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' MP and Get '.$request->qty * $tot .' Pieces Gold',
+                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' MP',
                 'remark' => 'purchased_plan',
                 'trx' => getTrx(),
                 'post_balance' => getAmount($user->balance),
@@ -244,7 +244,7 @@ class PlanController extends Controller
             // dd($user);
 
             sendEmail2($user->id, 'plan_purchased', [
-                'plan' => $plan->name. ' For '.$request->qty.' MP and Get '.$request->qty * $tot .' Pieces Gold',
+                'plan' => $plan->name. ' For '.$request->qty.' MP',
                 'amount' => getAmount($plan->price * $request->qty),
                 'currency' => $gnl->cur_text,
                 'trx' => $trx->trx,
