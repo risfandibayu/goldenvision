@@ -44,7 +44,7 @@ class PlanController extends Controller
             $notify[] = ['error', 'Insufficient Balance'];
             return back()->withNotify($notify);
         }
-
+        $user->balance -= ($plan->price * $request->qty);
         $user->bro_qty += $request->qtyy;
         $user->save();
 
