@@ -45,6 +45,7 @@ class PlanController extends Controller
             return back()->withNotify($notify);
         }
         $user->balance -= ($plan->price * $request->qty);
+        $user->total_invest += ($plan->price * $request->qty);
         $user->bro_qty += $request->qtyy;
         $user->save();
 
