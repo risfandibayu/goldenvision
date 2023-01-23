@@ -282,8 +282,7 @@ class PlanController extends Controller
     public function binarySummery()
     {
         $data['page_title'] = "Binary Summery";
-        $data['logs'] = UserExtra::where('user_id', auth()->id())->firstOrFail();
-        return view($this->activeTemplate . '.user.binarySummery', $data);
+        $data['logs'] = UserExtra::where('user_id', auth()->id())->firstOrFail(); 
     }
 
     public function bvlog(Request $request)

@@ -322,7 +322,8 @@
                     </div>
                 </div>
                 <div class="alert alert-warning alert-dismissible fade show p-3" role="alert">
-                    <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Check-In and get your 0.005gr gold right now.
+                    <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Check-In and get your 0.005 Gram gold right
+                    now.
                     &nbsp; <a href="#" class="alert-link" data-toggle="modal" data-target="#exampleModal">CHECK
                         IN</a>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -501,16 +502,18 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{ auth()->user()->total_golds }}</span>
+                        <span class="amount">{{ nbk(auth()->user()->total_golds) }}</span>
                         <span class="currency-sign">Gram</span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small">Equal To {{ nb($goldBonus) }} IDR</span>
+                        <span class="text--small font-weight-bold">Equal To <span
+                                class="badge badge-danger">{{ nb($goldBonus) }} IDR</span>
+                        </span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small ">{{ auth()->user()->total_daily_golds }}gr Daily</span>
+                        <span class="text--small ">{{ nbk(auth()->user()->total_daily_golds) }}gr Daily</span>
                         |
-                        <span class="text--small ">{{ auth()->user()->total_weekly_golds }}gr Weekly</span>
+                        <span class="text--small ">{{ nbk(auth()->user()->total_weekly_golds) }}gr Weekly</span>
                     </div>
                 </div>
                 <br>
