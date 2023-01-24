@@ -1743,8 +1743,8 @@ function generateUniqueNoBro()
         return $code;
     }
 
-    function tree_created($email){
-        $user = User::where('email',$email)->first();
+    function tree_created($username){
+        $user = User::where('username',$username)->first();
         $tree = showTreePage($user->pos_id);
         // $cek_awal = User::where('pos_id',$user->id)->first();
         // $cek_awal_kiri = User::where('pos_id',$user->id)->where('position',1)->first();
