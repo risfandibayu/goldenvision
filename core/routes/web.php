@@ -18,12 +18,17 @@ use Illuminate\Support\Facades\URL;
 // })
 
 Route::get('update-gold',function(){
+    $day = 10;
     for ($i=115; $i < 146 ; $i++) { 
+        $user = UserGold::where('user_id',$i)->count();
+        $kurang = $day - $user;
         $user = User::find($i);
-        $user->golds()->create([
-                    'type'  => 'weekly',
-                    'golds' => 0.051
-                ]);
+        for ($x=1; $x < $kurang + 1; $x++) { 
+            $user->golds()->create([
+                        'type'  => 'daily',
+                        'golds' => 0.005
+                    ]);
+        }
     }
     return 'success';
 });
