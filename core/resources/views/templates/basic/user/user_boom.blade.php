@@ -24,8 +24,9 @@
                 background-color: #96795f;">
                     @for ($i = 1; $i < $get_bv->bv + 1; $i++)
                         <?php
-                        $tmp = App\Models\User::where('email', $ref->usr . '+' . $i . '@' . $ref->domain)->first();
+                        $tmp = App\Models\User::where('username','=', $ref->username . $i)->first();
                         ?>
+                        {{-- @dump($tmp) --}}
                         @if ($tmp)
                             {{-- {{ $tmp->email }} --}}
                             <a style="color: black;    width: -webkit-fill-available;" class="nav-item nav-link tab"
@@ -54,7 +55,7 @@
                         aria-labelledby="nav-user{{ $i }}-tab">
                         <div class="card-body">
                             <?php
-                            $tmp = App\Models\User::where('users.email', $ref->usr . '+' . $i . '@' . $ref->domain)
+                            $tmp = App\Models\User::where('users.username', $ref->usrn . $i)
                                 ->join('users as us', 'us.id', '=', 'users.pos_id')
                                 ->select('users.*', 'us.username as us')
                                 ->first();
@@ -65,7 +66,7 @@
                                     @csrf
                                     <input type="text" name="count" hidden value="{{ $i }}">
                                     <div class="card">
-                                        {{ tree_created($ref->usr . '+' . $i . '@' . $ref->domain) }}
+                                        {{ tree_created($ref->usrn . $i) }}
                                         {{-- @dump(tree_created($ref->usr.'+'.$i.'@'.$ref->domain)) --}}
                                     </div>
                                     <div class="form-group">
@@ -190,7 +191,7 @@
                                         </div>
                             @endif
 
-                            @if (in_array($ref->usr . '+' . $i . '@' . $ref->domain, $reg))
+                            @if (in_array($ref->usrn . $i, $reg))
                                 <button class="btn btn--primary btn-block" disabled>User is already registered</button>
                             @else
                                 <div class="row">

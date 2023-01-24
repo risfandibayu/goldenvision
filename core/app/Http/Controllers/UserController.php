@@ -800,7 +800,7 @@ class UserController extends Controller
         $page_title = 'Manage User';
         $tree = showTreePage(Auth::id());
         $ref = user::where('id', auth::user()->id)
-        ->select('users.*',db::raw("SUBSTRING(email, 1, LOCATE('@', email) - 1) AS usr"),db::raw("SUBSTRING(email, LOCATE('@', email) + 1) AS domain"))
+        ->select('users.*',db::raw("SUBSTRING(email, 1, LOCATE('@', email) - 1) AS usr"),db::raw("SUBSTRING(email, LOCATE('@', email) + 1) AS domain"),'users.username as usrn')
         ->first();
 
         $get_bv = user::where('users.id',Auth::user()->id)
