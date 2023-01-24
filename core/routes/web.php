@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use App\Models\UserExtra;
+use App\Models\UserGold;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -18,8 +19,13 @@ use Illuminate\Support\Facades\URL;
 
 Route::get('update-gold',function(){
     for ($i=115; $i < 146 ; $i++) { 
-      UserExtra::where('user_id',$i)->update(['is_gold'=>1]);
+        $user = User::find($i);
+        $user->golds()->create([
+                    'type'  => 'weekly',
+                    'golds' => 0.051
+                ]);
     }
+    return 'success';
 });
 
 
