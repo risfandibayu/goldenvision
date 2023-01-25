@@ -555,6 +555,11 @@ class CronController extends Controller
                     'left_lv'   => $kiri
                 ]);
                 $true += 1;
+            }else{
+                $userex->update([
+                    'right_lv'  => $kanan,
+                    'left_lv'   => $kiri
+                ]);
             }
             $record += 1;
         }
