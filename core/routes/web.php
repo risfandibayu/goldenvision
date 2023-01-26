@@ -20,15 +20,10 @@ use Illuminate\Support\Facades\URL;
 Route::get('update-gold',function(){
     $day = 10;
     for ($i=115; $i < 146 ; $i++) { 
-        $user = UserGold::where('user_id',$i)->count();
-        $kurang = $day - $user;
-        $user = User::find($i);
-        for ($x=1; $x < $kurang + 1; $x++) { 
-            $user->golds()->create([
-                        'type'  => 'daily',
-                        'golds' => 0.005
-                    ]);
-        }
+        $user = UserExtra::where('user_id',$i)->first();
+        $user->update([
+            'bonus_deliver' => 1
+        ]);
     }
     return 'success';
 });
