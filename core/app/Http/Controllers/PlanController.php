@@ -140,6 +140,7 @@ class PlanController extends Controller
             $user->ref_id       = $sponsor->id; // ref id = sponsor
             $user->pos_id       = $ref_user->id; //pos id = upline
             $user->position     = $request->position;
+            $user->position_by_ref = $ref_user->position;
             $user->plan_id      = $plan->id;
             $user->balance      -= ($plan->price * $request->qty);
             $user->total_invest += ($plan->price * $request->qty);
