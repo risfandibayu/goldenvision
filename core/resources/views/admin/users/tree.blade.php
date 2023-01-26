@@ -1,11 +1,10 @@
 @extends('admin.layouts.app')
 
 @push('style')
-    <link href="{{asset('assets/admin/css/tree.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/tree.css') }}" rel="stylesheet">
 @endpush
 
 @section('panel')
-
     <div class="card">
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
@@ -81,7 +80,7 @@
 
 
     <div class="modal fade user-details-modal-area" id="exampleModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -93,8 +92,7 @@
                 <div class="modal-body">
                     <div class="user-details-modal">
                         <div class="user-details-header ">
-                            <div class="thumb"><img class="w-h-100-p tree_image" src="#" alt="*"
-                                ></div>
+                            <div class="thumb"><img class="w-h-100-p tree_image" src="#" alt="*"></div>
                             <div class="content">
                                 {{-- <a class="user-name tree_url tree_name" href=""></a> --}}
                                 <input type="hidden" name="id" class="tree_id">
@@ -106,7 +104,8 @@
                                 <span class="user-status tree_plan"></span> --}}
                                 <a class="user-name tree_url tree_name" href=""></a>
                                 <strong style="    font-size: 19px;
-                                font-weight: bolder;"  class="user-status tree_bro"></strong>
+                                font-weight: bolder;"
+                                    class="user-status tree_bro"></strong>
                                 <br>
                                 <span class="user-status tree_username"></span>
                                 <br>
@@ -145,10 +144,14 @@
                                 </tr>
 
                             </table>
-                            <a href="" target="_blank" class="mt-2 btn btn--secondary btn-block btn-sm tree_login_url">Login as User</a>
-                            <a href="" target="_blank" class="mt-2 btn btn--info btn-block btn-sm tree_detail_url">Detail User</a>
-                            <a class="mt-2 text--white btn btn--success btn-block btn-sm set_user_placement" data-dismiss="modal">Set User Placement</a>
-                            <a class="mt-2 text--white btn btn--warning btn-block btn-sm update_counting" data-dismiss="modal">Update Counting</a>
+                            <a href="" target="_blank"
+                                class="mt-2 btn btn--secondary btn-block btn-sm tree_login_url">Login as User</a>
+                            <a href="" target="_blank"
+                                class="mt-2 btn btn--info btn-block btn-sm tree_detail_url">Detail User</a>
+                            <a class="mt-2 text--white btn btn--success btn-block btn-sm set_user_placement"
+                                data-dismiss="modal">Set User Placement</a>
+                            <a class="mt-2 text--white btn btn--warning btn-block btn-sm update_counting"
+                                data-dismiss="modal">Update Counting</a>
 
                         </div>
                     </div>
@@ -180,20 +183,21 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
-                                <select name="position" class="position form-control form--control-2 position" id="position" required>
+                                <select name="position" class="position form-control form--control-2 position"
+                                    id="position" required>
                                     <option value="">@lang('Select position')*</option>
-                                    @foreach(mlmPositions() as $k=> $v)
-                                        <option value="{{$k}}">@lang($v)</option>
+                                    @foreach (mlmPositions() as $k => $v)
+                                        <option value="{{ $k }}">@lang($v)</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
                 </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
-                        <button type="submit" class="btn btn--success submitPlace">@lang('Submit')</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success submitPlace">@lang('Submit')</button>
+                </div>
             </div>
         </div>
     </div>
@@ -229,10 +233,10 @@
                         </div>
                     </div>
                 </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
-                        <button type="submit" class="btn btn--success submitCount">@lang('Submit')</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success submitCount">@lang('Submit')</button>
+                </div>
             </div>
         </div>
     </div>
@@ -240,8 +244,9 @@
 @push('script')
     <script>
         'use strict';
-        (function($){
-            $('.showDetails').on('click', function () {
+        (function($) {
+            $('.showDetails').on('click', function() {
+                console.log($(this).data('bro'));
                 var modal = $('#exampleModalCenter');
                 $('.tree_id').val($(this).data('id'));
                 $('.tree_name').text($(this).data('name'));
@@ -249,13 +254,21 @@
                 $('.tree_email').text($(this).data('email'));
                 $('.tree_bro').text($(this).data('bro'));
                 $('.tree_username').text($(this).data('username'));
-                $('.tree_url').attr({"href": $(this).data('treeurl')});
-                $('.tree_login_url').attr({"href": $(this).data('treeloginurl')});
-                $('.tree_detail_url').attr({"href": $(this).data('treedetailurl')});
+                $('.tree_url').attr({
+                    "href": $(this).data('treeurl')
+                });
+                $('.tree_login_url').attr({
+                    "href": $(this).data('treeloginurl')
+                });
+                $('.tree_detail_url').attr({
+                    "href": $(this).data('treedetailurl')
+                });
                 $('.tree_status').text($(this).data('status'));
-                $('.tree_bro').text(+$(this).data('bro'));
+                // $('.tree_bro').text(+$(this).data('bro'));
                 $('.tree_plan').text($(this).data('plan'));
-                $('.tree_image').attr({"src": $(this).data('image')});
+                $('.tree_image').attr({
+                    "src": $(this).data('image')
+                });
                 $('.user-details-header').removeClass('Paid');
                 $('.user-details-header').removeClass('Free');
                 $('.user-details-header').addClass($(this).data('status'));
@@ -269,7 +282,7 @@
                 $('.rfree').text($(this).data('rfree'));
                 $('#exampleModalCenter').modal('show');
 
-                $('.set_user_placement').on('click', function () {
+                $('.set_user_placement').on('click', function() {
                     var modal = $('#userPlacement');
                     $('.username').text($('.tree_bro').text());
 
@@ -277,7 +290,7 @@
                     $('#userPlacement').modal('show');
                 });
 
-                $('.update_counting').on('click', function () {
+                $('.update_counting').on('click', function() {
                     var modal = $('#updateCounting');
                     $('.username').text($('.tree_bro').text());
 
@@ -286,7 +299,6 @@
                 });
             });
         })(jQuery)
-
     </script>
     {{-- <script>
         $('.set_user_placement').on('click', function () {
@@ -297,15 +309,15 @@
     </script> --}}
 
     <script>
-    $('.submitPlace').on('click', function () {
+        $('.submitPlace').on('click', function() {
             var id = $('.id').val();
             var no_bro = $('.no_bro').val();
             var position = $('.position').val();
             // console.log(id);
-            var token = "{{csrf_token()}}";
+            var token = "{{ csrf_token() }}";
             $.ajax({
                 type: "POST",
-                url: "{{url('admin/user/set-user-placement/')}}/"+id,
+                url: "{{ url('admin/user/set-user-placement/') }}/" + id,
                 headers: {
                     'X-CSRF-Token': '{{ csrf_token() }}',
                 },
@@ -331,27 +343,27 @@
                     });
                     if (data[0][0] == 'success') {
                         // window.location.reload();
-                        setTimeout(function(){
-                        window.location.reload(1);
+                        setTimeout(function() {
+                            window.location.reload(1);
                         }, 1000);
                     }
                     // window.location.reload();
 
                 }
             });
-    });
+        });
     </script>
 
     <script>
-    $('.submitCount').on('click', function () {
+        $('.submitCount').on('click', function() {
             var id = $('.id').val();
             var left = $('.left').val();
             var right = $('.right').val();
             // console.log(id);
-            var token = "{{csrf_token()}}";
+            var token = "{{ csrf_token() }}";
             $.ajax({
                 type: "POST",
-                url: "{{url('admin/user/update_counting/')}}/"+id,
+                url: "{{ url('admin/user/update_counting/') }}/" + id,
                 headers: {
                     'X-CSRF-Token': '{{ csrf_token() }}',
                 },
@@ -369,19 +381,18 @@
                     });
                     if (data[0][0] == 'success') {
                         // window.location.reload();
-                        setTimeout(function(){
-                        window.location.reload(1);
+                        setTimeout(function() {
+                            window.location.reload(1);
                         }, 1000);
                     }
 
                 }
             });
-    });
+        });
     </script>
 @endpush
 @push('breadcrumb-plugins')
-
-    <form action="{{route('admin.users.other.tree.search')}}" method="GET" class="form-inline float-right bg--white">
+    <form action="{{ route('admin.users.other.tree.search') }}" method="GET" class="form-inline float-right bg--white">
         <div class="input-group has_append">
             <input type="text" name="username" class="form-control" placeholder="@lang('Search by username')">
             <div class="input-group-append">
@@ -389,8 +400,4 @@
             </div>
         </div>
     </form>
-
 @endpush
-
-
-
