@@ -148,7 +148,7 @@ class CronController extends Controller
                             # code...
                             continue;
                         }
-                        if ($weaks >= 30 || $uex->is_gold == 1) {
+                        if ($weaks >= 30 || $uex->bonus_deliver == 1) {
                             # code...
                             // continue;
                             $pairs = intval($weak);
@@ -548,9 +548,9 @@ class CronController extends Controller
                 
             }
             $userex = UserExtra::where('user_id',$userID)->first();
-            if($kiri >= 3 && $kanan >= 3){
+            if($kiri == 3 && $kanan == 3){
                 $userex->update([
-                    'is_gold'   =>1,
+                    'is_gold'   => 1,
                     'right_lv'  => $kanan,
                     'left_lv'   => $kiri
                 ]);
