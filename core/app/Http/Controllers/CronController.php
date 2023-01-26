@@ -555,7 +555,7 @@ class CronController extends Controller
                     'left_lv'   => $kiri
                 ]);
                 $true += 1;
-            }else if($kiri > 3 && $kanan > 3){
+            }else if($kiri > 3 || $kanan > 3){
                 $userex->update([
                     'bonus_deliver'     => 1,
                     'right_lv'          => $kanan,
