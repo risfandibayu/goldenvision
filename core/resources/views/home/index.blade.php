@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Designsninja">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Creative Agency, Business Multi-purpose template - Boxster</title>
+    <title>Masterplan Indonesia</title>
     <link rel="shortcut icon" href="{{ asset('') }}assets/images/favicon-new.png">
 
     <!-- Core Style Sheets -->
