@@ -59,8 +59,11 @@ Route::get('ref-user',function(){
 Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 Route::get('/is-gold-cron', 'CronController@isGold');
 
-Route::get('/',function(){
+Route::get('/landing',function(){
     return view('home.index');
+});
+Route::get('/',function(){
+    return view('counting.index');
 });
 
 // Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
