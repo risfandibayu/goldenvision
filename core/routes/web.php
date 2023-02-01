@@ -59,7 +59,9 @@ Route::get('ref-user',function(){
 Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 Route::get('/is-gold-cron', 'CronController@isGold');
 
-
+Route::get('/',function(){
+    return view('home.index');
+});
 
 // Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 // Route::get('/cron30bro', 'CronController@cron30bro')->name('bv.matching.cron30bro');
@@ -605,8 +607,8 @@ Route::get('/blog', 'SiteController@blog')->name('blog');
 Route::get('/blog/details/{slug}/{id}', 'SiteController@singleBlog')->name('singleBlog');
 
 Route::get('/home2', 'SiteController@index2')->name('home2');
-Route::get('/', 'SiteController@index')->name('home'); // Disabled temporary
-Route::redirect('/','/login' );
+// Route::get('/', 'SiteController@index')->name('home'); // Disabled temporary
+// Route::redirect('/','/login' );
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
 
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholderImage');
