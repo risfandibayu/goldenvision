@@ -23,7 +23,7 @@
           </li>
           <li class="dropdown"><a href="#about" class="dropdown-toggle" data-toggle="dropdown">Tentang</a>
           </li>
-          <li class="dropdown"><a href="#faq" class="dropdown-toggle" data-toggle="dropdown">FAQ</a>
+          {{-- <li class="dropdown"><a href="#faq" class="dropdown-toggle" data-toggle="dropdown">FAQ</a> --}}
           </li>
       </ul>
   </div>
