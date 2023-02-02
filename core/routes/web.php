@@ -62,9 +62,9 @@ Route::get('/is-gold-cron', 'CronController@isGold');
 Route::get('/landing',function(){
     return view('home.index');
 });
-Route::get('/',function(){
-    return view('counting.index');
-});
+// Route::get('/',function(){
+//     return view('counting.index');
+// });
 
 // Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 // Route::get('/cron30bro', 'CronController@cron30bro')->name('bv.matching.cron30bro');
@@ -611,7 +611,7 @@ Route::get('/blog/details/{slug}/{id}', 'SiteController@singleBlog')->name('sing
 
 Route::get('/home2', 'SiteController@index2')->name('home2');
 // Route::get('/', 'SiteController@index')->name('home'); // Disabled temporary
-// Route::redirect('/','/login' );
+Route::redirect('/','/login' );
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
 
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholderImage');
