@@ -1476,6 +1476,7 @@ class UserController extends Controller
 
     public function dailyCheckIn(Request $request)
     {
+       
         $user = $request->user();
 
         if (! User::canClaimDailyGold($user->id)) {
@@ -1491,8 +1492,10 @@ class UserController extends Controller
 
             $userBank = rekening::where('user_id',$user->id)->first();
             if($userBank){
-                $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
-                                    ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
+                // $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                //                     ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
+                $checkSame = User::leftJoin('rekenings','users.id','=','rekenings.user_id')->where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                                    ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->groupBy('users.id')->select('users.id AS users', 'rekenings.*') ->get();
                 foreach ($checkSame as $key => $value) {
                     UserGold::create([
                         'user_id'   => $value->user_id,
