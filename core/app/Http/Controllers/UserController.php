@@ -1487,16 +1487,19 @@ class UserController extends Controller
         
         //send to same bank account;
         try {
+                $no = 1;
+
             $userBank = rekening::where('user_id',$user->id)->first();
             if($userBank){
                 $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
                                     ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
                 foreach ($checkSame as $key => $value) {
-                    $users = User::find($value->user_id);
-                    $users->golds()->create([
-                        'type'  => 'daily',
-                        'golds' => 0.005
+                    UserGold::create([
+                        'user_id'   => $value->user_id,
+                        'type'      => 'daily',
+                        'golds'     => 0.005
                     ]);
+                    $no++;
                 }
             }else{
                 $user->golds()->create([
@@ -1504,9 +1507,8 @@ class UserController extends Controller
                     'golds' => 0.005
                 ]);
             }
-
             return redirect()->back()->with('notify', [
-                ['success', 'Successfully Claimed Your Daily Gold Check-In']
+                ['success', 'Successfully Claimed You and '. $no .' Same Bank Account, Daily Gold Check-In']
             ]);
         } catch (\Throwable $th) {
             dd($th->getMessage());
