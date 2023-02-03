@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BonusRewardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Models\rekening;
 use App\Models\User;
 use App\Models\UserExtra;
 use App\Models\UserGold;
@@ -17,15 +18,27 @@ use Illuminate\Support\Facades\URL;
 //     dd($pdo);
 // })
 
-Route::get('update-gold',function(){
-    $day = 10;
+Route::get('update-rek',function(){
     for ($i=115; $i < 146 ; $i++) { 
-        $user = UserExtra::where('user_id',$i)->first();
-        $user->update([
-            'bonus_deliver' => 1
-        ]);
+        $rek = rekening::where('user_id',$i)->first();
+        if(!$rek){
+            rekening::create([
+                'user_id'       => $i,
+                'nama_bank'     => 'BANK BNI',
+                'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
+                'no_rek'        => '1420021206387',
+                'kota_cabang'   => 'Jakarta'
+            ]);
+        }else{
+            $rek->update([
+                'nama_bank'     => 'BANK BNI',
+                'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
+                'no_rek'        => '1420021206387',
+                'kota_cabang'   => 'Jakarta'
+            ]);
+        }
     }
-    return 'success';
+    return 'success add rekening';
 });
 
 

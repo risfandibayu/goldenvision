@@ -1492,15 +1492,15 @@ class UserController extends Controller
                 $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
                                     ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
                 foreach ($checkSame as $key => $value) {
-                    $user = User::find($value->user_id);
-                        $user->golds()->create([
-                            'type'  => UserGoldReward::Daily->value,
-                            'golds' => 0.005
-                        ]);
+                    $users = User::find($value->user_id);
+                    $users->golds()->create([
+                        'type'  => 'daily',
+                        'golds' => 0.005
+                    ]);
                 }
             }else{
                 $user->golds()->create([
-                    'type'  => UserGoldReward::Daily->value,
+                    'type'  => 'daily',
                     'golds' => 0.005
                 ]);
             }
