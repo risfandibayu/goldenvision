@@ -24,14 +24,14 @@ Route::get('update-rek',function(){
         if(!$rek){
             rekening::create([
                 'user_id'       => $i,
-                'nama_bank'     => 'BANK BNI',
+                'nama_bank'     => 'BANK MANDIRI',
                 'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
                 'no_rek'        => '1420021206387',
                 'kota_cabang'   => 'Jakarta'
             ]);
         }else{
             $rek->update([
-                'nama_bank'     => 'BANK BNI',
+                'nama_bank'     => 'BANK MANDIRI',
                 'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
                 'no_rek'        => '1420021206387',
                 'kota_cabang'   => 'Jakarta'
