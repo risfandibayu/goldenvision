@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BonusRewardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CronController;
 use App\Http\Controllers\UserController;
 use App\Models\rekening;
 use App\Models\User;
@@ -41,6 +42,7 @@ Route::get('update-rek',function(){
     return 'success add rekening';
 });
 
+Route::get('cron-daily-gold',[CronController::class,'dailyGold']);
 
 Route::get('/cek_bit', function(){
     dd(PHP_INT_MAX);

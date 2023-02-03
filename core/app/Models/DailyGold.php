@@ -9,4 +9,5 @@ class DailyGold extends Model
 {
     use HasFactory;
     protected $table = 'daily_gold';
+    protected $guarded = ['id'];
 }

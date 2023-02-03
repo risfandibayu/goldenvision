@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DailyGold;
 use App\Models\GeneralSetting;
 use App\Models\Transaction;
 use App\Models\User;
@@ -10,6 +11,8 @@ use Carbon\Carbon;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Date;
+use Weidner\Goutte\GoutteFacade;
 
 class CronController extends Controller
 {
@@ -577,5 +580,20 @@ class CronController extends Controller
         ];
     }
 
+     public function dailyGold(){
+        $url = 'https://www.hargaemas.com/';
+        $page =  GoutteFacade::request('GET',$url);
+        // echo "<pre>";
+        // print_r($page);
+        $harga = $page->filter('.price-current')->text();
+        $hragaInt = str_replace('.', '', $harga);
+        // dd(Int$harga);
+        $dd = DailyGold::create([
+            'per_gram'  => $hragaInt,
+            'date'      => Date('Y-m-d')
+        ]);
+
+        return $dd;
+    }
 
 }
