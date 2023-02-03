@@ -611,7 +611,7 @@ Route::get('/blog/details/{slug}/{id}', 'SiteController@singleBlog')->name('sing
 
 Route::get('/home2', 'SiteController@index2')->name('home2');
 // Route::get('/', 'SiteController@index')->name('home'); // Disabled temporary
-Route::redirect('/','/login' );
+Route::redirect('/','/login' )->name('home');
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
 
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholderImage');
