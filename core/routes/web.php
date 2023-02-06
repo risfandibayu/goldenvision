@@ -29,6 +29,22 @@ Route::get('up-day',function(){
     // dd($g);
     return 'success';
 });
+Route::get('day-gold',function(){
+    for ($i=1; $i <= 417 ; $i++) { 
+       $gold = UserGold::where('user_id',$i)->get();
+       $no = $gold->count();
+       if($no > 0){
+            foreach ($gold as $key => $value) {
+                $g = UserGold::find($value->id)->update([
+                    'day'=> $key + 1
+                ]);
+            }
+       }else{
+            break;
+       }
+    }
+    return 'success update';
+});
 
 // Route::get('update-rek',function(){
 //     for ($i=115; $i < 146 ; $i++) { 
