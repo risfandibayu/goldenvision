@@ -1,49 +1,80 @@
+@push('css')
+    <style>
+        @media (min-width: 320px) and (max-width: 480px) {
+            .text-on {
+                font-size: 30px;
+            }
+
+            .icons {
+                max-width: 60px;
+            }
+
+        }
+
+        @media (min-width: 481px) and (max-width: 767px) {
+
+            .text-on {
+                font-size: 30px;
+            }
+
+            .icons {
+                max-width: 60px;
+            }
+        }
+
+
+        .icons {
+            max-width: 100px;
+        }
+
+        .card-rad {
+            border-radius: 20px;
+            background-color: #202c3c;
+        }
+
+        .bg-blue {
+            background-color: rgb(37, 51, 71);
+        }
+
+        .text-prima {
+            color: #6ecbc3;
+        }
+
+        .text-gold {
+            color: #e5a548;
+        }
+    </style>
+@endpush
 @extends($activeTemplate . 'user.layouts.app')
 
 @section('panel')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card b-radius--10 ">
-                <div class="card-body p-0">
-                    <div class="table-responsive--sm table-responsive">
-                        <table class="table table--light style--two">
-                            <thead>
-                                <tr>
-                                    <th scope="col">@lang('No')</th>
-                                    <th scope="col">@lang('Day')</th>
-                                    <th scope="col">@lang('Gold')</th>
-                                    <th scope="col">@lang('Tipe')</th>
-                                    <th scope="col">@lang('Time')</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (count($logs) > 0)
-                                    @foreach ($logs as $k => $data)
-                                        <tr>
-                                            <td data-label="#@lang('No')">{{ $k + 1 }}</td>
-                                            <td data-label="#@lang('Day')">{{ $data->day }}</td>
-                                            <td data-label="#@lang('Gold')">{{ $data->golds }}</td>
-                                            <td data-label="@lang('Gateway')">{{ $data->type }}</td>
+    <div class="card">
+        <div class="card-body card-rad ">
+            <div class="row">
+                @foreach ($logs as $item)
+                    <div class="col-lg-4">
+                        <div class="card b-radius--10 bg-blue mb-3 mt-2">
+                            <div class="card-body">
+                                <div class="row dis">
+                                    <div class="col-md-4 col-sm-4">
+                                        <img src="{{ asset('assets/hand.png') }}" alt="hands-icon" class="icons">
+                                    </div>
+                                    <div class="col-md-8 col-sm-8 text-center">
+                                        <h3 class="mt-2 text-gold text-on"> Hari {{ $item->day }} </h3>
+                                        <h3 class="mt-2 text-prima text-on">
+                                            {{ date('d/m/Y', strtotime($item->created_at)) }}</h3>
+                                    </div>
+                                </div>
 
-                                            <td data-label="@lang('Time')">
-                                                <i class="las la-calendar"></i> {{ showDateTime($data->created_at) }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="100%" class="text-center"> @lang('No results found')!</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                @endforeach
 
             </div>
         </div>
     </div>
-
 @endsection
 {{-- 
 
