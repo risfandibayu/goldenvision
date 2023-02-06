@@ -10,6 +10,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">@lang('No')</th>
+                                    <th scope="col">@lang('Day')</th>
                                     <th scope="col">@lang('Gold')</th>
                                     <th scope="col">@lang('Tipe')</th>
                                     <th scope="col">@lang('Time')</th>
@@ -20,6 +21,7 @@
                                     @foreach ($logs as $k => $data)
                                         <tr>
                                             <td data-label="#@lang('No')">{{ $k + 1 }}</td>
+                                            <td data-label="#@lang('Day')">{{ $data->day }}</td>
                                             <td data-label="#@lang('Gold')">{{ $data->golds }}</td>
                                             <td data-label="@lang('Gateway')">{{ $data->type }}</td>
 
