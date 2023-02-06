@@ -18,29 +18,40 @@ use Illuminate\Support\Facades\URL;
 //     $pdo = DB::connection('mysql');
 //     dd($pdo);
 // })
-
-Route::get('update-rek',function(){
-    for ($i=115; $i < 146 ; $i++) { 
-        $rek = rekening::where('user_id',$i)->first();
-        if(!$rek){
-            rekening::create([
-                'user_id'       => $i,
-                'nama_bank'     => 'BANK MANDIRI',
-                'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
-                'no_rek'        => '1420021206387',
-                'kota_cabang'   => 'Jakarta'
-            ]);
-        }else{
-            $rek->update([
-                'nama_bank'     => 'BANK MANDIRI',
-                'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
-                'no_rek'        => '1420021206387',
-                'kota_cabang'   => 'Jakarta'
-            ]);
-        }
+Route::get('up-day',function(){
+    $gold = UserGold::where('user_id',1)->get();
+    $no = $gold->count();
+    foreach ($gold as $key => $value) {
+        $g = UserGold::find($value->id)->update([
+            'day'=> $key + 1
+        ]);
     }
-    return 'success add rekening';
+    // dd($g);
+    return 'success';
 });
+
+// Route::get('update-rek',function(){
+//     for ($i=115; $i < 146 ; $i++) { 
+//         $rek = rekening::where('user_id',$i)->first();
+//         if(!$rek){
+//             rekening::create([
+//                 'user_id'       => $i,
+//                 'nama_bank'     => 'BANK MANDIRI',
+//                 'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
+//                 'no_rek'        => '1420021206387',
+//                 'kota_cabang'   => 'Jakarta'
+//             ]);
+//         }else{
+//             $rek->update([
+//                 'nama_bank'     => 'BANK MANDIRI',
+//                 'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
+//                 'no_rek'        => '1420021206387',
+//                 'kota_cabang'   => 'Jakarta'
+//             ]);
+//         }
+//     }
+//     return 'success add rekening';
+// });
 
 Route::get('cron-daily-gold',[CronController::class,'dailyGold']);
 
