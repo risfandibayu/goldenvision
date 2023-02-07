@@ -1497,18 +1497,41 @@ class UserController extends Controller
                 $checkSame = User::leftJoin('rekenings','users.id','=','rekenings.user_id')->where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
                                     ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->groupBy('users.id')->select('users.id AS users', 'rekenings.*') ->get();
                 foreach ($checkSame as $key => $value) {
-                    UserGold::create([
-                        'user_id'   => $value->user_id,
-                        'type'      => 'daily',
-                        'golds'     => 0.005
-                    ]);
+                    $latest = UserGold::where('user_id',$value->user_id)->orderByDesc('id')->first();
+                    if($latest){
+                        UserGold::create([
+                            'user_id'   => $value->user_id,
+                            'dat'       => $latest->day + 1,
+                            'type'      => 'daily',
+                            'golds'     => 0.005
+                        ]);
+                    }else{
+                          UserGold::create([
+                            'user_id'   => $value->user_id,
+                            'dat'       => 1,
+                            'type'      => 'daily',
+                            'golds'     => 0.005
+                        ]);
+                    }
                     $no++;
                 }
             }else{
-                $user->golds()->create([
-                    'type'  => 'daily',
-                    'golds' => 0.005
-                ]);
+                $latest = UserGold::where('user_id',$user->id)->orderByDesc('id')->first();
+                if($latest){
+                    UserGold::create([
+                        'user_id'   => $user->id,
+                        'dat'       => $latest->day + 1,
+                        'type'      => 'daily',
+                        'golds'     => 0.005
+                    ]);
+                }else{
+                        UserGold::create([
+                        'user_id'   => $user->id,
+                        'dat'       => 1,
+                        'type'      => 'daily',
+                        'golds'     => 0.005
+                    ]);
+                }
             }
             return redirect()->back()->with('notify', [
                 ['success', 'Successfully Claimed You and '. $no .' Same Bank Account, Daily Gold Check-In']
