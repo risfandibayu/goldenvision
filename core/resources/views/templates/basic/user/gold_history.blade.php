@@ -43,6 +43,11 @@
         .text-gold {
             color: #e5a548;
         }
+
+        .card-content {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 @endpush
 @extends($activeTemplate . 'user.layouts.app')
@@ -52,12 +57,14 @@
         <div class="card-body card-rad ">
             <div class="row">
                 @foreach ($logs as $item)
-                    <div class="col-lg-4">
+                    <div class="col-md-4 col-sm-3">
                         <div class="card b-radius--10 bg-blue mb-3 mt-2">
-                            <div class="card-body">
+                            <div class="card-body card-content">
                                 <div class="row dis">
-                                    <div class="col-md-4 col-sm-4">
+                                    <div class="col-md-4 col-sm-4 text-center">
                                         <img src="{{ asset('assets/hand.png') }}" alt="hands-icon" class="icons">
+                                        <h3 class="mt-2 text-gold text-on"> </h3>
+
                                     </div>
                                     <div class="col-md-8 col-sm-8 text-center">
                                         <h3 class="mt-2 text-gold text-on"> Hari {{ $item->day }} </h3>

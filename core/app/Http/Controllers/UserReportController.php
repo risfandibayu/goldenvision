@@ -132,7 +132,8 @@ class UserReportController extends Controller
     {
         $user = Auth::user();
         $data['page_title'] = 'Daily Gold Log';
-        $data['logs'] = UserGold::where('user_id',$user->id)->limit(12)->latest()->paginate(getPaginate());
+        $data['logs'] = UserGold::where('user_id',$user->id)->limit(12)->orderByDesc('id')->get();
+
         $data['empty_message'] = 'No history found.';
 
 

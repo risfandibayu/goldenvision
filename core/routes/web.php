@@ -30,7 +30,7 @@ Route::get('up-day',function(){
     return 'success';
 });
 Route::get('day-gold',function(){
-    for ($i=1; $i <= 417 ; $i++) { 
+    for ($i=352; $i <= 383 ; $i++) { 
        $gold = UserGold::where('user_id',$i)->get();
        $no = $gold->count();
        if($no > 0){
