@@ -1498,17 +1498,18 @@ class UserController extends Controller
                                     ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->groupBy('users.id')->select('users.id AS users', 'rekenings.*') ->get();
                 foreach ($checkSame as $key => $value) {
                     $latest = UserGold::where('user_id',$value->user_id)->orderByDesc('id')->first();
+    
                     if($latest){
                         UserGold::create([
                             'user_id'   => $value->user_id,
-                            'dat'       => $latest->day + 1,
+                            'day'       => $latest->day + 1,
                             'type'      => 'daily',
                             'golds'     => 0.005
                         ]);
                     }else{
                           UserGold::create([
                             'user_id'   => $value->user_id,
-                            'dat'       => 1,
+                            'day'       => 1,
                             'type'      => 'daily',
                             'golds'     => 0.005
                         ]);
@@ -1517,17 +1518,18 @@ class UserController extends Controller
                 }
             }else{
                 $latest = UserGold::where('user_id',$user->id)->orderByDesc('id')->first();
+
                 if($latest){
                     UserGold::create([
                         'user_id'   => $user->id,
-                        'dat'       => $latest->day + 1,
+                        'day'       => $latest->day + 1,
                         'type'      => 'daily',
                         'golds'     => 0.005
                     ]);
                 }else{
                         UserGold::create([
                         'user_id'   => $user->id,
-                        'dat'       => 1,
+                        'day'       => 1,
                         'type'      => 'daily',
                         'golds'     => 0.005
                     ]);
