@@ -55,7 +55,7 @@
 @section('panel')
     <div class="card">
         <div class="card-body card-rad ">
-            <div class="row">
+            <div class="row d-flex justify-content-center">
                 @foreach ($logs as $item)
                     <div class="col-md-4 col-sm-3">
                         <div class="card b-radius--10 bg-blue mb-3 mt-2">
