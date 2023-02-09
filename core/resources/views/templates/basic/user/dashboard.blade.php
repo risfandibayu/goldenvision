@@ -304,7 +304,7 @@
                     data: {
                         // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                         datasets: [{
-                            label: '#Gold Today',
+                            label: 'Price',
                             data: result,
                             borderWidth: 1
                         }]
