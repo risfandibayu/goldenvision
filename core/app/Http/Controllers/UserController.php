@@ -100,7 +100,7 @@ class UserController extends Controller
 
     }
     public function goldRates(){
-        $gold  = DailyGold::limit(7)->orderByDesc('id')->get();
+        $gold  = DailyGold::all()->take(-5);
         $data = [];
         $day = [];
         foreach ($gold as $key => $value) {
