@@ -8,6 +8,9 @@
             --primary-color: rgb(11, 78, 179)
         }
 
+        .bg-grand-gold {
+            background: linear-gradient(90deg, rgba(194, 102, 31, 1) 14%, rgba(255, 192, 0, 1) 100%);
+        }
 
         label {
             display: block;
@@ -306,7 +309,14 @@
                         datasets: [{
                             label: 'Price',
                             data: result,
-                            borderWidth: 1
+                            borderWidth: 1,
+                            borderColor: "#fdbe01",
+                            borderDash: [5, 5],
+                            backgroundColor: "#FFD700",
+                            pointBackgroundColor: "#d68315",
+                            pointBorderColor: "#d68315",
+                            pointHoverBackgroundColor: "#d68315",
+                            pointHoverBorderColor: "#d68315",
                         }]
                     },
                     options: {
@@ -504,7 +514,7 @@
                     </div>
                 </div>
                 <div class="card card-header-actions mt-3">
-                    <div class="card-header" style="font-weight: 600;">
+                    <div class="card-header bg-grand-gold d-flex justify-content-center" style="font-weight: 600;">
                         Gold Rates
                     </div>
                     <div class="card-body text-center border-3">
