@@ -322,7 +322,8 @@
                     options: {
                         scales: {
                             y: {
-                                beginAtZero: true
+                                max: 1000000,
+                                min: 800000
                             }
                         }
                     }
