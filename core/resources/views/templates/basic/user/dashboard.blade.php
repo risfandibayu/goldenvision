@@ -322,7 +322,7 @@
                     options: {
                         scales: {
                             y: {
-                                max: 9500000,
+                                max: 950000,
                                 min: 850000
                             }
                         }
