@@ -99,6 +99,15 @@ class UserController extends Controller
         return view($this->activeTemplate . 'user.referals', $data);
 
     }
+    public function goldRates(){
+        $gold  = DailyGold::limit(7)->get();
+        $data = [];
+        $day = [];
+        foreach ($gold as $key => $value) {
+            $data[date('d/m/y',strtotime($value->date))] =  $value->per_gram;
+        }
+        return response()->json($data,200);
+    }
 
      public function allInUsers(Request $request){
         if ($request->search) {

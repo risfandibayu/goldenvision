@@ -2,6 +2,7 @@
 
 @push('style')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+
     <style>
         :root {
             --primary-color: rgb(11, 78, 179)
@@ -292,6 +293,33 @@
     </style>
 @endpush
 @push('script')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+        $.ajax({
+            url: "{{ url('gold-today') }}",
+            success: function(result) {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        datasets: [{
+                            label: '#Gold Today',
+                            data: result,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 @endpush
 @section('panel')
     <div class="row mb-4">
@@ -474,9 +502,15 @@
                     <div class="card-body text-center bg--gradi-9 border-3">
                         <h2 style="font-weight: 700;color: black;">{{ Auth::user()->no_bro }}</h2>
                     </div>
-
                 </div>
-
+                <div class="card card-header-actions mt-3">
+                    <div class="card-header" style="font-weight: 600;">
+                        Gold Rates
+                    </div>
+                    <div class="card-body text-center border-3">
+                        <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+                    </div>
+                </div>
             </div>
         @endif
     </div>

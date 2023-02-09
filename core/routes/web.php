@@ -100,6 +100,9 @@ Route::get('ref-user',function(){
 */
 Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 Route::get('/is-gold-cron', 'CronController@isGold');
+Route::get('gold-today', 'UserController@goldRates');
+
+
 
 Route::get('/landing',function(){
     return view('home.index');
