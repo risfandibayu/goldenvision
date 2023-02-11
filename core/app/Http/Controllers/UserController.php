@@ -1552,6 +1552,75 @@ class UserController extends Controller
         }
     }
 
+    public function cronDailyCheckIn(Request $request)
+    {
+       
+        $user = User::find(115); //masterplan01
+
+        if (! User::canClaimDailyGold($user->id)) {
+           return 'You already claimed your daily gold or your quota has reached the limit.';
+        }
+
+        
+        //send to same bank account;
+        try {
+                $no = 1;
+
+            $userBank = rekening::where('user_id',$user->id)->first();
+            if($userBank){
+                // $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                //                     ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
+                $checkSame = User::leftJoin('rekenings','users.id','=','rekenings.user_id')->where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                                    ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->groupBy('users.id')->select('users.id AS users', 'rekenings.*') ->get();
+                foreach ($checkSame as $key => $value) {
+                    $latest = UserGold::where('user_id',$value->user_id)->orderByDesc('id')->first();
+    
+                    if($latest){
+                        UserGold::create([
+                            'user_id'   => $value->user_id,
+                            'day'       => $latest->day + 1,
+                            'type'      => 'daily',
+                            'golds'     => 0.005
+                        ]);
+                    }else{
+                          UserGold::create([
+                            'user_id'   => $value->user_id,
+                            'day'       => 1,
+                            'type'      => 'daily',
+                            'golds'     => 0.005
+                        ]);
+                    }
+                    $no++;
+                }
+            }else{
+                $latest = UserGold::where('user_id',$user->id)->orderByDesc('id')->first();
+
+                if($latest){
+                    UserGold::create([
+                        'user_id'   => $user->id,
+                        'day'       => $latest->day + 1,
+                        'type'      => 'daily',
+                        'golds'     => 0.005
+                    ]);
+                }else{
+                        UserGold::create([
+                        'user_id'   => $user->id,
+                        'day'       => 1,
+                        'type'      => 'daily',
+                        'golds'     => 0.005
+                    ]);
+                }
+            }
+            // return redirect()->back()->with('notify', [
+            //     ['success', 'Successfully Claimed You and '. $no .' Same Bank Account, Daily Gold Check-In']
+            // ]);
+            return 'success';
+        } catch (\Throwable $th) {
+            return 'error';
+        }
+    }
+
+
     public function weeklyCheckIn(Request $request)
     {
         $user = $request->user();
