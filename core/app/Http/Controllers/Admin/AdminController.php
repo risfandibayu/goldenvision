@@ -22,8 +22,16 @@ use App\Models\AdminNotification;
 class AdminController extends Controller
 {
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
+        if($request->all()){
+            $user = User::whereNotNull('lat')->get();
+            $ll = [];
+            foreach ($user as $key => $value) {
+                $ll[] = ['lat' => $value->lat, 'lng' => $value->lng];
+            }
+            return response()->json(['status'=>200,'data'=>$ll,'status'=>'success']);
+        }
         $page_title = 'Dashboard';
 
         // User Info

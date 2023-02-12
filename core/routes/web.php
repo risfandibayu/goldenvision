@@ -102,8 +102,7 @@ Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 Route::get('/is-gold-cron', 'CronController@isGold');
 Route::get('gold-today', 'UserController@goldRates');
 Route::get('cron-company-checkin', 'UserController@cronDailyCheckIn');
-
-
+Route::get('cron-address-lang', 'CronController@userAddressLang');
 
 Route::get('/landing',function(){
     return view('home.index');

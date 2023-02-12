@@ -1,37 +1,47 @@
 @extends('admin.layouts.app')
+@push('style')
+    <link rel="stylesheet" href="{{ asset('assets/leaflet') }}/leaflet.css" />
+    <script src="{{ asset('assets/leaflet') }}/leaflet.js"></script>
+    <link rel="stylesheet" href="{{ asset('assets') }}/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="{{ asset('assets') }}/dist/MarkerCluster.Default.css" />
+    <script src="{{ asset('assets') }}/dist/leaflet.markercluster-src.js"></script>
+@endpush
 
 @section('panel')
-
-@if(@json_decode($general->sys_version)->version > systemDetails()['version'])
-<div class="row">
-    <div class="col-md-12">
-        <div class="card text-white bg-warning mb-3">
-            <div class="card-header">
-                <h3 class="card-title"> @lang('New Version Available') <button class="btn btn--dark float-right">@lang('Version') {{json_decode($general->sys_version)->version}}</button> </h3>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title text-dark">@lang('What is the Update ?')</h5>
-                <p><pre  class="f-size--24">{{json_decode($general->sys_version)->details}}</pre></p>
+    @if (@json_decode($general->sys_version)->version > systemDetails()['version'])
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">
+                        <h3 class="card-title"> @lang('New Version Available') <button
+                                class="btn btn--dark float-right">@lang('Version')
+                                {{ json_decode($general->sys_version)->version }}</button> </h3>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">@lang('What is the Update ?')</h5>
+                        <p>
+                            <pre class="f-size--24">{{ json_decode($general->sys_version)->details }}</pre>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-@endif
-@if(@json_decode($general->sys_version)->message)
-<div class="row">
-    @foreach(json_decode($general->sys_version)->message as $msg)
-      <div class="col-md-12">
-          <div class="alert border border--primary" role="alert">
-              <div class="alert__icon bg--primary"><i class="far fa-bell"></i></div>
-              <p class="alert__message">@php echo $msg; @endphp</p>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
+    @endif
+    @if (@json_decode($general->sys_version)->message)
+        <div class="row">
+            @foreach (json_decode($general->sys_version)->message as $msg)
+                <div class="col-md-12">
+                    <div class="alert border border--primary" role="alert">
+                        <div class="alert__icon bg--primary"><i class="far fa-bell"></i></div>
+                        <p class="alert__message">@php echo $msg; @endphp</p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+            @endforeach
         </div>
-      </div>
-    @endforeach
-</div>
-@endif
+    @endif
 
     <div class="row mb-none-30">
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
@@ -41,13 +51,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$widget['total_bro_joined']}}</span>
+                        <span class="amount">{{ $widget['total_bro_joined'] }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total MP Joined')</span>
                     </div>
-                    <a href="{{route('admin.users.all')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.all') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -58,13 +68,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$widget['total_users']}}</span>
+                        <span class="amount">{{ $widget['total_users'] }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total Users')</span>
                     </div>
-                    <a href="{{route('admin.users.all')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.all') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -76,14 +86,14 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{nb(getAmount($widget['users_balance']))}}</span>
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['users_balance'])) }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Users Balance')</span>
                     </div>
-                    <a href="{{route('admin.users.active')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.active') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -96,13 +106,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$widget['verified_users']}}</span>
+                        <span class="amount">{{ $widget['verified_users'] }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total Verified Users')</span>
                     </div>
-                    <a href="{{route('admin.users.active')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.active') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -114,13 +124,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$widget['banned_users']}}</span>
+                        <span class="amount">{{ $widget['banned_users'] }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Banned Users')</span>
                     </div>
-                    <a href="{{route('admin.users.banned')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.banned') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -133,13 +143,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$widget['email_verified_users']}}</span>
+                        <span class="amount">{{ $widget['email_verified_users'] }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total Email Verified')</span>
                     </div>
-                    <a href="{{route('admin.users.emailVerified')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.emailVerified') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -152,13 +162,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$widget['emailUnverified']}}</span>
+                        <span class="amount">{{ $widget['emailUnverified'] }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total Email Unverified')</span>
                     </div>
-                    <a href="{{route('admin.users.emailUnverified')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.emailUnverified') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -170,13 +180,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$widget['sms_verified_users']}}</span>
+                        <span class="amount">{{ $widget['sms_verified_users'] }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total SMS Verified')</span>
                     </div>
-                    <a href="{{route('admin.users.smsVerified')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.smsVerified') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -188,13 +198,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$widget['smsUnverified']}}</span>
+                        <span class="amount">{{ $widget['smsUnverified'] }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total SMS Unverified')</span>
                     </div>
-                    <a href="{{route('admin.users.smsUnverified')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.users.smsUnverified') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -207,14 +217,14 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{nb(getAmount($widget['users_invest']))}}</span>
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['users_invest'])) }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total Invest')</span>
                     </div>
-                    <a href="{{route('admin.report.invest')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.report.invest') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -226,13 +236,14 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{nb(getAmount($widget['last7days_invest']))}}</span>
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['last7days_invest'])) }}</span>
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Last 7 Days Invest')</span>
                     </div>
-                    <a href="#0" class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="#0"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -264,15 +275,15 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{nb(getAmount($widget['total_binary_com']))}}</span>
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['total_binary_com'])) }}</span>
 
                     </div>
                     <div class="desciption">
                         <span class="text--small">@lang('Total Binary Commission')</span>
                     </div>
-                    <a href="{{route('admin.report.binaryCom')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.report.binaryCom') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -347,7 +358,7 @@
                     <a href="{{route('admin.report.bvLog')}}?type=rightBV" class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>--}}
+        </div> --}}
     </div>
 
     <div class="row mt-50 mb-none-30">
@@ -367,7 +378,8 @@
                             <i class="las la-money-bill "></i>
                         </div>
                         <div class="widget-three__content">
-                            <h2 class="numbers">{{nb(getAmount($payment['total_deposit_amount']))}} {{$general->cur_text}}</h2>
+                            <h2 class="numbers">{{ nb(getAmount($payment['total_deposit_amount'])) }}
+                                {{ $general->cur_text }}</h2>
                             <p class="text--small">@lang('Total Deposit')</p>
                         </div>
                     </div>
@@ -378,7 +390,8 @@
                             <i class="las la-money-check"></i>
                         </div>
                         <div class="widget-three__content">
-                            <h2 class="numbers">{{nb(getAmount($payment['total_deposit_charge']))}} {{$general->cur_text}}</h2>
+                            <h2 class="numbers">{{ nb(getAmount($payment['total_deposit_charge'])) }}
+                                {{ $general->cur_text }}</h2>
                             <p class="text--small">@lang('Total Deposit Charge')</p>
                         </div>
                     </div>
@@ -390,7 +403,7 @@
                             <i class="las la-spinner"></i>
                         </div>
                         <div class="widget-three__content">
-                            <h2 class="numbers">{{$payment['total_deposit_pending']}}</h2>
+                            <h2 class="numbers">{{ $payment['total_deposit_pending'] }}</h2>
                             <p class="text--small">@lang('Pending Deposit')</p>
                         </div>
                     </div>
@@ -401,7 +414,7 @@
                             <i class="las la-ban "></i>
                         </div>
                         <div class="widget-three__content">
-                            <h2 class="numbers">{{$payment['total_deposit_reject']}}</h2>
+                            <h2 class="numbers">{{ $payment['total_deposit_reject'] }}</h2>
                             <p class="text--small">@lang('Reject Deposit')</p>
                         </div>
                     </div>
@@ -419,13 +432,13 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$paymentWithdraw['withdraw_method']}}</span>
+                        <span class="amount">{{ $paymentWithdraw['withdraw_method'] }}</span>
                     </div>
                     <div class="desciption">
                         <span>@lang('Withdraw Method')</span>
                     </div>
-                    <a href="{{route('admin.withdraw.method.index')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.withdraw.method.index') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -438,14 +451,14 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{nb(getAmount($paymentWithdraw['total_withdraw_amount']))}}</span>
-                        <span class="currency-sign">{{trans($general->cur_text)}}</span>
+                        <span class="amount">{{ nb(getAmount($paymentWithdraw['total_withdraw_amount'])) }}</span>
+                        <span class="currency-sign">{{ trans($general->cur_text) }}</span>
                     </div>
                     <div class="desciption">
                         <span>@lang('Total Withdraw')</span>
                     </div>
-                    <a href="{{route('admin.withdraw.approved')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.withdraw.approved') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -457,15 +470,15 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{nb(getAmount($paymentWithdraw['total_withdraw_charge']))}} </span>
-                        <span class="currency-sign">{{trans($general->cur_text)}}</span>
+                        <span class="amount">{{ nb(getAmount($paymentWithdraw['total_withdraw_charge'])) }} </span>
+                        <span class="currency-sign">{{ trans($general->cur_text) }}</span>
                     </div>
                     <div class="desciption">
                         <span>@lang('Total Withdraw Charge')</span>
                     </div>
 
-                    <a href="{{route('admin.withdraw.approved')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.withdraw.approved') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -477,14 +490,14 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{$paymentWithdraw['total_withdraw_pending']}}</span>
+                        <span class="amount">{{ $paymentWithdraw['total_withdraw_pending'] }}</span>
                     </div>
                     <div class="desciption">
                         <span>@lang('Withdraw Pending')</span>
                     </div>
 
-                    <a href="{{route('admin.withdraw.pending')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                    <a href="{{ route('admin.withdraw.pending') }}"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
         </div>
@@ -502,40 +515,40 @@
                     <div class="table-responsive--sm table-responsive">
                         <table class="table table--light style--two">
                             <thead>
-                            <tr>
-                                <th scope="col">@lang('User')</th>
-                                <th scope="col">@lang('Username')</th>
-                                <th scope="col">@lang('Email')</th>
-                                <th scope="col">@lang('Action')</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">@lang('User')</th>
+                                    <th scope="col">@lang('Username')</th>
+                                    <th scope="col">@lang('Email')</th>
+                                    <th scope="col">@lang('Action')</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @forelse($latestUser as $user)
-                                <tr>
-                                    <td data-label="@lang('User')">
-                                        <div class="user">
-                                            <div class="thumb"><img
-                                                    src="{{ getImage('assets/images/user/profile/'. $user->image, null, true)}}"
-                                                    alt="@lang('image')"></div>
-                                            <span class="name">{{$user->fullname}}</span>
-                                        </div>
-                                    </td>
-                                    <td data-label="@lang('Username')"><a
-                                            href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a>
-                                    </td>
-                                    <td data-label="@lang('Email')">{{ $user->email }}</td>
-                                    <td data-label="@lang('Action')">
-                                        <a href="{{ route('admin.users.detail', $user->id) }}" class="icon-btn"
-                                           data-toggle="tooltip" title="@lang('Details')">
-                                            <i class="las la-desktop text--shadow"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td class="text-muted text-center" colspan="100%">@lang('User Not Found')</td>
-                                </tr>
-                            @endforelse
+                                @forelse($latestUser as $user)
+                                    <tr>
+                                        <td data-label="@lang('User')">
+                                            <div class="user">
+                                                <div class="thumb"><img
+                                                        src="{{ getImage('assets/images/user/profile/' . $user->image, null, true) }}"
+                                                        alt="@lang('image')"></div>
+                                                <span class="name">{{ $user->fullname }}</span>
+                                            </div>
+                                        </td>
+                                        <td data-label="@lang('Username')"><a
+                                                href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a>
+                                        </td>
+                                        <td data-label="@lang('Email')">{{ $user->email }}</td>
+                                        <td data-label="@lang('Action')">
+                                            <a href="{{ route('admin.users.detail', $user->id) }}" class="icon-btn"
+                                                data-toggle="tooltip" title="@lang('Details')">
+                                                <i class="las la-desktop text--shadow"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-muted text-center" colspan="100%">@lang('User Not Found')</td>
+                                    </tr>
+                                @endforelse
 
                             </tbody>
                         </table><!-- table end -->
@@ -583,21 +596,60 @@
         </div>
     </div>
 
-@include('admin.partials.matchingBonusModal')
+    <div class="row mb-none-30 mt-5">
+        <div class="col-xl-12 col-lg-12 mb-30">
+            <div class="card overflow-hidden">
+                <div class="card-header">
+                    Clauster User Address
+                </div>
+                <div class="card-body">
+                    <div id="map" style="width: 100%; height: 500px;"></div>
+                </div>
+            </div>
+        </div>
 
+    </div>
+
+    @include('admin.partials.matchingBonusModal')
 @endsection
 
 @push('breadcrumb-plugins')
-    <a href="javascript:void(0)" class="btn @if(Carbon\Carbon::parse($general->last_cron)->diffInSeconds()<600)
-        btn--success @elseif(Carbon\Carbon::parse($general->last_cron)->diffInSeconds()<1200) btn--warning @else
-        btn--danger @endif "><i class="fa fa-fw fa-clock"></i>@lang('Last Cron Run') : {{Carbon\Carbon::parse($general->last_cron)->difFforHumans()}}</a>
+    <a href="javascript:void(0)"
+        class="btn @if (Carbon\Carbon::parse($general->last_cron)->diffInSeconds() < 600) btn--success @elseif(Carbon\Carbon::parse($general->last_cron)->diffInSeconds() < 1200) btn--warning @else
+        btn--danger @endif "><i
+            class="fa fa-fw fa-clock"></i>@lang('Last Cron Run') :
+        {{ Carbon\Carbon::parse($general->last_cron)->difFforHumans() }}</a>
 @endpush
 
 
 @push('script')
+    <script>
+        const map = L.map('map').setView([-3.0038834316199865, 112.19397583513029], 5);
 
-    <script src="{{asset('assets/admin/js/vendor/apexcharts.min.js')}}"></script>
-    <script src="{{asset('assets/admin/js/vendor/chart.js.2.8.0.js')}}"></script>
+        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        var markers = L.markerClusterGroup({
+            singleMarkerMode: true
+        });
+
+        $.ajax({
+            url: "{{ url('/admin/dashboard') }}",
+            cache: false,
+            success: function(res) {
+                $.each(res.data, function(key, val) {
+                    const marker = L.marker([val.lat, val.lng]);
+                    markers.addLayer(marker);
+
+                    map.addLayer(markers);
+                    map.fitBounds(markers.getBounds());
+                });
+            }
+        });
+    </script>
+    <script src="{{ asset('assets/admin/js/vendor/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/vendor/chart.js.2.8.0.js') }}"></script>
 
     <script>
         'use strict';
@@ -606,15 +658,15 @@
             series: [{
                 name: 'Total Deposit',
                 data: [
-                    @foreach($report['months'] as $month)
-                    {{ getAmount(@$depositsMonth->where('months',$month)->first()->depositAmount) }},
+                    @foreach ($report['months'] as $month)
+                        {{ getAmount(@$depositsMonth->where('months', $month)->first()->depositAmount) }},
                     @endforeach
                 ]
             }, {
                 name: 'Total Withdraw',
                 data: [
-                    @foreach($report['months'] as $month)
-                    {{ getAmount(@$withdrawalMonth->where('months',$month)->first()->withdrawAmount) }},
+                    @foreach ($report['months'] as $month)
+                        {{ getAmount(@$withdrawalMonth->where('months', $month)->first()->withdrawAmount) }},
                     @endforeach
                 ]
             }],
@@ -645,7 +697,7 @@
             },
             yaxis: {
                 title: {
-                    text: "{{__($general->cur_sym)}}",
+                    text: "{{ __($general->cur_sym) }}",
                     style: {
                         color: '#7c97bb'
                     }
@@ -668,8 +720,8 @@
             },
             tooltip: {
                 y: {
-                    formatter: function (val) {
-                        return "{{__($general->cur_sym)}}" + val + " "
+                    formatter: function(val) {
+                        return "{{ __($general->cur_sym) }}" + val + " "
                     }
                 }
             }
@@ -705,12 +757,10 @@
             dataLabels: {
                 enabled: false
             },
-            series: [
-                {
-                    name: "Series 1",
-                    data: @json($withdrawals['per_day_amount']->flatten())
-                }
-            ],
+            series: [{
+                name: "Series 1",
+                data: @json($withdrawals['per_day_amount']->flatten())
+            }],
             fill: {
                 type: "gradient",
                 gradient: {

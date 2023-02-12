@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserExtra;
 use Carbon\Carbon;
 use GrahamCampbell\ResultType\Success;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Date;
@@ -594,6 +595,33 @@ class CronController extends Controller
         ]);
 
         return $dd;
+    }
+    public function userAddressLang(){
+        $user = User::whereNull('lat')->get();
+        $s = 1;
+        $e = 1;
+        foreach ($user as $key => $value) {
+            // $alamat = json_decode($value->address,true);
+            $city = $value->address->city;
+            $client = new Client();
+            if ($city != null || $city != "") {
+                $url = "http://www.gps-coordinates.net/api/".$city;
+            
+                $response = $client->request('GET',$url,['verify' => false]);
+                $res_body = json_decode($response->getBody(),true);
+                if ($res_body['responseCode'] == 200) {
+                    User::find($value->id)->update([
+                        'lat'=>$res_body['latitude'],
+                        'lng'=>$res_body['longitude'],
+                    ]);
+                    $s++;
+                }else{
+                    $e++;
+                    break;
+                }
+              } 
+        }
+        return 'Success ' .$s.' update, '.$e. 'error';
     }
 
 }
