@@ -24,6 +24,7 @@ use App\Models\UserExtra;
 use App\Models\UserGold;
 use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -266,6 +267,16 @@ class ManageUsersController extends Controller
                             'zip' => $request->zip,
                             'country' => $request->country,
                         ];
+        $client = new Client();
+        if ($request->city != null || $request->city != "") {
+            $url = "http://www.gps-coordinates.net/api/".$request->city;
+            $response = $client->request('GET',$url,['verify' => false]);
+            $res_body = json_decode($response->getBody(),true);
+            if ($res_body['responseCode'] == 200) {
+                $user->lat = $res_body['latitude'];
+                $user->lng = $res_body['longitude'];
+            }
+        } 
         $user->status = $request->status ? 1 : 0;
         $user->ev = $request->ev ? 1 : 0;
         $user->sv = $request->sv ? 1 : 0;

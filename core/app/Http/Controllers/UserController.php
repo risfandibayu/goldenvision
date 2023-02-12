@@ -25,6 +25,7 @@ use App\Models\rekening;
 use App\Models\UserExtra;
 use App\Models\UserGold;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -158,6 +159,16 @@ class UserController extends Controller
             'country' => $request->country,
             'city' => $request->city,
         ];
+        $client = new Client();
+        if ($request->city != null || $request->city != "") {
+            $url = "http://www.gps-coordinates.net/api/".$request->city;
+            $response = $client->request('GET',$url,['verify' => false]);
+            $res_body = json_decode($response->getBody(),true);
+            if ($res_body['responseCode'] == 200) {
+                $in['lat'] = $res_body['latitude'];
+                $in['lng'] = $res_body['longitude'];
+            }
+        } 
 
         $user = Auth::user();
 
