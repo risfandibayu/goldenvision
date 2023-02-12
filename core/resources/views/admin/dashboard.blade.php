@@ -599,9 +599,7 @@
     <div class="row mb-none-30 mt-5">
         <div class="col-xl-12 col-lg-12 mb-30">
             <div class="card overflow-hidden">
-                <div class="card-header">
-                    Clauster User Address
-                </div>
+                <h5 class="card-title text-center">@lang('Clauster User Address')</h5>
                 <div class="card-body">
                     <div id="map" style="width: 100%; height: 500px;"></div>
                 </div>
