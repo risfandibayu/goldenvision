@@ -589,8 +589,12 @@ class CronController extends Controller
         $harga = $page->filter('.price-current')->text();
         $hragaInt = str_replace('.', '', $harga);
         // dd(Int$harga);
+        $last = DailyGold::orderByDesc('id')->first();
+        $percent = (($hragaInt - $last->per_gram) / $last->per_gram) * 100;
+        $percent_num = number_format($percent, 2, '.', '');
         $dd = DailyGold::create([
             'per_gram'  => $hragaInt,
+            'percent'   => $percent_num,
             'date'      => Date('Y-m-d')
         ]);
 

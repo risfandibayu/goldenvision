@@ -519,6 +519,15 @@
                         Gold Rates
                     </div>
                     <div class="card-body text-center border-3">
+                        <div class="price-today text-secondary">
+                            Price Today : Rp {{ nb($goldToday->per_gram) }}
+                            <span class=" {{ $goldToday->percent > 0 ? 'text-success' : 'text-danger' }} ">
+                                (<i class="fa {{ $goldToday->percent > 0 ? 'fa-arrow-up ' : 'fa-arrow-down' }}"
+                                    aria-hidden="true" style="font-size: px"></i> {{ $goldToday->percent }}%)
+                            </span>
+
+
+                        </div>
                         <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
                     </div>
                 </div>

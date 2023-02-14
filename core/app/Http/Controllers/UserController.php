@@ -79,6 +79,7 @@ class UserController extends Controller
         $goldRange = $gold->per_gram * $userGold;
         $data['goldBonus']          = $goldRange;
         $data['reward']          = BonusReward::all();
+        $data['goldToday']          = DailyGold::orderByDesc('id')->first();
         $ux = UserExtra::where('user_id',auth()->user()->id)->first();
         if(!$ux){
             $kiri = 0;
