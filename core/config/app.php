@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Weidner\Goutte\GoutteServiceProvider::class, // [1] This will register the Package in the laravel echo system
+        Laravolt\Indonesia\ServiceProvider::class
 
     ],
 
@@ -231,7 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Goutte' => Weidner\Goutte\GoutteFacade::class, // [2] It will register as an alias for the Goutte facade
-
+        'Indonesia' => Laravolt\Indonesia\Facade::class
     ],
 
 ];

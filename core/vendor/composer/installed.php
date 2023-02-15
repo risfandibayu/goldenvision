@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '43d2b586b0374f1b9a3ed90bb42af5c56e32dda4',
+        'reference' => '43fd1697f1867a892d830a5d1c0b47d8cdbf7cde',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -454,7 +454,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '43d2b586b0374f1b9a3ed90bb42af5c56e32dda4',
+            'reference' => '43fd1697f1867a892d830a5d1c0b47d8cdbf7cde',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -491,6 +491,15 @@
             'install_path' => __DIR__ . '/../laravel/ui',
             'aliases' => array(),
             'reference' => '65ec5c03f7fee2c8ecae785795b829a15be48c2c',
+            'dev_requirement' => false,
+        ),
+        'laravolt/indonesia' => array(
+            'pretty_version' => 'v0.33',
+            'version' => '0.33.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravolt/indonesia',
+            'aliases' => array(),
+            'reference' => 'a35892c91bc3c0a18c2d78248a35d98ba7d557dd',
             'dev_requirement' => false,
         ),
         'league/commonmark' => array(
