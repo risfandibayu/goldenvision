@@ -478,7 +478,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 | Start User Area
 |--------------------------------------------------------------------------
 */
-
+Route::get('provinces', [UserController::class,'provinces'])->name('provinces');
+Route::get('cities', [UserController::class,'cities'])->name('cities');
+Route::get('districts', [UserController::class,'districts'])->name('districts');
+Route::get('villages', [UserController::class,'villages'])->name('villages');
 
 Route::name('user.')->group(function () {
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -495,6 +498,8 @@ Route::name('user.')->group(function () {
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
     Route::post('password/verify-code', 'Auth\ForgotPasswordController@verifyCode')->name('password.verify-code');
+
+   
 });
 
 

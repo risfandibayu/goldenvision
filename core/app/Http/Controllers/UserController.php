@@ -126,11 +126,13 @@ class UserController extends Controller
 
     public function profile()
     {
+        // dd(auth()->user());
         $data['page_title'] = "Profile Setting";
         $data['bank'] = bank::all();
         $data['bank_user'] = rekening::where('user_id',Auth::user()->id)->first();
         $data['user'] = Auth::user();
         $data['alamat'] = alamat::where('user_id',Auth::user()->id)->get();
+        $data['provinsi'] = \Indonesia::allProvinces();
         return view($this->activeTemplate. 'user.profile-setting', $data);
     }
 
@@ -148,29 +150,45 @@ class UserController extends Controller
             'firstname.required'=>'First Name Field is required',
             'lastname.required'=>'Last Name Field is required'
         ]);
-
-
+        $prov = \Indonesia::findProvince($request->provinsi, $with = null);
+        $kota = \Indonesia::findCity($request->kota, $with = null);
+        $kec  = \Indonesia::findDistrict($request->kecamatan, $with = null);
+        $desa  = \Indonesia::findVillage($request->desa, $with = null);
         $in['firstname'] = $request->firstname;
         $in['lastname'] = $request->lastname;
+        if(is_numeric($request->kota)){
+            $in['address'] = [
+                'address' => $request->alamat,
+                'state' => $prov->name,
+                'zip' => $request->pos,
+                'country' => $request->country,
+                'city' => $kota->name,
+                'prov'  => $prov->name,
+                'prov_code'  => $request->provinsi,
+                'kota'  => $kota->name,
+                'kec'   => $kec->name,
+                'desa'  => $desa->name,
+            ];
+            $in['lat'] = $desa->meta['lat'];
+            $in['lng'] = $desa->meta['long'];
+            $in['address_check']    = 1;
 
-        $in['address'] = [
-            'address' => $request->address,
-            'state' => $request->state,
-            'zip' => $request->zip,
-            'country' => $request->country,
-            'city' => $request->city,
-        ];
-        $client = new Client();
-        if ($request->city != null || $request->city != "") {
-            $url = "http://www.gps-coordinates.net/api/".$request->city;
-            $response = $client->request('GET',$url,['verify' => false]);
-            $res_body = json_decode($response->getBody(),true);
-            if ($res_body['responseCode'] == 200) {
-                $in['lat'] = $res_body['latitude'];
-                $in['lng'] = $res_body['longitude'];
-            }
-        } 
-
+        }else{
+           $in['address'] = [
+                'address' => $request->alamat,
+                'state' => auth()->user()->address->prov,
+                'zip' => $request->pos,
+                'country' => $request->country,
+                'city' => auth()->user()->address->city,
+                'prov'  => auth()->user()->address->prov,
+                'prov_code'  => auth()->user()->address->prov_code,
+                'kota'  => auth()->user()->address->kota,
+                'kec'   =>auth()->user()->address->kec,
+                'desa'  => auth()->user()->address->desa,
+            ];
+            $in['lat'] = auth()->user()->lat;
+            $in['lng'] = auth()->user()->lng;
+        }
         $user = Auth::user();
 
         if ($request->hasFile('image')) {
@@ -1759,5 +1777,24 @@ class UserController extends Controller
             $notify[] = ['success', $general->cur_sym . $amount . ' has been subtracted from ' . $user->username . ' balance'];
         }
         return back()->withNotify($notify);
+    }
+    public function provinces()
+    {
+        return \Indonesia::allProvinces();
+    }
+
+    public function cities(Request $request)
+    {
+        return \Indonesia::findProvince($request->id, ['cities'])->cities->pluck('name', 'id');
+    }
+
+    public function districts(Request $request)
+    {
+        return \Indonesia::findCity($request->id, ['districts'])->districts->pluck('name', 'id');
+    }
+
+    public function villages(Request $request)
+    {
+        return \Indonesia::findDistrict($request->id, ['villages'])->villages->pluck('name', 'id');
     }
 }

@@ -49,9 +49,9 @@
         }
 
         /* .btn-11:hover {
-        text-decoration: none;
-        color: #fff;
-    } */
+                                                                                                                                                                                                    text-decoration: none;
+                                                                                                                                                                                                    color: #fff;
+                                                                                                                                                                                                } */
         .btn-11:before {
             position: absolute;
             content: '';
@@ -65,14 +65,14 @@
         }
 
         /* .btn-11:hover{
-      opacity: .7;
-    } */
+                                                                                                                                                                                                  opacity: .7;
+                                                                                                                                                                                                } */
         /* .btn-11:active{
-      box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-                  -4px -4px 6px 0 rgba(116, 125, 136, .2),
-        inset -4px -4px 6px 0 rgba(255,255,255,.2),
-        inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-    } */
+                                                                                                                                                                                                  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+                                                                                                                                                                                                              -4px -4px 6px 0 rgba(116, 125, 136, .2),
+                                                                                                                                                                                                    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                                                                                                                                                                                                    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+                                                                                                                                                                                                } */
 
 
         @-webkit-keyframes shiny-btn1 {
@@ -130,7 +130,7 @@
                                 <span>@lang('Joined at')</span>
                                 {{ date(
                                     'd M, Y h:i
-                                                            A',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            A',
                                     strtotime(auth()->user()->created_at),
                                 ) }}
                             </li>
@@ -227,15 +227,18 @@
                         </div>
 
                         <hr>
-                        
-                        <div class="row mt-4">
+
+                        {{-- <div class="row mt-4 d-none">
                             <div class="col-md-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Address') </label>
+                                    <textarea name="address" id="address" cols="30" rows="10" class="form-control form-control-lg">
+                                        {{ auth()->user()->address->address }}
+                                    </textarea>
                                     <input class="form-control form-control-lg" type="text" name="address"
                                         value="{{ auth()->user()->address->address }}">
                                     <small class="form-text text-muted"><i class="las la-info-circle"></i>@lang('House
-                                                                        number, street address')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            number, street address')
                                     </small>
                                 </div>
                             </div>
@@ -267,14 +270,107 @@
                                         @include('partials.country') </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
+                        @if (!auth()->user()->address_check)
+                            <div class="alert alert-warning alert-dismissible fade show p-3 h6" role="alert">
+                                Perhatian,
+                                terdapat perubahan kebijakan perusahaan terkait data alamat
+                                pelanggan. <br>
+                                Segera perbaharui alamat pada akun anda demi menghindari kesalahan
+                                pengiriman dan pendataan. <br>
+                                Terima kasih~.
+                                <br>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label font-weight-bold">@lang('Alamat') </label>
+                                    <input class="form-control form-control-lg" type="text" name="alamat"
+                                        value="{{ auth()->user()->address->address }}">
+                                    <small class="form-text text-muted"><i class="las la-info-circle"></i>@lang(' Alamat Lengkap Rumah')
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Provinsi')<span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" name="provinsi" id="provinsi" required>
+                                        <option>--Pilih Provinsi </option>
+                                        @foreach ($provinsi as $item)
+                                            <option value="{{ $item->id ?? '' }}"
+                                                {{ isset(auth()->user()->address->prov_code) && auth()->user()->address->prov_code == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name ?? '' }}
+                                            </option>
+                                        @endforeach
 
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Kabupaten / Kota')<span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" name="kota" id="kota" required>
+                                        @if (isset(auth()->user()->address->kota))
+                                            <option>{{ auth()->user()->address->kota }}</option>
+                                        @else
+                                            <option>--Pilih Kabupaten/Kota</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Kecamatan')<span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" name="kecamatan" id="kecamatan" required>
+                                        @if (isset(auth()->user()->address->kec))
+                                            <option>{{ auth()->user()->address->kec }}</option>
+                                        @else
+                                            <option>--Pilih Kecamatan</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Desa')<span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" name="desa" id="desa" required>
+                                        @if (isset(auth()->user()->address->desa))
+                                            <option>{{ auth()->user()->address->desa }}</option>
+                                        @else
+                                            <option>--Pilih Desa</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Kode Pos')</label>
+                                    <input class="form-control " type="text" name="pos"
+                                        value="{{ auth()->user()->address->zip }}">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Negara')</label>
+                                    <select name="negara" class="form-control ">
+                                        @include('partials.country') </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row mt-4">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <button type="submit"
                                         class="btn btn--primary btn-block btn-lg">@lang('Save
-                                                                            Changes')</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Changes')</button>
                                 </div>
                             </div>
                         </div>
@@ -289,7 +385,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-50 border-bottom pb-2">{{ auth()->user()->fullname }} @lang('Bank Account
-                                        Information')</h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Information')</h5>
                     @if ($bank_user)
                         <form action="{{ route('user.edit_rekening') }}" method="POST" enctype="multipart/form-data"
                             id="edit">
@@ -347,7 +443,7 @@
                                     <div class="form-group">
                                         <button type="submit"
                                             class="btn btn--primary btn-block btn-lg">@lang('Save
-                                                                                Changes')</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Changes')</button>
                                     </div>
                                 </div>
                             </div>
@@ -407,7 +503,7 @@
                                     <div class="form-group">
                                         <button type="submit"
                                             class="btn btn--primary btn-block btn-lg">@lang('Save
-                                                                                Changes')</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Changes')</button>
                                     </div>
                                 </div>
                             </div>
@@ -430,7 +526,7 @@
                         <div class="col-md-10">
                             <h5 class="card-title mb-50 border-bottom pb-2">{{ auth()->user()->fullname }}
                                 @lang('Shipping
-                                                            Address Information')</h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Address Information')</h5>
                         </div>
                         <div class="col-md-2">
                             <button class="btn btn--primary add-address">Add New Address</button>
@@ -595,12 +691,44 @@
 @push('breadcrumb-plugins')
     <a href="{{ route('user.change-password') }}" class="btn btn--success btn--shadow"><i
             class="fa fa-key"></i>@lang('Change
-                Password')</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Password')</a>
 @endpush
 
 
 
 @push('script')
+    <script>
+        function onChangeSelect(url, id, name) {
+            // send ajax request to get the cities of the selected province and append to the select tag
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#' + name).empty();
+                    $('#' + name).append('<option>-Pilih</option>');
+
+                    $.each(data, function(key, value) {
+                        $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        }
+        $(function() {
+            $('#provinsi').on('change', function() {
+                onChangeSelect('{{ route('cities') }}', $(this).val(), 'kota');
+            });
+            $('#kota').on('change', function() {
+                onChangeSelect('{{ route('districts') }}', $(this).val(), 'kecamatan');
+            })
+            $('#kecamatan').on('change', function() {
+                onChangeSelect('{{ route('villages') }}', $(this).val(), 'desa');
+            })
+        });
+    </script>
+
     <script>
         'use strict';
         (function($) {

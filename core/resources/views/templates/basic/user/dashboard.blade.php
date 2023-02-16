@@ -371,6 +371,23 @@
                 </div>
             @endif
 
+            @if (!auth()->user()->address_check)
+                <a href="{{ url('user/profile-setting') }}">
+                    <div class="alert alert-warning alert-dismissible fade show p-3 h6" role="alert">
+                        Perhatian,
+                        terdapat perubahan kebijakan perusahaan terkait data alamat
+                        pelanggan. <br>
+                        Segera perbaharui alamat pada akun anda demi menghindari kesalahan
+                        pengiriman dan pendataan. <br>
+                        Terima kasih~.
+                        <br>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </a>
+            @endif
+
             @if (\App\Models\User::canClaimWeeklyGold(Auth::id()))
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
