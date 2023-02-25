@@ -42,21 +42,21 @@ class ResetPasswordController extends Controller
     {
 
         $content    = Frontend::where('data_keys', 'reset_password.content')->first();
-        $email = session('fpass_email');
+        $username = session('fpass_username');
         $token = session()->has('token') ? session('token') : $token;
-        if (PasswordReset::where('token', $token)->where('email', $email)->count() != 1) {
+        if (PasswordReset::where('token', $token)->where('username', $username)->count() != 1) {
             $notify[] = ['error', 'Invalid token'];
             return redirect()->route('user.password.request')->withNotify($notify);
         }
-        return view(activeTemplate() . 'user.auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $email, 'page_title' => 'Reset Password', 'content'=>$content]
+        return view('landing.reset')->with(
+            ['token' => $token, 'username' => $username, 'page_title' => 'Reset Password', 'content'=>$content]
         );
     }
 
     public function reset(Request $request)
     {
 
-        session()->put('fpass_email', $request->email);
+        session()->put('fpass_username', $request->username);
         $request->validate($this->rules(), $this->validationErrorMessages());
         $reset = PasswordReset::where('token', $request->token)->orderBy('created_at', 'desc')->first();
         if (!$reset) {
@@ -64,7 +64,7 @@ class ResetPasswordController extends Controller
             return redirect()->route('user.login')->withNotify($notify);
         }
 
-        $user = User::where('email', $reset->email)->first();
+        $user = User::where('username', $reset->username)->first();
         $user->password = bcrypt($request->password);
         $user->save();
 
@@ -96,7 +96,7 @@ class ResetPasswordController extends Controller
     {
         return [
             'token' => 'required',
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required|confirmed|min:6',
         ];
     }

@@ -52,8 +52,10 @@
     <script src="{{ asset('assets/landing/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/landing/js/plugins.js') }}"></script>
     <script src="{{ asset('assets/landing/js/custom.js') }}"></script>
-
+    @include('partials.notify')
     @yield('js')
+    @stack('script')
+
 </body>
 
 </html>
