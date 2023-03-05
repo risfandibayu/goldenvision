@@ -221,8 +221,10 @@ class ManageUsersController extends Controller
         $totalBvCut         = BvLog::where('user_id',$user->id)->where('trx_type', '-')->sum('amount');
 
         $emas               = Gold::where('user_id',$user->id)->where('golds.status','=','0')->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('COALESCE(SUM(products.price * golds.qty),0) as total_rp'),db::raw('COALESCE(sum(products.weight * golds.qty ),0) as total_wg'))->groupBy('golds.user_id')->first();
+        $provinsi            = \Indonesia::allProvinces();
+        
         return view('admin.users.detail', compact('page_title','ref_id','user','totalDeposit',
-            'totalWithdraw','totalTransaction',  'totalBvCut','emas','bank'));
+            'totalWithdraw','totalTransaction',  'totalBvCut','emas','bank','provinsi'));
     }
 
     public function goldDetail($id){
@@ -260,23 +262,43 @@ class ManageUsersController extends Controller
         $user->lastname = $request->lastname;
         $user->lastname = $request->lastname;
         $user->email = $request->email;
-        $user->address = [
-                            'address' => $request->address,
-                            'city' => $request->city,
-                            'state' => $request->state,
-                            'zip' => $request->zip,
-                            'country' => $request->country,
-                        ];
-        $client = new Client();
-        if ($request->city != null || $request->city != "") {
-            $url = "http://www.gps-coordinates.net/api/".$request->city;
-            $response = $client->request('GET',$url,['verify' => false]);
-            $res_body = json_decode($response->getBody(),true);
-            if ($res_body['responseCode'] == 200) {
-                $user->lat = $res_body['latitude'];
-                $user->lng = $res_body['longitude'];
-            }
-        } 
+        $prov = \Indonesia::findProvince($request->provinsi, $with = null);
+        $kota = \Indonesia::findCity($request->kota, $with = null);
+        $kec  = \Indonesia::findDistrict($request->kecamatan, $with = null);
+        $desa  = \Indonesia::findVillage($request->desa, $with = null);
+        if(is_numeric($request->kota)){
+            $user->address = [
+                'address' => $request->alamat,
+                'state' => $prov->name,
+                'zip' => $request->pos,
+                'country' => $request->country,
+                'city' => $kota->name,
+                'prov'  => $prov->name,
+                'prov_code'  => $request->provinsi,
+                'kota'  => $kota->name,
+                'kec'   => $kec->name,
+                'desa'  => $desa->name,
+            ];
+            $user->lat = $desa->meta['lat'];
+            $user->lng = $desa->meta['long'];
+            $user->address_check    = 1;
+
+        }else{
+             $user->address = [
+                'address' =>$request->alamat,
+                'state' => $user->address->prov,
+                'zip' => $request->pos,
+                'country' => $request->country,
+                'city' => $user->address->city,
+                'prov'  => $user->address->prov,
+                'prov_code'  => $user->address->prov_code,
+                'kota'  => $user->address->kota,
+                'kec'   =>$user->address->kec,
+                'desa'  => $user->address->desa,
+            ];
+            $user->lat = $user->lat;
+            $user->lng= $user->lng;
+        }
         $user->status = $request->status ? 1 : 0;
         $user->ev = $request->ev ? 1 : 0;
         $user->sv = $request->sv ? 1 : 0;

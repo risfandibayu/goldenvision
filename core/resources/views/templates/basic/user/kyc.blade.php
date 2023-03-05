@@ -68,54 +68,93 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
+
+                        {{-- alamat --}}
+                        <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Address')<span
-                                            class="text-danger">*</span> </label>
-                                    <input class="form-control form-control-lg" type="text" name="address"
-                                        value="{{ auth()->user()->address->address }}" required>
-                                    <small class="form-text text-muted"><i class="las la-info-circle"></i>@lang('House number, street address')
+                                <div class="form-group">
+                                    <label class="form-control-label font-weight-bold">@lang('Alamat') </label>
+                                    <input class="form-control form-control-lg" type="text" name="alamat"
+                                        value="{{ auth()->user()->address->address }}">
+                                    <small class="form-text text-muted"><i class="las la-info-circle"></i>@lang(' Alamat Lengkap Rumah')
                                     </small>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label font-weight-bold">@lang('City')<span
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Provinsi')<span
                                             class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="text" name="city"
-                                        value="{{ auth()->user()->address->city }}" required>
+                                    <select class="form-control" name="provinsi" id="provinsi" required>
+                                        <option>--Pilih Provinsi </option>
+                                        @foreach ($provinsi as $item)
+                                            <option value="{{ $item->id ?? '' }}"
+                                                {{ isset(auth()->user()->address->prov_code) && auth()->user()->address->prov_code == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name ?? '' }}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('State')<span
+                                    <label class="form-control-label font-weight-bold">@lang('Kabupaten / Kota')<span
                                             class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="text" name="state"
-                                        value="{{ auth()->user()->address->state }}" required>
+                                    <select class="form-control" name="kota" id="kota" required>
+                                        @if (isset(auth()->user()->address->kota))
+                                            <option>{{ auth()->user()->address->kota }}</option>
+                                        @else
+                                            <option>--Pilih Kabupaten/Kota</option>
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Zip/Postal')<span
+                                    <label class="form-control-label font-weight-bold">@lang('Kecamatan')<span
                                             class="text-danger">*</span></label>
-                                    <input class="form-control form-control-lg" type="text" name="zip"
-                                        value="{{ auth()->user()->address->zip }}" required>
+                                    <select class="form-control" name="kecamatan" id="kecamatan" required>
+                                        @if (isset(auth()->user()->address->kec))
+                                            <option>{{ auth()->user()->address->kec }}</option>
+                                        @else
+                                            <option>--Pilih Kecamatan</option>
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Country')<span
+                                    <label class="form-control-label font-weight-bold">@lang('Desa')<span
                                             class="text-danger">*</span></label>
-                                    <select name="country" class="form-control form-control-lg" required>
+                                    <select class="form-control" name="desa" id="desa" required>
+                                        @if (isset(auth()->user()->address->desa))
+                                            <option>{{ auth()->user()->address->desa }}</option>
+                                        @else
+                                            <option>--Pilih Desa</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Kode Pos')</label>
+                                    <input class="form-control " type="text" name="pos"
+                                        value="{{ auth()->user()->address->zip }}">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Negara')</label>
+                                    <select name="negara" class="form-control ">
                                         @include('partials.country') </select>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row mt-4">
                             <div class="col-xl-6 col-md-6 col-12">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">National ID/Passport ID<span
+                                    <label class="form-control-label font-weight-bold">Nomor National ID (KTP)<span
                                             class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" value="{{ auth()->user()->nik }}"
                                         type="text" name="nik" required>
@@ -123,7 +162,7 @@
                             </div>
                             <div class="col-xl-3 col-md-3 col-12">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">National ID/Passport ID Photo<span
+                                    <label class="form-control-label font-weight-bold">Foto KTP<span
                                             class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="file" accept="image/*"
                                         onchange="loadFile(event)" name="ktp" required>
@@ -131,7 +170,7 @@
                             </div>
                             <div class="col-xl-3 col-md-3 col-12">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">Selfie with National ID/Passport
+                                    <label class="form-control-label font-weight-bold">Foto Selfie Dengan KTP
                                         ID<span class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" type="file" accept="image/*"
                                         onchange="loadFile(event)" name="selfie" required>
@@ -210,6 +249,37 @@
 
 
 @push('script')
+    <script>
+        function onChangeSelect(url, id, name) {
+            // send ajax request to get the cities of the selected province and append to the select tag
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#' + name).empty();
+                    $('#' + name).append('<option>-Pilih</option>');
+
+                    $.each(data, function(key, value) {
+                        $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        }
+        $(function() {
+            $('#provinsi').on('change', function() {
+                onChangeSelect('{{ route('cities') }}', $(this).val(), 'kota');
+            });
+            $('#kota').on('change', function() {
+                onChangeSelect('{{ route('districts') }}', $(this).val(), 'kecamatan');
+            })
+            $('#kecamatan').on('change', function() {
+                onChangeSelect('{{ route('villages') }}', $(this).val(), 'desa');
+            })
+        });
+    </script>
     <script>
         'use strict';
         (function($) {

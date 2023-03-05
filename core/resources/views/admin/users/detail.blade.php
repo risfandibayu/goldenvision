@@ -49,9 +49,9 @@
         }
 
         /* .btn-11:hover {
-                                                                                    text-decoration: none;
-                                                                                    color: #fff;
-                                                                                } */
+                                                                                            text-decoration: none;
+                                                                                            color: #fff;
+                                                                                        } */
         .btn-11:before {
             position: absolute;
             content: '';
@@ -65,14 +65,14 @@
         }
 
         /* .btn-11:hover{
-                                                                                  opacity: .7;
-                                                                                } */
+                                                                                          opacity: .7;
+                                                                                        } */
         /* .btn-11:active{
-                                                                                  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-                                                                                              -4px -4px 6px 0 rgba(116, 125, 136, .2),
-                                                                                    inset -4px -4px 6px 0 rgba(255,255,255,.2),
-                                                                                    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-                                                                                } */
+                                                                                          box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+                                                                                                      -4px -4px 6px 0 rgba(116, 125, 136, .2),
+                                                                                            inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                                                                                            inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+                                                                                        } */
 
 
         @-webkit-keyframes shiny-btn1 {
@@ -116,7 +116,7 @@
                                 class="text--small">@lang('Joined At ')<strong>{{ showDateTime(
                                     $user->created_at,
                                     'd M, Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
                                 ) }}</strong></span>
                         </div>
                     </div>
@@ -398,7 +398,7 @@
                         </div>
                         <div class="details">
                             <div class="numbers">
-                                <span class="amount">{{ nbk($user->total_golds )}}</span>
+                                <span class="amount">{{ nbk($user->total_golds) }}</span>
                                 <span class="currency-sign">Gram</span>
                             </div>
                             <div class="desciption">
@@ -539,7 +539,7 @@
                         </div>
 
 
-                        <div class="row mt-4">
+                        {{-- <div class="row mt-4">
                             <div class="col-md-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Address') </label>
@@ -582,8 +582,88 @@
                                     <select name="country" class="form-control"> @include('partials.country') </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label font-weight-bold">@lang('Alamat') </label>
+                                    <input class="form-control form-control-lg" type="text" name="alamat"
+                                        value="{{ $user->address->address }}">
+                                    <small class="form-text text-muted"><i
+                                            class="las la-info-circle"></i>@lang(' Alamat Lengkap Rumah')
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Provinsi')<span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" name="provinsi" id="provinsi" required>
+                                        <option>--Pilih Provinsi </option>
+                                        @foreach ($provinsi as $item)
+                                            <option value="{{ $item->id ?? '' }}"
+                                                {{ isset($user->address->prov_code) && $user->address->prov_code == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name ?? '' }}
+                                            </option>
+                                        @endforeach
 
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Kabupaten / Kota')<span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" name="kota" id="kota" required>
+                                        @if (isset($user->address->kota))
+                                            <option>{{ $user->address->kota }}</option>
+                                        @else
+                                            <option>--Pilih Kabupaten/Kota</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Kecamatan')<span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" name="kecamatan" id="kecamatan" required>
+                                        @if (isset($user->address->kec))
+                                            <option>{{ $user->address->kec }}</option>
+                                        @else
+                                            <option>--Pilih Kecamatan</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Desa')<span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" name="desa" id="desa" required>
+                                        @if (isset($user->address->desa))
+                                            <option>{{ $user->address->desa }}</option>
+                                        @else
+                                            <option>--Pilih Desa</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Kode Pos')</label>
+                                    <input class="form-control " type="text" name="pos"
+                                        value="{{ $user->address->zip }}">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group ">
+                                    <label class="form-control-label font-weight-bold">@lang('Negara')</label>
+                                    <select name="negara" class="form-control ">
+                                        @include('partials.country') </select>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="form-group col-xl-4 col-md-6  col-sm-3 col-12">
@@ -934,6 +1014,37 @@
 @endsection
 
 @push('script')
+    <script>
+        function onChangeSelect(url, id, name) {
+            // send ajax request to get the cities of the selected province and append to the select tag
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#' + name).empty();
+                    $('#' + name).append('<option>-Pilih</option>');
+
+                    $.each(data, function(key, value) {
+                        $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        }
+        $(function() {
+            $('#provinsi').on('change', function() {
+                onChangeSelect('{{ route('cities') }}', $(this).val(), 'kota');
+            });
+            $('#kota').on('change', function() {
+                onChangeSelect('{{ route('districts') }}', $(this).val(), 'kecamatan');
+            })
+            $('#kecamatan').on('change', function() {
+                onChangeSelect('{{ route('villages') }}', $(this).val(), 'desa');
+            })
+        });
+    </script>
     <script>
         'use strict';
         (function($) {

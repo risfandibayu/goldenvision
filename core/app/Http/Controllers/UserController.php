@@ -175,7 +175,7 @@ class UserController extends Controller
 
         }else{
            $in['address'] = [
-                'address' => $request->alamat,
+                'address' =>$request->alamat,
                 'state' => auth()->user()->address->prov,
                 'zip' => $request->pos,
                 'country' => $request->country,
@@ -274,8 +274,8 @@ class UserController extends Controller
         ]);
         $method = WithdrawMethod::where('id', $request->method_code)->where('status', 1)->firstOrFail();
         $user = auth()->user();
-        $rek = rekening::where('user_id',$user->id)->first();
-
+        $rek = rekening::with('bank')->where('user_id',$user->id)->first();
+       
         if (!$rek) {
             # code...
             $notify[] = ['error', 'You Don`t Have Bank Account, Please Enter Your Bank Account.'];
@@ -301,20 +301,100 @@ class UserController extends Controller
         $afterCharge = $request->amount - $charge;
         $finalAmount = getAmount($afterCharge * $method->rate);
 
-        $withdraw = new Withdrawal();
-        $withdraw->method_id = $method->id; // wallet method ID
-        $withdraw->user_id = $user->id;
-        $withdraw->amount = getAmount($request->amount);
-        $withdraw->currency = $method->currency;
-        $withdraw->rate = $method->rate;
-        $withdraw->charge = $charge;
-        $withdraw->final_amount = $finalAmount;
-        $withdraw->after_charge = $afterCharge;
-        $withdraw->trx = getTrx();
-        $withdraw->save();
+        $trx_no = getTrx();
+        // KPAY WITHDRAWL
+        // $data = [
+        //     'withdrawalNo'          => $trx_no, 
+        //     'merchantAppCode'       => env('KPAY_APP'),
+        //     'merchantAppPassword'   => env('KPAY_PAS'),
+        //     'accountName'           => $rek->nama_akun,
+        //     'accountNo'             => $rek->no_rek,
+        //     'bankCode'              => $rek->bank->nama_bank,
+        //     'bankName'              => $rek->bank->code,
+        //     'bankBranch'            => 'Asia',
+        //     'bankCity'              => $rek->kota_cabang,
+        //     'requestAmount'         => getAmount($request->amount),
+        //     'additionalMsg'         => $user->username.' Withdraw Money Rp. '.getAmount($request->amount),
+        //     'processURL'            => route('processUrl')
+        // ];
+        $product_no = [
+            1
+        ];
+        $product_desc = [
+            'Masterplan Withdrawl'
+        ];
+        $product_qty = [
+            1
+        ];
+        $product_amount = [
+            getAmount($request->amount)
+        ];
+        $data = [
+            'merchantAppCode' => env('KPAY_APP'),
+            'merchantAppPassword' => env('KPAY_PAS'),
+            'userEmail'     => 'miartayasa10@gmail.com',
+            'orderNo'       => $trx_no,
+            'orderAmt'      => getAmount($request->amount),
+            'additionalMsg' => $user->username.' Withdraw Money Rp. '.getAmount($request->amount),
+            'productNo'     => $product_no,
+            'productDesc'   => $product_desc,
+            "productQty"    => $product_qty,
+            "productAmt"    => $product_amount,
+            "discountAmt"   => 0,
+            "processURL"    => url('proccess'),
+            "cancelURL"     => url('cancel'),
+            "successURL"    => url('success')
+        ];
+
+        $res = $this->send('https://www.kinerjapay.com/sandbox/services/kinerjapay/json/transaction-process.php',json_encode($data));
+        $arr = json_decode($res,true);
+        dd($arr);
+        
+        if($arr['success'] == 1){
+            $withdraw = new Withdrawal();
+            $withdraw->method_id = $method->id; // wallet method ID
+            $withdraw->user_id = $user->id;
+            $withdraw->amount = getAmount($request->amount);
+            $withdraw->currency = $method->currency;
+            $withdraw->rate = $method->rate;
+            $withdraw->charge = $charge;
+            $withdraw->final_amount = $finalAmount;
+            $withdraw->after_charge = $afterCharge;
+            $withdraw->trx = $trx_no;
+            $withdraw->save();
+        }
+
         session()->put('wtrx', $withdraw->trx);
         return redirect()->route('user.withdraw.preview');
     }
+
+    
+    public function send($url,$data){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL             => $url,
+            CURLOPT_RETURNTRANSFER  => true,
+            CURLOPT_ENCODING        => '',
+            CURLOPT_MAXREDIRS       => 10,
+            CURLOPT_TIMEOUT         => 0,
+            CURLOPT_FOLLOWLOCATION  => true,
+            CURLOPT_HTTP_VERSION    => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST   => 'POST',
+            CURLOPT_POSTFIELDS      => $data,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
+    }
+
+    public function process(){
+        return redirect()->route('user.report.withdraw');
+    }
+
+
 
     public function withdrawPreview()
     {
@@ -1233,6 +1313,7 @@ class UserController extends Controller
         $data['bank'] = bank::all();
         $data['bank_user'] = rekening::where('user_id',Auth::user()->id)->first();
         $data['user'] = Auth::user();
+        $data['provinsi'] = \Indonesia::allProvinces();
         return view('templates.basic.user.kyc',$data);
     }
 
@@ -1261,15 +1342,45 @@ class UserController extends Controller
         // $in['foto_ktp'] = $request->ktp;
         // $in['foto_selfie'] = $request->selfie;
         $in['is_kyc'] = 1;
+        $prov = \Indonesia::findProvince($request->provinsi, $with = null);
+        $kota = \Indonesia::findCity($request->kota, $with = null);
+        $kec  = \Indonesia::findDistrict($request->kecamatan, $with = null);
+        $desa  = \Indonesia::findVillage($request->desa, $with = null);
+        $in['firstname'] = $request->firstname;
+        $in['lastname'] = $request->lastname;
+        if(is_numeric($request->kota)){
+            $in['address'] = [
+                'address' => $request->alamat,
+                'state' => $prov->name,
+                'zip' => $request->pos,
+                'country' => $request->country,
+                'city' => $kota->name,
+                'prov'  => $prov->name,
+                'prov_code'  => $request->provinsi,
+                'kota'  => $kota->name,
+                'kec'   => $kec->name,
+                'desa'  => $desa->name,
+            ];
+            $in['lat'] = $desa->meta['lat'];
+            $in['lng'] = $desa->meta['long'];
+            $in['address_check']    = 1;
 
-        $in['address'] = [
-            'address' => $request->address,
-            'state' => $request->state,
-            'zip' => $request->zip,
-            'country' => $request->country,
-            'city' => $request->city,
-        ];
-
+        }else{
+           $in['address'] = [
+                'address' =>$request->alamat,
+                'state' => auth()->user()->address->prov,
+                'zip' => $request->pos,
+                'country' => $request->country,
+                'city' => auth()->user()->address->city,
+                'prov'  => auth()->user()->address->prov,
+                'prov_code'  => auth()->user()->address->prov_code,
+                'kota'  => auth()->user()->address->kota,
+                'kec'   =>auth()->user()->address->kec,
+                'desa'  => auth()->user()->address->desa,
+            ];
+            $in['lat'] = auth()->user()->lat;
+            $in['lng'] = auth()->user()->lng;
+        }
         $user = Auth::user();
         
         $rek = new rekening();
