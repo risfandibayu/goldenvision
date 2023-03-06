@@ -5,6 +5,35 @@
 @endpush
 
 @section('panel')
+    <div class="card mb-4">
+        <div class="card-header">
+            Share Referals
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="kiri" class="col-sm-2 col-form-label">Kiri</label>
+                <div class="col-sm-10 input-group">
+                    <input type="text" class="form-control" id="kiri"
+                        value="{{ url('user/plan?') . 'sponsor=' . auth()->user()->no_bro . '&position=1' }}">
+                    <div class="input-group-append">
+                        <button type="button" class="input-group-text" id="btnKiri"> <i class="fas fa-copy mr-2"></i>
+                            Salin</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="kiri" class="col-sm-2 col-form-label">Kiri</label>
+                <div class="col-sm-10 input-group">
+                    <input type="text" class="form-control" id="kanan"
+                        value="{{ url('user/plan?') . 'sponsor=' . auth()->user()->no_bro . '&position=2' }}">
+                    <div class="input-group-append">
+                        <button type="button" class="input-group-text" id="btnKanan"> <i class="fas fa-copy mr-2"></i>
+                            Salin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card">
 
         {{-- <div class=" row">
@@ -221,16 +250,16 @@
                                 <div class="form-group d-none" id="is_true">
                                     <label class="form-control-label font-weight-bold">@lang('Stockiest Status')
                                     </label><br>
-                                    <input type="checkbox" id="is_stockiest_true" data-width="100%" data-onstyle="-success"
-                                        data-offstyle="-danger" data-toggle="toggle" data-on="Active" data-off="Deactive"
-                                        name="is_stockiest" checked>
+                                    <input type="checkbox" id="is_stockiest_true" data-width="100%"
+                                        data-onstyle="-success" data-offstyle="-danger" data-toggle="toggle"
+                                        data-on="Active" data-off="Deactive" name="is_stockiest" checked>
                                 </div>
                                 <div class="form-group d-none" id="is_false">
                                     <label class="form-control-label font-weight-bold">@lang('Stockiest Status')
                                     </label><br>
-                                    <input type="checkbox" id="is_stockiest_false" data-width="100%" data-onstyle="-success"
-                                        data-offstyle="-danger" data-toggle="toggle" data-on="Active" data-off="Deactive"
-                                        name="is_stockiest">
+                                    <input type="checkbox" id="is_stockiest_false" data-width="100%"
+                                        data-onstyle="-success" data-offstyle="-danger" data-toggle="toggle"
+                                        data-on="Active" data-off="Deactive" name="is_stockiest">
                                 </div>
                             </span>
                             <hr>
@@ -382,6 +411,22 @@
                         }
                     }
                 });
+            });
+            $('#btnKiri').on('click', function() {
+                $("#btnKanan").removeClass('bg-success');
+                $("#btnKanan").html('<i class="fas fa-copy mr-2"> Salin');
+                var kiri = $('#kiri').val();
+                navigator.clipboard.writeText(kiri);
+                $(this).addClass('bg-success');
+                $(this).html('<i class="fas fa-copy mr-2"> Data Disalin');
+            });
+            $('#btnKanan').on('click', function() {
+                $("#btnKiri").removeClass('bg-success');
+                $("#btnKiri").html('<i class="fas fa-copy mr-2"> Salin');
+                var kanan = $('#kanan').val();
+                navigator.clipboard.writeText(kanan);
+                $(this).addClass('bg-success');
+                $(this).html('<i class="fas fa-copy mr-2"> Data Disalin');
             })
         })(jQuery);
     </script>
