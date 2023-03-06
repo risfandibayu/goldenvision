@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="kiri" class="col-sm-2 col-form-label">Kiri</label>
+                <label for="kiri" class="col-sm-2 col-form-label">Kanan</label>
                 <div class="col-sm-10 input-group">
                     <input type="text" class="form-control" id="kanan"
                         value="{{ url('user/plan?') . 'sponsor=' . auth()->user()->no_bro . '&position=2' }}">
