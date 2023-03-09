@@ -319,38 +319,38 @@ class UserController extends Controller
         //     'additionalMsg'         => $user->username.' Withdraw Money Rp. '.getAmount($request->amount),
         //     'processURL'            => route('processUrl')
         // ];
-        $product_no = [
-            1
-        ];
-        $product_desc = [
-            'Masterplan Withdrawl'
-        ];
-        $product_qty = [
-            1
-        ];
-        $product_amount = [
-            getAmount($request->amount)
-        ];
-        $data = [
-            'merchantAppCode' => env('KPAY_APP'),
-            'merchantAppPassword' => env('KPAY_PAS'),
-            'userEmail'     => 'miartayasa10@gmail.com',
-            'orderNo'       => $trx_no,
-            'orderAmt'      => getAmount($request->amount),
-            'additionalMsg' => $user->username.' Withdraw Money Rp. '.getAmount($request->amount),
-            'productNo'     => $product_no,
-            'productDesc'   => $product_desc,
-            "productQty"    => $product_qty,
-            "productAmt"    => $product_amount,
-            "discountAmt"   => 0,
-            "processURL"    => url('proccess'),
-            "cancelURL"     => url('cancel'),
-            "successURL"    => url('success')
-        ];
+        // $product_no = [
+        //     1
+        // ];
+        // $product_desc = [
+        //     'Masterplan Withdrawl'
+        // ];
+        // $product_qty = [
+        //     1
+        // ];
+        // $product_amount = [
+        //     getAmount($request->amount)
+        // ];
+        // $data = [
+        //     'merchantAppCode' => env('KPAY_APP'),
+        //     'merchantAppPassword' => env('KPAY_PAS'),
+        //     'userEmail'     => 'miartayasa10@gmail.com',
+        //     'orderNo'       => $trx_no,
+        //     'orderAmt'      => getAmount($request->amount),
+        //     'additionalMsg' => $user->username.' Withdraw Money Rp. '.getAmount($request->amount),
+        //     'productNo'     => $product_no,
+        //     'productDesc'   => $product_desc,
+        //     "productQty"    => $product_qty,
+        //     "productAmt"    => $product_amount,
+        //     "discountAmt"   => 0,
+        //     "processURL"    => url('proccess'),
+        //     "cancelURL"     => url('cancel'),
+        //     "successURL"    => url('success')
+        // ];
 
-        $res = $this->send('https://www.kinerjapay.com/sandbox/services/kinerjapay/json/transaction-process.php',json_encode($data));
-        $arr = json_decode($res,true);
-  
+        // $res = $this->send('https://www.kinerjapay.com/sandbox/services/kinerjapay/json/transaction-process.php',json_encode($data));
+        // $arr = json_decode($res,true);
+        $arr['success'] = true;
         if($arr['success'] == 1){
             $withdraw = new Withdrawal();
             $withdraw->method_id = $method->id; // wallet method ID
