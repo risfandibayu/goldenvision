@@ -275,7 +275,8 @@ class UserController extends Controller
         ]);
         $method = WithdrawMethod::where('id', $request->method_code)->where('status', 1)->firstOrFail();
         $user = auth()->user();
-        $rek = rekening::with('bank')->where('user_id',$user->id)->first();
+        // $rek = rekening::with('bank')->where('user_id',$user->id)->first();
+        $rek = rekening::where('user_id',$user->id)->first();
        
         if (!$rek) {
             # code...
@@ -349,8 +350,7 @@ class UserController extends Controller
 
         $res = $this->send('https://www.kinerjapay.com/sandbox/services/kinerjapay/json/transaction-process.php',json_encode($data));
         $arr = json_decode($res,true);
-        dd($arr);
-        
+  
         if($arr['success'] == 1){
             $withdraw = new Withdrawal();
             $withdraw->method_id = $method->id; // wallet method ID
