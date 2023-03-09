@@ -1919,10 +1919,10 @@ class UserController extends Controller
             $notify[] = ['error', 'Bonus Not Found'];
             return back()->withNotify($notify);
         }
-        // if($user->userExtra->p_left < $reward->kiri && $user->userExtra->p_right < $reward->kanan){
-        //     $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
-        //     return back()->withNotify($notify);
-        // }
+        if($user->userExtra->p_left < $reward->kiri && $user->userExtra->p_right < $reward->kanan){
+            $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
+            return back()->withNotify($notify);
+        }
         ureward::create([
             'trx'       => getTrx(),
             'user_id'   => $user->id,
