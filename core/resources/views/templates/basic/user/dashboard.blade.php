@@ -480,11 +480,11 @@
             </div> --}}
             <div class="col-lg-8 col-md-8 col-12 mb-30">
                 <div class="card card-header-actions">
-                    <div class="card-header text-center" style="font-weight: 600;">
+                    {{-- <div class="card-header text-center" style="font-weight: 600;">
                         Account Verification
                         <p>Your data has been successfully verified <i class="fa fa-check-circle text-success"></i></p>
-                    </div>
-                    <div class="card-footer text-center">
+                    </div> --}}
+                    {{-- <div class="card-footer text-center">
                         <b>Akumulasi Komisi</b>
                         <p>Ketika Sudah Mencapai Rp. 10,000,000 Anda Wajib Melakukan Repeat Order Ke
                             Produk Masterplan Lainnya (saat ini {{ $persen_bonus }}% dari target)</p>
@@ -499,7 +499,22 @@
                                 Repeat Order</a>
                         @endif
                     </div>
+                </div> --}}
+                <div class="card-body bg--gradi-8 h5 text-center">
+                   <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk anggota yang memiliki downline 20 kiri 20 kanan per bulan ini, berkesempatan memenangkan hadiah smartphone. Segera perluas jaringan dan raih kesuksesan bersama!
+                    <br>
+                    <br>
+                   <b class="mt-5"> Saat ini kamu {{ auth()->user()->userExtra->p_left .' : '.auth()->user()->userExtra->p_right }}</b>
                 </div>
+                <div class="card-footer">
+                    <form action="{{ route('user.claim-reward') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="type" value="3">
+                        <button type="submit" class="btn btn-info btn-lg btn-block">Claim Reward</button>
+                  
+                    </form>
+                </div>
+            </div>
             </div>
         @elseif(Auth::user()->is_kyc == 3)
             <div class="col-lg-8 col-md-8 col-12 mb-30">

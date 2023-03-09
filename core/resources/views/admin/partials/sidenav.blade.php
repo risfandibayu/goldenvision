@@ -63,12 +63,36 @@
                         <span class="menu-title">@lang('Product')</span>
                     </a>
                 </li>
-                <li class="sidebar-menu-item @if (Request::url() == url('admin/bonus-reward')) active @endif">
+                {{-- <li class="sidebar-menu-item @if (Request::url() == url('admin/bonus-reward')) active @endif">
                     <a href="{{ url('admin/bonus-reward') }}" class="nav-link ">
-                        {{-- <i class="las la-paper-plane"></i> --}}
+                      
                         <i class="menu-icon las la-coins"></i>
                         <span class="menu-title">@lang('Reward')</span>
                     </a>
+                </li> --}}
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.reward*', 3) }}">
+                        <i class="menu-icon las la-coins"></i>
+                        <span class="menu-title">@lang('Bonus Reward')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.reward*', 2) }} ">
+                        <ul>
+                            <li class="sidebar-menu-item {{ menuActive('admin.reward.allReward') }} ">
+                                <a href="{{ route('admin.reward.allReward') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Bonus Reward')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item {{ menuActive('admin.reward.userBonus') }} ">
+                                <a href="{{ route('admin.reward.userBonus') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('User Reward')</span>
+                                </a>
+                            </li>
+
+                           
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="sidebar-menu-item sidebar-dropdown">

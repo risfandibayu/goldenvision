@@ -22,6 +22,7 @@ use App\Models\DailyGold;
 use App\Models\Gold;
 use App\Models\GoldExchange;
 use App\Models\rekening;
+use App\Models\ureward;
 use App\Models\UserExtra;
 use App\Models\UserGold;
 use Carbon\Carbon;
@@ -1278,6 +1279,8 @@ class UserController extends Controller
         // $user->ref_id       = $userCheck->id;
         $user->mobile       = $us->country_code . $us->mobile;
         $user->address      = $us->address;
+        $user->lat          = $us->lat;
+        $user->lng          = $us->lng;
         $user->status = 1;
         $user->is_kyc = 2;
         $user->ev = 1;
@@ -1907,5 +1910,26 @@ class UserController extends Controller
     public function villages(Request $request)
     {
         return \Indonesia::findDistrict($request->id, ['villages'])->villages->pluck('name', 'id');
+    }
+
+    public function claimBonusReward(Request $request){
+        $user = Auth::user();
+        $reward = BonusReward::find($request->type);
+        if(!$reward){
+            $notify[] = ['error', 'Bonus Not Found'];
+            return back()->withNotify($notify);
+        }
+        // if($user->userExtra->p_left < $reward->kiri && $user->userExtra->p_right < $reward->kanan){
+        //     $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
+        //     return back()->withNotify($notify);
+        // }
+        ureward::create([
+            'trx'       => getTrx(),
+            'user_id'   => $user->id,
+            'reward_id' => $reward->id,
+            'status'    => 1,
+        ]);
+        $notify[] = ['success', 'Your data has been on record, get your reward: '.$reward->reward.' soon'];
+        return back()->withNotify($notify);
     }
 }

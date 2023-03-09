@@ -91,6 +91,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ureward::class);
     }
+    public function bonus(){
+        return $this->hasMany(BonusUser::class);
+    }
 
     public function dailyGolds()
     {
@@ -116,6 +119,7 @@ class User extends Authenticatable
     {
         return $this->golds()->sum('golds') ?: 0;
     }
+
 
     public function getCanAddWeeklyGoldAttribute()
     {

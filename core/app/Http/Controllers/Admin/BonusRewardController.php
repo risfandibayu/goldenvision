@@ -8,6 +8,7 @@ use App\Models\BonusReward;
 use App\Models\GeneralSetting;
 use App\Models\Gold;
 use App\Models\Product;
+use App\Models\ureward;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -152,5 +153,21 @@ class BonusRewardController extends Controller
     public function destroy(corder $corder)
     {
         //
+    }
+
+    public function UserBonus(){
+        $page_title = 'User Rewards';
+        $empty_message = 'No User Rewards Found';
+        $table = ureward::all()->paginate(getPaginate());
+        return view('admin.bonus_reward.user', compact('page_title','table', 'empty_message'));
+    }
+
+    public function UserUpdate(Request $request){
+        ureward::find($request->id)->update([
+            'ket'       => $request->ket,
+            'status'    => $request->status
+        ]);
+        $notify[] = ['success', 'Data Updated'];
+        return back()->withNotify($notify);
     }
 }

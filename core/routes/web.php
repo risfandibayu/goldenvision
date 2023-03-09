@@ -261,8 +261,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         // mlm plan
         Route::get('product', 'ProductController@products')->name('product');
-        Route::resource('bonus-reward', 'BonusRewardController');
-        Route::post('bonus-reward/update', 'BonusRewardController@upreward')->name('reward.update');
         Route::post('products/store', 'ProductController@productsStore')->name('products.store');
 
         Route::post('products/update', 'ProductController@productsUpdate')->name('products.update');
@@ -279,7 +277,16 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('notice/update', 'GeneralSettingController@noticeUpdate')->name('setting.notice.update');
 
 
+        // bonus reward
+        // Route::resource('bonus-reward', 'BonusRewardController');
+        Route::get('bonus-reward','BonusRewardController@index')->name('reward.allReward');
+        Route::post('bonus-reward','BonusRewardController@store')->name('reward.Store');
+        Route::get('bonus-reward/{id}','BonusRewardController@store')->name('reward.getId');
+        Route::post('bonus-reward/update', 'BonusRewardController@upreward')->name('reward.update');
+        Route::get('user-reward','BonusRewardController@UserBonus')->name('reward.userBonus');
+        Route::post('user-reward-update','BonusRewardController@UserUpdate')->name('reward.userUpdate');
 
+    
 
         // Subscriber
         Route::get('subscriber', 'SubscriberController@index')->name('subscriber.index');
@@ -519,6 +526,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
             Route::post('weekly-checkin', 'UserController@weeklyCheckIn')->name('weekly-checkin');
+            Route::post('clam-bonus-reward', 'UserController@claimBonusReward')->name('claim-reward');
 
             Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
             Route::post('profile-setting', 'UserController@submitProfile');

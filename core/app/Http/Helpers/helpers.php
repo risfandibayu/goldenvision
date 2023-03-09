@@ -957,10 +957,12 @@ function updatePaidCount($id)
                 $extra->free_left -= 1;
                 $extra->paid_left += 1;
                 $extra->left += 1;
+                $extra->p_left += 1;
             } else {
                 $extra->free_right -= 1;
                 $extra->paid_right += 1;
                 $extra->right += 1;
+                $extra->p_right += 1;
             }
             $extra->save();
             $id = $posid;
@@ -986,10 +988,12 @@ function updatePaidCount2($id)
                 // $extra->free_left -= 1;
                 $extra->paid_left += 1;
                 $extra->left += 1;
+                $extra->p_left += 1;
             } else {
                 // $extra->free_right -= 1;
                 $extra->paid_right += 1;
                 $extra->right += 1;
+                $extra->p_right += 1;
             }
             $extra->save();
             $id = $posid;
@@ -1015,14 +1019,18 @@ function updatePaidCount3($id, $count)
                 // $extra->free_left -= 1;
                     $extra->paid_right -= $count;
                     $extra->right -= $count;
+                    $extra->p_right -= $count;
                 $extra->paid_left += $count;
                 $extra->left += $count;
+                $extra->p_left += $count;
             } else {
                 // $extra->free_right -= $count;
                     $extra->paid_left -= $count;
                     $extra->left -= $count;
+                    $extra->p_left -= $count;
                 $extra->paid_right += $count;
                 $extra->right += $count;
+                $extra->p_right += $count;
             }
             $extra->save();
             $id = $posid;
