@@ -504,7 +504,7 @@
                    <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk anggota yang memiliki downline 20 kiri 20 kanan per bulan ini, berkesempatan memenangkan hadiah smartphone. Segera perluas jaringan dan raih kesuksesan bersama!
                     <br>
                     <br>
-                   <b class="mt-5"> Saat ini kamu {{ auth()->user()->userExtra->p_left .' : '.auth()->user()->userExtra->p_right }}</b>
+                   <b class="mt-5"> Saat ini kamu {{ $p_kiri < 3 ? 0 : $p_kiri - 3}} : {{ $p_kanan < 3 ? 0 : $p_kanan - 3  }}</b>
                 </div>
                 <div class="card-footer">
                     <form action="{{ route('user.claim-reward') }}" method="POST">

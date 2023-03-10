@@ -79,8 +79,10 @@ class UserController extends Controller
         $userGold = auth()->user()->total_golds;
         $goldRange = $gold->per_gram * $userGold;
         $data['goldBonus']          = $goldRange;
-        $data['reward']          = BonusReward::all();
+        $data['reward']             = BonusReward::all();
         $data['goldToday']          = DailyGold::orderByDesc('id')->first();
+        $data['p_kiri']             = auth()->user()->userExtra->p_left;
+        $data['p_kanan']            = auth()->user()->userExtra->p_right;
         $ux = UserExtra::where('user_id',auth()->user()->id)->first();
         if(!$ux){
             $kiri = 0;
@@ -1919,7 +1921,7 @@ class UserController extends Controller
             $notify[] = ['error', 'Bonus Not Found'];
             return back()->withNotify($notify);
         }
-        if($user->userExtra->p_left < $reward->kiri && $user->userExtra->p_right < $reward->kanan){
+        if($user->userExtra->p_left - 3 < $reward->kiri && $user->userExtra->p_righ - 3 < $reward->kanan){
             $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
             return back()->withNotify($notify);
         }
