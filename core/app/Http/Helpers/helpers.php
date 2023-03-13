@@ -1330,11 +1330,13 @@ function showSingleUserinTree($user)
             $stShow = "Paid";
             $planName = '';
             $test = $user->userExtra->is_gold;
+            $bg = 'bg-gold';
         }else{
              $userType = "free-user";
              $stShow = "Paid";
             $planName = '';
             $test = $user->userExtra->is_gold;
+            $bg = 'bg-pink';
 
         }
 
@@ -1376,7 +1378,7 @@ function showSingleUserinTree($user)
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
         $res .= "<div class=\"user \" type=\"button\" >";
-        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $test  showDetails\" $extraData>";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $test $bg showDetails\" $extraData>";
         
         if (auth()->guard('admin')->user()) {
             // if(auth()->user()->userExtra->is_gold){
@@ -1393,7 +1395,9 @@ function showSingleUserinTree($user)
             // }
             $res .= "<p class=\"user-name\">$user->username</p>";
         }
-        $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\">Explore Tree</a></p>";
+        $res .= " </div>";
+        $res .= " <span class=\"line\" ></span>";
+        $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm mt-n5\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\" style=\"\">Explore Tree</a></p>";
 
     } else {
         $img = getImage('assets/images/user/profile/', null, true);
@@ -1401,10 +1405,11 @@ function showSingleUserinTree($user)
         $res .= "<div class=\"user\" type=\"button\">";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
         $res .= "<p class=\"user-name\">MP</p>";
-    }
+        $res .= " </div>";
+        $res .= " <span class=\"line\" ></span>";
+    }   
 
-    $res .= " </div>";
-    $res .= " <span class=\"line\"></span>";
+    
 
     return $res;
 

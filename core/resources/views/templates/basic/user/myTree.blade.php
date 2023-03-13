@@ -5,7 +5,7 @@
 @endpush
 
 @section('panel')
-    <div class="card mb-4">
+    {{-- <div class="card mb-4">
         <div class="card-header">
             Share Referals
         </div>
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="card">
 
         {{-- <div class=" row">
@@ -111,8 +111,6 @@
             <div class="w-8">
                 @php echo showSingleUserinTree($tree['o']); @endphp
             </div>
-
-
         </div>
         {{-- <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->

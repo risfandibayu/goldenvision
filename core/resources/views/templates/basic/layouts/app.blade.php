@@ -18,6 +18,12 @@
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/lightbox.min.css') }}">
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/owl.min.css') }}">
 
+    <style>
+        .bg-pink{
+            background-color: pink;
+        }
+    </style>
+
     @stack('style-lib')
 
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/main.css') }}">
