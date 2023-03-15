@@ -99,7 +99,19 @@
                         @enderror
                     </div>
                 </div>
+                <hr>
+                <div class="form-group row">
+                    <label for="phone" class="col-sm-2 col-form-label">Transfer Pin</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control {{ $errors->has('pin') ? 'is-invalid' : '' }}"
+                            value="{{ old('pin') }}" name="pin" placeholder="pin">
+                        @error('pin')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
+
             <div class="card-footer text-center">
                 <a href="{{ $url ?? '' }}" class="btn btn-warning btn-lg"><i class="fa fa-times"></i> Cancel</a>
                 <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-save"></i> Submit</button>

@@ -552,7 +552,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('twofactor/disable', 'UserController@disable2fa')->name('twofactor.disable');
             Route::get('login/history', 'UserController@userLoginHistory')->name('login.history');
 
-            //plan
+            //F
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
 
             Route::get('/Product', 'ProductController@productIndex')->name('product.index');
@@ -579,6 +579,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('/search-user', 'UserController@searchUser')->name('search.user');
             
             Route::post('add-sub-balance/{id}', 'UserController@addSubBalance')->name('addSubBalance');
+            Route::post('send-pin/{id}', [SponsorRegisterController::class,'sendPin'])->name('addPinUser');
             //Report
             // Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');
             // Route::get('report/invest/log', 'UserReportController@investLog')->name('report.invest');

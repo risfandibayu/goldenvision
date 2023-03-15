@@ -261,8 +261,8 @@
                                 </div>
                             </span> --}}
                             <hr>
-                            {{-- <a href="#" class="mt-4 btn btn--warning btn-block btn-sm btnAddSubs">Add/Substract
-                                Balance</a> --}}
+                            <a href="#" class="mt-4 btn btn--warning btn-block btn-sm btnAddSubs">Send Pin</a>
+                            <hr>
                             <a href="" class=" btn btn--primary btn-block btn-sm tree_url">See Tree</a>
                             <hr>
                             <form action="{{ route('user.sponsor.set') }}" method="POST" id="formAddDownline"
@@ -275,7 +275,8 @@
                                     <option value="1" id="s_kiri">Kiri</option>
                                     <option value="2" id="s_kanan">Kanan</option>
                                 </select>
-                                <button type="submit" class=" btn btn--success btn-block btn-sm mt-2">Add Downline</button>
+                                <button type="submit" class=" btn btn--success btn-block btn-sm mt-2">Add
+                                    Downline</button>
                             </form>
 
                         </div>
@@ -288,7 +289,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">@lang('Add / Subtract Balance')</h5>
+                    <h5 class="modal-title">@lang('Send PIN')</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -298,20 +299,23 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-row">
-                            <div class="form-group col-md-12">
+                            {{-- <div class="form-group col-md-12">
                                 <input type="checkbox" data-width="100%" data-height="44px" data-onstyle="-success"
                                     data-offstyle="-danger" data-toggle="toggle" data-on="Add Balance"
                                     data-off="Subtract Balance" name="act" checked>
-                            </div>
+                            </div> --}}
 
 
                             <div class="form-group col-md-12">
-                                <label>@lang('Amount')<span class="text-danger">*</span></label>
+                                <label>@lang('PIN')<span class="text-danger">*</span> <span class="text-secondary">
+                                        <br>
+                                        Sisa Pin =
+                                        {{ auth()->user()->pin }}</span></label>
                                 <div class="input-group has_append">
-                                    <input type="text" name="amount" class="form-control"
+                                    <input type="text" name="pin" class="form-control"
                                         placeholder="Please provide positive amount">
                                     <div class="input-group-append">
-                                        <div class="input-group-text">IDR</div>
+                                        <div class="input-group-text">PIN</div>
                                     </div>
                                 </div>
                             </div>
@@ -406,7 +410,7 @@
             });
             $('.btnAddSubs').on('click', function() {
                 let userID = $(this).data('id');
-                const url = "{{ url('user/add-sub-balance') }}" + '/' + userID;
+                const url = "{{ url('user/send-pin') }}" + '/' + userID;
 
                 $('#exampleModalCenter').modal('hide');
                 $('#addSubModal').modal('show');

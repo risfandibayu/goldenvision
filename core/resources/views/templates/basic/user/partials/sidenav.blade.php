@@ -78,14 +78,14 @@
                     </a>
                 </li> --}}
                 {{-- @if (Auth::user()->is_mlm == 1) --}}
-                @if (auth()->user()->is_leader == 1)
+                {{-- @if (auth()->user()->is_leader == 1)
                     <li class="sidebar-menu-item {{ menuActive('user.all.users') }}">
                         <a href="{{ route('user.all.users') }}" class="nav-link">
                             <i class="menu-icon las la-users"></i>
                             <span class="menu-title">@lang('Send Deposit')</span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
                 <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
                     <a href="{{ route('user.my.tree') }}" class="nav-link">
                         <i class="menu-icon las la-tree"></i>
@@ -99,14 +99,14 @@
                         <span class="menu-title">@lang('Bonus Reward')</span>
                     </a>
                 </li>
-                @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null || auth()->user()->no_bro !== '')
+                {{-- @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null || auth()->user()->no_bro !== '')
                     <li class="sidebar-menu-item {{ menuActive('user.ref.tree') }}">
                         <a href="{{ route('user.ref.tree') }}" class="nav-link">
                             <i class="menu-icon las la-tree"></i>
                             <span class="menu-title">@lang('Referals Tree')</span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
                         <a href="{{ route('user.gold.invest') }}" class="nav-link">
                             <i class="menu-icon las la-coins"></i>

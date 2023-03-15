@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
 use App\Models\GeneralSetting;
+use App\Models\Gold;
+use App\Models\Plan;
+use App\Models\Transaction;
 use App\Models\User;
+use App\Models\UserExtra;
 use App\Models\UserLogin;
+use App\Models\UserPin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Tree\TreeService;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -44,40 +50,74 @@ class SponsorRegisterController extends Controller
             'position'  => 'required',
             'username'  => 'required|alpha_num|unique:users|min:6',
             'email'     => 'required|email',
-            'phone'     => 'required'
+            'phone'     => 'required',
+            'pin'       => 'required|numeric'
         ]);
         if ($validate->fails()) {
            return redirect()->back()->withInput($request->all())->withErrors($validate);
         }
-        event(new Registered($user = $this->create($request->all())));
+        DB::beginTransaction();
+        try {
+            $user = $this->create($request->all());  //register user
+
+            $pin = $this->addPin($request->pin,$user->id); //send pin to user
+
+            $pin['error'] = false;
+            if($pin['error']){
+                $notify[] = ['error',$pin['msg']];
+                return back()->withInput($request->all())->withNotify($notify);
+            }
+            $buyPlan['error'] = false;
+            $buyPlan = $this->planStore([
+                'plan_id'   => 1,
+                'upline'    => $request->upline,
+                'sponsor'   => $request->sponsor,
+                'pin'       => $request->pin,
+                'position'  => $request->position,
+                'user_id'   => $user->id
+            ]);
+            if($buyPlan['error']){
+                $notify[] = ['error',$buyPlan['msg']];
+                return back()->withInput($request->all())->withNotify($notify);
+            }
+            DB::commit();
+
+            $notify[] = ['success', 'Created User '.$user->username.' & Purchased Plan Successfully'];
+            return redirect()->route('user.my.tree')->withNotify($notify);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $notify[] = ['success', 'Created User Failed'];
+            return redirect()->route('user.my.tree')->withNotify($notify);
+        }
+        
     }
     protected function create(array $data)
     {
+        $gnl = GeneralSetting::first();
+        $user = User::create([
+            'firstname' => isset($data['firstname']) ? $data['firstname'] : null,
+            'lastname'  => isset($data['lastname']) ? $data['lastname'] : null,
+            'email'    => strtolower(trim($data['email'])),
+            'password'  => Hash::make(strtolower(trim($data['username']))),
+            'username'  => strtolower(trim($data['username'])),
+            'mobile'    => 62 . $data['phone'],
+            'address'   => [
+                'address' => '',
+                'state' => '',
+                'zip' => '',
+                'country' => 'Indonesia',
+                'city' => ''
+            ],
+            'status'    => 1,
+            'ev'        => $gnl->ev ? 0 : 1,
+            'sv'        => $gnl->sv ? 0 : 1,
+            'ts'        => 0,
+            'tv'        => 1
 
-        $gnl = GeneralSetting::first(); 
-        //User Create
-        $user = new User();
-        $user->firstname    = isset($data['firstname']) ? $data['firstname'] : null;
-        $user->lastname     = isset($data['lastname']) ? $data['lastname'] : null;
-        $user->email        = strtolower(trim($data['email']));
-        $user->password     = Hash::make(strtolower(trim($data['username'])));
-        $user->username     = strtolower(trim($data['username']));
-        $user->mobile       = 62 . $data['mobile'];
-        $user->address      = [
-            'address' => '',
-            'state' => '',
-            'zip' => '',
-            'country' => 'Indonesia',
-            'city' => ''
-        ];
-        $user->status = 1;
-        $user->ev = $gnl->ev ? 0 : 1;
-        $user->sv = $gnl->sv ? 0 : 1;
-        $user->ts = 0;
-        $user->tv = 1;
-        $user->save();
-
-
+        ]);
+        UserExtra::create([
+            'user_id' => $user->id
+        ]);
         $adminNotification = new AdminNotification();
         $adminNotification->user_id = $user->id;
         $adminNotification->title = 'New member registered By Sponsor: '.Auth::user()->username;
@@ -113,8 +153,189 @@ class SponsorRegisterController extends Controller
         $userLogin->browser = @$userAgent['browser'];
         $userLogin->os = @$userAgent['os_platform'];
         $userLogin->save();
-
-
+        
         return $user;
     }
+    public function addPin($pin,$user_id){
+       
+        $user = User::find($user_id);
+        $sponsor = Auth::user();
+        $trx = getTrx();
+        try {
+            if ($sponsor->pin < $pin) {
+                return ['error'=>true, 'msg'=> 'Not enough pin to send'];
+            }
+            $sponsor->pin -= $pin;
+            $sponsor->save();
+
+            $upin = UserPin::create([
+                'user_id' => $user_id,
+                'pin'     => $pin,
+                'pin_by'  => $sponsor->id,
+                'start_pin' => $user->pin,
+                'end_pin'   => $user->pin + $pin,
+                'ket'       => 'Added Pin By Sponsor: '. $sponsor->username
+            ]);
+           
+            
+            $user->pin += $pin;
+            $user->save();
+            
+            $transaction = new Transaction();
+            $transaction->user_id = $user_id;
+            $transaction->amount = $pin;
+            $transaction->post_balance = 0;
+            $transaction->charge = 0;
+            $transaction->trx_type = '+';
+            $transaction->details = 'Added Pin Via Admin';
+            $transaction->trx =  $trx;
+            $transaction->save();
+
+            return ['sts'=>$user->pin];
+        } catch (\Throwable $th) {
+            return ['error'=>true, 'msg'=> 'Error: '.$th->getMessage()];
+        }
+         
+    }
+    public function planStore($data)
+    {
+        // dd($request->all());
+        $plan = Plan::where('id', $data['plan_id'])->where('status', 1)->firstOrFail();
+        $gnl = GeneralSetting::first();
+
+        $user = User::find($data['user_id']);
+        // $ref_user = null;
+        $ref_user = User::where('no_bro', $data['upline'])->first();
+        if ($ref_user == null && $data['upline']) {
+            return ['error'=>true, 'msg'=>'Invalid Upline MP Number.'];
+        }
+        if ($ref_user) {
+            # code...
+            $cek_pos = User::where('pos_id', $ref_user->id)->where('position',$data['position'])->first();
+    
+            if(!treeFilter($ref_user->id,$ref_user->id)){
+                return ['error'=>true, 'msg'=> 'Refferal and Upline BRO number not in the same tree.'];
+            }
+            
+            if ($cek_pos) {
+                return ['error'=>true, 'msg'=> 'Node you input is already filled.'];
+            }
+        }
+        $sponsor = User::where('no_bro', $data['sponsor'])->first();
+        if (!$sponsor) {
+            return ['error'=>true, 'msg'=> 'Invalid Sponsor MP Number.'];
+        }
+        if($ref_user->no_bro == $user->no_bro){
+            return ['error'=>true, 'msg'=> 'Invalid Input MP Number. You can`t input your own MP number'];
+        }
+        if($data['pin'] > $user->pin){
+            return ['error'=>true, 'msg'=> 'User Doesn Have Enough Pin'];
+        }
+
+        $oldPlan = $user->plan_id;
+
+        $pos = getPosition($ref_user->id, $data['position']);
+        try {
+            $user->no_bro           = generateUniqueNoBro();
+            $user->ref_id           = $sponsor->id; // ref id = sponsor
+            $user->pos_id           = $ref_user->id; //pos id = upline
+            $user->position         = $data['position'];
+            $user->position_by_ref  = $ref_user->position;
+            $user->plan_id          = $plan->id;
+            $user->pin              -= $data['pin'];
+            $user->total_invest     += ($plan->price * $data['pin']);
+            $user->bro_qty          = $data['pin'] - 1;
+            $user->save();
+
+                // $this->treeService->calculateUplineMemberBonus(
+                //     $user,
+                //     $ref_user,
+                //     TreePosition::from((int) $request->position)
+                // );
+
+            brodev($data['user_id'], $data['pin']);
+
+            $trx = $user->transactions()->create([
+                'amount' => $plan->price * $data['pin'],
+                'trx_type' => '-',
+                'details' => 'Purchased ' . $plan->name . ' For '.$data['pin'].' MP',
+                'remark' => 'purchased_plan',
+                'trx' => getTrx(),
+                'post_balance' => getAmount($user->balance),
+            ]);
+
+            // dd($user);
+
+            sendEmail2($user->id, 'plan_purchased', [
+                'plan' => $plan->name. ' For '.$data['pin'].' MP',
+                'amount' => getAmount($plan->price * $data['pin']),
+                'currency' => $gnl->cur_text,
+                'trx' => $trx->trx,
+                'post_balance' => getAmount($user->balance),
+            ]);
+            if ($oldPlan == 0) {
+                updatePaidCount2($user->id);
+            }
+            $userSponsor = User::find($data['user_id']);
+            $details = $userSponsor->username. ' Subscribed to ' . $plan->name . ' plan.';
+
+            // updateBV($user->id, $plan->bv, $details);
+
+            // if ($plan->tree_com > 0) {
+            //     treeComission($user->id, $plan->tree_com, $details);
+            // }
+
+            referralCommission2($user->id, $details);
+            return $plan;
+        } catch (\Throwable $th) {
+            return ['error'=>true, 'msg'=> 'Error: '.$th->getMessage()];
+        }
+      
+        
+    }
+
+    public function sendPin(Request $request,$id){
+       
+        $user = User::find($id);
+        $sponsor = Auth::user();
+        $trx = getTrx();
+        try {
+            if ($sponsor->pin < $request->pin) {
+                return ['error'=>true, 'msg'=> 'Not enough pin to send'];
+            }
+            $sponsor->pin -= $request->pin;
+            $sponsor->save();
+
+            $upin = UserPin::create([
+                'user_id' => $user->id,
+                'pin'     => $request->pin,
+                'pin_by'  => $sponsor->id,
+                'start_pin' => $user->pin,
+                'end_pin'   => $user->pin + $request->pin,
+                'ket'       => 'Added Pin By Sponsor: '. $sponsor->username
+            ]);
+           
+            
+            $user->pin += $request->pin;
+            $user->save();
+            
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $user->pin;
+            $transaction->post_balance = 0;
+            $transaction->charge = 0;
+            $transaction->trx_type = '+';
+            $transaction->details = 'Added Pin Via Admin';
+            $transaction->trx =  $trx;
+            $transaction->save();
+
+            $notify[] = ['success','Pin Transfer Success'];
+            return back()->withNotify($notify);
+        } catch (\Throwable $th) {
+            $notify[] = ['error', 'Error: '. $th->getMessage() ];
+            return back()->withNotify($notify);
+        }
+         
+    }
+
 }

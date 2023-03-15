@@ -500,21 +500,24 @@
                         @endif
                     </div>
                 </div> --}}
-                <div class="card-body bg--gradi-8 h5 text-center">
-                   <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk anggota yang memiliki downline 20 kiri 20 kanan per bulan ini, berkesempatan memenangkan hadiah smartphone. Segera perluas jaringan dan raih kesuksesan bersama!
-                    <br>
-                    <br>
-                   <b class="mt-5"> Saat ini kamu {{ $p_kiri < 3 ? 0 : $p_kiri - 3}} : {{ $p_kanan < 3 ? 0 : $p_kanan - 3  }}</b>
+                    <div class="card-body bg--gradi-8 h5 text-center">
+                        <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk anggota yang memiliki downline 20 kiri 20 kanan per
+                        bulan ini, berkesempatan memenangkan hadiah smartphone. Segera perluas jaringan dan raih kesuksesan
+                        bersama!
+                        <br>
+                        <br>
+                        <b class="mt-5"> Saat ini kamu {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
+                            {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
+                    </div>
+                    <div class="card-footer">
+                        <form action="{{ route('user.claim-reward') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="type" value="3">
+                            <button type="submit" class="btn btn-info btn-lg btn-block">Claim Reward</button>
+
+                        </form>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <form action="{{ route('user.claim-reward') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="type" value="3">
-                        <button type="submit" class="btn btn-info btn-lg btn-block">Claim Reward</button>
-                  
-                    </form>
-                </div>
-            </div>
             </div>
         @elseif(Auth::user()->is_kyc == 3)
             <div class="col-lg-8 col-md-8 col-12 mb-30">
@@ -721,11 +724,11 @@
                 </div>
                 <div class="details">
                     <div class="numbers">
-                        <span class="amount">{{ nb(getAmount($totalDeposit)) }}</span>
-                        <span class="currency-sign">{{ $general->cur_text }}</span>
+                        <span class="amount">{{ auth()->user()->pin }}</span>
+                        <span class="currency-sign">{{ 'PIN' }}</span>
                     </div>
                     <div class="desciption">
-                        <span class="text--small">@lang('Total Deposit')</span>
+                        <span class="text--small">@lang('Active Pin')</span>
                     </div>
                 </div>
                 <br>

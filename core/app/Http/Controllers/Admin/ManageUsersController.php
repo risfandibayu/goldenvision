@@ -22,6 +22,7 @@ use App\Models\UserLogin;
 use App\Models\Survey;
 use App\Models\UserExtra;
 use App\Models\UserGold;
+use App\Models\UserPin;
 use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
 use GuzzleHttp\Client;
@@ -343,68 +344,115 @@ class ManageUsersController extends Controller
 
     public function addSubBalance(Request $request, $id)
     {
-        $request->validate(['amount' => 'required']);
+        $request->validate(['amount' => 'required','pin'=>'required']);
         $amount = preg_replace("/[^0-9]/", "", $request->amount);
         $amount = (int)$amount;
         $user = User::findOrFail($id);
         $amount = getAmount($amount);
         $general = GeneralSetting::first(['cur_text','cur_sym']);
+
+        $pin = new UserPin();
         $trx = getTrx();
+        DB::beginTransaction();
+        try {
+            if ($request->act) {
+                $pin->user_id   = $user->id;
+                $pin->pin       = $request->pin;
+                $pin->pin_by    = null;
+                $pin->type      = "+";
+                $pin->start_pin = $user->pin;
+                $pin->end_pin   = $user->pin + $request->pin;
+                $pin->ket       = 'Added Pin By Admin';
+                $pin->save();
 
-        if ($request->act) {
-            $user->balance += $amount;
-            $user->save();
-            $notify[] = ['success', $general->cur_sym . $amount . ' has been added to ' . $user->username . ' balance'];
+                $user->pin += $request->pin;
+                $user->save();
+
+                $notify[] = ['success', $request->pin . ' Pin has been added to ' . $user->username ];
+                
+                $transaction = new Transaction();
+                $transaction->user_id = $user->id;
+                $transaction->amount = $request->pin;
+                $transaction->post_balance = 0;
+                $transaction->charge = 0;
+                $transaction->trx_type = '+';
+                $transaction->details = 'Added Pin Via Admin';
+                $transaction->trx =  $trx;
+                $transaction->save();
+
+                // $transaction = new Transaction();
+                // $transaction->user_id = $user->id;
+                // $transaction->amount = $amount;
+                // $transaction->post_balance = getAmount($user->balance);
+                // $transaction->charge = 0;
+                // $transaction->trx_type = '+';
+                // $transaction->details = 'Added Balance Via Admin';
+                // $transaction->trx =  $trx;
+                // $transaction->save();
 
 
-            $transaction = new Transaction();
-            $transaction->user_id = $user->id;
-            $transaction->amount = $amount;
-            $transaction->post_balance = getAmount($user->balance);
-            $transaction->charge = 0;
-            $transaction->trx_type = '+';
-            $transaction->details = 'Added Balance Via Admin';
-            $transaction->trx =  $trx;
-            $transaction->save();
+
+                // notify($user, 'BAL_ADD', [
+                //     'trx' => $trx,
+                //     'amount' => $pin,
+                //     'currency' => $general->cur_text,
+                //     'post_balance' => getAmount($user->balance),
+                // ]);
+
+            } else {
+
+                if ($request->pin > $user->pin) {
+                    $notify[] = ['error', $user->username . ' has insufficient Pin.'];
+                    return back()->withNotify($notify);
+                }
+                $user->pin -= $request->pin;
+                $user->save();
+
+                $pin->user_id   = $id;
+                $pin->pin       = $request->pin;
+                $pin->pin_by    = null;
+                $pin->type      = "-";
+                $pin->start_pin = $user->pin;
+                $pin->end_pin   = $user->pin - $request->pin;
+                $pin->ket       = 'Subtract Pin By Admin';
+                $pin->save();
+
+                $transaction = new Transaction();
+                $transaction->user_id = $user->id;
+                $transaction->amount = $pin;
+                $transaction->post_balance = 0;
+                $transaction->charge = 0;
+                $transaction->trx_type = '-';
+                $transaction->details = 'Subtract Pin Via Admin';
+                $transaction->trx =  $trx;
+                $transaction->save();
+
+                // $transaction = new Transaction();
+                // $transaction->user_id = $user->id;
+                // $transaction->amount = $amount;
+                // $transaction->post_balance = getAmount($user->balance);
+                // $transaction->charge = 0;
+                // $transaction->trx_type = '-';
+                // $transaction->details = 'Subtract Balance Via Admin';
+                // $transaction->trx =  $trx;
+                // $transaction->save();
 
 
-            notify($user, 'BAL_ADD', [
-                'trx' => $trx,
-                'amount' => $amount,
-                'currency' => $general->cur_text,
-                'post_balance' => getAmount($user->balance),
-            ]);
-
-        } else {
-            if ($amount > $user->balance) {
-                $notify[] = ['error', $user->username . ' has insufficient balance.'];
-                return back()->withNotify($notify);
+                // notify($user, 'BAL_SUB', [
+                //     'trx' => $trx,
+                //     'amount' => $amount,
+                //     'currency' => $general->cur_text,
+                //     'post_balance' => getAmount($user->balance)
+                // ]);
+                $notify[] = ['success', $general->cur_sym . $amount . ' has been subtracted from ' . $user->username . ' balance'];
             }
-            $user->balance -= $amount;
-            $user->save();
-
-
-
-            $transaction = new Transaction();
-            $transaction->user_id = $user->id;
-            $transaction->amount = $amount;
-            $transaction->post_balance = getAmount($user->balance);
-            $transaction->charge = 0;
-            $transaction->trx_type = '-';
-            $transaction->details = 'Subtract Balance Via Admin';
-            $transaction->trx =  $trx;
-            $transaction->save();
-
-
-            notify($user, 'BAL_SUB', [
-                'trx' => $trx,
-                'amount' => $amount,
-                'currency' => $general->cur_text,
-                'post_balance' => getAmount($user->balance)
-            ]);
-            $notify[] = ['success', $general->cur_sym . $amount . ' has been subtracted from ' . $user->username . ' balance'];
+            DB::commit();
+            return back()->withNotify($notify);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $notify[] = ['error', 'error: ' .$th->getMessage()];
+            return back()->withNotify($notify);
         }
-        return back()->withNotify($notify);
     }
 
     public function userLoginHistory($id)
