@@ -44,13 +44,13 @@
         <div class="active-user-none" data-id="{{ auth()->user()->id }}"></div>
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
-            <div class="w-1">
+            <div class="w-1 ">
                 @php echo showSingleUserinTree($tree['a']); @endphp
             </div>
         </div>
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
-            <div class="w-2">
+            <div class="w-2 ">
                 @php echo showSingleUserinTree($tree['b']); @endphp
             </div>
             <!-- <div class="col"> -->
@@ -60,19 +60,19 @@
         </div>
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
-            <div class="w-4 ">
+            <div class="w-4  ">
                 @php echo showSingleUserinTree($tree['d']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-4 ">
+            <div class="w-4  ">
                 @php echo showSingleUserinTree($tree['e']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-4 ">
+            <div class="w-4  ">
                 @php echo showSingleUserinTree($tree['f']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-4 ">
+            <div class="w-4  ">
                 @php echo showSingleUserinTree($tree['g']); @endphp
             </div>
             <!-- <div class="col"> -->
@@ -80,35 +80,35 @@
         </div>
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
-            <div class="w-8">
+            <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['h']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-8">
+            <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['i']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-8">
+            <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['j']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-8">
+            <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['k']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-8">
+            <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['l']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-8">
+            <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['m']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-8">
+            <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['n']); @endphp
             </div>
             <!-- <div class="col"> -->
-            <div class="w-8">
+            <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['o']); @endphp
             </div>
         </div>
@@ -243,8 +243,8 @@
                                     <td><span class="rpaid"></span></td>
                                 </tr>
                             </table>
-                            <hr>
-                            <span class="mt-4">
+                            {{-- <hr> --}}
+                            {{-- <span class="mt-4">
                                 <div class="form-group d-none" id="is_true">
                                     <label class="form-control-label font-weight-bold">@lang('Stockiest Status')
                                     </label><br>
@@ -259,11 +259,25 @@
                                         data-onstyle="-success" data-offstyle="-danger" data-toggle="toggle"
                                         data-on="Active" data-off="Deactive" name="is_stockiest">
                                 </div>
-                            </span>
+                            </span> --}}
                             <hr>
-                            <a href="#" class="mt-4 btn btn--warning btn-block btn-sm btnAddSubs">Add/Substract
-                                Balance</a>
+                            {{-- <a href="#" class="mt-4 btn btn--warning btn-block btn-sm btnAddSubs">Add/Substract
+                                Balance</a> --}}
                             <a href="" class=" btn btn--primary btn-block btn-sm tree_url">See Tree</a>
+                            <hr>
+                            <form action="{{ route('user.sponsor.set') }}" method="POST" id="formAddDownline"
+                                class="d-none">
+                                @csrf
+                                <input type="hidden" name="back" value="{{ Request::url() }}">
+                                <input type="hidden" name="upline" id="upline">
+                                <select name="postion" id="position" class="form-select form-control">
+                                    <option selected disabled>--Select Position</option>
+                                    <option value="1" id="s_kiri">Kiri</option>
+                                    <option value="2" id="s_kanan">Kanan</option>
+                                </select>
+                                <button type="submit" class=" btn btn--success btn-block btn-sm mt-2">Add Downline</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -373,6 +387,20 @@
                     $('#is_true').addClass('d-none');
                     $('#is_false').removeClass('d-none');
 
+                }
+                const kiri = $(this).data('lpaid');
+                const kanan = $(this).data('rpaid');
+                if (kiri < 1 || kanan < 1) {
+                    $('#formAddDownline').removeClass('d-none');
+                    $('#upline').val($(this).data('bro'));
+                    if (kiri > 0) {
+                        $('#s_kiri').attr('disabled', 'disabled');
+                    }
+                    if (kanan > 0) {
+                        $('#s_kanan').attr('disabled', 'disabled');
+                    }
+                } else {
+                    $('#formAddDownline').addClass('d-none');
                 }
 
             });

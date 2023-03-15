@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BonusRewardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CronController;
+use App\Http\Controllers\SponsorRegisterController;
 use App\Http\Controllers\UserController;
 use App\Models\rekening;
 use App\Models\User;
@@ -568,6 +569,9 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/tree/{user}', 'PlanController@otherTree')->name('other.tree');
             Route::get('/tree/search', 'PlanController@otherTree')->name('other.tree.search');
 
+            Route::get('/register-by-sponsor',[SponsorRegisterController::class,'index'])->name('sponsor.regist');
+            Route::post('/register-by-sponsor-set',[SponsorRegisterController::class,'setSession'])->name('sponsor.set');
+            Route::post('/register-sponsor',[SponsorRegisterController::class,'registerUser'])->name('sponsorRegist.post');
             
             //balance transfer
             Route::get('/transfer', 'UserController@indexTransfer')->name('balance.transfer');

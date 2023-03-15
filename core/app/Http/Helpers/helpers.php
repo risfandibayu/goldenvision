@@ -1377,8 +1377,8 @@ function showSingleUserinTree($user)
         $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
-        $res .= "<div class=\"user \" type=\"button\" >";
-        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $test $bg showDetails\" $extraData>";
+        $res .= "<div class=\"user\" type=\"button\" >";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $test $bg showDetails \" $extraData>";
         
         if (auth()->guard('admin')->user()) {
             // if(auth()->user()->userExtra->is_gold){
@@ -1395,9 +1395,7 @@ function showSingleUserinTree($user)
             // }
             $res .= "<p class=\"user-name\">$user->username</p>";
         }
-        $res .= " </div>";
-        $res .= " <span class=\"line\" ></span>";
-        $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm mt-n5\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\" style=\"\">Explore Tree</a></p>";
+        // $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\" style=\"position: absolute; z-index:-1;\">Explore Tree</a></p>";
 
     } else {
         $img = getImage('assets/images/user/profile/', null, true);
@@ -1405,12 +1403,9 @@ function showSingleUserinTree($user)
         $res .= "<div class=\"user\" type=\"button\">";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
         $res .= "<p class=\"user-name\">MP</p>";
-        $res .= " </div>";
-        $res .= " <span class=\"line\" ></span>";
-    }   
-
-    
-
+    }
+    $res .= " </div>";
+    $res .= " <span class=\"line\" ></span>";
     return $res;
 
 }
