@@ -108,9 +108,9 @@ Route::get('cron-address-lang', 'CronController@userAddressLang');
 Route::get('/landing',function(){
     return view('home.index');
 });
-// Route::get('/',function(){
-//     return view('counting.index');
-// });
+Route::get('/',function(){
+    return redirect(url('login'));
+})->name('home');
 
 // Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 // Route::get('/cron30bro', 'CronController@cron30bro')->name('bv.matching.cron30bro');
