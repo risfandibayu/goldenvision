@@ -643,6 +643,8 @@ Route::name('user.')->prefix('user')->group(function () {
                 });
             });
 
+            Route::post('convert-deopsit',[SponsorRegisterController::class,'convertSaldo'])->name('convert.saldo');
+
             Route::post('gold_exchange', 'UserController@goldExchange')->name('gold.exchange');
             Route::post('gold_delivery', 'SendgoldController@goldDelivery')->name('gold.delivery');
 

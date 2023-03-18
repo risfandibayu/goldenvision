@@ -370,4 +370,61 @@ class SponsorRegisterController extends Controller
          
     }
 
+
+    public function convertSaldo(Request $request){
+        $validate = Validator::make($request->all(),[
+            "saldo" => "required|numeric",
+            "qty" => "required|numeric",
+            "idr" => "required|numeric",
+            "sisa" => "required|numeric",
+        ]);
+        if ($validate->fails()) {
+           return redirect()->back()->withInput($request->all())->withErrors($validate);
+        }
+        $user = Auth::user();
+        $trx = getTrx();
+        DB::beginTransaction();
+        try {
+
+            if ($user->balance < $request->idr) {
+                return ['error'=>true, 'msg'=> 'Not enough balace to convert'];
+            }
+
+            $upin = UserPin::create([
+                'user_id' => $user->id,
+                'pin'     => $request->qty,
+                'pin_by'  => null,
+                'type'      => '+',
+                'start_pin' => $user->pin,
+                'end_pin'   => $user->pin + $request->qty,
+                'ket'       => 'Convert '.$request->idr.' Balance To '.$request->qty.' Pin'
+            ]);
+           
+            
+            $user->pin += $request->qty;
+            $user->balance -= $request->idr;
+            $user->save();
+
+
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $request->idr;
+            $transaction->post_balance = $request->sisa;
+            $transaction->charge = 0;
+            $transaction->trx_type = '-';
+            $transaction->details = 'Convert '.$request->idr.' Balance To '.$request->qty.' Pin';
+            $transaction->trx =  $trx;
+            $transaction->save();
+
+            DB::commit();
+            $notify[] = ['success', 'Convert '.$request->idr.' Balance To '.$request->qty.' Pin'];
+            return redirect()->back()->withNotify($notify);
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $notify[] = ['success', 'Error: '.$th->getMessage()];
+            return redirect()->back()->withNotify($notify);
+        }
+    }
+
 }

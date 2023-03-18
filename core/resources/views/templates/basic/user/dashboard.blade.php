@@ -713,6 +713,7 @@
                 <br>
                 <a href="{{ route('user.report.transactions') }}"
                     class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
+                {{-- <button class="btn btn-primary">Convert Saldo to PIN</button> --}}
             </div>
         </div>
 
