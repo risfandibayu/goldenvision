@@ -56,8 +56,7 @@ class PlanController extends Controller
             'end_pin'   => $user->pin - $request->qtyy,
             'ket'       => 'Purchased ' . $plan->name . ' For '.$request->qtyy.' MP',
         ]);
-
-        $user->qty -= $request->qtyy;
+        
         $user->pin -= $request->qtyy;
         $user->total_invest += ($plan->price * $request->qtyy);
         $user->bro_qty += $request->qtyy;
