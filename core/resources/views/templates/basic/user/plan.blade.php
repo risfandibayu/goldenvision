@@ -12,6 +12,8 @@
                                 class="price text--dark font-weight-bold d-block">{{ $general->cur_sym }}{{ nb(getAmount($data->price)) }}</span>
                             <p>/ MP</p>
                             <hr>
+                            Use Your {{ auth()->user()->pin }} PIN to buy
+                            <hr>
                             <ul class="package-features-list mt-30">
                                 {{-- <li><i class="fas fa-check bg--success"></i> <span>@lang('Business Volume (BV)'):
                                 {{getAmount($data->bv)}}</span> <span class="icon" data-toggle="modal"
@@ -37,7 +39,7 @@
                         @else
                             <a data-toggle="modal"
                                 class="btn w-100 btn-outline--primary  mt-20 py-2 box--shadow1">@lang('Already
-                                                                                                                                                                                    Subscribe')</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Subscribe')</a>
                             <a href="#confBuyMP{{ $data->id }}" data-toggle="modal"
                                 class="btn  w-100 btn--primary  mt-20 py-2 box--shadow1">@lang('Buy MP')</a>
                         @endif
@@ -61,13 +63,18 @@
                                     <div class="modal-body row">
                                         <h5 class="text-center col-12">{{ getAmount($data->price) }}
                                             {{ $general->cur_text }} / MP
+                                            <br>
+                                            or
+                                            <br>
+                                            <span class="text-success"> Use Your {{ auth()->user()->pin }} PIN to
+                                                buy</span>
                                         </h5>
                                         <input type="hidden" name="prices" value="{{ getAmount($data->price) }}">
                                         <input type="hidden" name="plan_id" value="{{ $data->id }}">
                                         <div class="form-group col-6">
                                             <label for="">QTY</label>
                                             <input class="form-control" type="number" name="qty" id="qty"
-                                                min="1" value="1" placeholder="MP qty" required>
+                                                min="1" value="" placeholder="MP qty" required>
                                         </div>
                                         <div class="col-6">
                                             <label for="ref_name" class="form--label-2">@lang('Referral MP Number (Sponsor)')</label>
@@ -145,7 +152,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <h5 class="text-danger">@lang('When someone from your below tree subscribe this plan, You will get this
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        Business Volume which will be used for matching bonus').
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Business Volume which will be used for matching bonus').
                                     </h5>
                                 </div>
                                 <div class="modal-footer">
@@ -172,13 +179,19 @@
                                     @csrf
                                     <div class="modal-body row">
                                         <h5 class="text-center col-12"> {{ getAmount($data->price) }}
-                                            {{ $general->cur_text }} / MP</h5>
+                                            {{ $general->cur_text }} / MP
+                                            <br>
+                                            or
+                                            <br>
+                                            <span class="text-success">Use Your {{ auth()->user()->pin }} PIN to
+                                                buy</span>
+                                        </h5>
                                         <input type="hidden" name="pricess" value="{{ getAmount($data->price) }}">
                                         <input type="hidden" name="plan_id" value="{{ $data->id }}">
                                         <div class="form-group col-6">
                                             <label for="">QTY</label>
                                             <input class="form-control" type="number" name="qtyy" id="qty"
-                                                min="1" value="1" placeholder="MP qty" required>
+                                                min="1" value="" placeholder="MP qty" required>
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="">total</label>
@@ -235,7 +248,7 @@
                             <br>
                             <br>
                             <span class="text-success"> @lang('This is the reason you should choose a plan with bigger referral
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    commission').</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            commission').</span>
                         </h5>
                     </div>
                     <div class="modal-footer">
@@ -256,7 +269,7 @@
                     </div>
                     <div class="modal-body">
                         <h5 class=" text-danger">@lang('When someone from your below tree subscribe this plan, You will get this
-                                                                                                                                                                                                                                                                                                                                                                                            amount as tree commission'). </h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            amount as tree commission'). </h5>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>

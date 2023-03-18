@@ -612,31 +612,34 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/survey/{id}/questions', 'UserController@surveyQuestions')->name('survey.questions');
             Route::post('/survey/answers', 'UserController@surveyQuestionsAnswers')->name('survey.questions.answers');
 
+            Route::get('gold_invest', 'UserController@goldInvest')->name('gold.invest');
+            Route::post('/Product-purchase', 'ProductController@productPurchase')->name('product.purchase');
+            Route::post('/Product-custom', 'CorderController@productCustom')->name('product.custom');
+            Route::post('/Product-rcustom', 'CorderController@rproductCustom')->name('product.rcustom');
+
+           
+            Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');
+            Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');
+            Route::get('report/gold/log', 'UserReportController@dailyGoldLog')->name('report.gold');
+            Route::get('report/invest/log', 'UserReportController@investLog')->name('report.invest');
+            Route::get('report/transactions/log', 'UserReportController@transactions')->name('report.transactions');
+            Route::get('report/withdraw/log', 'UserReportController@withdrawLog')->name('report.withdraw');
+            Route::get('report/referral/commission', 'UserReportController@refCom')->name('report.refCom');
+            Route::get('report/binary/commission', 'UserReportController@binaryCom')->name('report.binaryCom');
+            Route::get('report/exchange/log', 'UserReportController@exchangeLog')->name('report.exchangeLog');
+            Route::get('report/delivery/log', 'UserReportController@deliveryLog')->name('report.deliveryLog');
+            Route::get('report/Brodelivery/log', 'UserReportController@BroDeliveryLog')->name('report.BroDeliveryLog');
+
+            Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
+            Route::post('/buymp', 'PlanController@buyMpStore')->name('plan.mppurchase');
+            Route::get('/manage_user', 'UserController@user_boom')->name('user_boom');
+            Route::get('/tree', 'PlanController@myTree')->name('my.tree');
+
             Route::middleware(['checkKyc'])->group(function () {
-                Route::get('gold_invest', 'UserController@goldInvest')->name('gold.invest');
-                Route::post('/Product-purchase', 'ProductController@productPurchase')->name('product.purchase');
-                Route::post('/Product-custom', 'CorderController@productCustom')->name('product.custom');
-                Route::post('/Product-rcustom', 'CorderController@rproductCustom')->name('product.rcustom');
-
                 Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
-                Route::any('deposit', 'Gateway\PaymentController@deposit')->name('deposit');
-                Route::get('report/deposit/log', 'UserReportController@depositHistory')->name('report.deposit');
-                Route::get('report/gold/log', 'UserReportController@dailyGoldLog')->name('report.gold');
-                Route::get('report/invest/log', 'UserReportController@investLog')->name('report.invest');
-                Route::get('report/transactions/log', 'UserReportController@transactions')->name('report.transactions');
-                Route::get('report/withdraw/log', 'UserReportController@withdrawLog')->name('report.withdraw');
-                Route::get('report/referral/commission', 'UserReportController@refCom')->name('report.refCom');
-                Route::get('report/binary/commission', 'UserReportController@binaryCom')->name('report.binaryCom');
-                Route::get('report/exchange/log', 'UserReportController@exchangeLog')->name('report.exchangeLog');
-                Route::get('report/delivery/log', 'UserReportController@deliveryLog')->name('report.deliveryLog');
-                Route::get('report/Brodelivery/log', 'UserReportController@BroDeliveryLog')->name('report.BroDeliveryLog');
-
-                Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
-                Route::post('/buymp', 'PlanController@buyMpStore')->name('plan.mppurchase');
 
                 Route::middleware(['checkPaid'])->group(function () {
-                Route::get('/manage_user', 'UserController@user_boom')->name('user_boom');
-                Route::get('/tree', 'PlanController@myTree')->name('my.tree');
+                    //
                 });
             });
 
@@ -674,7 +677,7 @@ Route::get('/blog/details/{slug}/{id}', 'SiteController@singleBlog')->name('sing
 
 Route::get('/home2', 'SiteController@index2')->name('home2');
 // Route::get('/', 'SiteController@index')->name('home'); // Disabled temporary
-Route::redirect('/','/login' )->name('home');
+
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
 
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholderImage');

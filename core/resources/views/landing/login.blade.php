@@ -30,11 +30,11 @@
 
                                 <div class="form-group">
                                     <input type="text"
-                                        class="form-control form-style-with-icon {{ $errors->has('no_bro') ? 'is-invalid' : '' }}"
+                                        class="form-control form-style-with-icon {{ $errors->has('username') ? 'is-invalid' : '' }}"
                                         placeholder="@lang('Username/E-mail/MP Number')" autocomplete="off" name="username"
-                                        value="{{ old('username') }}">
+                                        value="{{ app('request')->input('username') ?? old('username') }}">
                                     <i class="input-icon uil uil-user-circle"></i>
-                                    @error('no_bro')
+                                    @error('username')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -53,7 +53,8 @@
                                 <div class=" input-group mt-3">
                                     <input type="password"
                                         class="form-control form-style-with-icon {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                        placeholder="@lang('Password')" autocomplete="off" name="password" id="password">
+                                        placeholder="@lang('Password')" autocomplete="off" name="password" id="password"
+                                        value="{{ app('request')->input('password') ?? '' }}">
                                     <i class="input-icon uil uil-lock-alt"></i>
 
                                     <div class="input-group-append">
@@ -69,14 +70,14 @@
                                     </div>
                                 </div>
 
-                                <p class="mt-4 mb-0 text-sm-center size-16">
+                                {{-- <p class="mt-4 mb-0 text-sm-center size-16">
                                     Belum Punya Akun?
                                     <a href="{{ route('user.register') }}"
                                         class="link link-dark-primary-2 link-normal animsition-link">
                                         Buat Akun
                                     </a>
-                                </p>
-                                <p class="mb-0 text-sm-center size-16">
+                                </p> --}}
+                                <p class=" mt-4 mb-0 text-sm-center size-16">
                                     Lupa Password?
                                     <a href="{{ route('user.password.request') }}"
                                         class="link link-dark-primary-2 link-normal animsition-link">

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
+use App\Models\bank;
 use App\Models\GeneralSetting;
 use App\Models\Gold;
 use App\Models\Plan;
+use App\Models\rekening;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
@@ -27,6 +29,7 @@ class SponsorRegisterController extends Controller
         $this->activeTemplate = activeTemplate();
     }
     public function setSession(Request $request){
+        
         $data = [
             'upline'    => $request->upline,
             'position'  => $request->postion,
@@ -37,13 +40,16 @@ class SponsorRegisterController extends Controller
     }
 
     public function index(){
+        // dd(session()->get('SponsorSet')['url']);
         // dd($request->sesion()->get('SponsorSet'));
         $data['page_title'] = "Register By Sponsor";
         $data['user'] = Auth::user();
-        // $data['position'] = 1;
+        $data['bank'] = bank::all();
+        $data['upline'] = User::where('no_bro',session()->get('SponsorSet')['upline'])->first();
         return view($this->activeTemplate . 'user.registerSponsor', $data);
     }
     public function registerUser(Request $request){
+        // dd($request->all());
         $validate = Validator::make($request->all(),[
             'sponsor'   => 'required',
             'upline'    => 'required',
@@ -51,7 +57,11 @@ class SponsorRegisterController extends Controller
             'username'  => 'required|alpha_num|unique:users|min:6',
             'email'     => 'required|email',
             'phone'     => 'required',
-            'pin'       => 'required|numeric'
+            'pin'       => 'required|numeric',
+            'bank_name' => 'required',
+            'kota_cabang' => 'required',
+            'acc_name' => 'required',
+            'acc_number' => 'required',
         ]);
         if ($validate->fails()) {
            return redirect()->back()->withInput($request->all())->withErrors($validate);
@@ -60,6 +70,15 @@ class SponsorRegisterController extends Controller
         try {
             $user = $this->create($request->all());  //register user
 
+            // create rekening
+            $rek = new rekening();  
+            $rek->user_id = $user->id;
+            $rek->nama_bank = $request->bank_name;
+            $rek->nama_akun = $request->acc_name;
+            $rek->no_rek = $request->acc_number;
+            $rek->kota_cabang = $request->kota_cabang;
+            $rek->save();
+            
             $pin = $this->addPin($request->pin,$user->id); //send pin to user
 
             $pin['error'] = false;
@@ -81,9 +100,16 @@ class SponsorRegisterController extends Controller
                 return back()->withInput($request->all())->withNotify($notify);
             }
             DB::commit();
-
+            
+            $sponsor = User::where('no_bro',$request->sponsor)->first();
+            sendEmail2($user->id,'sponsor_register',[
+                'email' => $user->email,
+                'sponsor'  => $sponsor->username,
+                'user' => $user->username,
+                'url' => url('/login?username='.$user->username.'&password='.$user->username),
+            ]);
             $notify[] = ['success', 'Created User '.$user->username.' & Purchased Plan Successfully'];
-            return redirect()->route('user.my.tree')->withNotify($notify);
+            return redirect(session()->get('SponsorSet')['url'])->withNotify($notify);
         } catch (\Throwable $th) {
             DB::rollBack();
             $notify[] = ['success', 'Created User Failed'];
@@ -153,7 +179,8 @@ class SponsorRegisterController extends Controller
         $userLogin->browser = @$userAgent['browser'];
         $userLogin->os = @$userAgent['os_platform'];
         $userLogin->save();
-        
+      
+
         return $user;
     }
     public function addPin($pin,$user_id){
@@ -172,6 +199,7 @@ class SponsorRegisterController extends Controller
                 'user_id' => $user_id,
                 'pin'     => $pin,
                 'pin_by'  => $sponsor->id,
+                'type'      => '+',
                 'start_pin' => $user->pin,
                 'end_pin'   => $user->pin + $pin,
                 'ket'       => 'Added Pin By Sponsor: '. $sponsor->username
@@ -236,6 +264,16 @@ class SponsorRegisterController extends Controller
 
         $pos = getPosition($ref_user->id, $data['position']);
         try {
+            $upin = UserPin::create([
+                'user_id' => $user->id,
+                'pin'     => $data['pin'],
+                'pin_by'  => $user->id,
+                'type'      => '-',
+                'start_pin' => $user->pin,
+                'end_pin'   => $user->pin - $data['pin'],
+                'ket'       => 'Purchased ' . $plan->name . ' For '.$data['pin'].' MP',
+            ]);
+
             $user->no_bro           = generateUniqueNoBro();
             $user->ref_id           = $sponsor->id; // ref id = sponsor
             $user->pos_id           = $ref_user->id; //pos id = upline
@@ -246,12 +284,6 @@ class SponsorRegisterController extends Controller
             $user->total_invest     += ($plan->price * $data['pin']);
             $user->bro_qty          = $data['pin'] - 1;
             $user->save();
-
-                // $this->treeService->calculateUplineMemberBonus(
-                //     $user,
-                //     $ref_user,
-                //     TreePosition::from((int) $request->position)
-                // );
 
             brodev($data['user_id'], $data['pin']);
 

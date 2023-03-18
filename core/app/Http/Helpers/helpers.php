@@ -1315,6 +1315,7 @@ function showTreePage($id)
 function showSingleUserinTree($user)
 {
     $res = '';
+    // dd($user);
     if ($user) {
         // if ($user->plan_id == 0) {
         //     $userType = "free-user";
@@ -1332,8 +1333,8 @@ function showSingleUserinTree($user)
             $test = $user->userExtra->is_gold;
             $bg = 'bg-gold';
         }else{
-             $userType = "free-user";
-             $stShow = "Paid";
+            $userType = "free-user";
+            $stShow = "Paid";
             $planName = '';
             $test = $user->userExtra->is_gold;
             $bg = 'bg-pink';
@@ -1347,14 +1348,15 @@ function showSingleUserinTree($user)
         $is_stockiest = $user->is_stockiest;
         $extraData = " data-name=\"$user->fullname\"";
         if (auth()->guard('admin')->user()) {
-            $hisTree = route('admin.users.other.tree', $user->username);
+            // $hisTree = route('admin.users.other.tree', $user->username);
             $loginTree = route('admin.users.login',$user->id);
             $detailTree = route('admin.users.detail',$user->id);
             $extraData .= " data-treeloginurl=\"$loginTree\"";
             $extraData .= " data-treedetailurl=\"$detailTree\"";
         } else {
-            $hisTree = route('user.other.tree', $user->username);
+            // $hisTree = route('user.other.tree', $user->username);
         }
+        $hisTree = route('user.other.tree', $user->username);
 
 
 
@@ -1409,6 +1411,107 @@ function showSingleUserinTree($user)
     return $res;
 
 }
+function showSingleUserNoLine($user)
+{
+    $res = '';
+    // dd($user);
+    if ($user) {
+        // if ($user->plan_id == 0) {
+        //     $userType = "free-user";
+        //     $stShow = "Free";
+        //     $planName = '';
+        // } else {
+        //     $userType = "paid-user";
+        //     $stShow = "Paid";
+        //     $planName = $user->plan->name;
+        // }
+        if($user->userExtra->is_gold){
+            $userType = "paid-user";
+            $stShow = "Paid";
+            $planName = '';
+            $test = $user->userExtra->is_gold;
+            $bg = 'bg-gold';
+        }else{
+            $userType = "free-user";
+            $stShow = "Paid";
+            $planName = '';
+            $test = $user->userExtra->is_gold;
+            $bg = 'bg-pink';
+
+        }
+
+        $img = getImage('assets/images/user/profile/'. $user->image, null, true);
+
+        $refby = getUserById($user->ref_id)->fullname ?? '';
+        $posby = getUserById($user->pos_id)->username ?? '';
+        $is_stockiest = $user->is_stockiest;
+        $extraData = " data-name=\"$user->fullname\"";
+        if (auth()->guard('admin')->user()) {
+            // $hisTree = route('admin.users.other.tree', $user->username);
+            $loginTree = route('admin.users.login',$user->id);
+            $detailTree = route('admin.users.detail',$user->id);
+            $extraData .= " data-treeloginurl=\"$loginTree\"";
+            $extraData .= " data-treedetailurl=\"$detailTree\"";
+        } else {
+            // $hisTree = route('user.other.tree', $user->username);
+        }
+
+            $hisTree = route('user.other.tree', $user->username);
+
+
+        $extraData .= " data-treeurl=\"$hisTree\"";
+        $extraData .= " data-status=\"$stShow\"";
+        $extraData .= " data-plan=\"$planName\"";
+        $extraData .= " data-username=\"$user->username\"";
+        $extraData .= " data-id=\"$user->id\"";
+        $extraData .= " data-email=\"$user->email\"";
+        $extraData .= " data-mobile=\"$user->mobile\"";
+        $extraData .= " data-bro=\"$user->no_bro\"";
+        $extraData .= " data-image=\"$img\"";
+        $extraData .= " data-refby=\"$refby\"";
+        $extraData .= " data-posby=\"$posby\"";
+        $extraData .= " data-is_stockiest=\"$is_stockiest\"";
+        $extraData .= " data-lpaid=\"" . @$user->userExtra->left . "\"";
+        $extraData .= " data-rpaid=\"" . @$user->userExtra->right . "\"";
+        $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";
+        $extraData .= " data-rfree=\"" . @$user->userExtra->free_right . "\"";
+        $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
+        $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
+
+        $res .= "<div class=\"user\" type=\"button\" >";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $test $bg showDetails \" $extraData>";
+        
+        if (auth()->guard('admin')->user()) {
+            // if(auth()->user()->userExtra->is_gold){
+            //     $res .= "<span class=\"badge badge-warning mt-n3\">$user->username</span>";
+            // }else{
+            //     $res .= "<span class=\"badge badge-light\">$user->username</span>";
+            // }
+            $res .= "<p class=\"user-name\">$user->username</p>";
+        } else {
+            // if(auth()->user()->userExtra->is_gold){
+            //     $res .= "<span class=\"badge badge-warning mt-n3\">$user->username</span>";
+            // }else{
+            //     $res .= "<span class=\"badge badge-light\">$user->username</span>";
+            // }
+            $res .= "<p class=\"user-name\">$user->username</p>";
+        }
+        // $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\" style=\"position: absolute; z-index:-1;\">Explore Tree</a></p>";
+
+    } else {
+        $img = getImage('assets/images/user/profile/', null, true);
+
+        $res .= "<div class=\"user\" type=\"button\">";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
+        $res .= "<p class=\"user-name\">MP</p>";
+    }
+    $res .= " </div>";
+    // $res .= " <span class=\"line\" ></span>";
+    $res .= "<div class='mb-5'></div>";
+    return $res;
+
+}
+
 function showSingleUserinTree2($user,$id)
 {
     $res = '';
@@ -1513,6 +1616,11 @@ function showSingleUserinTree2Update($user,$id)
         //     $stShow = "Paid";
         //     $planName = $user->plan->name;
         // }
+        if($user->userExtra->is_gold){
+            $bg = 'bg-gold';
+        }else{
+            $bg = 'bg-pink';
+        }
 
         if ($user->id == $id) {
             $userType = "active-user";
@@ -1520,11 +1628,16 @@ function showSingleUserinTree2Update($user,$id)
             $planName = '';
             $fs ="font-weight: 700;font-size:18px;
             color: #070707;";
+            $bg = 'bg-pink';
+
+
         } else {
             $userType = "free-user";
             $stShow = "Free";
             $planName = '';
             $fs="";
+            $bg = 'bg-pink';
+
         }
 
         $img = getImage('assets/images/user/profile/'. $user->image, null, true);
@@ -1551,25 +1664,26 @@ function showSingleUserinTree2Update($user,$id)
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
         if(Auth::user()->pos_id == $user->id){
-            $res .= "<div class=\"user showDetails select_tree\" $extraData>";
+            $res .= "<div class=\"user showDetails select_tree \" $extraData>";
         }else{
         $res .= "<div class=\"user showDetails select_tree\" onclick='f1(\"$user->id\")' type=\"button\" $extraData>";
         }
-        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType\">";
-        $res .= "<p class=\"user-name\" style=\"font-size: 12px;font-weight: bold;\" style=\"$fs\"> $user->no_bro</p>";
-        $res .= "<p class=\"user-name mt-n3\" style=\"font-size: 15px\" style=\"$fs\"> $user->username</p>";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $bg\">";
+        $res .= "<p class=\"user-name\" style=\"font-size: 12px;font-weight: bold;\" style=\"$fs\"> $user->username</p>";
+        // $res .= "<p class=\"user-name mt-n3\" style=\"font-size: 15px\" style=\"$fs\"> $user->username</p>";
         if(Auth::user()->pos_id == $user->id){
 
         }elseif(Auth::user()->id == $user->id){
             $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#4cbe04;color:black;\"'>Leader (You)</a> </p>";
             if (Auth::user()->id == $id) {
-                $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")'>Selected Parent</a> </p>";
+                $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm selectedParent\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")' data-parent=\"$user->id\" data-bro\"$user->no_bro\">Selected Parent</a> </p>";
             }
         }elseif($user->id == $id){
-            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")'>Selected Parent</a> </p>";
+            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm selectedParent\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")' data-parent=\"$user->id\" data-bro\"$user->no_bro\">Selected Parent</a> </p>";
         }
         else{
-            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" onclick='f1(\"$user->id\")'>Explore Tree</a> </p>";
+            // $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" onclick='f1(\"$user->id\")'>Explore Tree</a> </p>";
+            
         }
 
     } else {
@@ -1592,6 +1706,112 @@ function showSingleUserinTree2Update($user,$id)
     return $res;
 
 }
+
+function showSingleUserinTree2NoLine($user,$id)
+{
+    $res = '';
+    if ($user) {
+        // if ($user->plan_id == 0) {
+        //     $userType = "free-user";
+        //     $stShow = "Free";
+        //     $planName = '';
+        // } else {
+        //     $userType = "paid-user";
+        //     $stShow = "Paid";
+        //     $planName = $user->plan->name;
+        // }
+        if($user->userExtra->is_gold){
+            $bg = 'bg-gold';
+        }else{
+            $bg = 'bg-pink';
+        }
+
+        if ($user->id == $id) {
+            $userType = "active-user";
+            $stShow = "Free";
+            $planName = '';
+            $fs ="font-weight: 700;font-size:18px;
+            color: #070707;";
+            $bg = 'bg-pink';
+
+
+        } else {
+            $userType = "free-user";
+            $stShow = "Free";
+            $planName = '';
+            $fs="";
+            $bg = 'bg-pink';
+
+        }
+
+        $img = getImage('assets/images/user/profile/'. $user->image, null, true);
+
+        $refby = getUserById($user->ref_id)->fullname ?? '';
+        if (auth()->guard('admin')->user()) {
+            $hisTree = route('admin.users.other.tree', $user->username);
+        } else {
+            $hisTree = route('user.other.tree', $user->username);
+        }
+
+        $extraData = " data-name=\"$user->fullname\"";
+        $extraData .= " data-id=\"$user->id\"";
+        $extraData .= " data-treeurl=\"$hisTree\"";
+        $extraData .= " data-status=\"$stShow\"";
+        $extraData .= " data-plan=\"$planName\"";
+        $extraData .= " data-image=\"$img\"";
+        $extraData .= " data-refby=\"$refby\"";
+        $extraData .= " data-lpaid=\"" . @$user->userExtra->left . "\"";
+        $extraData .= " data-rpaid=\"" . @$user->userExtra->right . "\"";
+        $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";
+        $extraData .= " data-rfree=\"" . @$user->userExtra->free_right . "\"";
+        $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
+        $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
+
+        if(Auth::user()->pos_id == $user->id){
+            $res .= "<div class=\"user showDetails select_tree \" $extraData>";
+        }else{
+        $res .= "<div class=\"user showDetails select_tree\" onclick='f1(\"$user->id\")' type=\"button\" $extraData>";
+        }
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $bg\">";
+        $res .= "<p class=\"user-name\" style=\"font-size: 12px;font-weight: bold;\" style=\"$fs\"> $user->username</p>";
+        // $res .= "<p class=\"user-name mt-n3\" style=\"font-size: 15px\" style=\"$fs\"> $user->username</p>";
+        if(Auth::user()->pos_id == $user->id){
+
+        }elseif(Auth::user()->id == $user->id){
+            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#4cbe04;color:black;\"'>Leader (You)</a> </p>";
+            if (Auth::user()->id == $id) {
+                $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm selectedParent\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")' data-parent=\"$user->id\" data-bro\"$user->no_bro\">Selected Parent</a> </p>";
+            }
+        }elseif($user->id == $id){
+            $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm selectedParent\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")' data-parent=\"$user->id\" data-bro\"$user->no_bro\">Selected Parent</a> </p>";
+        }
+        else{
+            // $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" onclick='f1(\"$user->id\")'>Explore Tree</a> </p>";
+            
+        }
+
+    } else {
+        $img = getImage('assets/images/user/profile/', null, true);
+
+        $res .= "<div class=\"user\" >";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
+        $res .= "<p class=\"user-name\">MP</p>";
+        // $users = user::where('pos_id',$id)->first();
+        // if($users){
+
+        // }else{
+        //     $res .= "<p class=\"user-name\"><a class=\"btn btn-sm\" style=\"background-color:#47bc52;\" href='posisi'>Select Position</a></p>";
+        // }
+    }
+
+    $res .= " </div>";
+    // $res .= " <span class=\"line\"></span>";
+    $res .= "<div class='mb-5'></div>";
+
+    return $res;
+
+}
+
 function showSingleUserinTree3($user,$pos_id,$id)
 {
     $res = '';

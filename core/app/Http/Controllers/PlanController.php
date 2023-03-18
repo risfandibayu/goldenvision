@@ -9,6 +9,7 @@ use App\Models\Plan;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
+use App\Models\UserPin;
 use App\Services\Tree\Enums\TreePosition;
 use App\Services\Tree\TreeService;
 use Illuminate\Http\Request;
@@ -37,14 +38,27 @@ class PlanController extends Controller
         $this->validate($request, [
             'qtyy' => 'required|integer|min:1',
         ]);
+        $activePin  = Auth::user()->pin;
+
         $user = User::find(Auth::id());
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
         $gnl = GeneralSetting::first();
-        if ($user->balance < ($plan->price * $request->qtyy)) {
-            $notify[] = ['error', 'Insufficient Balance'];
+        if ($activePin < $request->qtyy) {
+            $notify[] = ['error', 'Insufficient Balance, Not Enough PIN to Buy'];
             return back()->withNotify($notify);
         }
-        $user->balance -= ($plan->price * $request->qtyy);
+        UserPin::create([
+            'user_id' => $user->id,
+            'pin'     => $request->qtyy,
+            'pin_by'  => $user->id,
+            'type'      => '-',
+            'start_pin' => $user->pin,
+            'end_pin'   => $user->pin - $request->qtyy,
+            'ket'       => 'Purchased ' . $plan->name . ' For '.$request->qtyy.' MP',
+        ]);
+
+        $user->qty -= $request->qtyy;
+        $user->pin -= $request->qtyy;
         $user->total_invest += ($plan->price * $request->qtyy);
         $user->bro_qty += $request->qtyy;
         $user->save();
@@ -52,11 +66,12 @@ class PlanController extends Controller
         $trx = $user->transactions()->create([
             'amount' => $plan->price * $request->qtyy,
             'trx_type' => '-',
-            'details' => 'Purchased new MP quantity for '.$request->qtyy.' MP',
+            'details' => 'Purchased ' . $plan->name . ' For '.$request->qtyy.' MP',
             'remark' => 'purchased_plan',
             'trx' => getTrx(),
             'post_balance' => getAmount($user->balance),
         ]);
+
 
         $notify[] = ['success', 'Purchased new MP quantity for '.$request->qtyy.' MP Successfully'];
         return redirect()->route('user.home')->withNotify($notify);
@@ -79,22 +94,22 @@ class PlanController extends Controller
 
         $brolimit = user::where('plan_id','!=',0)->count();
         // dd($brolimit);
-        if (date('Y-m-d,H:i:s') > '2022-09-02,23:59:59') {
-            # code...
-            // dd('s');
-            $g1 = 50;
-            $g2 = 20;
-            $g3 = 5;
-            $g4 = 2;
-            $tot = 77;
-        }else{
-            // dd('w');
-            $g1 = 70;
-            $g2 = 20;
-            $g3 = 7;
-            $g4 = 2;
-            $tot = 99;
-        }
+        // if (date('Y-m-d,H:i:s') > '2022-09-02,23:59:59') {
+        //     # code...
+        //     // dd('s');
+        //     $g1 = 50;
+        //     $g2 = 20;
+        //     $g3 = 5;
+        //     $g4 = 2;
+        //     $tot = 77;
+        // }else{
+        //     // dd('w');
+        //     $g1 = 70;
+        //     $g2 = 20;
+        //     $g3 = 7;
+        //     $g4 = 2;
+        //     $tot = 99;
+        // }
 
 
         $user = User::find(Auth::id());
@@ -127,25 +142,26 @@ class PlanController extends Controller
             return back()->withNotify($notify);
         }
 
-
-        if ($user->balance < ($plan->price * $request->qty)) {
-            $notify[] = ['error', 'Insufficient Balance'];
+        $activePin = Auth::user()->pin;
+        if ($activePin < $request->qtyy) {
+            $notify[] = ['error', 'Insufficient Balance, Not Enough PIN to Buy'];
             return back()->withNotify($notify);
         }
 
-            $oldPlan = $user->plan_id;
+        $oldPlan = $user->plan_id;
 
-            $pos = getPosition($ref_user->id, $request->position);
-            $user->no_bro       = generateUniqueNoBro();
-            $user->ref_id       = $sponsor->id; // ref id = sponsor
-            $user->pos_id       = $ref_user->id; //pos id = upline
-            $user->position     = $request->position;
-            $user->position_by_ref = $ref_user->position;
-            $user->plan_id      = $plan->id;
-            $user->balance      -= ($plan->price * $request->qty);
-            $user->total_invest += ($plan->price * $request->qty);
-            $user->bro_qty      = $request->qty - 1;
-            $user->save();
+        $pos = getPosition($ref_user->id, $request->position);
+        $user->no_bro       = generateUniqueNoBro();
+        $user->ref_id       = $sponsor->id; // ref id = sponsor
+        $user->pos_id       = $ref_user->id; //pos id = upline
+        $user->position     = $request->position;
+        $user->position_by_ref = $ref_user->position;
+        $user->plan_id      = $plan->id;
+        // $user->balance      -= ($plan->price * $request->qty);
+        $user->pin              -= $request->qty;
+        $user->total_invest += ($plan->price * $request->qty);
+        $user->bro_qty      = $request->qty - 1;
+        $user->save();
 
 
             // $this->treeService->calculateUplineMemberBonus(
@@ -154,120 +170,120 @@ class PlanController extends Controller
             //     TreePosition::from((int) $request->position)
             // );
 
-            $gold = Gold::where('user_id',Auth::user()->id)->first();
-            $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->first();
-            $gold2 = Gold::where('user_id',Auth::user()->id)->where('prod_id',2)->first();
-            $gold3 = Gold::where('user_id',Auth::user()->id)->where('prod_id',3)->first();
-            $gold4 = Gold::where('user_id',Auth::user()->id)->where('prod_id',4)->first();
+            // $gold = Gold::where('user_id',Auth::user()->id)->first();
+            // $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->first();
+            // $gold2 = Gold::where('user_id',Auth::user()->id)->where('prod_id',2)->first();
+            // $gold3 = Gold::where('user_id',Auth::user()->id)->where('prod_id',3)->first();
+            // $gold4 = Gold::where('user_id',Auth::user()->id)->where('prod_id',4)->first();
 
-            if($gold){
-                if($gold1){
-                    $gold1->qty += $g1 * $request->qty;
-                    $gold1->save();
-                }else{
-                    $newg = new Gold();
-                    $newg->user_id = Auth::user()->id;
-                    $newg->prod_id = 1;
-                    $newg->qty = $g1 * $request->qty;
-                    $newg->save();
-                }
+            // if($gold){
+            //     if($gold1){
+            //         $gold1->qty += $g1 * $request->qty;
+            //         $gold1->save();
+            //     }else{
+            //         $newg = new Gold();
+            //         $newg->user_id = Auth::user()->id;
+            //         $newg->prod_id = 1;
+            //         $newg->qty = $g1 * $request->qty;
+            //         $newg->save();
+            //     }
 
-                if($gold2){
-                    $gold2->qty += $g2 * $request->qty;
-                    $gold2->save();
-                }else{
-                    $newg = new Gold();
-                    $newg->user_id = Auth::user()->id;
-                    $newg->prod_id = 2;
-                    $newg->qty = $g2 * $request->qty;
-                    $newg->save();
-                }
+            //     if($gold2){
+            //         $gold2->qty += $g2 * $request->qty;
+            //         $gold2->save();
+            //     }else{
+            //         $newg = new Gold();
+            //         $newg->user_id = Auth::user()->id;
+            //         $newg->prod_id = 2;
+            //         $newg->qty = $g2 * $request->qty;
+            //         $newg->save();
+            //     }
 
-                if($gold3){
-                    $gold3->qty += $g3 * $request->qty;
-                    $gold3->save();
-                }else{
-                    $newg = new Gold();
-                    $newg->user_id = Auth::user()->id;
-                    $newg->prod_id = 3;
-                    $newg->qty = $g3 * $request->qty;
-                    $newg->save();
-                }
+            //     if($gold3){
+            //         $gold3->qty += $g3 * $request->qty;
+            //         $gold3->save();
+            //     }else{
+            //         $newg = new Gold();
+            //         $newg->user_id = Auth::user()->id;
+            //         $newg->prod_id = 3;
+            //         $newg->qty = $g3 * $request->qty;
+            //         $newg->save();
+            //     }
 
-                if($gold4){
-                    $gold4->qty += $g4 * $request->qty;
-                    $gold4->save();
-                }else{
-                    $newg = new Gold();
-                    $newg->user_id = Auth::user()->id;
-                    $newg->prod_id = 4;
-                    $newg->qty = $g4 * $request->qty;
-                    $newg->save();
-                }
+            //     if($gold4){
+            //         $gold4->qty += $g4 * $request->qty;
+            //         $gold4->save();
+            //     }else{
+            //         $newg = new Gold();
+            //         $newg->user_id = Auth::user()->id;
+            //         $newg->prod_id = 4;
+            //         $newg->qty = $g4 * $request->qty;
+            //         $newg->save();
+            //     }
 
 
-            }else{
-                $newg = new Gold();
-                $newg->user_id = Auth::user()->id;
-                $newg->prod_id = 1;
-                $newg->qty = $g1 * $request->qty;
-                $newg->save();
+            // }else{
+            //     $newg = new Gold();
+            //     $newg->user_id = Auth::user()->id;
+            //     $newg->prod_id = 1;
+            //     $newg->qty = $g1 * $request->qty;
+            //     $newg->save();
 
-                $newg = new Gold();
-                $newg->user_id = Auth::user()->id;
-                $newg->prod_id = 2;
-                $newg->qty = $g2 * $request->qty;
-                $newg->save();
+            //     $newg = new Gold();
+            //     $newg->user_id = Auth::user()->id;
+            //     $newg->prod_id = 2;
+            //     $newg->qty = $g2 * $request->qty;
+            //     $newg->save();
 
-                $newg = new Gold();
-                $newg->user_id = Auth::user()->id;
-                $newg->prod_id = 3;
-                $newg->qty = $g3 * $request->qty;
-                $newg->save();
+            //     $newg = new Gold();
+            //     $newg->user_id = Auth::user()->id;
+            //     $newg->prod_id = 3;
+            //     $newg->qty = $g3 * $request->qty;
+            //     $newg->save();
 
-                $newg = new Gold();
-                $newg->user_id = Auth::user()->id;
-                $newg->prod_id = 4;
-                $newg->qty = $g4 * $request->qty;
-                $newg->save();
-            }
-
-            brodev(Auth::user()->id, $request->qty);
-
-            $trx = $user->transactions()->create([
-                'amount' => $plan->price * $request->qty,
-                'trx_type' => '-',
-                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' MP',
-                'remark' => 'purchased_plan',
-                'trx' => getTrx(),
-                'post_balance' => getAmount($user->balance),
-            ]);
-
-            // dd($user);
-
-            sendEmail2($user->id, 'plan_purchased', [
-                'plan' => $plan->name. ' For '.$request->qty.' MP',
-                'amount' => getAmount($plan->price * $request->qty),
-                'currency' => $gnl->cur_text,
-                'trx' => $trx->trx,
-                'post_balance' => getAmount($user->balance),
-            ]);
-            if ($oldPlan == 0) {
-                updatePaidCount2($user->id);
-            }
-            
-            $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
-
-            // updateBV($user->id, $plan->bv, $details);
-
-            // if ($plan->tree_com > 0) {
-            //     treeComission($user->id, $plan->tree_com, $details);
+            //     $newg = new Gold();
+            //     $newg->user_id = Auth::user()->id;
+            //     $newg->prod_id = 4;
+            //     $newg->qty = $g4 * $request->qty;
+            //     $newg->save();
             // }
 
-            referralCommission2($user->id, $details);
+        brodev(Auth::user()->id, $request->qty);
 
-            $notify[] = ['success', 'Purchased ' . $plan->name . ' Successfully'];
-            return redirect()->route('user.home')->withNotify($notify);
+        $trx = $user->transactions()->create([
+            'amount' => $plan->price * $request->qty,
+            'trx_type' => '-',
+            'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' MP',
+            'remark' => 'purchased_plan',
+            'trx' => getTrx(),
+            'post_balance' => getAmount($user->balance),
+        ]);
+
+        // dd($user);
+
+        sendEmail2($user->id, 'plan_purchased', [
+            'plan' => $plan->name. ' For '.$request->qty.' MP',
+            'amount' => getAmount($plan->price * $request->qty),
+            'currency' => $gnl->cur_text,
+            'trx' => $trx->trx,
+            'post_balance' => getAmount($user->balance),
+        ]);
+        if ($oldPlan == 0) {
+            updatePaidCount2($user->id);
+        }
+            
+        $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
+
+        // updateBV($user->id, $plan->bv, $details);
+
+        // if ($plan->tree_com > 0) {
+        //     treeComission($user->id, $plan->tree_com, $details);
+        // }
+
+        referralCommission2($user->id, $details);
+
+        $notify[] = ['success', 'Purchased ' . $plan->name . ' Successfully'];
+        return redirect()->route('user.home')->withNotify($notify);
 
     }
 

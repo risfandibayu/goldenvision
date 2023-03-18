@@ -158,8 +158,8 @@ class User extends Authenticatable
 
         return  ($user?->daily_golds_count < 100) &&
                 (! static::hasClaimedDailyGold($id)) &&
-                ($user?->is_kyc == 2) &&
-                ($user?->no_bro != 0);
+                // ($user?->is_kyc == 2) &&
+                ($user?->no_bro != null);
     }
     public static function canClaimWeeklyGold($id)
     {
@@ -170,8 +170,8 @@ class User extends Authenticatable
 
         return  ($user?->daily_golds_count > 100) &&
                 (! static::hasClaimedWeeklyGold($id)) &&
-                ($user?->is_kyc == 2) &&
-                ($user?->no_bro != 0);
+                // ($user?->is_kyc == 2) &&
+                ($user?->no_bro != null);
     }
 
     public static function canAddWeeklyGold($id)

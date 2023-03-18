@@ -24,7 +24,7 @@
                 background-color: #96795f;">
                     @for ($i = 1; $i < $get_bv->bv + 1; $i++)
                         <?php
-                        $tmp = App\Models\User::where('username','=', $ref->username . $i)->first();
+                        $tmp = App\Models\User::where('username', '=', $ref->username . $i)->first();
                         ?>
                         {{-- @dump($tmp) --}}
                         @if ($tmp)
@@ -118,7 +118,8 @@
                                         <div class="form-group">
                                             <label for="ref_username1">Parent Username</label>
                                             <select class="form-select form-control ref_username select2"
-                                                name="ref_username" id="ref_username{{ $i }}" required onchange="selectFx(this)">
+                                                name="ref_username" id="ref_username{{ $i }}" required
+                                                onchange="selectFx(this)">
                                                 <option value="" hidden>-- Select Parent Username --</option>
                                                 @foreach ($ref_user as $refus)
                                                     @if ($refus->pos == 'Leader')
@@ -235,16 +236,17 @@
     });​​​​​​​​​​​​​​​
 </script> --}}
     <script>
-        $( document ).ready(function() {
-            console.log( "ready!" );
-            $('#nav-tabContent').on('select2:select','select2', function (e) {
+        $(document).ready(function() {
+            console.log("ready!");
+            $('#nav-tabContent').on('select2:select', 'select2', function(e) {
                 var data = e.params.data;
                 console.log(data);
             });
         });
-        function selectFx(x){
+
+        function selectFx(x) {
             var id = x.value;
-              $.ajax({
+            $.ajax({
                 type: "GET",
                 url: "{{ url('/user/cek_pos') }}/" + id,
                 success: function(data) {
@@ -282,7 +284,7 @@
                         $('.position').html(options);
                         $('.tree').attr("hidden", false).html(data.tree);
                         var pilih = `
-                            <div class='user'><img src='` + base_uri + `/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>MP</p>
+                            <div class='user'><img src='` + base_uri + `/assets/images/avatar.png' alt='*' class='select-user'>
                                 <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p>
                                 </div> <span class='line'></span>
                         `;
@@ -301,11 +303,11 @@
                 dataType: "json"
             });
         }
-        
+
         var base_uri = $('#base_url').val();
 
         $('.ref_username').on('change', function() {
-            
+
             console.log($(this).val());
             // var posa = $('.position').val();
             // console.log(posa);
@@ -379,21 +381,21 @@
         $('.position').on('change', function() {
             var pos = $(this).find('option:selected').val();
             var pilih = `
-                <div class='user'><img src='` + base_uri + `/assets/images/avatar.png' alt='*' class='select-user'><p class='user-name'>MP</p>
+                <div class='user'><img src='` + base_uri + `/assets/images/avatar.png' alt='*' class='select-user'>
                     <p class="user-name"><a class="btn btn-sm" style="background-color:#00f60e;color:black;" >Selected Position</a> </p> </div> <span class='line'></span>
             `;
-            var def = `
-                <div class='user'><img src='` + base_uri + `/assets/images/avatar.png' alt='*' class='no-user'><p class='user-name'>MP</p> </div> <span class='line'></span>
-            `;
+            // var def = `
+        //     <div class='user'><img src='` + base_uri + `/assets/images/avatar.png' alt='*' class='no-user'><p class='user-name'>MP</p> </div> <span class='line'></span>
+        // `;
             // console.log(pos);
 
             // $('.pleft').html("");
             if (pos == 1) {
                 $('.pleft').html(pilih);
-                $('.pright').html(def);
+                // $('.pright').html(def);
             } else {
                 $('.pright').html(pilih);
-                $('.pleft').html(def);
+                // $('.pleft').html(def);
             }
         });
         $('.tab').on('click', function() {

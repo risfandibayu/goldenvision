@@ -61,24 +61,24 @@
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
             <div class="w-4  ">
-                @php echo showSingleUserinTree($tree['d']); @endphp
+                @php echo showSingleUserNoLine($tree['d']); @endphp
             </div>
             <!-- <div class="col"> -->
             <div class="w-4  ">
-                @php echo showSingleUserinTree($tree['e']); @endphp
+                @php echo showSingleUserNoLine($tree['e']); @endphp
             </div>
             <!-- <div class="col"> -->
             <div class="w-4  ">
-                @php echo showSingleUserinTree($tree['f']); @endphp
+                @php echo showSingleUserNoLine($tree['f']); @endphp
             </div>
             <!-- <div class="col"> -->
             <div class="w-4  ">
-                @php echo showSingleUserinTree($tree['g']); @endphp
+                @php echo showSingleUserNoLine($tree['g']); @endphp
             </div>
             <!-- <div class="col"> -->
 
         </div>
-        <div class="row text-center justify-content-center llll">
+        {{-- <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
             <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['h']); @endphp
@@ -111,70 +111,8 @@
             <div class="w-8 ">
                 @php echo showSingleUserinTree($tree['o']); @endphp
             </div>
-        </div>
-        {{-- <div class="row text-center justify-content-center llll">
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['p']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['q']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['r']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['s']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['t']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['u']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['v']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['w']); @endphp
-            </div>
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['x']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['y']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['z']); @endphp
-            </div>
-            <!-- <div class="col"> -->
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['aa']); @endphp
-            </div>
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['ab']); @endphp
-            </div>
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['ac']); @endphp
-            </div>
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['ad']); @endphp
-            </div>
-            <div class="w-8">
-                @php echo showSingleUserinTree($tree['ae']); @endphp
-            </div>
-
-
         </div> --}}
+
     </div>
 
 

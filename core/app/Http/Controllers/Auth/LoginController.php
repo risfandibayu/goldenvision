@@ -65,6 +65,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        // dd($request->all());
         $this->validateLogin($request);
 
         if(isset($request->captcha)){
@@ -117,7 +118,8 @@ class LoginController extends Controller
     {
         $customRecaptcha = Extension::where('act', 'custom-captcha')->where('status', 1)->first();
         $validation_rule = [
-            $this->username() => 'required|string',
+            // $this->username() => 'required|string',
+            'username' => 'required|string',
             'password' => 'required|string',
         ];
 
@@ -136,7 +138,7 @@ class LoginController extends Controller
         request()->session()->invalidate();
 
         $notify[] = ['success', 'You have been logged out.'];
-        return redirect()->route('home')->withNotify($notify);
+        return redirect('/login')->withNotify($notify);
     }
 
 

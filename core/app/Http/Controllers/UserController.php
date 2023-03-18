@@ -129,7 +129,6 @@ class UserController extends Controller
 
     public function profile()
     {
-        // dd(auth()->user());
         $data['page_title'] = "Profile Setting";
         $data['bank'] = bank::all();
         $data['bank_user'] = rekening::where('user_id',Auth::user()->id)->first();
@@ -935,22 +934,23 @@ class UserController extends Controller
         // $dd4 = array();
         // $dd5 = array();
         $level = user::where('pos_id',Auth::user()->id)->select('id')->get();
+       
         if($level){
             foreach ($level as $key => $value) {
                 $dd[] = $value->id;
             }
         }
-
+        
         // foreach ($level as $get_bv->bv => $value) {
-        for ($i=0; $i < $get_bv->bv; $i++) {
-            # code...
-            $level[$i] = user::whereIn('pos_id',$dd)->select('id')->get();
-            if($level[$i]){
-                foreach ($level[$i] as $key => $value) {
-                    $dd[] = $value->id;
+            for ($i=0; $i < $get_bv->bv; $i++) {
+                # code...
+                $level[$i] = user::whereIn('pos_id',$dd)->select('id')->get();
+                if($level[$i]){
+                    foreach ($level[$i] as $key => $value) {
+                        $dd[] = $value->id;
+                    }
                 }
             }
-        }
             # code...
         // }
         // foreach ($level3 as $key => $value) {
@@ -981,13 +981,10 @@ class UserController extends Controller
         //         $dd5[] = $value->id;
         //     }
         // }
-        $ref_user = user::whereIn('users.pos_id', $dd) //level2
-        // ->orwhereIn('users.ref_id', $dd5) //level6
-        // ->orwhereIn('users.ref_id', $dd4) //level5
-        // ->orwhereIn('users.ref_id', $dd3) //level4
-        // ->orwhereIn('users.ref_id', $dd2) //level3
+        $ref_user = user::whereIn('users.pos_id', $dd)
         ->orwhere('users.id', auth::user()->id)//leader
         ->orwhere('users.ref_id', auth::user()->id)//level1
+        ->orwhere('users.pos_id', auth::user()->id)//level1
         ->orderby('users.pos_id',"DESC")
         ->select('users.*',db::raw("if(users.id=".auth::user()->id.",'Leader',concat('Level ',users.pos_id-1)) as pos"),'us.no_bro as usa')
         ->leftjoin('users as us','us.id','=','users.pos_id')
@@ -1089,62 +1086,62 @@ class UserController extends Controller
         <div class='row text-center justify-content-center'>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2Update($tree['d'],$id)."
+                ".showSingleUserinTree2NoLine($tree['d'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2Update($tree['e'],$id)."
+                ".showSingleUserinTree2NoLine($tree['e'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2Update($tree['f'],$id)."
+                ".showSingleUserinTree2NoLine($tree['f'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2Update($tree['g'],$id)."
+                ".showSingleUserinTree2NoLine($tree['g'],$id)."
             </div>
             <!-- <div class='col'> -->
 
         </div>
 
-        <div class='row text-center justify-content-center llll'>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree2Update($tree['h'],$id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree2Update($tree['i'],$id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree2Update($tree['j'],$id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree2Update($tree['k'],$id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree2Update($tree['l'],$id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree2Update($tree['m'],$id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree2Update($tree['n'],$id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree2Update($tree['o'],$id)."
-            </div>
-
-
-        </div>
-
+        
         ";
+        // <div class='row text-center justify-content-center llll'>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2Update($tree['h'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2Update($tree['i'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2Update($tree['j'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2Update($tree['k'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2Update($tree['l'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2Update($tree['m'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2Update($tree['n'],$id)."
+        //     </div>
+        //     <!-- <div class='col'> -->
+        //     <div class='w-8'>
+        //         ".showSingleUserinTree2Update($tree['o'],$id)."
+        //     </div>
+
+
+        // </div>
 
         if ($cek_awal) {
             # code...

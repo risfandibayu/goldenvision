@@ -322,8 +322,8 @@
                     options: {
                         scales: {
                             y: {
-                                max: 950000,
-                                min: 850000
+                                max: 1000000,
+                                min: 900000
                             }
                         }
                     }
@@ -427,7 +427,7 @@
     </div>
     <div class="row">
         @if (Auth::user()->is_kyc == 0)
-            <div class="col-lg-8 col-md-8 col-12 mb-30">
+            {{-- <div class="col-lg-8 col-md-8 col-12 mb-30">
                 <div class="card card-header-actions">
                     <div class="card-header" style="font-weight: 600;">
                         Account Verification
@@ -443,9 +443,9 @@
                         <a href="{{ route('user.verification') }}" class="btn btn-sm btn-danger">Verify Now</a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         @elseif(Auth::user()->is_kyc == 1)
-            <div class="col-lg-8 col-md-8 col-12 mb-30">
+            {{-- <div class="col-lg-8 col-md-8 col-12 mb-30">
                 <div class="card card-header-actions">
                     <div class="card-header" style="font-weight: 600;">
                         Account Verification
@@ -460,7 +460,7 @@
                         <p>Your data is in the verification process.</p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         @elseif(Auth::user()->is_kyc == 2)
             {{-- <div class="col-lg-8 col-md-8 col-12 mb-30">
                 <div class="card card-header-actions">
@@ -478,47 +478,6 @@
                     </div>
                 </div>
             </div> --}}
-            <div class="col-lg-8 col-md-8 col-12 mb-30">
-                <div class="card card-header-actions">
-                    {{-- <div class="card-header text-center" style="font-weight: 600;">
-                        Account Verification
-                        <p>Your data has been successfully verified <i class="fa fa-check-circle text-success"></i></p>
-                    </div> --}}
-                    {{-- <div class="card-footer text-center">
-                        <b>Akumulasi Komisi</b>
-                        <p>Ketika Sudah Mencapai Rp. 10,000,000 Anda Wajib Melakukan Repeat Order Ke
-                            Produk Masterplan Lainnya (saat ini {{ $persen_bonus }}% dari target)</p>
-                        <div class="d-flex justify-content-center">
-                            <div class="animated-progress progress-blue">
-                                <span data-progress="{{ $persen_bonus }}"></span>
-                            </div>
-                        </div>
-                        @if ($persen_bonus >= 70)
-                            <a href="{{ route('user.product.index') }}" class="btn btn--success btn-sm">
-                                <i class="las la-archive"></i>
-                                Repeat Order</a>
-                        @endif
-                    </div>
-                </div> --}}
-                    <div class="card-body bg--gradi-8 h5 text-center">
-                        <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk anggota yang memiliki downline 20 kiri 20 kanan per
-                        bulan ini, berkesempatan memenangkan hadiah smartphone. Segera perluas jaringan dan raih kesuksesan
-                        bersama!
-                        <br>
-                        <br>
-                        <b class="mt-5"> Saat ini kamu {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
-                            {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
-                    </div>
-                    <div class="card-footer">
-                        <form action="{{ route('user.claim-reward') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="type" value="3">
-                            <button type="submit" class="btn btn-info btn-lg btn-block">Claim Reward</button>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
         @elseif(Auth::user()->is_kyc == 3)
             <div class="col-lg-8 col-md-8 col-12 mb-30">
                 <div class="card card-header-actions">
@@ -538,7 +497,47 @@
                 </div>
             </div>
         @endif
+        <div class="col-lg-8 col-md-8 col-12 mb-30">
+            <div class="card card-header-actions">
+                {{-- <div class="card-header text-center" style="font-weight: 600;">
+                        Account Verification
+                        <p>Your data has been successfully verified <i class="fa fa-check-circle text-success"></i></p>
+                    </div> --}}
+                {{-- <div class="card-footer text-center">
+                        <b>Akumulasi Komisi</b>
+                        <p>Ketika Sudah Mencapai Rp. 10,000,000 Anda Wajib Melakukan Repeat Order Ke
+                            Produk Masterplan Lainnya (saat ini {{ $persen_bonus }}% dari target)</p>
+                        <div class="d-flex justify-content-center">
+                            <div class="animated-progress progress-blue">
+                                <span data-progress="{{ $persen_bonus }}"></span>
+                            </div>
+                        </div>
+                        @if ($persen_bonus >= 70)
+                            <a href="{{ route('user.product.index') }}" class="btn btn--success btn-sm">
+                                <i class="las la-archive"></i>
+                                Repeat Order</a>
+                        @endif
+                    </div>
+                </div> --}}
+                <div class="card-body bg--gradi-8 h5 text-center">
+                    <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk anggota yang memiliki downline 20 kiri 20 kanan per
+                    bulan ini, berkesempatan memenangkan hadiah smartphone. Segera perluas jaringan dan raih kesuksesan
+                    bersama!
+                    <br>
+                    <br>
+                    <b class="mt-5"> Saat ini kamu {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
+                        {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
+                </div>
+                <div class="card-footer">
+                    <form action="{{ route('user.claim-reward') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="type" value="3">
+                        <button type="submit" class="btn btn-info btn-lg btn-block">Claim Reward</button>
 
+                    </form>
+                </div>
+            </div>
+        </div>
         @if (Auth::user()->plan_id != 0)
             <div class="col-lg-4 col-md-4 col-12 mb-30">
                 <div class="card card-header-actions">

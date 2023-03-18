@@ -20,6 +20,6 @@ class CheckKyc
             return $next($request);
         }
         $notify[] = ['error','Sorry, You have to verification data first.'];
-        return redirect()->route('user.home')->withNotify($notify);
+        return redirect()->route('user.verification')->withNotify($notify);
     }
 }
