@@ -33,10 +33,10 @@
                                     placeholder="qty" value="">
                                 <button type="button">=</button>
                                 <input type="text" class="form-control" id="idr" name="idr" placeholder="IDR"
-                                    value="">
+                                    value="" readonly>
                                 <button type="button">//</button></button>
-                                <input type="text" class="form-control" id="sisa" name="sisa" placeholder="IDR"
-                                    value="">
+                                <input type="text" class="form-control" id="sisa" name="sisa"
+                                    placeholder="Remais" value="" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
