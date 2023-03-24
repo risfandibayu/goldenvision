@@ -25,11 +25,11 @@
                                         </td>
                                         <td data-label="@lang('Date')">{{ showDateTime($trx->created_at) }}</td>
                                         <td data-label="@lang('TRX')" class="font-weight-bold">
-                                            {{ $trx->pin_by ?? 'System' }}
+                                            {{ $trx->username ?? 'System' }}
                                         </td>
                                         <td data-label="@lang('PIN')">{{ $trx->pin }}</td>
                                         <td data-label="@lang('Start')">{{ $trx->start_pin }}</td>
-                                        <td data-label="@lang('Post')">{{ $trx->end_pin }}</td>
+                                        <td data-label="@lang('Post ')">{{ $trx->end_pin }}</td>
                                         <td data-label="@lang('Detail')">{{ __($trx->ket) }}</td>
                                     </tr>
                                 @empty

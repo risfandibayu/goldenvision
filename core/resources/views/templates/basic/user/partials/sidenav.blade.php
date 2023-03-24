@@ -157,7 +157,7 @@
                             <li class="sidebar-menu-item {{ menuActive('user.report.PinDeliveriyLog') }} ">
                                 <a href="{{ route('user.report.PinDeliveriyLog') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Pin Deliveriy Log')</span>
+                                    <span class="menu-title">@lang('Pin Delivery Log')</span>
                                 </a>
                             </li>
                             <li class="sidebar-menu-item {{ menuActive('user.report.deposit') }}">

@@ -232,8 +232,10 @@ class UserReportController extends Controller
         $data['page_title'] = "PIN Delivery Log";
         $data['transactions'] = UserPin::where('user_id',Auth::user()->id)
                             ->leftjoin('users','users.id','=','user_pin.pin_by')
+                            ->select('user_pin.*','users.username')
                             ->orderBy('user_pin.created_at','DESC')
                             ->paginate(getPaginate());
+                            //->get(); dd($data);
         $data['search'] = $search;
         $data['empty_message'] = "No Data Found!";
         return view($this->activeTemplate . 'user.pinLog', $data);
