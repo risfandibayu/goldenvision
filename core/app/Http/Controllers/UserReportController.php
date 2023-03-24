@@ -7,6 +7,7 @@ use App\Models\GoldExchange;
 use App\Models\sendgold;
 use App\Models\Transaction;
 use App\Models\UserGold;
+use App\Models\UserPin;
 use App\Models\Withdrawal;
 use App\Models\WithdrawMethod;
 use Illuminate\Http\Request;
@@ -224,6 +225,19 @@ class UserReportController extends Controller
         $data['search'] = $search;
         $data['empty_message'] = "No Data Found!";
         return view($this->activeTemplate . 'user.BROdev', $data);
+    }
+
+    public function PinDeliveriyLog(Request $request){
+        $search = $request->search;
+        $data['page_title'] = "PIN Delivery Log";
+        $data['transactions'] = UserPin::where('user_id',Auth::user()->id)
+                            ->leftjoin('users','users.id','=','user_pin.pin_by')
+                            ->orderBy('user_pin.created_at','DESC')
+                            ->paginate(getPaginate());
+        $data['search'] = $search;
+        $data['empty_message'] = "No Data Found!";
+        return view($this->activeTemplate . 'user.pinLog', $data);
+
     }
 
 }

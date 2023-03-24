@@ -105,7 +105,10 @@
                 </div>
                 <hr>
                 <div class="form-group row">
-                    <label for="phone" class="col-sm-2 col-form-label">Transfer Pin</label>
+                    <label for="phone" class="col-sm-2 col-form-label">Transfer Pin
+                        <br>
+                        <span class="text-sm text-secondary">You Have {{ auth()->user()->pin }} PIN</span>
+                    </label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control {{ $errors->has('pin') ? 'is-invalid' : '' }}"
                             value="{{ old('pin') }}" name="pin" placeholder="pin">

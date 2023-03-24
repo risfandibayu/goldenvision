@@ -629,6 +629,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('report/exchange/log', 'UserReportController@exchangeLog')->name('report.exchangeLog');
             Route::get('report/delivery/log', 'UserReportController@deliveryLog')->name('report.deliveryLog');
             Route::get('report/Brodelivery/log', 'UserReportController@BroDeliveryLog')->name('report.BroDeliveryLog');
+            Route::get('report/pin/log', 'UserReportController@PinDeliveriyLog')->name('report.PinDeliveriyLog');
 
             Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::post('/buymp', 'PlanController@buyMpStore')->name('plan.mppurchase');

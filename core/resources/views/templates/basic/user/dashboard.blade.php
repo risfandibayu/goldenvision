@@ -732,7 +732,7 @@
                     </div>
                 </div>
                 <br>
-                <a href="{{ route('user.report.deposit') }}"
+                <a href="{{ route('user.report.PinDeliveriyLog') }}"
                     class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>

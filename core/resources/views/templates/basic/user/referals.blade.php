@@ -26,6 +26,7 @@
                                             <th>MP No</th>
                                             <th>Username</th>
                                             <th>Phone</th>
+                                            <th>Position</th>
                                             <th>Join date</th>
                                         </tr>
                                         <tbody>
@@ -45,12 +46,14 @@
 
                                                     </td>
                                                     <td>
-                                                        {{ '+62' . strtolower($t->mobile) }}
+                                                        {{ '(+62) ' . strtolower($t->mobile) }}
 
                                                     </td>
                                                     <td>
+                                                        {{ $t->position == 1 ? 'Kiri' : 'Kanan' }}
+                                                    </td>
+                                                    <td>
                                                         {!! date('M d Y', strtotime($t->created_at)) !!}
-
                                                     </td>
                                                 </tr>
                                             @endforeach
