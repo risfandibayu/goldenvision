@@ -62,14 +62,14 @@ class PlanController extends Controller
         $user->bro_qty += $request->qtyy;
         $user->save();
 
-        $trx = $user->transactions()->create([
-            'amount' => $plan->price * $request->qtyy,
-            'trx_type' => '-',
-            'details' => 'Purchased ' . $plan->name . ' For '.$request->qtyy.' MP',
-            'remark' => 'purchased_plan',
-            'trx' => getTrx(),
-            'post_balance' => getAmount($user->balance),
-        ]);
+        // $trx = $user->transactions()->create([
+        //     'amount' => $plan->price * $request->qtyy,
+        //     'trx_type' => '-',
+        //     'details' => 'Purchased ' . $plan->name . ' For '.$request->qtyy.' MP',
+        //     'remark' => 'purchased_plan',
+        //     'trx' => getTrx(),
+        //     'post_balance' => getAmount($user->balance),
+        // ]);
 
 
         $notify[] = ['success', 'Purchased new MP quantity for '.$request->qtyy.' MP Successfully'];

@@ -12,23 +12,26 @@
                                     <th scope="col">@lang('SL')</th>
                                     <th scope="col">@lang('Date')</th>
                                     <th scope="col">@lang('PIN By')</th>
+                                    <th scope="col">@lang('Start PIN')</th>
                                     <th scope="col">@lang('Distribute')</th>
-                                    <th scope="col">@lang('Qty')</th>
                                     <th scope="col">@lang('Post PIN')</th>
                                     <th scope="col">@lang('Detail')</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($transactions  as $trx)
-                                    <tr>
+                                    <tr class="">
                                         <td data-label="@lang('SL')">{{ $transactions->firstItem() + $loop->index }}
                                         </td>
                                         <td data-label="@lang('Date')">{{ showDateTime($trx->created_at) }}</td>
                                         <td data-label="@lang('TRX')" class="font-weight-bold">
                                             {{ $trx->username ?? 'System' }}
                                         </td>
-                                        <td data-label="@lang('PIN')">{{ $trx->pin }}</td>
                                         <td data-label="@lang('Start')">{{ $trx->start_pin }}</td>
+                                        <td data-label="@lang('PIN')"
+                                            class="{{ $trx->type == '-' ? 'text-danger' : 'text-success' }}">
+                                            {{ $trx->type . $trx->pin }}
+                                        </td>
                                         <td data-label="@lang('Post ')">{{ $trx->end_pin }}</td>
                                         <td data-label="@lang('Detail')">{{ __($trx->ket) }}</td>
                                     </tr>
