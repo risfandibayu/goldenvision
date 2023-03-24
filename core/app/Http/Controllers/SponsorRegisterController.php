@@ -331,39 +331,51 @@ class SponsorRegisterController extends Controller
         $user = User::find($id);
         $sponsor = Auth::user();
         $trx = getTrx();
+        DB::beginTransaction();
         try {
             if ($sponsor->pin < $request->pin) {
                 return ['error'=>true, 'msg'=> 'Not enough pin to send'];
             }
+            $spin = UserPin::create([
+                'user_id' => $sponsor->id,
+                'pin'     => $request->pin,
+                'pin_by'  => $sponsor->id,
+                'type'      => "-",
+                'start_pin' => $sponsor->pin,
+                'end_pin'   => $sponsor->pin - $request->pin,
+                'ket'       => 'Sponsor Send '.$request->pin.' Pin to'. $sponsor->username
+            ]);
             $sponsor->pin -= $request->pin;
             $sponsor->save();
-
+            
             $upin = UserPin::create([
                 'user_id' => $user->id,
                 'pin'     => $request->pin,
                 'pin_by'  => $sponsor->id,
                 'start_pin' => $user->pin,
                 'end_pin'   => $user->pin + $request->pin,
-                'ket'       => 'Added Pin By Sponsor: '. $sponsor->username
+                'ket'       => 'Added '.$user->pin.' Pin By Sponsor: '. $sponsor->username
             ]);
            
             
             $user->pin += $request->pin;
             $user->save();
             
-            $transaction = new Transaction();
-            $transaction->user_id = $user->id;
-            $transaction->amount = $user->pin;
-            $transaction->post_balance = 0;
-            $transaction->charge = 0;
-            $transaction->trx_type = '+';
-            $transaction->details = 'Added Pin Via Admin';
-            $transaction->trx =  $trx;
-            $transaction->save();
+            // $transaction = new Transaction();
+            // $transaction->user_id = $user->id;
+            // $transaction->amount = $user->pin;
+            // $transaction->post_balance = 0;
+            // $transaction->charge = 0;
+            // $transaction->trx_type = '+';
+            // $transaction->details = 'Added Pin Via Admin';
+            // $transaction->trx =  $trx;
+            // $transaction->save();
 
+            DB::commit();
             $notify[] = ['success','Pin Transfer Success'];
             return back()->withNotify($notify);
         } catch (\Throwable $th) {
+            DB::rollBack();
             $notify[] = ['error', 'Error: '. $th->getMessage() ];
             return back()->withNotify($notify);
         }

@@ -12,6 +12,7 @@
                                     <th scope="col">@lang('SL')</th>
                                     <th scope="col">@lang('Date')</th>
                                     <th scope="col">@lang('PIN By')</th>
+                                    <th scope="col">@lang('Distribute')</th>
                                     <th scope="col">@lang('Qty')</th>
                                     <th scope="col">@lang('Post PIN')</th>
                                     <th scope="col">@lang('Detail')</th>
@@ -26,8 +27,9 @@
                                         <td data-label="@lang('TRX')" class="font-weight-bold">
                                             {{ $trx->pin_by ?? 'System' }}
                                         </td>
-                                        <td data-label="@lang('Post Balance')">{{ $trx->start_pin }}</td>
-                                        <td data-label="@lang('Post Balance')">{{ $trx->end_pin }}</td>
+                                        <td data-label="@lang('PIN')">{{ $trx->pin }}</td>
+                                        <td data-label="@lang('Start')">{{ $trx->start_pin }}</td>
+                                        <td data-label="@lang('Post')">{{ $trx->end_pin }}</td>
                                         <td data-label="@lang('Detail')">{{ __($trx->ket) }}</td>
                                     </tr>
                                 @empty

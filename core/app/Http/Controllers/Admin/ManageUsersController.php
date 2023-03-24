@@ -362,7 +362,7 @@ class ManageUsersController extends Controller
                 $pin->type      = "+";
                 $pin->start_pin = $user->pin;
                 $pin->end_pin   = $user->pin + $request->pin;
-                $pin->ket       = 'Added Pin By Admin';
+                $pin->ket       = 'Admin Added '.$request->pin . ' PIN to ' . $user->username;
                 $pin->save();
 
                 $user->pin += $request->pin;
@@ -370,15 +370,15 @@ class ManageUsersController extends Controller
 
                 $notify[] = ['success', $request->pin . ' Pin has been added to ' . $user->username ];
                 
-                $transaction = new Transaction();
-                $transaction->user_id = $user->id;
-                $transaction->amount = $request->pin;
-                $transaction->post_balance = 0;
-                $transaction->charge = 0;
-                $transaction->trx_type = '+';
-                $transaction->details = 'Added Pin Via Admin';
-                $transaction->trx =  $trx;
-                $transaction->save();
+                // $transaction = new Transaction();
+                // $transaction->user_id = $user->id;
+                // $transaction->amount = $request->pin;
+                // $transaction->post_balance = 0;
+                // $transaction->charge = 0;
+                // $transaction->trx_type = '+';
+                // $transaction->details = 'Admin Added '.$request->pin . ' PIN to ' . $user->username;
+                // $transaction->trx =  $trx;
+                // $transaction->save();
 
                 // $transaction = new Transaction();
                 // $transaction->user_id = $user->id;
@@ -414,18 +414,18 @@ class ManageUsersController extends Controller
                 $pin->type      = "-";
                 $pin->start_pin = $user->pin;
                 $pin->end_pin   = $user->pin - $request->pin;
-                $pin->ket       = 'Subtract Pin By Admin';
+                $pin->ket       = 'Admin Subtract '.$request->pin . ' PIN to ' . $user->username;
                 $pin->save();
 
-                $transaction = new Transaction();
-                $transaction->user_id = $user->id;
-                $transaction->amount = $pin;
-                $transaction->post_balance = 0;
-                $transaction->charge = 0;
-                $transaction->trx_type = '-';
-                $transaction->details = 'Subtract Pin Via Admin';
-                $transaction->trx =  $trx;
-                $transaction->save();
+                // $transaction = new Transaction();
+                // $transaction->user_id = $user->id;
+                // $transaction->amount = $pin;
+                // $transaction->post_balance = 0;
+                // $transaction->charge = 0;
+                // $transaction->trx_type = '-';
+                // $transaction->details = 'Admin Subtract '.$request->pin . ' PIN to ' . $user->username;
+                // $transaction->trx =  $trx;
+                // $transaction->save();
 
                 // $transaction = new Transaction();
                 // $transaction->user_id = $user->id;
@@ -444,7 +444,7 @@ class ManageUsersController extends Controller
                 //     'currency' => $general->cur_text,
                 //     'post_balance' => getAmount($user->balance)
                 // ]);
-                $notify[] = ['success', $general->cur_sym . $amount . ' has been subtracted from ' . $user->username . ' balance'];
+                $notify[] = ['success', $request->pin . ' PIN has been subtracted from ' . $user->username ];
             }
             DB::commit();
             return back()->withNotify($notify);

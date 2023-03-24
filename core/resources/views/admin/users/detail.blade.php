@@ -49,9 +49,9 @@
         }
 
         /* .btn-11:hover {
-                                                                                                        text-decoration: none;
-                                                                                                        color: #fff;
-                                                                                                    } */
+                                                                                                                    text-decoration: none;
+                                                                                                                    color: #fff;
+                                                                                                                } */
         .btn-11:before {
             position: absolute;
             content: '';
@@ -65,14 +65,14 @@
         }
 
         /* .btn-11:hover{
-                                                                                                      opacity: .7;
-                                                                                                    } */
+                                                                                                                  opacity: .7;
+                                                                                                                } */
         /* .btn-11:active{
-                                                                                                      box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-                                                                                                                  -4px -4px 6px 0 rgba(116, 125, 136, .2),
-                                                                                                        inset -4px -4px 6px 0 rgba(255,255,255,.2),
-                                                                                                        inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-                                                                                                    } */
+                                                                                                                  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+                                                                                                                              -4px -4px 6px 0 rgba(116, 125, 136, .2),
+                                                                                                                    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                                                                                                                    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+                                                                                                                } */
 
 
         @-webkit-keyframes shiny-btn1 {
@@ -116,7 +116,7 @@
                                 class="text--small">@lang('Joined At ')<strong>{{ showDateTime(
                                     $user->created_at,
                                     'd M, Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
                                 ) }}</strong></span>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                     </a>
 
                     <a data-toggle="modal" href="#addSubModal" class="btn btn--success btn--shadow btn-block btn-lg">
-                        @lang('Add/Subtract Balance')
+                        @lang('Add/Subtract PIN')
                     </a>
                     <a href="{{ route('admin.users.login.history.single', $user->id) }}"
                         class="btn btn--primary btn--shadow btn-block btn-lg">
@@ -924,7 +924,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">@lang('Add / Subtract Balance')</h5>
+                    <h5 class="modal-title">@lang('Add / Subtract PIN')</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -935,8 +935,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <input type="checkbox" data-width="100%" data-height="44px" data-onstyle="-success"
-                                    data-offstyle="-danger" data-toggle="toggle" data-on="Add Balance"
-                                    data-off="Subtract Balance" name="act" checked>
+                                    data-offstyle="-danger" data-toggle="toggle" data-on="Add PIN"
+                                    data-off="Subtract PIN" name="act" checked>
                             </div>
                             <div class="form-group col-md-12">
                                 <label>@lang('Titik')<span class="text-danger">*</span></label>
