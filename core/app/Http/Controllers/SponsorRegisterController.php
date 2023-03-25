@@ -135,7 +135,7 @@ class SponsorRegisterController extends Controller
                 'city' => ''
             ],
             'status'    => 1,
-            'ev'        => $gnl->ev ? 0 : 1,
+            'ev'        => 1,
             'sv'        => $gnl->sv ? 0 : 1,
             'ts'        => 0,
             'tv'        => 1
