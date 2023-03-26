@@ -136,7 +136,7 @@ class SponsorRegisterController extends Controller
             ],
             'status'    => 1,
             'ev'        => 1,
-            'sv'        => $gnl->sv ? 0 : 1,
+            'sv'        => 1,
             'ts'        => 0,
             'tv'        => 1
 
@@ -302,7 +302,7 @@ class SponsorRegisterController extends Controller
                 'plan' => $plan->name. ' For '.$data['pin'].' MP',
                 'amount' => getAmount($plan->price * $data['pin']),
                 'currency' => $gnl->cur_text,
-                'trx' => $trx->trx,
+                'trx' => getTrx(),
                 'post_balance' => getAmount($user->balance),
             ]);
             if ($oldPlan == 0) {
@@ -339,11 +339,11 @@ class SponsorRegisterController extends Controller
             $spin = UserPin::create([
                 'user_id' => $sponsor->id,
                 'pin'     => $request->pin,
-                'pin_by'  => $sponsor->id,
+                'pin_by'  => $user->id,
                 'type'      => "-",
                 'start_pin' => $sponsor->pin,
                 'end_pin'   => $sponsor->pin - $request->pin,
-                'ket'       => 'Sponsor Send '.$request->pin.' Pin to'. $sponsor->username
+                'ket'       => 'Sponsor Send '.$request->pin.' Pin to: '. $user->username
             ]);
             $sponsor->pin -= $request->pin;
             $sponsor->save();
