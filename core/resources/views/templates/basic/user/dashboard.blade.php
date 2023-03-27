@@ -595,7 +595,7 @@
                     </div>
                     <div class="desciption">
                         <span class="text--small font-weight-bold">Equal To <span
-                                class="badge badge-danger">{{ nb($goldBonus) }} IDR</span>
+                                class="badge badge-danger">{{ nb($goldBonus * auth()->user()->total_golds) }} IDR</span>
                         </span>
                     </div>
                     <div class="desciption">

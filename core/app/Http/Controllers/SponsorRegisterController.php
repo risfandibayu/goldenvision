@@ -439,4 +439,8 @@ class SponsorRegisterController extends Controller
         }
     }
 
+    public function userSendPin(){
+
+    }
+
 }

@@ -77,7 +77,7 @@ class UserController extends Controller
         $data['emas']               = Gold::where('user_id',Auth::user()->id)->where('golds.status','=','0')->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.user_id')->first();
         $gold = DailyGold::orderByDesc('id')->first();  
         $userGold = auth()->user()->total_golds;
-        $goldRange = $gold->per_gram * $userGold;
+        $goldRange = $gold->per_gram;
         $data['goldBonus']          = $goldRange;
         $data['reward']             = BonusReward::all();
         $data['goldToday']          = DailyGold::orderByDesc('id')->first();

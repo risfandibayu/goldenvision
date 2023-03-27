@@ -64,7 +64,28 @@
                         </a>
                     </li>
                 @endif
-
+                {{-- <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('user.report*', 3) }} my-2">
+                        <i class="menu-icon las la-exchange-alt"></i>
+                        <span class="menu-title">@lang('User PINs')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('user.report*', 2) }} ">
+                        <ul>
+                            <li class="sidebar-menu-item {{ menuActive('user.report.transactions') }} ">
+                                <a href="{{ route('user.report.transactions') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Send PIN')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item {{ menuActive('user.report.PinDeliveriyLog') }} ">
+                                <a href="{{ route('user.report.PinDeliveriyLog') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Delivery Log')</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> --}}
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.bv.log') }}">
                     <a href="{{ route('user.bv.log') }}" class="nav-link">
                         <i class="menu-icon las la-sitemap"></i>
@@ -160,12 +181,12 @@
                                     <span class="menu-title">@lang('Pin Delivery Log')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{ menuActive('user.report.deposit') }}">
+                            {{-- <li class="sidebar-menu-item {{ menuActive('user.report.deposit') }}">
                                 <a href="{{ route('user.report.deposit') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Deposit Log')</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             <li class="sidebar-menu-item {{ menuActive('user.report.withdraw') }}">
                                 <a href="{{ route('user.report.withdraw') }}" class="nav-link">
@@ -180,7 +201,7 @@
                                     <span class="menu-title">@lang('Invest Log')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{ menuActive('user.report.exchangeLog') }}">
+                            {{-- <li class="sidebar-menu-item {{ menuActive('user.report.exchangeLog') }}">
                                 <a href="{{ route('user.report.exchangeLog') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Gold Exchange Log')</span>
@@ -197,7 +218,7 @@
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('MP Pack Delivery Log')</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="sidebar-menu-item {{ menuActive('user.report.refCom') }}">
                                 <a href="{{ route('user.report.refCom') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
