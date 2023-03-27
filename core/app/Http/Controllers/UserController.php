@@ -78,6 +78,8 @@ class UserController extends Controller
         $gold = DailyGold::orderByDesc('id')->first();  
         $userGold = auth()->user()->total_golds;
         $goldRange = $gold->per_gram;
+        $float = floatval(str_replace(',', '.', nbk(auth()->user()->total_golds)));
+        // dd($goldRange * $float);
         $data['goldBonus']          = $goldRange;
         $data['reward']             = BonusReward::all();
         $data['goldToday']          = DailyGold::orderByDesc('id')->first();

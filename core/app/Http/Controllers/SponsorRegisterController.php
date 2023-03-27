@@ -71,13 +71,28 @@ class SponsorRegisterController extends Controller
             $user = $this->create($request->all());  //register user
 
             // create rekening
-            $rek = new rekening();  
-            $rek->user_id = $user->id;
-            $rek->nama_bank = $request->bank_name;
-            $rek->nama_akun = $request->acc_name;
-            $rek->no_rek = $request->acc_number;
-            $rek->kota_cabang = $request->kota_cabang;
-            $rek->save();
+            $cekbank = rekening::where('nama_bank',$request->bank_name)
+                            ->where('nama_akun','like','%'.$request->acc_name.'%')
+                            ->where('no_rek','like','%'.$request->acc_number.'%')
+                            ->first();
+            if($cekbank){
+                $rek = new rekening();  
+                $rek->user_id = $user->id;
+                $rek->nama_bank = $cekbank->bank_name;
+                $rek->nama_akun = $cekbank->acc_name;
+                $rek->no_rek = $cekbank->acc_number;
+                $rek->kota_cabang = $cekbank->kota_cabang;
+                $rek->save();
+            }else{
+                $rek = new rekening();  
+                $rek->user_id = $user->id;
+                $rek->nama_bank = $request->bank_name;
+                $rek->nama_akun = $request->acc_name;
+                $rek->no_rek = $request->acc_number;
+                $rek->kota_cabang = $request->kota_cabang;
+                $rek->save();
+            }
+            
             
             $pin = $this->addPin($request->pin,$user->id); //send pin to user
 
