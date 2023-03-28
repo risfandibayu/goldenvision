@@ -387,7 +387,7 @@ class SponsorRegisterController extends Controller
             // $transaction->save();
 
             DB::commit();
-            $notify[] = ['success','Pin Transfer Success'];
+            $notify[] = ['success','Send Pin Success to '.$user->username];
             return back()->withNotify($notify);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -455,7 +455,19 @@ class SponsorRegisterController extends Controller
     }
 
     public function userSendPin(){
-
+        $data['page_title'] = "Send PINs";
+        return view($this->activeTemplate . 'user.sendPin', $data);
+    }
+    public function findUname($uname){
+        $find = User::where('username','=',$uname)->first();
+       
+        if(!$find){
+            return response()->json(['status'=>404,'msg'=>"Username `".$uname."` Not Found!"]);
+        }
+        if($find->id == auth()->user()->id){
+            return response()->json(['status'=>404,'msg'=>"Can't Send Pin To Yourself!"]);
+        }
+        return response()->json(['status'=>200,'msg'=>'Username Correct: `'.$find->username.' - '.$find->no_bro.'`','data'=>$find]);
     }
 
 }

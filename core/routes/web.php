@@ -555,6 +555,10 @@ Route::name('user.')->prefix('user')->group(function () {
             //F
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
 
+
+            Route::get('/user-pin',[SponsorRegisterController::class,'userSendPin'])->name('pins.view');
+            Route::get('pin/log', 'UserReportController@PinDeliveriyLog')->name('pins.PinDeliveriyLog');
+
             Route::get('/Product', 'ProductController@productIndex')->name('product.index');
 
             // Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
@@ -629,7 +633,6 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('report/exchange/log', 'UserReportController@exchangeLog')->name('report.exchangeLog');
             Route::get('report/delivery/log', 'UserReportController@deliveryLog')->name('report.deliveryLog');
             Route::get('report/Brodelivery/log', 'UserReportController@BroDeliveryLog')->name('report.BroDeliveryLog');
-            Route::get('report/pin/log', 'UserReportController@PinDeliveriyLog')->name('report.PinDeliveriyLog');
 
             Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::post('/buymp', 'PlanController@buyMpStore')->name('plan.mppurchase');
@@ -685,3 +688,4 @@ Route::get('/{slug}', 'SiteController@pages')->name('pages');
 
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholderImage');
 Route::get('links/{slug}', 'SiteController@links')->name('links');
+Route::get('find-uname/{uname}',[SponsorRegisterController::class,'findUname']);

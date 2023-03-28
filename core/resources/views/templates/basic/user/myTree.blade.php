@@ -41,6 +41,7 @@
 
             <a href="{{ url()->previous() }}" style="margin-left: -19px;margin-top:5px;" class="col-md-1 col-4 btn btn--secondary">Back</a>
         </div> --}}
+        {{-- @dd($tree['e']) --}}
         <div class="active-user-none" data-id="{{ auth()->user()->id }}"></div>
         <div class="row text-center justify-content-center llll">
             <!-- <div class="col"> -->
@@ -199,8 +200,8 @@
                                 </div>
                             </span> --}}
                             <hr>
-                            <a href="#" class="mt-4 btn btn--warning btn-block btn-sm btnAddSubs">Send Pin</a>
-                            <hr>
+                            {{-- <a href="#" class="mt-4 btn btn--warning btn-block btn-sm btnAddSubs">Send Pin</a>
+                            <hr> --}}
                             <a href="" class=" btn btn--primary btn-block btn-sm tree_url">See Tree</a>
                             <hr>
                             <form action="{{ route('user.sponsor.set') }}" method="POST" id="formAddDownline"

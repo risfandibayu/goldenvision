@@ -64,28 +64,34 @@
                         </a>
                     </li>
                 @endif
-                {{-- <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('user.report*', 3) }} my-2">
+                <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
+                    <a href="{{ route('user.my.tree') }}" class="nav-link">
+                        <i class="menu-icon las la-tree"></i>
+                        <span class="menu-title">@lang('My Tree')</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('user.pins*', 2) }} my-2">
                         <i class="menu-icon las la-exchange-alt"></i>
                         <span class="menu-title">@lang('User PINs')</span>
                     </a>
-                    <div class="sidebar-submenu {{ menuActive('user.report*', 2) }} ">
+                    <div class="sidebar-submenu {{ menuActive('user.pins*', 2) }} ">
                         <ul>
-                            <li class="sidebar-menu-item {{ menuActive('user.report.transactions') }} ">
-                                <a href="{{ route('user.report.transactions') }}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.pins.view') }} ">
+                                <a href="{{ route('user.pins.view') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Send PIN')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{ menuActive('user.report.PinDeliveriyLog') }} ">
-                                <a href="{{ route('user.report.PinDeliveriyLog') }}" class="nav-link">
+                            <li class="sidebar-menu-item {{ menuActive('user.pins.PinDeliveriyLog') }} ">
+                                <a href="{{ route('user.pins.PinDeliveriyLog') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Delivery Log')</span>
+                                    <span class="menu-title">@lang('Log Delivery')</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                </li> --}}
+                </li>
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.bv.log') }}">
                     <a href="{{ route('user.bv.log') }}" class="nav-link">
                         <i class="menu-icon las la-sitemap"></i>
@@ -107,12 +113,7 @@
                         </a>
                     </li>
                 @endif --}}
-                <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
-                    <a href="{{ route('user.my.tree') }}" class="nav-link">
-                        <i class="menu-icon las la-tree"></i>
-                        <span class="menu-title">@lang('My Tree')</span>
-                    </a>
-                </li>
+
                 <li class="sidebar-menu-item {{ menuActive('user.reward') }}">
                     <a href="{{ route('user.reward') }}" class="nav-link">
                         {{-- <i class="menu-icon las la-tree"></i> --}}
@@ -173,12 +174,6 @@
                                 <a href="{{ route('user.report.transactions') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Transactions Log')</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-menu-item {{ menuActive('user.report.PinDeliveriyLog') }} ">
-                                <a href="{{ route('user.report.PinDeliveriyLog') }}" class="nav-link">
-                                    <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Pin Delivery Log')</span>
                                 </a>
                             </li>
                             {{-- <li class="sidebar-menu-item {{ menuActive('user.report.deposit') }}">
