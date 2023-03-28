@@ -338,7 +338,6 @@ class PlanController extends Controller
     public function myTree()
     {
         $data['tree'] = showTreePage(Auth::id());
-        dd(showTreePage(Auth::id()));
         $data['page_title'] = "My Tree";
         return view($this->activeTemplate . 'user.myTree', $data);
     }
