@@ -187,9 +187,16 @@
             </div>
 
             <div class="card-footer text-center">
-                <a href="{{ session()->get('SponsorSet')['url'] ?? '' }}" class="btn btn-warning btn-lg"><i
-                        class="fa fa-times"></i> Cancel</a>
-                <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-save"></i> Submit</button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-success btn-lg btn-block"><i class="fa fa-save"></i>
+                            Submit</button>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ session()->get('SponsorSet')['url'] ?? '' }}"
+                            class="btn btn-warning btn-lg btn-block"><i class="fa fa-times"></i> Cancel</a>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

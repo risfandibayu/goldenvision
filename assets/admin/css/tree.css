@@ -12,6 +12,7 @@
     background: linear-gradient(#dfb300, #fff);
 }
 
+
 .user{
     height: 100px;
     width: 100px;
@@ -90,7 +91,13 @@
     color: #777777;
 }
 
+.card-tree{
+    min-height: 35rem;
+}
 @media (max-width: 767px) {
+    .card-tree{
+        min-height: 25rem;
+    }
     .user {
         line-height: 0;
         position: relative;
@@ -168,9 +175,13 @@
     .user .user-btn{
          display: none;
     }
+    
 }
 
 @media (max-width: 575px) {
+     .card-tree{
+        min-height: 25rem;
+    }
     .user {
         line-height: 0;
         position: relative;
@@ -235,6 +246,9 @@
     }
 }
 @media (max-width: 400px) {
+     .card-tree{
+        min-height: 25rem;
+    }
     .user {
         line-height: 0;
         position: relative;

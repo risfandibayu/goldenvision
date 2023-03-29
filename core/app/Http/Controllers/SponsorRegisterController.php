@@ -36,7 +36,7 @@ class SponsorRegisterController extends Controller
             'url'       => $request->back
         ];
         $request->session()->put('SponsorSet', $data);
-        return redirect()->route('user.sponsor.regist');
+        return response()->json(['sts'=>200,'url'=>route('user.sponsor.regist')]);
     }
 
     public function index(){

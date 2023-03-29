@@ -636,7 +636,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
             Route::post('/buymp', 'PlanController@buyMpStore')->name('plan.mppurchase');
-            Route::get('/manage_user', 'UserController@user_boom')->name('user_boom');
+            Route::get('/manage-user', 'UserController@user_boom')->name('user_boom');
             Route::get('/tree', 'PlanController@myTree')->name('my.tree');
 
             Route::middleware(['checkKyc'])->group(function () {

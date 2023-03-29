@@ -9,6 +9,10 @@
             text-decoration: none;
             background-color: transparent;
         }
+
+        .textInf {
+            margin-top: -1rem;
+        }
     </style>
 @endpush
 
@@ -34,8 +38,9 @@
                                 aria-controls="nav-user{{ $i }}" aria-selected="true">MP - {{ $tmp->no_bro }} <i
                                     class="las la-check" style="color: rgb(60, 226, 255)"></i></a>
                         @else
-                            <a style="color: black;     width: -webkit-fill-available;" class="nav-item nav-link tab"
-                                id="nav-user-tab" data-toggle="tab" href="#nav-user{{ $i }}" role="tab"
+                            <a style="color: black;     width: -webkit-fill-available;"
+                                class="nav-item nav-link tab addNewTree" id="nav-user-tab" data-toggle="tab"
+                                href="#nav-user{{ $i }}" role="tab"
                                 aria-controls="nav-user{{ $i }}" aria-selected="true">MP - (Number) <i
                                     class="las la-pen" style="color: yellow"></i></a>
                         @endif
@@ -60,152 +65,182 @@
                                 ->select('users.*', 'us.username as us')
                                 ->first();
                             ?>
+
+                            <input type="text" name="count" id="counting" hidden value="{{ $i }}">
                             @if ($tmp)
-                                <form action="{{ route('user.user') }}" class="form" id="form{{ $i }}"
-                                    method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="text" name="count" hidden value="{{ $i }}">
-                                    <div class="card">
-                                        {{ tree_created($ref->usrn . $i) }}
-                                        {{-- @dump(tree_created($ref->usr.'+'.$i.'@'.$ref->domain)) --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ref_username1">Parent Username</label>
-                                        <select class="form-select form-control" disabled>
-                                            <option value="" hidden>{{ $tmp->us }}</option>
-                                        </select>
-                                    </div>
+                                <div class="card " style="max-height: 50rem">
+                                    {{ tree_created($ref->usrn . $i) }}
+                                    {{-- @dump(tree_created($ref->usr.'+'.$i.'@'.$ref->domain)) --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="ref_username1">Parent Username</label>
+                                    <select class="form-select form-control" disabled>
+                                        <option value="" hidden>{{ $tmp->us }}</option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="position1">Position</label>
-                                        <select class="form-select form-control" disabled>
-                                            @if ($tmp->position == 1)
-                                                <option value="">Left</option>
-                                            @else
-                                                <option value="">Right</option>
-                                            @endif
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="position1">Position</label>
+                                    <select class="form-select form-control" disabled>
+                                        @if ($tmp->position == 1)
+                                            <option value="">Left</option>
+                                        @else
+                                            <option value="">Right</option>
+                                        @endif
+                                    </select>
+                                </div>
 
 
-                                    <div class="form-group">
-                                        <label for="exampleInputusername">Username</label>
-                                        <input readonly type="text" class="form-control" name="username"
-                                            id="exampleInputusername" placeholder="Username" value="{{ $tmp->username }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputusername">MP Number</label>
-                                        <input readonly type="text" class="form-control" name="username"
-                                            id="exampleInputusername" placeholder="Username" value="{{ $tmp->no_bro }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input readonly value="{{ $ref->usr . '+' . $i . '@' . $ref->domain }}"
-                                            type="email" name="email" class="form-control" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp" placeholder="Enter email">
-                                        {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input disabled type="text" value="the password is the same as the main email"
-                                            class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                    </div>
-                                @else
-                                    <form action="{{ route('user.user') }}" class="form" id="form{{ $i }}"
-                                        method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="text" name="count" hidden value="{{ $i }}">
-                                        <div class="form-group">
-                                            <label for="ref_username1">Parent Username</label>
-                                            <select class="form-select form-control ref_username select2"
-                                                name="ref_username" id="ref_username{{ $i }}" required
-                                                onchange="selectFx(this)">
-                                                <option value="" hidden>-- Select Parent Username --</option>
-                                                @foreach ($ref_user as $refus)
-                                                    @if ($refus->pos == 'Leader')
-                                                        <option value="{{ $refus->id }}"
-                                                            data-value="{{ $refus->id }}" style="font-weight: 700">
-                                                            {{-- {{ $refus->no_bro . ' - ' . $refus->username }} --}}
-                                                        @else
-                                                        <option value="{{ $refus->id }}"
-                                                            data-value="{{ $refus->id }}">
-                                                            {{-- {{ $refus->no_bro . ' - ' . $refus->username }} --}}
-                                                    @endif
-                                                    {{-- @if ($refus->pos == $refus->pos_id) --}}
-                                                    @if ($refus->pos == 'Leader')
-                                                        {{ $refus->no_bro . ' - ' . $refus->username }}
-                                                        (You)
-                                                    @else
-                                                        @if ($refus->position == 1)
-                                                            - Under {!! $refus->usa . ' | <b>' . $refus->username . '<b>' !!}
-                                                            (Left)
-                                                        @else
-                                                            - Under {!! $refus->usa . ' | <b>' . $refus->username . '<b>' !!}
-                                                            (Right)
-                                                        @endif
-                                                    @endif
-
-                                                    {{-- @else --}}
-                                                    {{-- @endif --}}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="card tree" id="tree" hidden>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="position1">Position</label>
-                                            <select class="form-select form-control position" name="position"
-                                                id="position" disabled>
-                                                <option value="">-- Select Position --</option>
-                                            </select>
-                                            <span id="alr" class="text-danger alr">Please select Parent Username
-                                                First!.</span>
-                                            {{-- <span id="alr" class="text-danger"></span> --}}
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label for="exampleInputusername">Username</label>
-                                            <input readonly type="text" class="form-control" name="username"
-                                                id="exampleInputusername" placeholder="Username"
-                                                value="{{ $ref->username }}{{ $i }}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputusername">MP Number</label>
-                                            <input readonly type="text" class="form-control" name="no_bro"
-                                                id="exampleInputno_bro" placeholder="no_bro" value="Random MP Number">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Email address</label>
-                                            <input readonly value="{{ $ref->usr . '+' . $i . '@' . $ref->domain }}"
-                                                type="email" name="email" class="form-control"
-                                                id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                placeholder="Enter email">
-                                            {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Password</label>
-                                            <input disabled type="text"
-                                                value="the password is the same as the main email" class="form-control"
-                                                id="exampleInputPassword1" placeholder="Password">
-                                        </div>
-                            @endif
-
-                            @if (in_array($ref->usrn . $i, $reg))
-                                <button class="btn btn--primary btn-block" disabled>User is already registered</button>
+                                <div class="form-group">
+                                    <label for="exampleInputusername">Username</label>
+                                    <input readonly type="text" class="form-control" name="username"
+                                        id="exampleInputusername" placeholder="Username" value="{{ $tmp->username }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputusername">MP Number</label>
+                                    <input readonly type="text" class="form-control" name="username"
+                                        id="exampleInputusername" placeholder="Username" value="{{ $tmp->no_bro }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input readonly value="{{ $ref->usr . '+' . $i . '@' . $ref->domain }}" type="email"
+                                        name="email" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Enter email">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input disabled type="text" value="the password is the same as the main email"
+                                        class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                </div>
                             @else
-                                <div class="row">
-                                    <div class="col-md-6 col-6">
-                                        <button type="submit" class="btn btn--primary btn-block">Submit</button>
-                                    </div>
-                                    <div class="col-md-6 col-6">
-                                        <a href="{{ route('user.my.tree') }}" class="btn btn--secondary btn-block">View
-                                            Tree</a>
+                                <div class="card tree" id="tree" hidden>
+                                </div>
+                                <div class="card card-tree">
+                                    <div class="previewTree" id="previewTree">
+                                        <div class="active-user-none" data-id="{{ auth()->user()->id }}"></div>
+                                        <div class="row text-center justify-content-center llll">
+                                            <!-- <div class="col"> -->
+                                            <div class="w-1 ">
+                                                @php echo showSingleUserinTree($tree['a']); @endphp
+                                            </div>
+                                        </div>
+                                        <div class="row text-center justify-content-center llll">
+                                            <!-- <div class="col"> -->
+                                            <div class="w-2 ">
+                                                @php echo showSingleUserinTree($tree['b']); @endphp
+                                            </div>
+                                            <!-- <div class="col"> -->
+                                            <div class="w-2 ">
+                                                @php echo showSingleUserinTree($tree['c']); @endphp
+                                            </div>
+                                        </div>
+                                        <div class="row text-center justify-content-center llll">
+                                            <!-- <div class="col"> -->
+                                            <div class="w-4  ">
+                                                @php echo showSingleUserNoLine($tree['d']); @endphp
+                                            </div>
+                                            <!-- <div class="col"> -->
+                                            <div class="w-4  ">
+                                                @php echo showSingleUserNoLine($tree['e']); @endphp
+                                            </div>
+                                            <!-- <div class="col"> -->
+                                            <div class="w-4  ">
+                                                @php echo showSingleUserNoLine($tree['f']); @endphp
+                                            </div>
+                                            <!-- <div class="col"> -->
+                                            <div class="w-4  ">
+                                                @php echo showSingleUserNoLine($tree['g']); @endphp
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="card mt-3" id="inpForm" hidden>
+                                    <div class="card-body">
+                                        <form action="{{ route('user.user') }}" class="form"
+                                            id="form{{ $i }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="text" class="last lastMp" value="" hidden>
+                                            <input type="text" class="upMp uplineMP" name="upMp" value=""
+                                                hidden>
+                                            <input type="text" name="count" class="counting" hidden
+                                                value="{{ $i }}">
+                                            <div class="form-group">
+                                                <label for="ref_username1">Parent Username</label>
+                                                <input readonly type="text" class="form-control newUpline"
+                                                    name="upline" id="exampleInputusername" placeholder="Username"
+                                                    value="">
+                                            </div>
+                                            <input type="hidden" name="pos" id="pos" class="pos">
+                                            <div class="form-group">
+                                                <label for="position1">Position</label>
+                                                <select class="form-select form-control position" name="position"
+                                                    id="position" disabled>
+                                                    <option value="">-- Select Position --</option>
+                                                    <option value="1">Kiri</option>
+                                                    <option value="2">Kanan</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="exampleInputusername">Username</label>
+                                                <input readonly type="text" class="form-control newUsername"
+                                                    name="username" id="exampleInputusername" placeholder="Username"
+                                                    value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputusername">MP Number</label>
+                                                <input readonly type="text" class="form-control" name="no_bro"
+                                                    id="exampleInputno_bro" placeholder="no_bro"
+                                                    value="Random MP Number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input readonly value="{{ auth()->user()->email }}" type="email"
+                                                    name="email" class="form-control newEmail" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp" placeholder="Enter email">
+                                                {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Password</label>
+                                                <input disabled type="text"
+                                                    value="the password is the same as the main email"
+                                                    class="form-control" id="exampleInputPassword1"
+                                                    placeholder="Password">
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <button type="submit"
+                                                        class="btn btn--primary btn-block">Submit</button>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <a href="{{ route('user.my.tree') }}"
+                                                        class="btn btn--secondary btn-block">View
+                                                        Tree</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
                             @endif
-                            </form>
+
+                            {{-- @if (in_array($ref->usrn . $i, $reg))
+                                    <button class="btn btn--primary btn-block" disabled>User is already registered</button>
+                                @else
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <button type="submit" class="btn btn--primary btn-block">Submit</button>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <a href="{{ route('user.my.tree') }}"
+                                                class="btn btn--secondary btn-block">View
+                                                Tree</a>
+                                        </div>
+                                    </div>
+                                @endif --}}
+
                         </div>
                     </div>
                 @endfor
@@ -237,12 +272,80 @@
 </script> --}}
     <script>
         $(document).ready(function() {
-            console.log("ready!");
             $('#nav-tabContent').on('select2:select', 'select2', function(e) {
                 var data = e.params.data;
                 console.log(data);
             });
         });
+        $('.showDetails').on('click', function() {
+            let id = $(this).data('id');
+            $.ajax({
+                type: "GET",
+                url: "{{ url('/user/cek_pos') }}/" + id,
+                success: function(data) {
+                    $('#tree').attr("hidden", false).html(data.tree);
+                    $('.card-tree').attr("hidden", true);
+
+                }
+
+            })
+        });
+        $('.addNewTree').on('click', function() {
+            $('#inpForm').attr('hidden', true);
+            $('.card-tree').attr('hidden', false);
+            $('#tree').attr('hidden', false);
+        })
+        $('.btnUser').on('click', function() {
+            let last = $('.last').val();
+            let count = $('.counting').val();
+            let user = "{{ auth()->user()->username }}";
+            let upline = $(this).data('upline');
+            let pos = $(this).data('pos');
+            let uname = $(this).data('up');
+            $('.imgUser' + pos + last).removeClass('select-user');
+            $('#inpForm').attr("hidden", false);
+            $('.imgUser' + pos + upline).addClass('select-user');
+            $('.last').val(upline);
+            $('.pos').val(pos);
+            $('.upMp').val(upline);
+            $('.newUpline').val(uname);
+            $('.newUsername').val(user + count);
+            $('.position').val(pos);
+
+        })
+        $('#tree').on('click', '.btnUser', function() {
+            let last = $('.last').val();
+            let count = $('.counting').val();
+            let user = "{{ auth()->user()->username }}";
+            let upline = $(this).data('upline');
+            let pos = $(this).data('pos');
+            let uname = $(this).data('up');
+            $('#inpForm').attr("hidden", false);
+            console.log('imgUser' + pos + last);
+
+            $('.imgUser' + last).removeClass('select-user');
+
+            $('.imgUser' + pos + upline).addClass('select-user');
+            $('.lastMp').val(pos + upline);
+            $('.uplineMP').val(upline);
+            $('.pos').val(pos);
+            $('.newUpline').val(uname);
+            $('.newUsername').val(user + count);
+            $('.position').val(pos);
+        })
+        $('#tree').on('click', '.showDetails', function() {
+            let id = $(this).data('id');
+            $.ajax({
+                type: "GET",
+                url: "{{ url('/user/cek_pos') }}/" + id,
+                success: function(data) {
+                    $('#tree').attr("hidden", false).html(data.tree);
+                    $('.card-tree').attr("hidden", true);
+
+                }
+
+            })
+        })
 
         function selectFx(x) {
             var id = x.value;

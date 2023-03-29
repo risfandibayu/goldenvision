@@ -338,7 +338,7 @@ class PlanController extends Controller
     public function myTree()
     {
         $data['tree'] = showTreePage(Auth::id());
-        dd(showTreePage(Auth::id()));
+        // dd($data);
         $data['page_title'] = "My Tree";
         return view($this->activeTemplate . 'user.myTree', $data);
     }
@@ -353,7 +353,6 @@ class PlanController extends Controller
         }
         if ($user && treeAuth($user->id, auth()->id())) {
             $data['tree'] = showTreePage($user->id);
-        // dd(showTreePage(Auth::id()));
 
             $data['page_title'] = "Tree of " . $user->fullname;
             return view($this->activeTemplate . 'user.myTree', $data);
