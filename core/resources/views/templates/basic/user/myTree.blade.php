@@ -34,7 +34,7 @@
             </div>
         </div>
     </div> --}}
-    <div class="card">
+    <div class="card card-tree">
 
         {{-- <div class=" row">
             <div class="col-md-11 col-8"></div>
@@ -276,77 +276,113 @@
         (function($) {
             const userID = $('.active-user-none').data('id');
 
-            $('.showDetails').on('click', function() {
-                var modal = $('#exampleModalCenter');
-                let id = $(this).data('id');
-                $('#is_stockiest_true').attr('data-id');
-                $('#is_stockiest_false').attr('data-id');
-                $('#is_true').addClass('d-none');
-                $('#is_false').addClass('d-none');
-                if (id == userID) {
-                    $('.btnAddSubs').addClass('d-none');
-                } else {
-                    $('.btnAddSubs').removeClass('d-none');
-                }
-                $('.tree_name').text($(this).data('name'));
-                $('.tree_url')
-                    .attr({
-                        "href": $(this).data('treeurl')
-                    });
-                $('.tree_status').text($(this).data('status'));
-                $('.tree_plan').text($(this).data('plan'));
-                $(
-                    '.tree_phone').text('+' + $(this).data('mobile'));
-                $('.tree_email').text($(this).data(
-                    'email'));
-                $('.tree_bro').text($(this).data('bro'));
-                $('.tree_image').attr({
-                    "src": $(this).data('image')
-                });
-                $('.user-details-header').removeClass('Paid');
-                $('.user-details-header').removeClass('Free');
-                $('.user-details-header').addClass($(this).data('status'));
-                $('.tree_ref').text($(this).data(
-                    'refby'));
-                $('.lbv').text($(this).data('lbv'));
-                $('.rbv').text($(this).data('rbv'));
-                $('.lpaid')
-                    .text($(this).data('lpaid'));
-                $('.rpaid').text($(this).data('rpaid'));
-                $('.lfree').text($(this)
-                    .data('lfree'));
-                $('.rfree').text($(this).data('rfree'));
-                $('#exampleModalCenter').modal(
-                    'show');
-                $('.btnAddSubs').attr('data-id', id);
-                $('#is_stockiest_true').attr('data-id', id);
-                $('#is_stockiest_false').attr('data-id', id);
-
-                const is_stockiest = $(this).data('is_stockiest');
-                if (is_stockiest) {
-                    $('#is_true').removeClass('d-none');
-                    $('#is_false').addClass('d-none');
-                } else {
-                    $('#is_true').addClass('d-none');
-                    $('#is_false').removeClass('d-none');
-
-                }
-                const kiri = $(this).data('lpaid');
-                const kanan = $(this).data('rpaid');
-                if (kiri < 1 || kanan < 1) {
-                    $('#formAddDownline').removeClass('d-none');
-                    $('#upline').val($(this).data('bro'));
-                    if (kiri > 0) {
-                        $('#s_kiri').attr('disabled', 'disabled');
-                    }
-                    if (kanan > 0) {
-                        $('#s_kanan').attr('disabled', 'disabled');
-                    }
-                } else {
-                    $('#formAddDownline').addClass('d-none');
-                }
-
+            $('.btnSeeUser').on('click', function() {
+                let username = $(this).data('username');
+                let url = `{{ url('user/tree/${username}') }}`
+                window.location.replace(url)
             });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.btnUser').on('click', function(e) {
+                e.preventDefault();
+                let upline = $(this).data('upline');
+                let pos = $(this).data('pos');
+                let backUrl = "{{ Request::url() }}";
+                const postUrl = "{{ route('user.sponsor.set') }}";
+
+                $.ajax({
+                    type: 'POST',
+                    url: postUrl,
+                    data: {
+                        back: backUrl,
+                        upline: upline,
+                        postion: pos
+                    },
+                    success: function(rs) {
+                        console.log(rs);
+                        if (rs.sts = 200) {
+                            window.location.replace(rs.url);
+                        }
+                    }
+                });
+
+                console.log(upline);
+                console.log(pos);
+            })
+            // $('.showDetails').on('click', function() {
+            //     var modal = $('#exampleModalCenter');
+            //     let id = $(this).data('id');
+            //     $('#is_stockiest_true').attr('data-id');
+            //     $('#is_stockiest_false').attr('data-id');
+            //     $('#is_true').addClass('d-none');
+            //     $('#is_false').addClass('d-none');
+            //     if (id == userID) {
+            //         $('.btnAddSubs').addClass('d-none');
+            //     } else {
+            //         $('.btnAddSubs').removeClass('d-none');
+            //     }
+            //     $('.tree_name').text($(this).data('name'));
+            //     $('.tree_url')
+            //         .attr({
+            //             "href": $(this).data('treeurl')
+            //         });
+            //     $('.tree_status').text($(this).data('status'));
+            //     $('.tree_plan').text($(this).data('plan'));
+            //     $(
+            //         '.tree_phone').text('+' + $(this).data('mobile'));
+            //     $('.tree_email').text($(this).data(
+            //         'email'));
+            //     $('.tree_bro').text($(this).data('bro'));
+            //     $('.tree_image').attr({
+            //         "src": $(this).data('image')
+            //     });
+            //     $('.user-details-header').removeClass('Paid');
+            //     $('.user-details-header').removeClass('Free');
+            //     $('.user-details-header').addClass($(this).data('status'));
+            //     $('.tree_ref').text($(this).data(
+            //         'refby'));
+            //     $('.lbv').text($(this).data('lbv'));
+            //     $('.rbv').text($(this).data('rbv'));
+            //     $('.lpaid')
+            //         .text($(this).data('lpaid'));
+            //     $('.rpaid').text($(this).data('rpaid'));
+            //     $('.lfree').text($(this)
+            //         .data('lfree'));
+            //     $('.rfree').text($(this).data('rfree'));
+            //     $('#exampleModalCenter').modal(
+            //         'show');
+            //     $('.btnAddSubs').attr('data-id', id);
+            //     $('#is_stockiest_true').attr('data-id', id);
+            //     $('#is_stockiest_false').attr('data-id', id);
+
+            //     const is_stockiest = $(this).data('is_stockiest');
+            //     if (is_stockiest) {
+            //         $('#is_true').removeClass('d-none');
+            //         $('#is_false').addClass('d-none');
+            //     } else {
+            //         $('#is_true').addClass('d-none');
+            //         $('#is_false').removeClass('d-none');
+
+            //     }
+            //     const kiri = $(this).data('lpaid');
+            //     const kanan = $(this).data('rpaid');
+            //     if (kiri < 1 || kanan < 1) {
+            //         $('#formAddDownline').removeClass('d-none');
+            //         $('#upline').val($(this).data('bro'));
+            //         if (kiri > 0) {
+            //             $('#s_kiri').attr('disabled', 'disabled');
+            //         }
+            //         if (kanan > 0) {
+            //             $('#s_kanan').attr('disabled', 'disabled');
+            //         }
+            //     } else {
+            //         $('#formAddDownline').addClass('d-none');
+            //     }
+
+            // });
             $('.btnAddSubs').on('click', function() {
                 let userID = $(this).data('id');
                 const url = "{{ url('user/send-pin') }}" + '/' + userID;

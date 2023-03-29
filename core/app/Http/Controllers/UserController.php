@@ -918,10 +918,14 @@ class UserController extends Controller
         $notify[] = ['success', 'You have done this survey successfully'];
         return redirect()->route('user.home')->withNotify($notify);
     }
+    
 
     public function user_boom(){
-        $page_title = 'Manage User';
+       
+        // dd($request->get('username'));
+       
         $tree = showTreePage(Auth::id());
+        $page_title = 'Manage User';
         $ref = user::where('id', auth::user()->id)
         ->select('users.*',db::raw("SUBSTRING(email, 1, LOCATE('@', email) - 1) AS usr"),db::raw("SUBSTRING(email, LOCATE('@', email) + 1) AS domain"),'users.username as usrn')
         ->first();
@@ -1017,6 +1021,7 @@ class UserController extends Controller
         //     dd('sip');
         // }
     }
+
     public function cek_tree($id){
         $tree = showTreePage($id);
         $response ="<div class='row text-center justify-content-center llll'>
@@ -1072,42 +1077,40 @@ class UserController extends Controller
         <div class='row text-center justify-content-center llll'>
         <!-- <div class='col'> -->
         <div class='w-1'>
-            ".showSingleUserinTree2Update($tree['a'],$id)."
+            ".showSingleUserinTree($tree['a'],$id)."
         </div>
         </div>
         <div class='row text-center justify-content-center llll'>
             <!-- <div class='col'> -->
             <div class='w-2 pleft'>
-                ".showSingleUserinTree2Update($tree['b'],$id)."
+                ".showSingleUserinTree($tree['b'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-2 pright'>
-                ".showSingleUserinTree2Update($tree['c'],$id)."
+                ".showSingleUserinTree($tree['c'],$id)."
             </div>
         </div>
         <div class='row text-center justify-content-center'>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2NoLine($tree['d'],$id)."
+                ".showSingleUserNoLine($tree['d'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2NoLine($tree['e'],$id)."
+                ".showSingleUserNoLine($tree['e'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2NoLine($tree['f'],$id)."
+                ".showSingleUserNoLine($tree['f'],$id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree2NoLine($tree['g'],$id)."
+                ".showSingleUserNoLine($tree['g'],$id)."
             </div>
             <!-- <div class='col'> -->
 
-        </div>
-
-        
-        ";
+        </div>";
+        return response()->json(['sts'=>200,'tree'=>$response_tree]);
         // <div class='row text-center justify-content-center llll'>
         //     <!-- <div class='col'> -->
         //     <div class='w-8'>
@@ -1145,27 +1148,27 @@ class UserController extends Controller
 
         // </div>
 
-        if ($cek_awal) {
-            # code...
-            if ($cek_awal_kiri) {
-                if ($cek_awal_kanan) {
-                    echo json_encode(["response" => '3','tree'=>$response_tree]);
-                    # code...
-                }else{
-                    echo json_encode(["response" => '2','tree'=>$response_tree]);
+        // if ($cek_awal) {
+        //     # code...
+        //     if ($cek_awal_kiri) {
+        //         if ($cek_awal_kanan) {
+        //             echo json_encode(["response" => '3','tree'=>$response_tree]);
+        //             # code...
+        //         }else{
+        //             echo json_encode(["response" => '2','tree'=>$response_tree]);
 
-                }
-            }else{
-                if ($cek_awal_kanan) {
-                    # code...
-                    echo json_encode(["response" => '1','tree'=>$response_tree]);
-                }else{
-                    echo json_encode(["response" => '0','tree'=>$response_tree]);
-                }
-            }
-        }else{
-            echo json_encode(["response" => '0','tree'=>$response_tree]);
-        }
+        //         }
+        //     }else{
+        //         if ($cek_awal_kanan) {
+        //             # code...
+        //             echo json_encode(["response" => '1','tree'=>$response_tree]);
+        //         }else{
+        //             echo json_encode(["response" => '0','tree'=>$response_tree]);
+        //         }
+        //     }
+        // }else{
+        //     echo json_encode(["response" => '0','tree'=>$response_tree]);
+        // }
         // $get_kanan = getPosition($user->id, 2);
         // $get_kiri = getPosition($user->id, 1);
         // if ($user->pos_id = $get_kanan['pos_id']) {
@@ -1257,35 +1260,35 @@ class UserController extends Controller
     }
 
     public function user(Request $request){
+        // dd($request->all());
         // dd($request->ref_username1);
         $gnl = GeneralSetting::first();
 
         $userCheck = User::where('id', $request->ref_username)->first();
-        $pos = getPosition($userCheck->id, $request->position);
-        $chekUser = User::find($pos['pos_id']);
+        $pos = User::where('no_bro',$request->upMp)->first();
         $us = user::where('id',Auth::user()->id)->first();
         //User Create
         $user = new User();
         $user->no_bro       = generateUniqueNoBro();
         $user->ref_id       = Auth::user()->id;
         $user->plan_id      = 1;
-        $user->pos_id       = $pos['pos_id'];
-        $user->position     = $pos['position'];
-        $user->position_by_ref = $chekUser->position;
+        $user->pos_id       = $pos->id;
+        $user->position     = $request->pos;
+        $user->position_by_ref = $pos->position;
         $user->firstname    = isset($us->firstname) ? $us->firstname : null;
         $user->lastname     = isset($us->lastname) ? $us->lastname.' '.$request->count : null;
         $user->email        = strtolower(trim($request->email));
         $user->password     = $us->password;
         $user->username     = trim($request->username);
         // $user->ref_id       = $userCheck->id;
-        $user->mobile       = $us->country_code . $us->mobile;
+        $user->mobile       = $us->mobile;
         $user->address      = $us->address;
         $user->lat          = $us->lat;
         $user->lng          = $us->lng;
         $user->status = 1;
         $user->is_kyc = 2;
         $user->ev = 1;
-        $user->sv = $gnl->sv ? 0 : 1;
+        $user->sv = 1;
         $user->ts = 0;
         $user->tv = 1;
         $user->save();

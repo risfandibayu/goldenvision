@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('assets/admin/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/css/survey.css') }}">
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/user_custom.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     @stack('style')
 

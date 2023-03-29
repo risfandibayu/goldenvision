@@ -1246,75 +1246,93 @@ function getPositionUser($id, $position)
 
 function showTreePage($id)
 {
-    $res = array_fill_keys(array('b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o','p','q','r','s','t','u','v','w','x','y','z','aa','ab','ac','ad','ae'), null);
-    $res['a'] = User::find($id);
+    $res = array_fill_keys(array('b', 'c', 'd', 'e', 'f', 'g'), null);
+    $user = User::find($id);
+    $res['a'] = ['user'=>$user,'upline'=>null,'pos'=>$user->position];
 
-    $res['b'] = getPositionUser($id, 1);
-    if ($res['b']) {
-        $res['d'] = getPositionUser($res['b']->id, 1);
-        $res['e'] = getPositionUser($res['b']->id, 2);
+    $res['b'] = ['user'=>getPositionUser($id, 1),'upline'=>$res['a']['user'],'pos'=>1];
+    if ($res['b']['user']) {
+        $res['d'] = ['user'=>getPositionUser($res['b']['user']->id, 1),'upline'=>$res['b']['user'],'pos'=>1];
+        $res['e'] = ['user'=>getPositionUser($res['b']['user']->id, 2),'upline'=>$res['b']['user'],'pos'=>2];
+    }else{
+        $res['d'] = ['user'=>null,'upline'=>null,'pos'=>1];
+        $res['e'] = ['user'=>null,'upline'=>null,'pos'=>2];
     }
-    if ($res['d']) {
-        $res['h'] = getPositionUser($res['d']->id, 1);
-        $res['i'] = getPositionUser($res['d']->id, 2);
+    // if ($res['d']) {
+    //     $res['h'] = getPositionUser($res['d']->id, 1);
+    //     $res['i'] = getPositionUser($res['d']->id, 2);
+    // }
+    // if ($res['e']) {
+    //     $res['j'] = getPositionUser($res['e']->id, 1);
+    //     $res['k'] = getPositionUser($res['e']->id, 2);
+    // }
+    $res['c'] = ['user'=>getPositionUser($id, 2),'upline'=>$res['a']['user'],'pos'=>2];
+    if ($res['c']['user']) {
+        $res['f'] = ['user'=>getPositionUser($res['c']['user']->id, 1),'upline'=>$res['c']['user'],'pos'=>1];
+        $res['g'] = ['user'=>getPositionUser($res['c']['user']->id, 2),'upline'=>$res['c']['user'],'pos'=>2];
+    }else{
+        $res['f'] = ['user'=>null,'upline'=>null,'pos'=>1];
+        $res['g'] = ['user'=>null,'upline'=>null,'pos'=>2];
     }
-    if ($res['e']) {
-        $res['j'] = getPositionUser($res['e']->id, 1);
-        $res['k'] = getPositionUser($res['e']->id, 2);
-    }
-    $res['c'] = getPositionUser($id, 2);
-    if ($res['c']) {
-        $res['f'] = getPositionUser($res['c']->id, 1);
-        $res['g'] = getPositionUser($res['c']->id, 2);
-    }
-    if ($res['f']) {
-        $res['l'] = getPositionUser($res['f']->id, 1);
-        $res['m'] = getPositionUser($res['f']->id, 2);
-    }
-    if ($res['g']) {
-        $res['n'] = getPositionUser($res['g']->id, 1);
-        $res['o'] = getPositionUser($res['g']->id, 2);
-    }
-    // $res['o'] = getPositionUser($id, 2);
-    if ($res['o']) {
-        $res['ad'] = getPositionUser($res['o']->id, 1);
-        $res['ae'] = getPositionUser($res['o']->id, 2);
-    }
-    if ($res['n']) {
-        $res['ab'] = getPositionUser($res['n']->id, 1);
-        $res['ac'] = getPositionUser($res['n']->id, 2);
-    }
-    if ($res['m']) {
-        $res['z'] = getPositionUser($res['m']->id, 1);
-        $res['aa'] = getPositionUser($res['m']->id, 2);
-    }
-    if ($res['l']) {
-        $res['x'] = getPositionUser($res['l']->id, 1);
-        $res['y'] = getPositionUser($res['l']->id, 2);
-    }
-    if ($res['k']) {
-        $res['v'] = getPositionUser($res['k']->id, 1);
-        $res['w'] = getPositionUser($res['k']->id, 2);
-    }
-    if ($res['j']) {
-        $res['t'] = getPositionUser($res['j']->id, 1);
-        $res['u'] = getPositionUser($res['j']->id, 2);
-    }
-    if ($res['i']) {
-        $res['r'] = getPositionUser($res['i']->id, 1);
-        $res['s'] = getPositionUser($res['i']->id, 2);
-    }
-    if ($res['h']) {
-        $res['p'] = getPositionUser($res['h']->id, 1);
-        $res['q'] = getPositionUser($res['h']->id, 2);
-    }
+    // if ($res['f']) {
+    //     $res['l'] = getPositionUser($res['f']->id, 1);
+    //     $res['m'] = getPositionUser($res['f']->id, 2);
+    // }
+    // if ($res['g']) {
+    //     $res['n'] = getPositionUser($res['g']->id, 1);
+    //     $res['o'] = getPositionUser($res['g']->id, 2);
+    // }
+    // // $res['o'] = getPositionUser($id, 2);
+    // if ($res['o']) {
+    //     $res['ad'] = getPositionUser($res['o']->id, 1);
+    //     $res['ae'] = getPositionUser($res['o']->id, 2);
+    // }
+    // if ($res['n']) {
+    //     $res['ab'] = getPositionUser($res['n']->id, 1);
+    //     $res['ac'] = getPositionUser($res['n']->id, 2);
+    // }
+    // if ($res['m']) {
+    //     $res['z'] = getPositionUser($res['m']->id, 1);
+    //     $res['aa'] = getPositionUser($res['m']->id, 2);
+    // }
+    // if ($res['l']) {
+    //     $res['x'] = getPositionUser($res['l']->id, 1);
+    //     $res['y'] = getPositionUser($res['l']->id, 2);
+    // }
+    // if ($res['k']) {
+    //     $res['v'] = getPositionUser($res['k']->id, 1);
+    //     $res['w'] = getPositionUser($res['k']->id, 2);
+    // }
+    // if ($res['j']) {
+    //     $res['t'] = getPositionUser($res['j']->id, 1);
+    //     $res['u'] = getPositionUser($res['j']->id, 2);
+    // }
+    // if ($res['i']) {
+    //     $res['r'] = getPositionUser($res['i']->id, 1);
+    //     $res['s'] = getPositionUser($res['i']->id, 2);
+    // }
+    // if ($res['h']) {
+    //     $res['p'] = getPositionUser($res['h']->id, 1);
+    //     $res['q'] = getPositionUser($res['h']->id, 2);
+    // }
     return $res;
 }
 
 
-function showSingleUserinTree($user)
+function showSingleUserinTree($resp)
 {
     $res = '';
+    $user = $resp['user'];
+    $uplines = $resp['upline'];
+    if($uplines){
+        $upline = $uplines->no_bro;
+        $uname = $uplines->username;
+    }else{
+        $upline = '';
+        $uname = '';
+
+    }
+    $pos = $resp['pos'];
     // dd($user);
     if ($user) {
         // if ($user->plan_id == 0) {
@@ -1379,7 +1397,7 @@ function showSingleUserinTree($user)
         $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
-        $res .= "<div class=\"user\" type=\"button\" >";
+        $res .= "<div class=\"user btnSeeUser\" data-username=\"$user->username\" type=\"button\" >";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $test $bg showDetails \" $extraData>";
         
         if (auth()->guard('admin')->user()) {
@@ -1388,32 +1406,55 @@ function showSingleUserinTree($user)
             // }else{
             //     $res .= "<span class=\"badge badge-light\">$user->username</span>";
             // }
-            $res .= "<p class=\"user-name\">$user->username</p>";
+            $res .= "<p class=\"user-name font-weight-bold\">$user->username</p>";
+            // $res .= "<p class=\"user-name \"><small>$user->no_bro</small></p>";
+            $res .= '<p class="user-name font-weight-bold textInf">'.$user->userExtra->left.' | '.$user->userExtra->right.'</p>';
+
         } else {
             // if(auth()->user()->userExtra->is_gold){
             //     $res .= "<span class=\"badge badge-warning mt-n3\">$user->username</span>";
             // }else{
             //     $res .= "<span class=\"badge badge-light\">$user->username</span>";
             // }
-            $res .= "<p class=\"user-name\">$user->username</p>";
+            $res .= "<p class=\"user-name font-weight-bold\">$user->username</p>";
+            // $res .= "<p class=\"user-name \"><small>$user->no_bro</small></p>";
+            $res .= '<p class="user-name font-weight-bold textInf">'.$user->userExtra->left.' | '.$user->userExtra->right.'</p>';
         }
         // $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\" style=\"position: absolute; z-index:-1;\">Explore Tree</a></p>";
 
     } else {
-        $img = getImage('assets/images/user/profile/', null, true);
+         if($upline){
+            $img = getImage('assets/images/rm.png', null, true);
+            $addList = 'btnUser';
+        }else{
+            $img = getImage('assets/images/', null, true);
+            $addList = 'noUser';
+        }
+        $res .= '<div class="user '.$addList.' " data-upline="'.$upline.'" data-pos="'.$pos.'" data-up="'.$uname.'" type="button">';
+        // $res .= '<div class="user btnUser" type="button">';
+        $res .= '<img src="'.$img.'" alt="*"  class="no-user imgUser'.$pos.$upline.'">';
 
-        $res .= "<div class=\"user\" type=\"button\">";
-        $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
-        $res .= "<p class=\"user-name\">MP</p>";
+
     }
     $res .= " </div>";
     $res .= " <span class=\"line\" ></span>";
     return $res;
 
 }
-function showSingleUserNoLine($user)
+function showSingleUserNoLine($resp)
 {
     $res = '';
+    $user = $resp['user'];
+    $uplines = $resp['upline'];
+    if($uplines){
+        $upline = $uplines->no_bro;
+        $uname = $uplines->username;
+    }else{
+        $upline = '';
+        $uname = '';
+
+    }
+    $pos = $resp['pos'];
     // dd($user);
     if ($user) {
         // if ($user->plan_id == 0) {
@@ -1478,7 +1519,7 @@ function showSingleUserNoLine($user)
         $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
         $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
 
-        $res .= "<div class=\"user\" type=\"button\" >";
+        $res .= "<div class=\"user btnSeeUser\" data-username=\"$user->username\" type=\"button\" >";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $test $bg showDetails \" $extraData>";
         
         if (auth()->guard('admin')->user()) {
@@ -1487,23 +1528,36 @@ function showSingleUserNoLine($user)
             // }else{
             //     $res .= "<span class=\"badge badge-light\">$user->username</span>";
             // }
-            $res .= "<p class=\"user-name\">$user->username</p>";
+            $res .= "<p class=\"user-name font-weight-bold\">$user->username</p>";
+            // $res .= "<p class=\"user-name \"><small>$user->no_bro</small></p>";
+            $res .= '<p class="user-name font-weight-bold textInf">'.$user->userExtra->left.' | '.$user->userExtra->right.'</p>';
+
         } else {
             // if(auth()->user()->userExtra->is_gold){
             //     $res .= "<span class=\"badge badge-warning mt-n3\">$user->username</span>";
             // }else{
             //     $res .= "<span class=\"badge badge-light\">$user->username</span>";
             // }
-            $res .= "<p class=\"user-name\">$user->username</p>";
+            $res .= "<p class=\"user-name font-weight-bold\">$user->username</p>";
+            // $res .= "<p class=\"user-name \"><small>$user->no_bro</small></p>";
+            $res .= '<p class="user-name font-weight-bold textInf">'.$user->userExtra->left.' | '.$user->userExtra->right.'</p>';
+
         }
         // $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\" style=\"position: absolute; z-index:-1;\">Explore Tree</a></p>";
 
     } else {
-        $img = getImage('assets/images/user/profile/', null, true);
+        if($upline){
+            $img = getImage('assets/images/rm.png', null, true);
+            $addList = 'btnUser';
+        }else{
+            $img = getImage('assets/images/', null, true);
+            $addList = 'noUser';
+        }
+        $res .= '<div class="user '.$addList.' " data-upline="'.$upline.'" data-pos="'.$pos.'" data-up="'.$uname.'" type="button">';
+        // $res .= '<div class="user btnUser" type="button">';
+        $res .= '<img src="'.$img.'" alt="*"  class="no-user imgUser'.$pos.$upline.'">';
 
-        $res .= "<div class=\"user\" type=\"button\">";
-        $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
-        $res .= "<p class=\"user-name\">MP</p>";
+
     }
     $res .= " </div>";
     // $res .= " <span class=\"line\" ></span>";
@@ -1812,9 +1866,123 @@ function showSingleUserinTree2NoLine($user,$id)
 
 }
 
-function showSingleUserinTree3($user,$pos_id,$id)
+function showSingleUserinTree3($users,$pos_id,$id)
 {
+    // dd($users);
     $res = '';
+    $user = $users['user'];
+    $uplines = $users['upline'];
+    if($uplines){
+        $upline = $uplines->no_bro;
+    }else{
+        $upline = '';
+    }
+    // $pos = $user['pos'];
+    if ($user) {
+         if($user->userExtra->is_gold){
+            $userType = "paid-user";
+            $stShow = "Paid";
+            $planName = '';
+            $test = $user->userExtra->is_gold;
+            $bg = 'bg-gold';
+        }else{
+            $userType = "free-user";
+            $stShow = "Paid";
+            $planName = '';
+            $test = $user->userExtra->is_gold;
+            $bg = 'bg-pink';
+
+        }
+
+        if ($user->id == $id) {
+            $userType = "select-user";
+            $stShow = "Free";
+            $planName = '';
+            $fs ="font-weight: 700;font-size:18px;
+            color: #070707;";
+        } else {
+            $userType = "free-user";
+            $stShow = "Free";
+            $planName = '';
+            $fs="";
+        }
+
+        $img = getImage('assets/images/user/profile/'. $user->image, null, true);
+
+        $refby = getUserById($user->ref_id)->fullname ?? '';
+        if (auth()->guard('admin')->user()) {
+            $hisTree = route('admin.users.other.tree', $user->username);
+        } else {
+            $hisTree = route('user.other.tree', $user->username);
+        }
+
+        $extraData = " data-name=\"$user->fullname\"";
+        $extraData .= " data-id=\"$user->id\"";
+        $extraData .= " data-treeurl=\"$hisTree\"";
+        $extraData .= " data-status=\"$stShow\"";
+        $extraData .= " data-plan=\"$planName\"";
+        $extraData .= " data-image=\"$img\"";
+        $extraData .= " data-refby=\"$refby\"";
+        $extraData .= " data-lpaid=\"" . @$user->userExtra->paid_left . "\"";
+        $extraData .= " data-rpaid=\"" . @$user->userExtra->paid_right . "\"";
+        $extraData .= " data-lfree=\"" . @$user->userExtra->free_left . "\"";
+        $extraData .= " data-rfree=\"" . @$user->userExtra->free_right . "\"";
+        $extraData .= " data-lbv=\"" . getAmount(@$user->userExtra->bv_left) . "\"";
+        $extraData .= " data-rbv=\"" . getAmount(@$user->userExtra->bv_right) . "\"";
+
+        if(Auth::user()->pos_id == $user->id){
+            $res .= '<div class="user" '.$extraData.'>';
+        }else{
+            $res .= '<div class="user" '.$extraData.'>';
+        }
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $bg\">";
+        $res .= "<p class=\"user-name\" style=\"$fs\"> $user->username</p>";
+        // if(Auth::user()->pos_id == $user->id){
+
+        // }elseif(Auth::user()->id == $user->id){
+        //     $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#4cbe04;color:black;\"'>Leader (You)</a> </p>";
+        //     if (Auth::user()->id == $id) {
+        //         $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#47bc52;color:black;\" onclick='f1(\"$user->id\")'>Selected Parent</a> </p>";
+        //     }
+        // }elseif($user->id == $id){
+        //     $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#47bc52;color:black;\" onclick='f1(\"$user->id\")'>Selected Position</a> </p>";
+        // }
+        // else{
+        //     // $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" onclick='f1(\"$user->id\")'>Explore Tree</a> </p>";
+        // }
+
+    } else {
+        $img = getImage('assets/images/user/profile/', null, true);
+
+        $res .= "<div class=\"user\" >";
+        $res .= '<img src="'.$img.'" alt="*"  class="no-user">';
+        $res .= "<p class=\"user-name\">MP</p>";
+        // $users = user::where('pos_id',$id)->first();
+        // if($users){
+
+        // }else{
+        //     $res .= "<p class=\"user-name\"><a class=\"btn btn-sm\" style=\"background-color:#47bc52;\" href='posisi'>Select Position</a></p>";
+        // }
+    }
+
+    $res .= " </div>";
+    $res .= " <span class=\"line\"></span>";
+
+    return $res;
+
+}
+function showSingleUserinTree3NoLine($users,$pos_id,$id)
+{
+    // dd($users);
+    $res = '';
+    $user = $users['user'];
+    $uplines = $users['upline'];
+    if($uplines){
+        $upline = $uplines->no_bro;
+    }else{
+        $upline = '';
+    }
+    // $pos = $user['pos'];
     if ($user) {
         // if ($user->plan_id == 0) {
         //     $userType = "free-user";
@@ -1825,6 +1993,20 @@ function showSingleUserinTree3($user,$pos_id,$id)
         //     $stShow = "Paid";
         //     $planName = $user->plan->name;
         // }
+        if($user->userExtra->is_gold){
+            $userType = "paid-user";
+            $stShow = "Paid";
+            $planName = '';
+            $test = $user->userExtra->is_gold;
+            $bg = 'bg-gold';
+        }else{
+            $userType = "free-user";
+            $stShow = "Paid";
+            $planName = '';
+            $test = $user->userExtra->is_gold;
+            $bg = 'bg-pink';
+
+        }
 
         if ($user->id == $id) {
             $userType = "select-user";
@@ -1867,7 +2049,7 @@ function showSingleUserinTree3($user,$pos_id,$id)
         }else{
         $res .= "<div class=\"user\"  $extraData>";
         }
-        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType\">";
+        $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $bg\">";
         $res .= "<p class=\"user-name\" style=\"$fs\"> $user->username</p>";
         // if(Auth::user()->pos_id == $user->id){
 
@@ -1898,11 +2080,13 @@ function showSingleUserinTree3($user,$pos_id,$id)
     }
 
     $res .= " </div>";
-    $res .= " <span class=\"line\"></span>";
+    $res .= "<div class='mb-5'></div>";
+
 
     return $res;
 
 }
+
 
 /*
 ===============TREE AUTH==============
@@ -1999,59 +2183,24 @@ function generateUniqueNoBro()
         <div class='row text-center justify-content-center'>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree3($tree['d'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3NoLine($tree['d'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree3($tree['e'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3NoLine($tree['e'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree3($tree['f'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3NoLine($tree['f'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
             <div class='w-4 '>
-                ".showSingleUserinTree3($tree['g'],$user->pos_id,$user->id)."
+                ".showSingleUserinTree3NoLine($tree['g'],$user->pos_id,$user->id)."
             </div>
             <!-- <div class='col'> -->
 
         </div>
-        <div class='row text-center justify-content-center llll'>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree3($tree['h'],$user->pos_id,$user->id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree3($tree['i'],$user->pos_id,$user->id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree3($tree['j'],$user->pos_id,$user->id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree3($tree['k'],$user->pos_id,$user->id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree3($tree['l'],$user->pos_id,$user->id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree3($tree['m'],$user->pos_id,$user->id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree3($tree['n'],$user->pos_id,$user->id)."
-            </div>
-            <!-- <div class='col'> -->
-            <div class='w-8'>
-                ".showSingleUserinTree3($tree['o'],$user->pos_id,$user->id)."
-            </div>
-
-
-        </div>
+       
         ";
          echo $response_tree;
     }
