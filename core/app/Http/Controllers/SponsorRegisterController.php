@@ -127,7 +127,7 @@ class SponsorRegisterController extends Controller
             return redirect(session()->get('SponsorSet')['url'])->withNotify($notify);
         } catch (\Throwable $th) {
             DB::rollBack();
-            $notify[] = ['success', 'Created User Failed'];
+            $notify[] = ['error', 'Created User Failed: '.$th->getMessage()];
             return redirect()->route('user.my.tree')->withNotify($notify);
         }
         
