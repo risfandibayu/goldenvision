@@ -78,10 +78,10 @@ class SponsorRegisterController extends Controller
             if($cekbank){
                 $rek = new rekening();  
                 $rek->user_id = $user->id;
-                $rek->nama_bank = $cekbank->bank_name;
-                $rek->nama_akun = $cekbank->acc_name;
-                $rek->no_rek = $cekbank->acc_number;
-                $rek->kota_cabang = $cekbank->kota_cabang;
+                $rek->nama_bank = $cekbank->bank_name??$request->bank_name;
+                $rek->nama_akun = $cekbank->acc_name??$request->acc_name;
+                $rek->no_rek = $cekbank->acc_number??$request->acc_number;
+                $rek->kota_cabang = $cekbank->kota_cabang??$request->kota_cabang;
                 $rek->save();
             }else{
                 $rek = new rekening();  
