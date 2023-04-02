@@ -1925,8 +1925,12 @@ class UserController extends Controller
         }
         $req_kiri = $user->userExtra->p_left - 3; //30
         $req_kanan = $user->userExtra->p_right - 3; //0
-        if($req_kiri > $reward->kiri){
+        if($req_kiri < $reward->kiri){
             dd('kiri '.$req_kiri.':' .$req_kanan.' | '.$reward->kiri.':'.$reward->kanan);
+
+        }
+        if($req_kanan < $reward->kanan){
+            dd('kanan '.$req_kiri.':' .$req_kanan.' | '.$reward->kiri.':'.$reward->kanan);
 
         }
         if($req_kiri > $reward->kiri && $req_kanan > $reward->kanan){
