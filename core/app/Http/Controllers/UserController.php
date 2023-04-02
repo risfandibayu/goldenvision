@@ -1929,8 +1929,7 @@ class UserController extends Controller
             $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
             return back()->withNotify($notify);
         }
-        if($req_kiri >= $reward->kiri || $req_kanan >= $reward->kanan){
-            dd($req_kiri.':' .$req_kanan.' | '.$reward->kiri.':'.$reward->kanan);
+        if($req_kiri >= $reward->kiri && $req_kanan >= $reward->kanan){
             ureward::create([
                 'trx'       => getTrx(),
                 'user_id'   => $user->id,
