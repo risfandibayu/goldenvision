@@ -1925,7 +1925,7 @@ class UserController extends Controller
         }
         $req_kiri = $user->userExtra->p_left - 3; //30
         $req_kanan = $user->userExtra->p_right - 3; //0
-        if($req_kiri < $reward->kiri && $req_kanan < $reward->kanan){
+        if($req_kiri < $reward->kiri || $req_kanan < $reward->kanan){
             $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
             return back()->withNotify($notify);
         }
