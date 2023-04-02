@@ -1929,14 +1929,17 @@ class UserController extends Controller
             $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
             return back()->withNotify($notify);
         }
-        dd($req_kiri.':' .$req_kanan.' | '.$reward->kiri.':'.$reward->kanan);
-        ureward::create([
-            'trx'       => getTrx(),
-            'user_id'   => $user->id,
-            'reward_id' => $reward->id,
-            'status'    => 1,
-        ]);
-        $notify[] = ['success', 'Your data has been on record, get your reward: '.$reward->reward.' soon'];
+        if($req_kiri >= $reward->kiri || $req_kanan >= $reward->kanan){
+            dd($req_kiri.':' .$req_kanan.' | '.$reward->kiri.':'.$reward->kanan);
+            ureward::create([
+                'trx'       => getTrx(),
+                'user_id'   => $user->id,
+                'reward_id' => $reward->id,
+                'status'    => 1,
+            ]);
+            $notify[] = ['success', 'Your data has been on record, get your reward: '.$reward->reward.' soon'];
+        }
+            $notify[] = ['error', "Can't Claim Reward!, Error!"];
         return back()->withNotify($notify);
     }
 }
