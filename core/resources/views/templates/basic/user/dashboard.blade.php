@@ -521,7 +521,8 @@
                 </div> --}}
                 <div class="card-body bg--gradi-8 h5 text-center">
                     <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk anggota yang memiliki downline 20 kiri 20 kanan per
-                    bulan ini, berkesempatan memenangkan hadiah smartphone. Segera perluas jaringan dan raih kesuksesan
+                    bulan ini, berkesempatan memenangkan hadiah Smartphone atau uang tunai Rp 600.000,- Segera perluas
+                    jaringan dan raih kesuksesan
                     bersama!
                     <br>
                     <br>
@@ -532,15 +533,38 @@
                     <form action="{{ route('user.claim-reward') }}" method="POST">
                         @csrf
                         <input type="hidden" name="type" value="3">
-                        <button type="submit" class="btn btn-info btn-lg btn-block"
+                        {{-- <input type="submit" class="btn btn-info btn-lg btn-block" value="1"
                             @if ($claim) disabled @endif>
 
-                            @if ($claim)
-                                Aleredy Claim Reward
-                            @else
-                                Claim Reward
-                            @endif
-                        </button>
+                        @if ($claim)
+                            Aleredy Claim Reward
+                        @else
+                            Claim Reward
+                        @endif
+                        </input> --}}
+                        {{-- <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <input type="submit" class="btn btn-info btn-lg bg-info" name="method"
+                                    value="Claim Uang">
+                                <input type="submit" class="btn btn-info btn-lg bg-info" name="method"
+                                    value="Claim Smartphone">
+                            </div>
+                        </div> --}}
+                        <div class="input-group">
+                            <input type="submit" class="form-control bg-primary form-control-lg" name="claim"
+                                value="Claim Smartphone">
+                            <input type="submit" class="form-control bg-primary form-control-lg" aria-label="Large"
+                                name="claim" value="Claim Uang">
+                        </div>
+                        {{-- <input type="submit" class="btn btn-info btn-lg btn-block" name="1" value=""
+                            @if ($claim) disabled @endif>
+
+                        @if ($claim)
+                            Aleredy Claim Reward
+                        @else
+                            Claim Reward
+                        @endif
+                        </input> --}}
 
                     </form>
                 </div>

@@ -1924,11 +1924,17 @@ class UserController extends Controller
     }
 
     public function claimBonusReward(Request $request){
+        if($request->claim == 'Claim Smartphone'){
+            $claim = 'reward';
+        }else{
+            $claim = 'equal';
+        }
         $user = Auth::user();
         $reward = BonusReward::find($request->type);
         $cekClaim = ureward::where(['reward_id'=>3,'user_id'=>$user->id])->first();
+    
         if($cekClaim){
-            $notify[] = ['error', 'Your data has been on record, get your reward: '.$reward->reward.' soon'];
+            $notify[] = ['error', 'Your data has been on record, get your reward soon'];
             return back()->withNotify($notify);
         }
 
@@ -1947,6 +1953,7 @@ class UserController extends Controller
                 'left'      => $req_kiri,
                 'right'     => $req_kanan,
                 'is_gold'   => $user->userExtra->is_gold,
+                'claim'     => $claim,
             ];
             ureward::create([
                 'trx'       => getTrx(),
@@ -1955,7 +1962,7 @@ class UserController extends Controller
                 'status'    => 1,
                 'detail'    => json_encode($onClaim)
             ]);
-            $notify[] = ['success', 'Your data has been on record, get your reward: '.$reward->reward.' soon'];
+            $notify[] = ['success', 'Your data has been on record, get your reward: '.$reward->$claim.' soon'];
             return back()->withNotify($notify);
         }
             $notify[] = ['error', "Can't Claim Reward!, Error!"];

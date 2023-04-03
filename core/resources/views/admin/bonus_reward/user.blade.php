@@ -15,6 +15,7 @@
                                     <th scope="col">@lang('Reward')</th>
                                     <th scope="col">@lang('On Claim')</th>
                                     <th scope="col">@lang('Status')</th>
+                                    <th scope="col">@lang('Selected')</th>
                                     <th scope="col">@lang('Ket.')</th>
                                     <th scope="col">@lang('Action')</th>
                                 </tr>
@@ -41,12 +42,18 @@
                                             {!! $k->status() !!}
                                         </td>
                                         <td data-label="@lang('reward')">
+                                            {{ 'Claim ' . $k->claim() }}
+                                        </td>
+                                        <td data-label="@lang('reward')">
                                             {{ $k->ket }}
                                         </td>
                                         <td data-label="@lang('Action')">
                                             <button type="button" class="icon-btn edit" data-toggle="tooltip"
                                                 data-id="{{ $k->id }}" data-ket="{{ $k->ket }}"
-                                                data-status="{{ $k->status }}" data-original-title="Edit">
+                                                data-claim="{{ json_decode($k->detail, true)['claim'] }}"
+                                                data-amount="{{ $k->claim() }}" data-status="{{ $k->status }}"
+                                                data-original-title="Edit">
+
                                                 <i class="la la-pencil"></i>
                                             </button>
                                         </td>
@@ -85,12 +92,14 @@
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="id" id="id">
+                        <input type="hidden" name="claim" id="claim">
+                        <input type="hidden" name="amount" id="amount">
                         <div class="form-row">
                             <div class="form-group col">
                                 <label class="font-weight-bold"> @lang('Details.')</label>
                                 <textarea name="ket" id="ket" class="form-control " cols="5" rows="5"></textarea>
-
                             </div>
+
                         </div>
                         <div class="form-row">
                             <div class="form-group col">
@@ -124,6 +133,8 @@
                 $('#id').val($(this).data('id'));
                 $('#ket').val($(this).data('ket'));
                 $('#status').val($(this).data('status'));
+                $('#claim').val($(this).data('claim'));
+                $('#amount').val($(this).data('amount'));
                 modal.modal('show');
             });
 

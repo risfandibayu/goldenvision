@@ -8,10 +8,12 @@ use App\Models\BonusReward;
 use App\Models\GeneralSetting;
 use App\Models\Gold;
 use App\Models\Product;
+use App\Models\Transaction;
 use App\Models\ureward;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Image;
 
 class BonusRewardController extends Controller
@@ -163,11 +165,38 @@ class BonusRewardController extends Controller
     }
 
     public function UserUpdate(Request $request){
-        ureward::find($request->id)->update([
-            'ket'       => $request->ket,
-            'status'    => $request->status
-        ]);
-        $notify[] = ['success', 'Data Updated'];
-        return back()->withNotify($notify);
+        $user = User::find($request->id);
+        DB::beginTransaction();
+        try {
+            ureward::find($request->id)->update([
+                'ket'       => $request->ket,
+                'status'    => $request->status
+            ]);
+            if($request->claim == 'equal'){
+                $transaction = new Transaction();
+                $transaction->user_id = $user->id;
+                $transaction->amount = $request->amount;
+                $transaction->post_balance = $user->balance + $request->amount;
+                $transaction->charge = 0;
+                $transaction->trx_type = '+';
+                $transaction->details = 'Claim Bonus Monthly, Equal Money';
+                $transaction->trx =  getTrx();
+                $transaction->save();
+
+                $user->balance += $request->amount;
+                $user->save();
+            }
+
+            DB::commit();
+            $notify[] = ['success', 'Data Updated'];
+            return back()->withNotify($notify);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $notify[] = ['error', 'Error: '.$th->getMessage()];
+            return back()->withNotify($notify);
+        }
+
+        
+       
     }
 }

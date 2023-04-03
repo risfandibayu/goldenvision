@@ -38,4 +38,8 @@ class ureward extends Model
         }
         return $rs;
     }
+    public function claim(){
+        $data = json_decode($this->detail,true)['claim'];
+        return $this->rewa->$data;
+    }
 }
