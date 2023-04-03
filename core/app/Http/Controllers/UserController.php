@@ -109,7 +109,6 @@ class UserController extends Controller
         $user = Auth::user();
         $data['page_title']     = "Referals Tree";
         $data['referrals']      = User::userTree($user->id); 
-        // dd($data);
         return view($this->activeTemplate . 'user.referals', $data);
 
     }
