@@ -33,7 +33,7 @@ class ureward extends Model
         $rs = '<p>'.$data['left'].' | '.$data['right'].'</p> ';
         if($data['is_gold']){
             $rs .= '<span class="badge badge-warning">Gold</span>';
-        }else if($this->status == 2){
+        }else{
             $rs .=  '<span class="badge badge-secondary">Silver</span>';
         }
         return $rs;
