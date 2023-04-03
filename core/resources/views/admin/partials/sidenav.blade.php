@@ -77,20 +77,21 @@
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.reward*', 2) }} ">
                         <ul>
-                            <li class="sidebar-menu-item {{ menuActive('admin.reward.allReward') }} ">
-                                <a href="{{ route('admin.reward.allReward') }}" class="nav-link">
-                                    <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Bonus Reward')</span>
-                                </a>
-                            </li>
                             <li class="sidebar-menu-item {{ menuActive('admin.reward.userBonus') }} ">
                                 <a href="{{ route('admin.reward.userBonus') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('User Reward')</span>
                                 </a>
                             </li>
+                            <li class="sidebar-menu-item {{ menuActive('admin.reward.allReward') }} ">
+                                <a href="{{ route('admin.reward.allReward') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Bonus Reward')</span>
+                                </a>
+                            </li>
 
-                           
+
+
                         </ul>
                     </div>
                 </li>

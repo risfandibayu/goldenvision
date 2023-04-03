@@ -28,4 +28,14 @@ class ureward extends Model
             return '';
         }
     }
+    public function detail(){
+        $data = json_decode($this->detail,true);
+        $rs = '<p>'.$data['left'].' | '.$data['right'].'</p> ';
+        if($data['is_gold']){
+            $rs .= '<span class="badge badge-warning">Gold</span>';
+        }else if($this->status == 2){
+            $rs .=  '<span class="badge badge-secondary">Silver</span>';
+        }
+        return $rs;
+    }
 }

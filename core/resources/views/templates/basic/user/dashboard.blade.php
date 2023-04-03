@@ -532,7 +532,15 @@
                     <form action="{{ route('user.claim-reward') }}" method="POST">
                         @csrf
                         <input type="hidden" name="type" value="3">
-                        <button type="submit" class="btn btn-info btn-lg btn-block">Claim Reward</button>
+                        <button type="submit" class="btn btn-info btn-lg btn-block"
+                            @if ($claim) disabled @endif>
+
+                            @if ($claim)
+                                Aleredy Claim Reward
+                            @else
+                                Claim Reward
+                            @endif
+                        </button>
 
                     </form>
                 </div>

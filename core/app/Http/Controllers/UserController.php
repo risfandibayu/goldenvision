@@ -66,6 +66,7 @@ class UserController extends Controller
 
     public function home()
     {
+
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
         $data['totalWithdraw']      = Withdrawal::where('user_id', auth()->id())->where('status', 1)->sum('amount');
@@ -75,6 +76,12 @@ class UserController extends Controller
         $data['total_ref']          = User::where('ref_id', auth()->id())->count();
         $data['totalBvCut']         = BvLog::where('user_id', auth()->id())->where('trx_type', '-')->sum('amount');
         $data['emas']               = Gold::where('user_id',Auth::user()->id)->where('golds.status','=','0')->join('products','products.id','=','golds.prod_id')->select('golds.*',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.user_id')->first();
+        $cekClaim = ureward::where(['reward_id'=>3,'user_id'=>auth()->user()->id])->first();
+        if($cekClaim){
+            $data['claim']              =  true;
+        }else{
+            $data['claim']              =  false;
+        }
         $gold = DailyGold::orderByDesc('id')->first();  
         $userGold = auth()->user()->total_golds;
         $goldRange = $gold->per_gram;
@@ -1919,6 +1926,12 @@ class UserController extends Controller
     public function claimBonusReward(Request $request){
         $user = Auth::user();
         $reward = BonusReward::find($request->type);
+        $cekClaim = ureward::where(['reward_id'=>3,'user_id'=>$user->id])->first();
+        if($cekClaim){
+            $notify[] = ['error', 'Your data has been on record, get your reward: '.$reward->reward.' soon'];
+            return back()->withNotify($notify);
+        }
+
         if(!$reward){
             $notify[] = ['error', 'Bonus Not Found'];
             return back()->withNotify($notify);
@@ -1930,15 +1943,23 @@ class UserController extends Controller
             return back()->withNotify($notify);
         }
         if($req_kiri >= $reward->kiri && $req_kanan >= $reward->kanan){
+            $onClaim = [
+                'left'      => $req_kiri,
+                'right'     => $req_kanan,
+                'is_gold'   => $user->userExtra->is_gold,
+            ];
             ureward::create([
                 'trx'       => getTrx(),
                 'user_id'   => $user->id,
                 'reward_id' => $reward->id,
                 'status'    => 1,
+                'detail'    => json_encode($onClaim)
             ]);
             $notify[] = ['success', 'Your data has been on record, get your reward: '.$reward->reward.' soon'];
+            return back()->withNotify($notify);
         }
             $notify[] = ['error', "Can't Claim Reward!, Error!"];
-        return back()->withNotify($notify);
+            return back()->withNotify($notify);
+        
     }
 }

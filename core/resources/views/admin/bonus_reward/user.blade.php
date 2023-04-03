@@ -13,13 +13,15 @@
                                     <th scope="col">@lang('Code')</th>
                                     <th scope="col">@lang('User')</th>
                                     <th scope="col">@lang('Reward')</th>
-                                    <th scope="col">@lang('Details')</th>
+                                    <th scope="col">@lang('On Claim')</th>
                                     <th scope="col">@lang('Status')</th>
+                                    <th scope="col">@lang('Ket.')</th>
                                     <th scope="col">@lang('Action')</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($table as $key => $k)
+                                    {{-- @dd($k->detail()); --}}
                                     <tr>
                                         <td data-label="@lang('No')">{{ $key + 1 }}</td>
                                         <td data-label="@lang('code')">
@@ -31,18 +33,20 @@
                                         <td data-label="@lang('reward')">
                                             {{ $k->rewa->reward }}
                                         </td>
+                                        <td data-label="@lang('status')">
+                                            {!! $k->detail() !!}
+                                        </td>
+
+                                        <td data-label="@lang('status')">
+                                            {!! $k->status() !!}
+                                        </td>
                                         <td data-label="@lang('reward')">
                                             {{ $k->ket }}
                                         </td>
-                                        <td data-label="@lang('status')">
-                                            {!! $k->status() !!} 
-                                        </td>
                                         <td data-label="@lang('Action')">
                                             <button type="button" class="icon-btn edit" data-toggle="tooltip"
-                                                data-id="{{ $k->id }}"
-                                                data-ket="{{ $k->ket }}"
-                                                data-status="{{ $k->status }}"
-                                                data-original-title="Edit">
+                                                data-id="{{ $k->id }}" data-ket="{{ $k->ket }}"
+                                                data-status="{{ $k->status }}" data-original-title="Edit">
                                                 <i class="la la-pencil"></i>
                                             </button>
                                         </td>
@@ -85,7 +89,7 @@
                             <div class="form-group col">
                                 <label class="font-weight-bold"> @lang('Details.')</label>
                                 <textarea name="ket" id="ket" class="form-control " cols="5" rows="5"></textarea>
-                               
+
                             </div>
                         </div>
                         <div class="form-row">
@@ -107,8 +111,6 @@
             </div>
         </div>
     </div>
-
-    
 @endsection
 
 
