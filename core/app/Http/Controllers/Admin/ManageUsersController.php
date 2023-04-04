@@ -342,7 +342,7 @@ class ManageUsersController extends Controller
         return redirect()->back()->withNotify($notify);
     }
 
-    public function addSubBalance(Request $request, $id)
+    public function addSubPin(Request $request, $id)
     {
         $request->validate(['amount' => 'required','pin'=>'required']);
         $amount = preg_replace("/[^0-9]/", "", $request->amount);
@@ -445,6 +445,77 @@ class ManageUsersController extends Controller
                 //     'post_balance' => getAmount($user->balance)
                 // ]);
                 $notify[] = ['success', $request->pin . ' PIN has been subtracted from ' . $user->username ];
+            }
+            DB::commit();
+            return back()->withNotify($notify);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $notify[] = ['error', 'error: ' .$th->getMessage()];
+            return back()->withNotify($notify);
+        }
+    }
+    public function addSubBalance(Request $request, $id)
+    {
+        $request->validate(['amount' => 'required','details'=>'required']);
+        $amount = preg_replace("/[^0-9]/", "", $request->amount);
+        $amount = (int)$amount;
+        $user = User::findOrFail($id);
+        $amount = getAmount($amount);
+        $general = GeneralSetting::first(['cur_text','cur_sym']);
+        $details = $request->details;
+
+        $trx = getTrx();
+        DB::beginTransaction();
+        try {
+            if ($request->act) {
+
+                $user->balance += $amount;
+                $user->save();
+
+                $transaction = new Transaction();
+                $transaction->user_id = $user->id;
+                $transaction->amount = $amount;
+                $transaction->post_balance = getAmount($user->balance);
+                $transaction->charge = 0;
+                $transaction->trx_type = '+';
+                $transaction->details = $details;
+                $transaction->trx =  $trx;
+                $transaction->save();
+
+                notify($user, 'BAL_ADD', [
+                    'trx' => $trx,
+                    'amount' => $amount,
+                    'currency' => $general->cur_text,
+                    'post_balance' => getAmount($user->balance),
+                ]);
+                $notify[] = ['success','Rp '. $request->amount. ' Balance has been added to ' . $user->username ];
+
+            } else {
+
+                if ($amount > $user->balance) {
+                    $notify[] = ['error', $user->username . ' has insufficient Balance.'];
+                    return back()->withNotify($notify);
+                }
+                $user->balance -= $amount;
+                $user->save();
+
+                $transaction = new Transaction();
+                $transaction->user_id = $user->id;
+                $transaction->amount = $amount;
+                $transaction->post_balance = getAmount($user->balance);
+                $transaction->charge = 0;
+                $transaction->trx_type = '-';
+                $transaction->details = $details;
+                $transaction->trx =  $trx;
+                $transaction->save();
+
+                notify($user, 'BAL_SUB', [
+                    'trx' => $trx,
+                    'amount' => $amount,
+                    'currency' => $general->cur_text,
+                    'post_balance' => getAmount($user->balance)
+                ]);
+                $notify[] = ['success','Rp '. $request->amount. ' Balance has been subtracted from ' . $user->username ];
             }
             DB::commit();
             return back()->withNotify($notify);

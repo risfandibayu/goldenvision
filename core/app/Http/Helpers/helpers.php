@@ -59,6 +59,21 @@ function slug($string)
     return Illuminate\Support\Str::slug($string);
 }
 
+function title(){
+    $user = Auth::user();
+    $kiri = $user->userExtra->left;
+    $kanan = $user->userExtra->right;
+    $master_gold = 100;
+    $grand_master = 700;
+    if($kiri >= $master_gold && $kanan >= $master_gold){
+        return 'Master Gold';
+    }elseif($kiri >= $grand_master && $kanan >= $grand_master){
+        return 'Grand Master';
+    }else{
+        return false;
+    }
+    
+}
 
 function shortDescription($string, $length = 120)
 {

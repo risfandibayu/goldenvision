@@ -12,6 +12,12 @@
             background: linear-gradient(90deg, rgba(194, 102, 31, 1) 14%, rgba(255, 192, 0, 1) 100%);
         }
 
+        .txt-grand-gold {
+            background: -webkit-linear-gradient(rgba(194, 102, 31, 1) 14%, rgba(255, 192, 0, 1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         label {
             display: block;
             margin-bottom: 0.5rem
@@ -572,6 +578,17 @@
         </div>
         @if (Auth::user()->plan_id != 0)
             <div class="col-lg-4 col-md-4 col-12 mb-30">
+                @if ($title)
+                    <div class="card card-header-actions mb-3">
+                        <div class="card-header bg-grand-gold d-flex justify-content-center" style="font-weight: 600;">
+                            Title User
+                        </div>
+                        <div class="card-body text-center border-3">
+                            <h1 class="display-6 font-weight-bold txt-grand-gold">{{ $title }}</h1>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="card card-header-actions">
                     <div class="card-header" style="font-weight: 600;">
                         MP Number
@@ -1108,7 +1125,8 @@
                                         <div class="card">
                                             <img class="card-img-top"
                                                 src="{{ getImage('assets/images/reward/' . $item->images, null, true) }}"
-                                                alt="Bonus reward {{ $item->reward }}">
+                                                alt="Bonus reward {{ $item->reward }}"
+                                                style="height: 200px;width: 400px">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $item->kiri }} Kiri : {{ $item->kanan }}
                                                     Kanan</h5>

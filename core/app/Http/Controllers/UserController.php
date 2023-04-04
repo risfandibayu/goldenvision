@@ -100,7 +100,8 @@ class UserController extends Controller
             $kiri = auth()->user()->userExtra->left;
             $kanan = auth()->user()->userExtra->right;
         }
-        $data['isReward']   = BonusReward::where('kiri','<=',$kiri)->where('kanan','<=',$kanan)->first();;
+        $data['isReward']   = BonusReward::where('kiri','<=',$kiri)->where('kanan','<=',$kanan)->first();
+        $data['title']     = title();
         $data['persen_bonus']       = auth()->user()->total_binary_com / 10000000 * 100;
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
