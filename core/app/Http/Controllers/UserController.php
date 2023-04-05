@@ -66,7 +66,6 @@ class UserController extends Controller
 
     public function home()
     {
-
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
         $data['totalWithdraw']      = Withdrawal::where('user_id', auth()->id())->where('status', 1)->sum('amount');
@@ -88,10 +87,11 @@ class UserController extends Controller
         $float = floatval(str_replace(',', '.', nbk(auth()->user()->total_golds)));
         // dd($goldRange * $float);
         $data['goldBonus']          = $goldRange;
-        $data['reward']             = BonusReward::all();
+        $data['reward']             = BonusReward::where('type','alltime')->get();
         $data['goldToday']          = DailyGold::orderByDesc('id')->first();
         $data['p_kiri']             = auth()->user()->userExtra->p_left;
         $data['p_kanan']            = auth()->user()->userExtra->p_right;
+        $data['promo']              = BonusReward::where(['status'=>1,'type'=>'monthly'])->first();
         $ux = UserExtra::where('user_id',auth()->user()->id)->first();
         if(!$ux){
             $kiri = 0;
@@ -1924,14 +1924,14 @@ class UserController extends Controller
     }
 
     public function claimBonusReward(Request $request){
-        if($request->claim == 'Claim Smartphone'){
+        $reward = BonusReward::find($request->type);
+        if(isset($request->claim) && $request->claim == $reward->reward){
             $claim = 'reward';
         }else{
             $claim = 'equal';
         }
         $user = Auth::user();
-        $reward = BonusReward::find($request->type);
-        $cekClaim = ureward::where(['reward_id'=>3,'user_id'=>$user->id])->first();
+        $cekClaim = ureward::where(['reward_id'=>$reward->id,'user_id'=>$user->id])->first();
     
         if($cekClaim){
             $notify[] = ['error', 'Your data has been on record, get your reward soon'];

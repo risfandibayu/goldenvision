@@ -264,8 +264,12 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // mlm plan
         Route::get('product', 'ProductController@products')->name('product');
         Route::post('products/store', 'ProductController@productsStore')->name('products.store');
-
         Route::post('products/update', 'ProductController@productsUpdate')->name('products.update');
+
+        // admin product
+        Route::get('admin-reward', 'AdminController@AdminReward')->name('adminReward');
+        Route::post('admin-reward', 'AdminController@AdminRewardStore')->name('adminReward.store');
+
 
         // matching bonus
         Route::post('matching-bonus/update', 'MlmController@matchingUpdate')->name('matching-bonus.update');
@@ -283,6 +287,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // Route::resource('bonus-reward', 'BonusRewardController');
         Route::get('bonus-reward','BonusRewardController@index')->name('reward.allReward');
         Route::post('bonus-reward','BonusRewardController@store')->name('reward.Store');
+        Route::post('bonus-monthly','BonusRewardController@monthly')->name('reward.monthly');
         Route::get('bonus-reward/{id}','BonusRewardController@store')->name('reward.getId');
         Route::post('bonus-reward/update', 'BonusRewardController@upreward')->name('reward.update');
         Route::get('user-reward','BonusRewardController@UserBonus')->name('reward.userBonus');

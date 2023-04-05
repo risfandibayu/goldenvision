@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\AdminNotification;
 
 class AdminController extends Controller
@@ -206,5 +207,36 @@ class AdminController extends Controller
         return redirect($notification->click_url);
     }
 
+    public function AdminReward(){
+        $data['page_title'] = 'Admin Reward';
+        $data['empty_message'] = 'No Products found';
+        $data['admin'] = Admin::where('role','=','ar')->paginate(getPaginate());
+        return view('admin.admin_reward.index',$data);
+    }
+    public function AdminRewardStore(Request $request){
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email',
+            'username' => 'required|unique:admins,username',
+            'password'  => 'required|confirmed'
+        ]);
+        DB::beginTransaction();
+        try {
+            Admin::create([
+                'name'      => $request->name,
+                'email'     => $request->email,
+                'username'  => $request->username,
+                'password'  => Hash::make($request->password),
+                'role'      => 'ar'
+            ]);
+            DB::commit();
+            $notify[] = ['success', 'Admin Reward Created Successfully.'];
+            return redirect()->back()->withNotify($notify);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $notify[] = ['success', 'Error: '.$th->getMessage()];
+            return redirect()->back()->withNotify($notify);
+        }
+    }
 
 }

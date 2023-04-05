@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\ureward;
 use App\Models\User;
+use App\Models\UserExtra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,8 @@ class BonusRewardController extends Controller
         $page_title = 'Bonus Rewards';
         $empty_message = 'No Bonus Rewards Found';
         $table = BonusReward::all()->paginate(getPaginate());
-        return view('admin.bonus_reward.index', compact('page_title','table', 'empty_message'));
+        $monthly = BonusReward::where('type','monthly')->orderByDesc('id')->get();
+        return view('admin.bonus_reward.index', compact('page_title','table', 'empty_message','monthly'));
     }
 
     /**
@@ -72,13 +74,37 @@ class BonusRewardController extends Controller
         // dd($request->file('images'));
         $prod->kiri            = $request->kiri;
         $prod->kanan           = $request->kanan;
-        $prod->reward           = $request->bonus;
+        $prod->reward          = $request->bonus;
+        $prod->type            = $request->type;
+        $prod->status          = 0;
         $prod->save();
 
         $notify[] = ['success', 'New Reward created successfully'];
         return back()->withNotify($notify);
     }
 
+    public function monthly(Request $request){
+
+        DB::beginTransaction();
+        try {
+            // update last active to deactive
+            BonusReward::where(['type'=>'monthly','status'=>1])->update(['status'=>0]);
+            // update new monthly to active
+            BonusReward::find($request->id)->update(['status'=>1]);
+            // reset userExtra p_kanan && p_kiri to 0
+            $ux =  UserExtra::where('p_left','!=',0)->orWhere('p_right','!=',0)->get();
+            foreach ($ux as $key => $value) {
+                $value->update(['p_left'=>0,'p_right'=>0]);
+            }
+            DB::commit();
+            $notify[] = ['success', 'New Bonus Monthly updated successfully'];
+            return back()->withNotify($notify);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $notify[] = ['error', 'Error: '.$th->getMessage()];
+            return back()->withNotify($notify);
+        }
+    }
     /**
      * Display the specified resource.
      *
@@ -140,6 +166,8 @@ class BonusRewardController extends Controller
         $prod->kiri            = $request->kiri;
         $prod->kanan           = $request->kanan;
         $prod->reward           = $request->bonus;
+        $prod->type            = $request->type;
+        $prod->status          = $request->status;
         $prod->save();
 
         $notify[] = ['success', 'New Reward updated successfully'];
@@ -160,7 +188,7 @@ class BonusRewardController extends Controller
     public function UserBonus(){
         $page_title = 'User Rewards';
         $empty_message = 'No User Rewards Found';
-        $table = ureward::all()->paginate(getPaginate());
+        $table = ureward::orderByDesc('id')->paginate(getPaginate());
         return view('admin.bonus_reward.user', compact('page_title','table', 'empty_message'));
     }
 

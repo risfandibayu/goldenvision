@@ -12,6 +12,8 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
     <!-- bootstrap 4  -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/vendor/grid.min.css') }}">
+
+
     <!-- bootstrap toggle css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/vendor/bootstrap-toggle.min.css') }}">
     <!-- fontawesome 5  -->
@@ -35,8 +37,13 @@
     <link rel="stylesheet" href="{{ asset('assets/admin/css/vendor/bootstrap-pincode-input.css') }}">
     <!-- dashdoard main css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/app.css') }}">
+
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+
     <style>
-        .bg-pink{
+        .bg-pink {
             background-color: pink;
         }
     </style>

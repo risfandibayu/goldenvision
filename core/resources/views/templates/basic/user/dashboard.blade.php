@@ -276,6 +276,15 @@
             animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards
         }
 
+        .cards-wrapper {
+            display: flex;
+        }
+
+        .cardSlide {
+            margin: 0 0.5em;
+            width: calc(100%/3);
+        }
+
         @keyframes stroke {
             100% {
                 stroke-dashoffset: 0
@@ -526,55 +535,86 @@
                     </div>
                 </div> --}}
                 <div class="card-body bg--gradi-8 h5 text-center">
-                    <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk anggota yang memiliki downline 20 kiri 20 kanan per
-                    bulan ini, berkesempatan memenangkan hadiah Smartphone atau uang tunai Rp 600.000,- Segera perluas
-                    jaringan dan raih kesuksesan
-                    bersama!
+                    <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk mitra usaha yang telah memenuhi kualifikasi penjualan
+                    produk {{ $promo['kiri'] }} kiri dan {{ $promo['kanan'] }} kanan per bulan ini, akan mendapatkan
+                    kesempatan reward promo {{ $promo['reward'] }}
+                    {{ $promo['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($promo['equal']) : '' }}
+                    segera tingkatkan
+                    penjualan anda dan raih kesuksesan bersama!!
                     <br>
                     <br>
-                    <b class="mt-5"> Saat ini kamu {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
+                    <b class="mt-5"> Total penjualan kamu saat ini {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
                         {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
                 </div>
                 <div class="card-footer">
                     <form action="{{ route('user.claim-reward') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="type" value="3">
-                        {{-- <input type="submit" class="btn btn-info btn-lg btn-block" value="1"
-                            @if ($claim) disabled @endif>
-
-                        @if ($claim)
-                            Aleredy Claim Reward
-                        @else
-                            Claim Reward
-                        @endif
-                        </input> --}}
-                        {{-- <div class="input-group mb-3">
-                            <div class="input-group-append">
-                                <input type="submit" class="btn btn-info btn-lg bg-info" name="method"
-                                    value="Claim Uang">
-                                <input type="submit" class="btn btn-info btn-lg bg-info" name="method"
-                                    value="Claim Smartphone">
-                            </div>
-                        </div> --}}
+                        <input type="hidden" name="type" value="{{ $promo['id'] }}">
                         <div class="input-group">
-                            <input type="submit" class="form-control bg-primary form-control-lg" name="claim"
-                                value="Claim Smartphone">
-                            <input type="submit" class="form-control bg-primary form-control-lg" aria-label="Large"
-                                name="claim" value="Claim Uang">
+                            @if ($promo['equal'] == 0)
+                                <button class="btn btn-primary btn-block">Claim Bonus</button>
+                            @else
+                                <input type="submit" class="form-control bg-primary form-control-lg" name="claim"
+                                    value="{{ $promo['reward'] }}">
+                                <input type="submit" class="form-control bg-primary form-control-lg" aria-label="Large"
+                                    name="claim" value="{{ $promo['equal'] }}">
+                            @endif
+
                         </div>
-                        {{-- <input type="submit" class="btn btn-info btn-lg btn-block" name="1" value=""
-                            @if ($claim) disabled @endif>
-
-                        @if ($claim)
-                            Aleredy Claim Reward
-                        @else
-                            Claim Reward
-                        @endif
-                        </input> --}}
-
                     </form>
                 </div>
             </div>
+
+            {{-- 
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <hr>
+                <h4>#CLAIM BONUS BY USER</h4>
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="cards-wrapper d-flex justify-content-center">
+                            <div class="card mr-5 mt-3" style="width: 10rem;">
+                                <img src="{{ getImage('test.png', null, true) }}" class="card-img-top" alt="..."
+                                    style="width: 10rem;height:8rem">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Some quick </p>
+                                </div>
+                            </div>
+                            <div class="card mr-5 mt-3" style="width: 10rem;">
+                                <img src="{{ getImage('test.png', null, true) }}" class="card-img-top" alt="..."
+                                    style="width: 10rem;height:8rem">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Some quick </p>
+                                </div>
+                            </div>
+                            <div class="card mr-5 mt-3" style="width: 10rem;">
+                                <img src="{{ getImage('test.png', null, true) }}" class="card-img-top" alt="..."
+                                    style="width: 10rem;height:8rem">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Some quick </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div> --}}
+
         </div>
         @if (Auth::user()->plan_id != 0)
             <div class="col-lg-4 col-md-4 col-12 mb-30">
@@ -644,7 +684,8 @@
                     </div>
                     <div class="desciption">
                         <span class="text--small font-weight-bold">Equal To <span
-                                class="badge badge-danger">{{ nb($goldBonus * auth()->user()->total_golds) }} IDR</span>
+                                class="badge badge-danger">{{ nb($goldBonus * auth()->user()->total_golds) }}
+                                IDR</span>
                         </span>
                     </div>
                     <div class="desciption">
@@ -1131,7 +1172,7 @@
                                                 <h5 class="card-title">{{ $item->kiri }} Kiri : {{ $item->kanan }}
                                                     Kanan</h5>
                                                 <p class="card-text">Dapatkan Reward <b>{{ $item->reward }}</b> Dengan
-                                                    {{ $item->kiri }}:{{ $item->kanan }} Downline</p>
+                                                    {{ $item->kiri }}:{{ $item->kanan }} OMSET/ Total Penjualan</p>
                                                 @if (cekReward($item->id) == 1)
                                                     <button type="submit" class="btn btn-primary btn-block"
                                                         disabled>Reward Sudah Diklaim</button>
