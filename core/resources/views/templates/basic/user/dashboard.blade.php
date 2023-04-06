@@ -512,7 +512,9 @@
                 </div>
             </div>
         @endif
+
         <div class="col-lg-8 col-md-8 col-12 mb-30">
+
             <div class="card card-header-actions">
                 {{-- <div class="card-header text-center" style="font-weight: 600;">
                         Account Verification
@@ -534,35 +536,108 @@
                         @endif
                     </div>
                 </div> --}}
-                <div class="card-body bg--gradi-8 h5 text-center">
-                    <b> Bonus Sepesial Bulan Ini</b> <br><br> Untuk mitra usaha yang telah memenuhi kualifikasi penjualan
-                    produk {{ $promo['kiri'] }} kiri dan {{ $promo['kanan'] }} kanan per bulan ini, akan mendapatkan
-                    kesempatan reward promo {{ $promo['reward'] }}
-                    {{ $promo['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($promo['equal']) : '' }}
-                    segera tingkatkan
-                    penjualan anda dan raih kesuksesan bersama!!
-                    <br>
-                    <br>
-                    <b class="mt-5"> Total penjualan kamu saat ini {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
-                        {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
-                </div>
-                <div class="card-footer">
-                    <form action="{{ route('user.claim-reward') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="type" value="{{ $promo['id'] }}">
-                        <div class="input-group">
-                            @if ($promo['equal'] == 0)
-                                <button class="btn btn-primary btn-block">Claim Bonus</button>
-                            @else
-                                <input type="submit" class="form-control bg-primary form-control-lg" name="claim"
-                                    value="{{ $promo['reward'] }}">
-                                <input type="submit" class="form-control bg-primary form-control-lg" aria-label="Large"
-                                    name="claim" value="{{ $promo['equal'] }}">
-                            @endif
 
-                        </div>
-                    </form>
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        @foreach ($promo as $item)
+                            <div class="carousel-item @if ($item->id == 3) active @endif">
+                                <div class="bonus">
+                                    <div class="card-body bg--gradi-8 h5 text-center">
+                                        <b> Bonus Sepesial {{ $item->id == 3 ? ' Bulan Ini' : ' Sampai Bulan Juni' }}</b>
+                                        <br><br>
+                                        Untuk mitra usaha yang telah memenuhi
+                                        kualifikasi
+                                        penjualan
+                                        produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }} kanan per bulan ini,
+                                        akan
+                                        mendapatkan
+                                        kesempatan reward promo {{ $item['reward'] }}
+                                        {{ $item['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($item['equal']) : '' }}
+                                        segera tingkatkan
+                                        penjualan anda dan raih kesuksesan bersama!!
+                                        <br>
+                                        <br>
+                                        <b class="mt-5"> Total penjualan kamu saat ini
+                                            {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
+                                            {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
+                                    </div>
+                                    <div class="card-footer">
+                                        <form action="{{ route('user.claim-reward') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="type" value="{{ $item['id'] }}">
+                                            <div class="input-group">
+                                                @if ($item['equal'] == 0)
+                                                    <button class="btn btn-primary btn-block">Claim Bonus</button>
+                                                @else
+                                                    <input type="submit" class="form-control bg-primary form-control-lg"
+                                                        name="claim" value="{{ $item['reward'] }}">
+                                                    <input type="submit" class="form-control bg-primary form-control-lg"
+                                                        aria-label="Large" name="claim" value="{{ $item['equal'] }}">
+                                                @endif
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        {{-- <div class="carousel-item">
+                            <div class="bonus">
+                                <div class="card-body bg--gradi-8 h5 text-center">
+                                    <b> Bonus Sepesial Sampai Bulan Juni</b> <br><br> Untuk mitra usaha yang telah memenuhi
+                                    kualifikasi
+                                    penjualan
+                                    produk {{ $promo['kiri'] }} kiri dan {{ $promo['kanan'] }} kanan per bulan ini, akan
+                                    mendapatkan
+                                    kesempatan reward promo {{ $promo['reward'] }}
+                                    {{ $promo['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($promo['equal']) : '' }}
+                                    segera tingkatkan
+                                    penjualan anda dan raih kesuksesan bersama!!
+                                    <br>
+                                    <br>
+                                    <b class="mt-5"> Total penjualan kamu saat ini {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
+                                        {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
+                                </div>
+                                <div class="card-footer">
+                                    <form action="{{ route('user.claim-reward') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="type" value="{{ $promo['id'] }}">
+                                        <div class="input-group">
+                                            @if ($promo['equal'] == 0)
+                                                <button class="btn btn-primary btn-block">Claim Bonus</button>
+                                            @else
+                                                <input type="submit" class="form-control bg-primary form-control-lg"
+                                                    name="claim" value="{{ $promo['reward'] }}">
+                                                <input type="submit" class="form-control bg-primary form-control-lg"
+                                                    aria-label="Large" name="claim" value="{{ $promo['equal'] }}">
+                                            @endif
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
+                    <button class="carousel-control-prev" style="opacity: 0.1;" type="button"
+                        data-target="#carouselExampleIndicators" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" style="opacity: 0.1;" type="button"
+                        data-target="#carouselExampleIndicators" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </button>
                 </div>
+
+
+
+
             </div>
 
             {{-- 

@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('panel')
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-12">
             <div class="accordion" id="accordionExample">
                 <div class="card">
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="row mt-3">
         <div class="col-lg-12">
             <div class="card">
@@ -171,6 +171,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label class="font-weight-bold">@lang('Type')</label>
+                                <select name="status" id="status" class="form-control status">
+                                    <option selected disabled>--Select</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">In Active</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-block btn--primary">@lang('Update')</button>
@@ -220,10 +230,10 @@
                         <div class="form-row">
                             <div class="form-group col">
                                 <label class="font-weight-bold">@lang('Type')</label>
-                                <select name="type" id="type" class="form-control type">
+                                <select name="status" id="type" class="form-control status">
                                     <option selected disabled>--Select</option>
-                                    <option value="alltime">alltime</option>
-                                    <option value="monthly">monthly</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">In Active</option>
                                 </select>
                             </div>
                         </div>
@@ -241,7 +251,7 @@
 @push('breadcrumb-plugins')
     <a href="javascript:void(0)" class="btn btn-sm btn--success add-product"><i
             class="fa fa-fw fa-plus"></i>@lang('Add
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                New')</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    New')</a>
 @endpush
 
 @push('script')
