@@ -50,7 +50,7 @@
 
                                                     </td>
                                                     <td>
-                                                        {{ $t->position_by_ref != null && $t->position_by_ref == 1 ? 'Kiri' : 'Kanan' }}
+                                                        {{ $t->position != null && $t->position == 1 ? 'Kiri' : 'Kanan' }}
                                                     </td>
                                                     <td>
                                                         {!! date('M d Y', strtotime($t->created_at)) !!}

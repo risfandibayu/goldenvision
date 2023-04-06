@@ -7,6 +7,7 @@ use App\Http\Controllers\CronController;
 use App\Http\Controllers\SponsorRegisterController;
 use App\Http\Controllers\UserController;
 use App\Models\rekening;
+use App\Models\test;
 use App\Models\User;
 use App\Models\UserExtra;
 use App\Models\UserGold;
@@ -47,6 +48,28 @@ Route::get('day-gold',function(){
     return 'success update';
 });
 
+Route::get('test-ex',function(){
+    // $ux = UserExtra::all();
+    // $data = [];
+    // foreach ($ux as $key => $value) {
+    //     $data[$value->id] = ['p_left' => $value->p_left , 'p_right' => $value->p_right];
+    // }
+    // $t = test::create([
+    //     'test' => json_encode($data)
+    // ]);
+
+    $test = test::find(2);
+  
+    $data = json_decode($test->test,true);
+
+    foreach ($data as $key => $value) {
+        UserExtra::findOrFail($key)->update([
+            'p_left'    => $value['p_left'],
+            'p_right'    => $value['p_right'],
+        ]);
+    }
+    return 'success';
+});
 // Route::get('update-rek',function(){
 //     for ($i=115; $i < 146 ; $i++) { 
 //         $rek = rekening::where('user_id',$i)->first();
