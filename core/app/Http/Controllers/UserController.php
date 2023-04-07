@@ -102,9 +102,11 @@ class UserController extends Controller
             $kiri = auth()->user()->userExtra->left;
             $kanan = auth()->user()->userExtra->right;
         }
-        $data['isReward']   = BonusReward::where('kiri','<=',$kiri)->where('kanan','<=',$kanan)->first();
-        $data['title']     = title();
-        $data['persen_bonus']       = auth()->user()->total_binary_com / 10000000 * 100;
+        $data['ureward']        = ureward::slideUser();
+        $data['urewardCount']      = ureward::with('user')->whereHas('reward', function ($query) {return $query->where('type', '=', 'monthly');})->count() / 3;
+        $data['isReward']       = BonusReward::where('kiri','<=',$kiri)->where('kanan','<=',$kanan)->first();
+        $data['title']          = title();
+        $data['persen_bonus']   = auth()->user()->total_binary_com / 10000000 * 100;
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
 

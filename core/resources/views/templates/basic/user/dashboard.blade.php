@@ -285,6 +285,103 @@
             width: calc(100%/3);
         }
 
+        /* userInfo */
+
+        .profile {
+            width: 330px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 5px;
+            background-color: #fafafa;
+            box-shadow: 0 0 2rem #babbbc;
+            animation: show-profile 0.5s forwards ease-in-out;
+        }
+
+        /* @keyframes show-profile {
+                                                                                                                                                                                                        0% {
+                                                                                                                                                                                                            width: 0;
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    } */
+
+        .profile .photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #fafafa;
+            margin-left: -50px;
+            box-shadow: 0 0 0.5rem #babbbc;
+            animation: rotate-photo 0.5s forwards ease-in-out;
+        }
+
+        /* @keyframes rotate-photo {
+                                                                                                                                                                                                            0% {
+                                                                                                                                                                                                                transform: rotate(0deg);
+                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                            100% {
+                                                                                                                                                                                                                transform: rotate(-360deg);
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                        } */
+
+        .profile .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile .content {
+            padding: 10px;
+            overflow: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        /* .profile .content::before {
+                                                                                                                                                                                                                content: "";
+                                                                                                                                                                                                                position: absolute;
+                                                                                                                                                                                                                width: 230px;
+                                                                                                                                                                                                                height: 150px;
+                                                                                                                                                                                                                background-color: #dfe6e9;
+                                                                                                                                                                                                                left: 0;
+                                                                                                                                                                                                                top: -20px;
+                                                                                                                                                                                                                z-index: -1;
+                                                                                                                                                                                                                transform: rotate(-8deg);
+                                                                                                                                                                                                            } */
+
+        .profile .content .text {
+            margin-top: 20px;
+            margin-left: 50px;
+        }
+
+        .profile .content .text h3,
+        .profile .content .text h6 {
+            font-weight: normal;
+            margin: 3px 0;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .profile .content .btn {
+            background-color: #70a1ff;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            right: 25px;
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            cursor: pointer;
+            transition-duration: 0.3s;
+            animation: pop-btn 0.3s both ease-in-out 0.5s;
+        }
+
         @keyframes stroke {
             100% {
                 stroke-dashoffset: 0
@@ -640,55 +737,149 @@
 
             </div>
 
-            {{-- 
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
                 <hr>
                 <h4>#CLAIM BONUS BY USER</h4>
                 <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    @if ($urewardCount == 1)
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                    @elseif($urewardCount == 2)
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+                    @else
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
+                    @endif
+
                 </ol>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                    {!! $ureward !!}
+                    {{-- <div class="carousel-item active">
                         <div class="cards-wrapper d-flex justify-content-center">
-                            <div class="card mr-5 mt-3" style="width: 10rem;">
-                                <img src="{{ getImage('test.png', null, true) }}" class="card-img-top" alt="..."
-                                    style="width: 10rem;height:8rem">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick </p>
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="card mr-5 mt-3" style="width: 10rem;">
-                                <img src="{{ getImage('test.png', null, true) }}" class="card-img-top" alt="..."
-                                    style="width: 10rem;height:8rem">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick </p>
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="card mr-5 mt-3" style="width: 10rem;">
-                                <img src="{{ getImage('test.png', null, true) }}" class="card-img-top" alt="..."
-                                    style="width: 10rem;height:8rem">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick </p>
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                         </div>
                     </div>
+                    <div class="carousel-item ">
+                        <div class="cards-wrapper d-flex justify-content-center">
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="cards-wrapper d-flex justify-content-center">
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
+                                <div class="row card-body">
+                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
+                                        alt="..." style="width: 2%;height: 2%;">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> --}}
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
-            </div> --}}
+            </div>
 
         </div>
         @if (Auth::user()->plan_id != 0)
