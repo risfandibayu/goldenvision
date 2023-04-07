@@ -233,7 +233,7 @@ class UserReportController extends Controller
         $data['transactions'] = UserPin::where('user_id',Auth::user()->id)
                             ->leftjoin('users','users.id','=','user_pin.pin_by')
                             ->select('user_pin.*','users.username')
-                            ->orderBy('user_pin.created_at','DESC')
+                            ->orderBy('id','DESC')
                             ->paginate(getPaginate());
                             //->get(); dd($data);
         $data['search'] = $search;
