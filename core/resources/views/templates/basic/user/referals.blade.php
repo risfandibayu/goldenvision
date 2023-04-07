@@ -50,7 +50,17 @@
 
                                                     </td>
                                                     <td>
-                                                        {!! $t->positionUpline() . ' | ' . $t->position() !!}
+                                                        <div class="row">
+                                                            <span class="col-md-4" style="text-align: right">
+                                                                {!! $t->positionUpline() !!}
+                                                            </span>
+                                                            <span class="col-md-4">
+                                                                |
+                                                            </span>
+                                                            <span class="col-md-4" style="text-align: left">
+                                                                {!! $t->position() !!}
+                                                            </span>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         {!! date('M d Y', strtotime($t->created_at)) !!}
