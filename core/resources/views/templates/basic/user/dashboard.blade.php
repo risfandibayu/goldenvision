@@ -301,10 +301,10 @@
         }
 
         /* @keyframes show-profile {
-                                                                                                                                                                                                        0% {
-                                                                                                                                                                                                            width: 0;
-                                                                                                                                                                                                        }
-                                                                                                                                                                                                    } */
+                                                                                                                                                                                                            0% {
+                                                                                                                                                                                                                width: 0;
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                        } */
 
         .profile .photo {
             width: 100px;
@@ -318,14 +318,14 @@
         }
 
         /* @keyframes rotate-photo {
-                                                                                                                                                                                                            0% {
-                                                                                                                                                                                                                transform: rotate(0deg);
-                                                                                                                                                                                                            }
+                                                                                                                                                                                                                0% {
+                                                                                                                                                                                                                    transform: rotate(0deg);
+                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                            100% {
-                                                                                                                                                                                                                transform: rotate(-360deg);
-                                                                                                                                                                                                            }
-                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                100% {
+                                                                                                                                                                                                                    transform: rotate(-360deg);
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                            } */
 
         .profile .photo img {
             width: 100%;
@@ -344,16 +344,16 @@
         }
 
         /* .profile .content::before {
-                                                                                                                                                                                                                content: "";
-                                                                                                                                                                                                                position: absolute;
-                                                                                                                                                                                                                width: 230px;
-                                                                                                                                                                                                                height: 150px;
-                                                                                                                                                                                                                background-color: #dfe6e9;
-                                                                                                                                                                                                                left: 0;
-                                                                                                                                                                                                                top: -20px;
-                                                                                                                                                                                                                z-index: -1;
-                                                                                                                                                                                                                transform: rotate(-8deg);
-                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                    content: "";
+                                                                                                                                                                                                                    position: absolute;
+                                                                                                                                                                                                                    width: 230px;
+                                                                                                                                                                                                                    height: 150px;
+                                                                                                                                                                                                                    background-color: #dfe6e9;
+                                                                                                                                                                                                                    left: 0;
+                                                                                                                                                                                                                    top: -20px;
+                                                                                                                                                                                                                    z-index: -1;
+                                                                                                                                                                                                                    transform: rotate(-8deg);
+                                                                                                                                                                                                                } */
 
         .profile .content .text {
             margin-top: 20px;
