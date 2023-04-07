@@ -266,5 +266,25 @@ class User extends Authenticatable
         return $group;
        
     }
+    public function position(){
+        $data = $this->position_by_ref;
+        if($data == null){
+            return '<span class="badge rounded-pill badge-secondary">not-set</span>';
+        }elseif($data==1){
+            return 'Kiri';
+        }else{
+            return 'Kanan';
+        }
+    }
+    public function positionUpline(){
+        $data = $this->position;
+        if($data == null){
+            return '<span class="badge rounded-pill badge-secondary">not-set</span>';
+        }elseif($data==1){
+            return 'Kiri';
+        }else{
+            return 'Kanan';
+        }
+    }
 
 }

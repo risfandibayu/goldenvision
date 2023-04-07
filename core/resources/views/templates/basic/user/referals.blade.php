@@ -26,7 +26,7 @@
                                             <th>MP No</th>
                                             <th>Username</th>
                                             <th>Phone</th>
-                                            <th>Position</th>
+                                            <th>Position <br> (By Upline | By Referral)</th>
                                             <th>Join date</th>
                                         </tr>
                                         <tbody>
@@ -50,7 +50,7 @@
 
                                                     </td>
                                                     <td>
-                                                        {{ $t->position != null && $t->position == 1 ? 'Kiri' : 'Kanan' }}
+                                                        {!! $t->positionUpline() . ' | ' . $t->position() !!}
                                                     </td>
                                                     <td>
                                                         {!! date('M d Y', strtotime($t->created_at)) !!}
