@@ -80,7 +80,7 @@ class ureward extends Model
             $rs .=                          '<h5 class="card-title">'.$value->user->username.'</h5>';
             $rs .=                          '<p class="card-text">'.$value->reward->reward.' </p>';
             $rs .=                          '<p class="card-text">'.$value->details()['left'].'|'.$value->details()['right'].' </p>';
-            $rs .=                          '<p class="card-text">'.$value->details()['is_gold']?'<span class="badge badge-warning">gold</span>':'<span class="badge badge-secondary">silver</span></p>';
+            $rs .=                          '<p class="card-text">'.$value->details()['is_gold']?'<span class="badge rounded-pill badge-warning">Gold</span>':'<span class="badge rounded-pill badge-secondary">Silver</span></p>';
             $rs .=                      '</div>';
             $rs .=              '</div>';
             $rs .=          '</div>';
@@ -99,7 +99,7 @@ class ureward extends Model
                 $rs .=                          '<h5 class="card-title">'.$value->user->username.'</h5>';
                 $rs .=                          '<p class="card-text">'.$value->reward->reward.' </p>';
                 $rs .=                          '<p class="card-text">'.$value->details()['left'].'|'.$value->details()['right'].' </p>';
-                $rs .=                          '<p class="card-text">'.$value->details()['is_gold']?'<span class="badge badge-warning">gold</span>':'<span class="badge badge-secondary">silver</span></p>';
+                $rs .=                          '<p class="card-text">'.$value->details()['is_gold']?'<span class="badge rounded-pill badge-warning">Gold</span>':'<span class="badge rounded-pill badge-secondary">Silver</span></p>';
                 $rs .=                      '</div>';
                 $rs .=              '</div>';
                 $rs .=          '</div>';
@@ -118,7 +118,7 @@ class ureward extends Model
                 $rs .=                          '<h5 class="card-title">'.$value->user->username.'</h5>';
                 $rs .=                          '<p class="card-text">'.$value->reward->reward.' </p>';
                 $rs .=                          '<p class="card-text">'.$value->details()['left'].'|'.$value->details()['right'].' </p>';
-                $rs .=                          '<p class="card-text">'.$value->details()['is_gold']?'<span class="badge badge-warning">gold</span>':'<span class="badge badge-secondary">silver</span></p>';
+                $rs .=                          '<p class="card-text">'.$value->details()['is_gold']?'<span class="badge rounded-pill badge-warning">Gold</span>':'<span class="badge rounded-pill badge-secondary">Silver</span></p>';
                 $rs .=                      '</div>';
                 $rs .=              '</div>';
                 $rs .=          '</div>';
