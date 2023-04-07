@@ -207,6 +207,15 @@ class SponsorRegisterController extends Controller
             if ($sponsor->pin < $pin) {
                 return ['error'=>true, 'msg'=> 'Not enough pin to send'];
             }
+            $spin = UserPin::create([
+                'user_id' => $sponsor->id,
+                'pin'     => $pin,
+                'pin_by'  => $user->id,
+                'type'      => "-",
+                'start_pin' => $sponsor->pin,
+                'end_pin'   => $sponsor->pin - $pin,
+                'ket'       => 'Sponsor Create and Send '.$pin.' Pin to: '. $user->username
+            ]);
             $sponsor->pin -= $pin;
             $sponsor->save();
 
@@ -224,15 +233,15 @@ class SponsorRegisterController extends Controller
             $user->pin += $pin;
             $user->save();
             
-            $transaction = new Transaction();
-            $transaction->user_id = $user_id;
-            $transaction->amount = $pin;
-            $transaction->post_balance = 0;
-            $transaction->charge = 0;
-            $transaction->trx_type = '+';
-            $transaction->details = 'Added Pin Via Admin';
-            $transaction->trx =  $trx;
-            $transaction->save();
+            // $transaction = new Transaction();
+            // $transaction->user_id = $user_id;
+            // $transaction->amount = $pin;
+            // $transaction->post_balance = 0;
+            // $transaction->charge = 0;
+            // $transaction->trx_type = '+';
+            // $transaction->details = 'Added Pin Via Admin';
+            // $transaction->trx =  $trx;
+            // $transaction->save();
 
             return ['sts'=>$user->pin];
         } catch (\Throwable $th) {
