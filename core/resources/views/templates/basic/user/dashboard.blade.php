@@ -301,10 +301,10 @@
         }
 
         /* @keyframes show-profile {
-                                                                                                                                                                                                            0% {
-                                                                                                                                                                                                                width: 0;
-                                                                                                                                                                                                            }
-                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                0% {
+                                                                                                                                                                                                                    width: 0;
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                            } */
 
         .profile .photo {
             width: 100px;
@@ -318,14 +318,14 @@
         }
 
         /* @keyframes rotate-photo {
-                                                                                                                                                                                                                0% {
-                                                                                                                                                                                                                    transform: rotate(0deg);
-                                                                                                                                                                                                                }
+                                                                                                                                                                                                                    0% {
+                                                                                                                                                                                                                        transform: rotate(0deg);
+                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                100% {
-                                                                                                                                                                                                                    transform: rotate(-360deg);
-                                                                                                                                                                                                                }
-                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                    100% {
+                                                                                                                                                                                                                        transform: rotate(-360deg);
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                } */
 
         .profile .photo img {
             width: 100%;
@@ -344,16 +344,16 @@
         }
 
         /* .profile .content::before {
-                                                                                                                                                                                                                    content: "";
-                                                                                                                                                                                                                    position: absolute;
-                                                                                                                                                                                                                    width: 230px;
-                                                                                                                                                                                                                    height: 150px;
-                                                                                                                                                                                                                    background-color: #dfe6e9;
-                                                                                                                                                                                                                    left: 0;
-                                                                                                                                                                                                                    top: -20px;
-                                                                                                                                                                                                                    z-index: -1;
-                                                                                                                                                                                                                    transform: rotate(-8deg);
-                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                        content: "";
+                                                                                                                                                                                                                        position: absolute;
+                                                                                                                                                                                                                        width: 230px;
+                                                                                                                                                                                                                        height: 150px;
+                                                                                                                                                                                                                        background-color: #dfe6e9;
+                                                                                                                                                                                                                        left: 0;
+                                                                                                                                                                                                                        top: -20px;
+                                                                                                                                                                                                                        z-index: -1;
+                                                                                                                                                                                                                        transform: rotate(-8deg);
+                                                                                                                                                                                                                    } */
 
         .profile .content .text {
             margin-top: 20px;
@@ -650,7 +650,7 @@
                                         Untuk mitra usaha yang telah memenuhi
                                         kualifikasi
                                         penjualan
-                                        produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }} kanan 
+                                        produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }} kanan
                                         {{ $item->id == 3 ? ' per bulan ini' : ' sampai bulan juni' }},
                                         akan
                                         mendapatkan
@@ -664,23 +664,28 @@
                                             {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
                                             {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
                                     </div>
-                                    <div class="card-footer">
-                                        <form action="{{ route('user.claim-reward') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="type" value="{{ $item['id'] }}">
-                                            <div class="input-group">
-                                                @if ($item['equal'] == 0)
-                                                    <button class="btn btn-primary btn-block">Claim Bonus</button>
-                                                @else
-                                                    <input type="submit" class="form-control bg-primary form-control-lg"
-                                                        name="claim" value="{{ $item['reward'] }}">
-                                                    <input type="submit" class="form-control bg-primary form-control-lg"
-                                                        aria-label="Large" name="claim" value="{{ $item['equal'] }}">
-                                                @endif
+                                    @if (auth()->user()->userExtra->is_gold)
+                                        <div class="card-footer">
+                                            <form action="{{ route('user.claim-reward') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="type" value="{{ $item['id'] }}">
+                                                <div class="input-group">
+                                                    @if ($item['equal'] == 0)
+                                                        <button class="btn btn-primary btn-block">Claim Bonus</button>
+                                                    @else
+                                                        <input type="submit"
+                                                            class="form-control bg-primary form-control-lg" name="claim"
+                                                            value="{{ $item['reward'] }}">
+                                                        <input type="submit"
+                                                            class="form-control bg-primary form-control-lg"
+                                                            aria-label="Large" name="claim"
+                                                            value="{{ $item['equal'] }}">
+                                                    @endif
 
-                                            </div>
-                                        </form>
-                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
