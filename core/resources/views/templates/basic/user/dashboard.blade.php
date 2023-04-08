@@ -650,7 +650,8 @@
                                         Untuk mitra usaha yang telah memenuhi
                                         kualifikasi
                                         penjualan
-                                        produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }} kanan per bulan ini,
+                                        produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }} kanan 
+                                        {{ $item->id == 3 ? ' per bulan ini' : ' sampai bulan juni' }},
                                         akan
                                         mendapatkan
                                         kesempatan reward promo {{ $item['reward'] }}
