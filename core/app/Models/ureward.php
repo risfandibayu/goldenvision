@@ -53,17 +53,20 @@ class ureward extends Model
         $data = ureward::with(['user','reward'])->whereHas('reward', function ($query) {
                     return $query->where('type', '=', 'monthly');
                 })
+                ->orderByDesc('id')
                 ->limit(3)
                 ->get();
         $data2 = ureward::with(['user','reward'])->whereHas('reward', function ($query) {
                     return $query->where('type', '=', 'monthly');
                 })
+                ->orderByDesc('id')
                 ->skip(3)
                 ->limit(3)
                 ->get();
         $data3 = ureward::with(['user','reward'])->whereHas('reward', function ($query) {
                     return $query->where('type', '=', 'monthly');
                 })
+                ->orderByDesc('id')
                 ->skip(6)
                 ->limit(3)
                 ->get();      
@@ -88,7 +91,7 @@ class ureward extends Model
         $rs .=      '</div>';
         $rs .= '</div>';
        
-        if($data2->count() > 1){
+        if($data2->count() > 0){
             $rs .=  '<div class="carousel-item">';
             $rs .=      '<div class="cards-wrapper d-flex justify-content-center">';
             foreach ($data2 as $key => $value) {
@@ -107,7 +110,7 @@ class ureward extends Model
             $rs .=      '</div>';
             $rs .= '</div>';
         }
-        if($data3->count() > 1){
+        if($data3->count() > 0){
             $rs .=  '<div class="carousel-item carusel3">';
             $rs .=      '<div class="cards-wrapper d-flex justify-content-center">';
             foreach ($data3 as $key => $value) {
