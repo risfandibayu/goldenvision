@@ -1,7 +1,7 @@
 @extends($activeTemplate . 'user.layouts.app')
 
 @section('panel')
-    <div class="row mb-5">
+    {{-- <div class="row mb-5">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-center">
@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="row ">
         <div class="col-lg-12">
             <div class="card b-radius--10 ">

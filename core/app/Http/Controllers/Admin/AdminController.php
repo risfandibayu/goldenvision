@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\AdminNotification;
+use App\Models\BonusReward;
+use App\Models\ureward;
 
 class AdminController extends Controller
 {
@@ -122,12 +124,25 @@ class AdminController extends Controller
         $bv['bvLeft'] = UserExtra::sum('bv_left');
         $bv['bvRight'] = UserExtra::sum('bv_right');
         $bv['totalBvCut'] = BvLog::where('trx_type', '-')->sum('amount');
+        
+        $bonusr = BonusReward::where('type','monthly')->count();
+        $bonusa = BonusReward::where('type','alltime')->count();
+        $ure = ureward::all()->count();
+        $ure2 = ureward::where('status',2)->count();
 
         $latestUser = User::latest()->limit(6)->get();
 
-        return view('admin.dashboard', compact('page_title',
-            'widget', 'report', 'withdrawals', 'chart','payment',
-            'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth'));
+        if(auth()->guard('admin')->user()->role == 'su'){
+            return view('admin.dashboard', compact('page_title',
+                'widget', 'report', 'withdrawals', 'chart','payment',
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth'));
+        }else{
+            return view('admin.dashboard_ar', compact('page_title',
+                'widget', 'report', 'withdrawals', 'chart','payment',
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth','bonusr','bonusa','ure','ure2'));
+        }
+
+        
     }
 
 
