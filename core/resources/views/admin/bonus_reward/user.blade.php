@@ -52,7 +52,7 @@
                                                 data-id="{{ $k->id }}" data-ket="{{ $k->ket }}"
                                                 data-claim="{{ json_decode($k->detail, true)['claim'] }}"
                                                 data-amount="{{ $k->claim() }}" data-status="{{ $k->status }}"
-                                                data-original-title="Edit">
+                                                data-userid="{{ $k->user_id }}" data-original-title="Edit">
 
                                                 <i class="la la-pencil"></i>
                                             </button>
@@ -94,6 +94,7 @@
                         <input type="hidden" name="id" id="id">
                         <input type="hidden" name="claim" id="claim">
                         <input type="hidden" name="amount" id="amount">
+                        <input type="hidden" name="user" id="user">
                         <div class="form-row">
                             <div class="form-group col">
                                 <label class="font-weight-bold"> @lang('Details.')</label>
@@ -135,6 +136,7 @@
                 $('#status').val($(this).data('status'));
                 $('#claim').val($(this).data('claim'));
                 $('#amount').val($(this).data('amount'));
+                $('#user').val($(this).data('userid'));
                 modal.modal('show');
             });
 

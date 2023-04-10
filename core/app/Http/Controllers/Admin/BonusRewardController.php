@@ -193,27 +193,32 @@ class BonusRewardController extends Controller
     }
 
     public function UserUpdate(Request $request){
-        $user = User::find($request->id);
+        // dd($request->all());
+        $user = User::find($request->user);
+        if(!$user){
+            $notify[] = ['error', 'Error: User Not Found'];
+            return back()->withNotify($notify);
+        }
         DB::beginTransaction();
         try {
             ureward::find($request->id)->update([
                 'ket'       => $request->ket,
                 'status'    => $request->status
             ]);
-            if($request->claim == 'equal'){
-                $transaction = new Transaction();
-                $transaction->user_id = $user->id;
-                $transaction->amount = $request->amount;
-                $transaction->post_balance = $user->balance + $request->amount;
-                $transaction->charge = 0;
-                $transaction->trx_type = '+';
-                $transaction->details = 'Claim Bonus Monthly, Equal Money';
-                $transaction->trx =  getTrx();
-                $transaction->save();
+            // if($request->claim == 'equal'){
+            //     $transaction = new Transaction();
+            //     $transaction->user_id = $user->id;
+            //     $transaction->amount = $request->amount;
+            //     $transaction->post_balance = $user->balance + $request->amount;
+            //     $transaction->charge = 0;
+            //     $transaction->trx_type = '+';
+            //     $transaction->details = 'Claim Bonus Monthly, Equal Money';
+            //     $transaction->trx =  getTrx();
+            //     $transaction->save();
 
-                $user->balance += $request->amount;
-                $user->save();
-            }
+            //     $user->balance += $request->amount;
+            //     $user->save();
+            // }
 
             DB::commit();
             $notify[] = ['success', 'Data Updated'];
