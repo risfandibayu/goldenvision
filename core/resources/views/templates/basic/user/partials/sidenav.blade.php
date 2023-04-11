@@ -70,6 +70,12 @@
                         <span class="menu-title">@lang('My Tree')</span>
                     </a>
                 </li>
+                <li class="sidebar-menu-item {{ menuActive('user.archivement.view') }}">
+                    <a href="{{ route('user.archivement.view') }}" class="nav-link">
+                        <i class="menu-icon las la-star"></i>
+                        <span class="menu-title">@lang('Achievement')</span>
+                    </a>
+                </li>
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('user.pins*', 2) }} my-2">
                         <i class="menu-icon las la-exchange-alt"></i>

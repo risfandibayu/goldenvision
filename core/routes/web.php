@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BonusRewardController;
+use App\Http\Controllers\ArchivementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CronController;
@@ -583,7 +584,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             //F
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
-
+            Route::get('/archivement',[ArchivementController::class,'index'])->name('archivement.view');
 
             Route::get('/user-pin',[SponsorRegisterController::class,'userSendPin'])->name('pins.view');
             Route::get('pin/log', 'UserReportController@PinDeliveriyLog')->name('pins.PinDeliveriyLog');

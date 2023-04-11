@@ -301,10 +301,10 @@
         }
 
         /* @keyframes show-profile {
-                                                                                                                                                                                                                0% {
-                                                                                                                                                                                                                    width: 0;
-                                                                                                                                                                                                                }
-                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                0% {
+                                                                                                                                                                                                                                                                                    width: 0;
+                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                            } */
 
         .profile .photo {
             width: 100px;
@@ -318,14 +318,14 @@
         }
 
         /* @keyframes rotate-photo {
-                                                                                                                                                                                                                    0% {
-                                                                                                                                                                                                                        transform: rotate(0deg);
-                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                    0% {
+                                                                                                                                                                                                                                                                                        transform: rotate(0deg);
+                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                    100% {
-                                                                                                                                                                                                                        transform: rotate(-360deg);
-                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                    100% {
+                                                                                                                                                                                                                                                                                        transform: rotate(-360deg);
+                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                } */
 
         .profile .photo img {
             width: 100%;
@@ -344,16 +344,16 @@
         }
 
         /* .profile .content::before {
-                                                                                                                                                                                                                        content: "";
-                                                                                                                                                                                                                        position: absolute;
-                                                                                                                                                                                                                        width: 230px;
-                                                                                                                                                                                                                        height: 150px;
-                                                                                                                                                                                                                        background-color: #dfe6e9;
-                                                                                                                                                                                                                        left: 0;
-                                                                                                                                                                                                                        top: -20px;
-                                                                                                                                                                                                                        z-index: -1;
-                                                                                                                                                                                                                        transform: rotate(-8deg);
-                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                        content: "";
+                                                                                                                                                                                                                                                                                        position: absolute;
+                                                                                                                                                                                                                                                                                        width: 230px;
+                                                                                                                                                                                                                                                                                        height: 150px;
+                                                                                                                                                                                                                                                                                        background-color: #dfe6e9;
+                                                                                                                                                                                                                                                                                        left: 0;
+                                                                                                                                                                                                                                                                                        top: -20px;
+                                                                                                                                                                                                                                                                                        z-index: -1;
+                                                                                                                                                                                                                                                                                        transform: rotate(-8deg);
+                                                                                                                                                                                                                                                                                    } */
 
         .profile .content .text {
             margin-top: 20px;
@@ -891,12 +891,16 @@
         @if (Auth::user()->plan_id != 0)
             <div class="col-lg-4 col-md-4 col-12 mb-30">
                 @if ($title)
-                    <div class="card card-header-actions mb-3">
-                        <div class="card-header bg-grand-gold d-flex justify-content-center" style="font-weight: 600;">
-                            Title User
-                        </div>
-                        <div class="card-body text-center border-3">
-                            <h1 class="display-6 font-weight-bold txt-grand-gold">{{ $title }}</h1>
+                    <div class="mb-3 d-flex justify-content-center">
+                        <div class="card b-radius--10 cardImages "
+                            style=" height: 15rem;width: 16rem;background-color: #1B1B19;">
+                            <div class="card-body text-center"
+                                style="display: table; min-height: 15rem; overflow: hidden;">
+                                <div style="display: table-cell; vertical-align: middle;">
+                                    <img src="{{ asset('assets/assets/badges') . '/' . $title }}" alt="">
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 @endif
