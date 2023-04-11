@@ -93,7 +93,7 @@
                 $('.txt-pin').html('');
                 const uPin = parseInt("{{ auth()->user()->pin }}"); //60
                 let pin = parseInt($(this).val()); //100
-                if (uPin > pin) {
+                if (uPin >= pin) {
                     $('.pin').removeClass('is-invalid').addClass('is-valid');
                     $('.txt-pin').addClass('text-success').removeClass('text-danger').html(
                         'Qty Match');
