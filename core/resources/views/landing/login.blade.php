@@ -5,11 +5,7 @@
 
 @section('css')
     <style>
-        .login-bg {
-            background: url('/assets/landing/img/login-bg.jpg') no-repeat center fixed;
-            background-size: cover;
-            object-fit: contain;
-        }
+
     </style>
 @endsection
 
