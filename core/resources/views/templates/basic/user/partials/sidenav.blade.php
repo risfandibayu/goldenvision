@@ -16,7 +16,12 @@
                         <span class="menu-title">@lang('Dashboard')</span>
                     </a>
                 </li>
-
+                <li class="sidebar-menu-item {{ menuActive('user.archivement.view') }}">
+                    <a href="{{ route('user.archivement.view') }}" class="nav-link">
+                        <i class="menu-icon las la-star"></i>
+                        <span class="menu-title">@lang('Achievement')</span>
+                    </a>
+                </li>
                 {{-- @php
                     $survey_notice = getContent('notice.content', true);
                     $get_survey = App\Models\Survey::where('status', 1)
@@ -70,12 +75,7 @@
                         <span class="menu-title">@lang('My Tree')</span>
                     </a>
                 </li>
-                <li class="sidebar-menu-item {{ menuActive('user.archivement.view') }}">
-                    <a href="{{ route('user.archivement.view') }}" class="nav-link">
-                        <i class="menu-icon las la-star"></i>
-                        <span class="menu-title">@lang('Achievement')</span>
-                    </a>
-                </li>
+
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('user.pins*', 2) }} my-2">
                         <i class="menu-icon las la-exchange-alt"></i>

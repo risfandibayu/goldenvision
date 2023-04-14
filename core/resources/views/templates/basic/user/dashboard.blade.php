@@ -301,10 +301,10 @@
         }
 
         /* @keyframes show-profile {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    0% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            0% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                width: 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
 
         .profile .photo {
             width: 100px;
@@ -318,14 +318,14 @@
         }
 
         /* @keyframes rotate-photo {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        0% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(0deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                0% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    transform: rotate(0deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(-360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    transform: rotate(-360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
 
         .profile .photo img {
             width: 100%;
@@ -342,18 +342,6 @@
             top: 0;
             left: 0;
         }
-
-        /* .profile .content::before {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            content: "";
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            position: absolute;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 230px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 150px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            background-color: #dfe6e9;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            left: 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            top: -20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            z-index: -1;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(-8deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
 
         .profile .content .text {
             margin-top: 20px;
@@ -402,6 +390,30 @@
         .carousel-inner .carousel-item-next,
         .carousel-inner .carousel-item-prev {
             display: flex;
+        }
+
+        .imgUser {
+            height: 10rem;
+            width: 10rem;
+            background-color: #fff;
+        }
+
+        .cardImages {
+            height: 15rem;
+            width: 16rem;
+            background-color: #141214;
+        }
+
+        .cardImages.masterGold {
+            background-image: url("{{ asset('assets/assets/badges/title-mg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .cardImages.grandMaster {
+            background-image: url("{{ asset('assets/assets/badges/title-gmg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
         }
 
         /* display 3 */
@@ -691,7 +703,7 @@
                 </div> --}}
                 <div class="container text-center my-3">
                     <div class="row mx-auto my-auto">
-                        <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                        <div id="recipeCarousel1" class="carousel slide w-100" data-ride="carousel">
                             <div class="carousel-inner w-100" role="listbox">
                                 @foreach ($promo as $i => $item)
                                     <div class="carousel-item @if ($item->id == 3) active @endif">
@@ -748,13 +760,13 @@
                                 @endforeach
 
                             </div>
-                            <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button"
+                            <a class="carousel-control-prev w-auto" href="#recipeCarousel1" role="button"
                                 data-slide="prev">
                                 <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle"
                                     aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
                             </a>
-                            <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button"
+                            <a class="carousel-control-next w-auto" href="#recipeCarousel1" role="button"
                                 data-slide="next">
                                 <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
                                     aria-hidden="true"></span>
@@ -796,7 +808,7 @@
                 </a>
             </div> --}}
             <div class="container text-center my-3">
-                <h2 class="font-weight-light">Bootstrap 4 - Multi Item Carousel</h2>
+                <h5 class="font-weight-light font-weight-bold">User Claim Reward</h5>
                 <div class="row mx-auto my-auto">
                     <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
                         <div class="carousel-inner w-100" role="listbox">
@@ -804,16 +816,15 @@
                                 <div class="carousel-item @if ($item == 0) active @endif">
                                     <div class="col-md-4">
                                         <div class="card card-body">
-                                            <img class="img-fluid"
+                                            <img class="img-fluid imgUser"
                                                 src="{{ getImage('assets/images/user/profile/' . $value->user->image, null, true) }}">
                                             <h5 class="card-title mt-2 mb-n1">{{ $value->user->username }}</h5>
                                             <p class="card-text">{{ $value->reward->reward }} </p>
                                             <p class="card-text">{!! $value->details()['is_gold']
                                                 ? '<span
-                                                                                                                                                                                                                                    class="badge rounded-pill badge-warning">Gold</span>'
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="badge rounded-pill badge-warning">Gold</span>'
                                                 : '<span
-                                                                                                                                                                                                                                    class="badge rounded-pill badge-secondary">Silver</span>' !!}</p>
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="badge rounded-pill badge-secondary">Silver</span>' !!}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -842,11 +853,11 @@
             <div class="col-lg-4 col-md-4 col-12 mb-30">
                 @if ($title)
                     <div class="mb-3 d-flex justify-content-center shing">
-                        <div class="card b-radius--10" style=" height: 15rem;width: 16rem;background-color: #1B1B19;">
+                        <div class="card b-radius--10 cardImages {{ $title }}">
                             <div class="card-body text-center cardTitle"
                                 style="display: table; min-height: 15rem; overflow: hidden;">
                                 <div style="display: table-cell; vertical-align: middle;">
-                                    <img src="{{ asset('assets/assets/badges') . '/' . $title }}" alt="">
+
                                 </div>
 
                             </div>
