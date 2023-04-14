@@ -301,10 +301,10 @@
         }
 
         /* @keyframes show-profile {
-                                                                                                                                                                                                                                                                                0% {
-                                                                                                                                                                                                                                                                                    width: 0;
-                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    0% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
 
         .profile .photo {
             width: 100px;
@@ -318,14 +318,14 @@
         }
 
         /* @keyframes rotate-photo {
-                                                                                                                                                                                                                                                                                    0% {
-                                                                                                                                                                                                                                                                                        transform: rotate(0deg);
-                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        0% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(0deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                    100% {
-                                                                                                                                                                                                                                                                                        transform: rotate(-360deg);
-                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(-360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
         .profile .photo img {
             width: 100%;
@@ -344,16 +344,16 @@
         }
 
         /* .profile .content::before {
-                                                                                                                                                                                                                                                                                        content: "";
-                                                                                                                                                                                                                                                                                        position: absolute;
-                                                                                                                                                                                                                                                                                        width: 230px;
-                                                                                                                                                                                                                                                                                        height: 150px;
-                                                                                                                                                                                                                                                                                        background-color: #dfe6e9;
-                                                                                                                                                                                                                                                                                        left: 0;
-                                                                                                                                                                                                                                                                                        top: -20px;
-                                                                                                                                                                                                                                                                                        z-index: -1;
-                                                                                                                                                                                                                                                                                        transform: rotate(-8deg);
-                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            content: "";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            position: absolute;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 230px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 150px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            background-color: #dfe6e9;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            left: 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            top: -20px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            z-index: -1;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(-8deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
 
         .profile .content .text {
             margin-top: 20px;
@@ -382,6 +382,62 @@
             animation: pop-btn 0.3s both ease-in-out 0.5s;
         }
 
+        .shing {
+            &::before {
+                animation: shine #{$anim-duration}s ease-in-out infinite;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .carousel-inner .carousel-item>div {
+                display: none;
+            }
+
+            .carousel-inner .carousel-item>div:first-child {
+                display: block;
+            }
+        }
+
+        .carousel-inner .carousel-item.active,
+        .carousel-inner .carousel-item-next,
+        .carousel-inner .carousel-item-prev {
+            display: flex;
+        }
+
+        /* display 3 */
+        @media (min-width: 768px) {
+
+            .carousel-inner .carousel-item-right.active,
+            .carousel-inner .carousel-item-next {
+                transform: translateX(33.333%);
+            }
+
+            .carousel-inner .carousel-item-left.active,
+            .carousel-inner .carousel-item-prev {
+                transform: translateX(-33.333%);
+            }
+        }
+
+        .carousel-inner .carousel-item-right,
+        .carousel-inner .carousel-item-left {
+            transform: translateX(0);
+        }
+
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+                transition-property: left;
+            }
+
+            #{($anim-speed / ($anim-duration + $anim-speed) * 100%)},
+            100% {
+                left: 100%;
+                transition-property: left;
+            }
+        }
+
+
         @keyframes stroke {
             100% {
                 stroke-dashoffset: 0
@@ -391,7 +447,7 @@
         @keyframes scale {
 
             0%,
-            100% {
+            0% {
                 transform: none
             }
 
@@ -633,118 +689,85 @@
                         @endif
                     </div>
                 </div> --}}
-
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        @foreach ($promo as $item)
-                            <div class="carousel-item @if ($item->id == 3) active @endif">
-                                <div class="bonus">
-                                    <div class="card-body bg--gradi-8 h5 text-center">
-                                        <b> Bonus Sepesial {{ $item->id == 3 ? ' Bulan Ini' : ' Sampai Bulan Juni' }}</b>
-                                        <br><br>
-                                        Untuk mitra usaha yang telah memenuhi
-                                        kualifikasi
-                                        penjualan
-                                        produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }} kanan
-                                        {{ $item->id == 3 ? ' per bulan ini' : ' sampai bulan juni' }},
-                                        akan
-                                        mendapatkan
-                                        kesempatan reward promo {{ $item['reward'] }}
-                                        {{ $item['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($item['equal']) : '' }}
-                                        segera tingkatkan
-                                        penjualan anda dan raih kesuksesan bersama!!
-                                        <br>
-                                        <br>
-                                        <b class="mt-5"> Total penjualan kamu saat ini
-                                            {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
-                                            {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
-                                    </div>
-                                    @if (auth()->user()->userExtra->is_gold)
-                                        <div class="card-footer">
-                                            <form action="{{ route('user.claim-reward') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="type" value="{{ $item['id'] }}">
-                                                <div class="input-group">
-                                                    @if ($item['equal'] == 0)
-                                                        <button class="btn btn-primary btn-block">Claim Bonus</button>
-                                                    @else
-                                                        <input type="submit"
-                                                            class="form-control bg-primary form-control-lg" name="claim"
-                                                            value="{{ $item['reward'] }}">
-                                                        <input type="submit"
-                                                            class="form-control bg-primary form-control-lg"
-                                                            aria-label="Large" name="claim"
-                                                            value="{{ $item['equal'] }}">
-                                                    @endif
-
+                <div class="container text-center my-3">
+                    <div class="row mx-auto my-auto">
+                        <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                            <div class="carousel-inner w-100" role="listbox">
+                                @foreach ($promo as $i => $item)
+                                    <div class="carousel-item @if ($item->id == 3) active @endif">
+                                        <div class="col-md-12">
+                                            <div class="bonus">
+                                                <div class="card-body bg--gradi-8 h5 text-center">
+                                                    <b> Bonus Sepesial
+                                                        {{ $item->id == 3 ? ' Bulan Ini' : ' Sampai Bulan Juni' }}</b>
+                                                    <br><br>
+                                                    Untuk mitra usaha yang telah memenuhi
+                                                    kualifikasi
+                                                    penjualan
+                                                    produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }} kanan
+                                                    {{ $item->id == 3 ? ' per bulan ini' : ' sampai bulan juni' }},
+                                                    akan
+                                                    mendapatkan
+                                                    kesempatan reward promo {{ $item['reward'] }}
+                                                    {{ $item['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($item['equal']) : '' }}
+                                                    segera tingkatkan
+                                                    penjualan anda dan raih kesuksesan bersama!!
+                                                    <br>
+                                                    <br>
+                                                    <b class="mt-5"> Total penjualan kamu saat ini
+                                                        {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
+                                                        {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
                                                 </div>
-                                            </form>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-                        {{-- <div class="carousel-item">
-                            <div class="bonus">
-                                <div class="card-body bg--gradi-8 h5 text-center">
-                                    <b> Bonus Sepesial Sampai Bulan Juni</b> <br><br> Untuk mitra usaha yang telah memenuhi
-                                    kualifikasi
-                                    penjualan
-                                    produk {{ $promo['kiri'] }} kiri dan {{ $promo['kanan'] }} kanan per bulan ini, akan
-                                    mendapatkan
-                                    kesempatan reward promo {{ $promo['reward'] }}
-                                    {{ $promo['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($promo['equal']) : '' }}
-                                    segera tingkatkan
-                                    penjualan anda dan raih kesuksesan bersama!!
-                                    <br>
-                                    <br>
-                                    <b class="mt-5"> Total penjualan kamu saat ini {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
-                                        {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
-                                </div>
-                                <div class="card-footer">
-                                    <form action="{{ route('user.claim-reward') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="type" value="{{ $promo['id'] }}">
-                                        <div class="input-group">
-                                            @if ($promo['equal'] == 0)
-                                                <button class="btn btn-primary btn-block">Claim Bonus</button>
-                                            @else
-                                                <input type="submit" class="form-control bg-primary form-control-lg"
-                                                    name="claim" value="{{ $promo['reward'] }}">
-                                                <input type="submit" class="form-control bg-primary form-control-lg"
-                                                    aria-label="Large" name="claim" value="{{ $promo['equal'] }}">
-                                            @endif
+                                                @if (auth()->user()->userExtra->is_gold)
+                                                    <div class="card-footer">
+                                                        <form action="{{ route('user.claim-reward') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="type"
+                                                                value="{{ $item['id'] }}">
+                                                            <div class="input-group">
+                                                                @if ($item['equal'] == 0)
+                                                                    <button class="btn btn-primary btn-block">Claim
+                                                                        Bonus</button>
+                                                                @else
+                                                                    <input type="submit"
+                                                                        class="form-control bg-primary form-control-lg"
+                                                                        name="claim" value="{{ $item['reward'] }}">
+                                                                    <input type="submit"
+                                                                        class="form-control bg-primary form-control-lg"
+                                                                        aria-label="Large" name="claim"
+                                                                        value="{{ $item['equal'] }}">
+                                                                @endif
 
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                @endforeach
+
                             </div>
-                        </div> --}}
+                            <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button"
+                                data-slide="prev">
+                                <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle"
+                                    aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button"
+                                data-slide="next">
+                                <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
+                                    aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </div>
-                    <button class="carousel-control-prev" style="opacity: 0.1;" type="button"
-                        data-target="#carouselExampleIndicators" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" style="opacity: 0.1;" type="button"
-                        data-target="#carouselExampleIndicators" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </button>
                 </div>
-
-
-
 
             </div>
 
 
-            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+            {{-- <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
                 <hr>
                 <h4>#CLAIM BONUS BY USER</h4>
                 <ol class="carousel-indicators">
@@ -762,120 +785,6 @@
                 </ol>
                 <div class="carousel-inner">
                     {!! $ureward !!}
-                    {{-- <div class="carousel-item active">
-                        <div class="cards-wrapper d-flex justify-content-center">
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="carousel-item ">
-                        <div class="cards-wrapper d-flex justify-content-center">
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="carousel-item ">
-                        <div class="cards-wrapper d-flex justify-content-center">
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="card mr-2 mt-3 100  h-100 bg--10 text-white b-radius--10 box-shadow">
-                                <div class="row card-body">
-                                    <img src="{{ getImage('test.png', null, true) }}" class="col-sm-6 rounded-circle"
-                                        alt="..." style="width: 2%;height: 2%;">
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick </p>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div> --}}
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -885,16 +794,56 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+            </div> --}}
+            <div class="container text-center my-3">
+                <h2 class="font-weight-light">Bootstrap 4 - Multi Item Carousel</h2>
+                <div class="row mx-auto my-auto">
+                    <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                        <div class="carousel-inner w-100" role="listbox">
+                            @foreach ($ure as $item => $value)
+                                <div class="carousel-item @if ($item == 0) active @endif">
+                                    <div class="col-md-4">
+                                        <div class="card card-body">
+                                            <img class="img-fluid"
+                                                src="{{ getImage('assets/images/user/profile/' . $value->user->image, null, true) }}">
+                                            <h5 class="card-title mt-2 mb-n1">{{ $value->user->username }}</h5>
+                                            <p class="card-text">{{ $value->reward->reward }} </p>
+                                            <p class="card-text">{!! $value->details()['is_gold']
+                                                ? '<span
+                                                                                                                                                                                                                                    class="badge rounded-pill badge-warning">Gold</span>'
+                                                : '<span
+                                                                                                                                                                                                                                    class="badge rounded-pill badge-secondary">Silver</span>' !!}</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </div>
+                        <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle"
+                                aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
+                                aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
+
         </div>
+
+
         @if (Auth::user()->plan_id != 0)
             <div class="col-lg-4 col-md-4 col-12 mb-30">
                 @if ($title)
-                    <div class="mb-3 d-flex justify-content-center">
-                        <div class="card b-radius--10 cardImages "
-                            style=" height: 15rem;width: 16rem;background-color: #1B1B19;">
-                            <div class="card-body text-center"
+                    <div class="mb-3 d-flex justify-content-center shing">
+                        <div class="card b-radius--10" style=" height: 15rem;width: 16rem;background-color: #1B1B19;">
+                            <div class="card-body text-center cardTitle"
                                 style="display: table; min-height: 15rem; overflow: hidden;">
                                 <div style="display: table-cell; vertical-align: middle;">
                                     <img src="{{ asset('assets/assets/badges') . '/' . $title }}" alt="">
@@ -1493,6 +1442,27 @@
                 1000
             );
             $(this).text($(this).attr("data-progress") + "%");
+        });
+        $('#recipeCarousel').carousel({
+            interval: 10000
+        })
+
+        $('.carousel .carousel-item').each(function() {
+            var minPerSlide = 3;
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+
+            for (var i = 0; i < minPerSlide; i++) {
+                next = next.next();
+                if (!next.length) {
+                    next = $(this).siblings(':first');
+                }
+
+                next.children(':first-child').clone().appendTo($(this));
+            }
         });
     </script>
 @endpush
