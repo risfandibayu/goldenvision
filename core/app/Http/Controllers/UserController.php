@@ -37,6 +37,7 @@ use Image;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller
 {
@@ -62,6 +63,21 @@ class UserController extends Controller
            User::find($value->id)->update(['is_kyc'=>2]);
         }
         return 'success';
+    }
+    public function fileDownload(Request $r){
+    if($r->file == 'mp'){
+        $file = public_path().'/files/mp.pdf';
+        $filename = 'Marketing Plan.pdf';
+    }else{
+        $file = public_path().'/files/ke.pdf';
+        $filename = 'Kode Etik MasterPlan.pdf';
+
+    }
+    $headers = array(
+              'Content-Type: application/pdf',
+            );
+
+    return Response::download($file,$filename, $headers);
     }
 
     public function home()

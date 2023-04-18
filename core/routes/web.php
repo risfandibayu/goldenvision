@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\URL;
 //     $pdo = DB::connection('mysql');
 //     dd($pdo);
 // })
+Route::get('getfile',[UserController::class,'fileDownload']);
+
+Route::get('/',function(){
+    return view('v3.home');
+})->name('home');
+Route::get('/build',function(){
+    return view('v3.build');
+});
 Route::get('up-day',function(){
     $gold = UserGold::where('user_id',1)->get();
     $no = $gold->count();
@@ -47,6 +55,11 @@ Route::get('day-gold',function(){
        }
     }
     return 'success update';
+});
+
+route::get('test-tree',function(){
+dd(inTreeUser(auth()->user()->id));
+// dd(User::orderByDesc('id')->limit(15)->get());
 });
 
 Route::get('test-ex',function(){
@@ -132,9 +145,9 @@ Route::get('cron-address-lang', 'CronController@userAddressLang');
 Route::get('/landing',function(){
     return view('home.index');
 });
-Route::get('/',function(){
-    return redirect(url('login'));
-})->name('home');
+// Route::get('/',function(){
+//     return redirect(url('login'));
+// })->name('home');
 
 // Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 // Route::get('/cron30bro', 'CronController@cron30bro')->name('bv.matching.cron30bro');

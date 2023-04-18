@@ -64,7 +64,7 @@ function title(){
     $kiri = $user->userExtra->left;
     $kanan = $user->userExtra->right;
     $master_gold = 100;
-    $grand_master = 700;
+    $grand_master = 1000;
     if($kiri >= $master_gold && $kanan >= $master_gold){
         return 'masterGold';
     }elseif($kiri >= $grand_master && $kanan >= $grand_master){
@@ -1333,6 +1333,78 @@ function showTreePage($id)
     return $res;
 }
 
+function inTreeUser($id){
+    $res = [];
+    $user = User::find($id);
+    // $res[] = $user1;
+    if($user){
+        $res[] = $user;
+        $user3 = getPositionUser($user->id,1);
+        
+        if($user3){
+            $res[] = $user3;
+            // dd($user3);
+            $user4 = getPositionUser($user3->id,1);
+            if($user4){
+                $res[] = $user4;
+                $usera = getPositionUser($user4->id,1);
+                if($usera){
+                    $res[] = $usera;
+
+                }
+                $userb = getPositionUser($user4->id,2);
+                if($userb){
+                    $res[] = $userb;
+
+                }
+            }
+            $user5 = getPositionUser($user3->id,2);
+            if($user5){
+                $res[] = $user5;
+                $userc = getPositionUser($user5->id,1);
+                if($userc){
+                    $res[] = $userc;
+
+                }
+                $userd = getPositionUser($user5->id,2);
+                if($userd){
+                    $res[] = $userd;
+
+                }
+            }
+        }
+        
+        $user6 = getPositionUser($user->id,2);
+        if($user6){
+            $res[] = $user6;
+            $user7 = getPositionUser($user6->id,1);
+            if($user7){
+                $res[] = $user7;
+                $useraa = getPositionUser($user7->id,1);
+                if($useraa){
+                    $res[] = $useraa;
+                }
+                $userbb = getPositionUser($user7->id,1);
+                if($userbb){
+                    $res[] = $userbb;
+                }
+            }
+            $user8 = getPositionUser($user7->id,2);
+            if($user8){
+                $res[] = $user8;
+                $usercc = getPositionUser($user7->id,1);
+                if($usercc){
+                    $res[] = $usercc;
+                }
+                $userdd = getPositionUser($user7->id,1);
+                if($userdd){
+                    $res[] = $userdd;
+                }
+            }
+        }
+    }
+    return $res;
+}
 
 function showSingleUserinTree($resp)
 {
