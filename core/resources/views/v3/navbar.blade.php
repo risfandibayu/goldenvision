@@ -3,8 +3,8 @@
           <div class="row align-items-center">
               <div class="col-lg-3 col-md-3">
                   <div class="logo">
-                      <a href="{{ url('/') }}"><img src="{{ asset('assets/images/logo-new.png') }}"
-                              alt=""></a>
+                      <a href="{{ url('/') }}"><img src="{{ asset('assets/counter/images/logo-new.png') }}"
+                              alt="" style="max-width: 300px"></a>
                   </div>
               </div>
               <div class="col-lg-7 col-md-7">

@@ -53,7 +53,7 @@
                <div class="col-xl-6 col-lg-6 col-md-12">
                    <div class="serviceArea">
                        <h3>Produk Kesehatan Yang Baik Untuk Anda</h3>
-                       <p>Perusahaan MASTERPLAN INDINESIA memasarkan produk dengan brand LARIS yang merupakan serbuk
+                       <p>Perusahaan MASTERPLAN INDONESIA memasarkan produk dengan brand LARIS yang merupakan serbuk
                            minuman Lemon Drink with Collagen. Kandungan alami didalamnya bermanfaat</p>
                        <p>Sebagai antioksidan yang dapat menjaga kesehatan tubuh dan kulit, serta membantu meningkatkan
                            imunitas.</p>

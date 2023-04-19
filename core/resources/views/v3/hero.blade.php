@@ -9,9 +9,10 @@
                             dibangun untuk memajukan dan menguatkan perekonomian bangsa.</p>
                     </div>
                     <div class="welcome_button mt-3">
-                        <a href="{{ url('getfile?file=mp') }}" class="btn btn-lg btn-warning mb-3">Download Marketing
+                        <a href="{{ url('getfile?file=mp') }}" class="btn btn-lg btn-warning mt-3">Download Marketing
                             Plan</a>
-                        <a href="{{ url('getfile?file=ke') }}" class="btn btn-lg btn-primary">Download Kode Etik</a>
+                        <a href="{{ url('getfile?file=ke') }}" class="btn btn-lg btn-primary mt-3">Download Kode
+                            Etik</a>
                     </div>
                 </div>
             </div>
