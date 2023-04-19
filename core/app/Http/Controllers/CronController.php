@@ -543,11 +543,17 @@ class CronController extends Controller
             $user = User::where('ref_id',$userID)->get();
             $kiri = 0;
             $kanan = 0;
+            $p_kiri =0;
+            $p_kanan =0;
             foreach ($user as $key => $value) {
                 if($value->position==1){
                     $kiri += 1;
                 }elseif ($value->position==2) {
                     $kanan += 1;
+                }elseif($value->position_by_ref==1){
+                    $p_kiri += 1;
+                }elseif($value->position_by_ref==2){
+                    $p_kanan += 2;
                 }
                 
             }
@@ -557,23 +563,36 @@ class CronController extends Controller
                     $userex->update([
                         'is_gold'   => 1,
                         'right_lv'  => $kanan,
-                        'left_lv'   => $kiri
+                        'left_lv'   => $kiri,
+                        'on_gold'   => date('Y-m-d H:i:s')
                     ]);
                     $true += 1;
-                }else if($kiri > 3 && $kanan > 3){
+                }
+                else if($p_kiri == 3 && $p_kanan == 3){
+                    $userex->update([
+                        'is_gold'   => 1,
+                        'right_lv'  => $kanan,
+                        'left_lv'   => $kiri,
+                        'on_gold'   => date('Y-m-d H:i:s')
+                    ]);
+                    $true += 1;
+                }
+                else if($kiri > 3 && $kanan > 3){
                     $userex->update([
                         'bonus_deliver'     => 1,
                         'right_lv'          => $kanan,
                         'left_lv'           => $kiri
                     ]);
                     $true += 1;
-                }else{
+                }
+                else{
                     $userex->update([
                         'right_lv'  => $kanan,
                         'left_lv'   => $kiri
                     ]);
                 }
             }
+            
             $record += 1;
         }
         return [
