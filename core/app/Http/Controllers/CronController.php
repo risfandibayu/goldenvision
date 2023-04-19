@@ -579,6 +579,16 @@ class CronController extends Controller
                 }
                 else if($kiri > 3 && $kanan > 3){
                     $userex->update([
+                        'is_gold'           => 1,
+                        'bonus_deliver'     => 1,
+                        'right_lv'          => $kanan,
+                        'left_lv'           => $kiri
+                    ]);
+                    $true += 1;
+                }
+                else if($p_kiri > 3 && $p_kanan > 3){
+                    $userex->update([
+                        'is_gold'           => 1,
                         'bonus_deliver'     => 1,
                         'right_lv'          => $kanan,
                         'left_lv'           => $kiri
