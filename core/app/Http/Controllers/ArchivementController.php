@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ureward;
 use Illuminate\Http\Request;
 
 class ArchivementController extends Controller
@@ -14,6 +15,7 @@ class ArchivementController extends Controller
         $data['page_title'] = "Archivement";
         $data['user']       = auth()->user();
         $data['title']          = title();
+        $data['bonus']      = ureward::where('user_id',auth()->user()->id)->get();
         return view($this->activeTemplate . 'user.archivement', $data);
     }
 

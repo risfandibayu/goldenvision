@@ -102,7 +102,8 @@ class UserController extends Controller
             $kiri = auth()->user()->userExtra->left;
             $kanan = auth()->user()->userExtra->right;
         }
-        $data['ureward']        = ureward::slideUser();
+        // $data['ureward']        = ureward::slideUser();
+        $data['ure']            = ureward::with(['user','reward'])->whereHas('reward', function ($query) {return $query->where('type', '=', 'monthly');})->orderByDesc('id')->get();
         // $data['isReward']       = BonusReward::where('kiri','<',$kiri)->orWhere('kanan','<',$kanan)->get();
         $data['isReward']       = false;
         $data['urewardCount']   = ureward::with('user')->whereHas('reward', function ($query) {return $query->where('type', '=', 'monthly');})->count() / 3;

@@ -66,9 +66,9 @@ function title(){
     $master_gold = 100;
     $grand_master = 700;
     if($kiri >= $master_gold && $kanan >= $master_gold){
-        return 'title-mg.jpeg';
+        return 'masterGold';
     }elseif($kiri >= $grand_master && $kanan >= $grand_master){
-        return 'title-gmg-jpeg';
+        return 'grandMaster';
     }else{
         return false;
     }

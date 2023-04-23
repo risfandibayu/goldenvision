@@ -19,6 +19,42 @@
             background-size: 100% 100%;
         }
 
+        .cardImages.phone {
+            background-image: url("{{ asset('assets/assets/badges/phone-bonus-sertif.jpeg') }}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .cardImages.trip {
+            background-image: url("{{ asset('assets/assets/badges/reward-monthly.jpeg') }}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .cardImages.masterGold {
+            background-image: url("{{ asset('assets/assets/badges/title-mg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .cardImages.grandMaster {
+            background-image: url("{{ asset('assets/assets/badges/title-gmg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .sertif {
+            height: 45rem;
+            /* width: 16rem; */
+            background-color: #141214;
+        }
+
+        .sertif.masterGold {
+            background-image: url("{{ asset('assets/assets/badges/sertif-title-mg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
         .imgUser {
             height: 100px;
             margin-top: -15px;
@@ -36,8 +72,8 @@
 @endpush
 
 @section('panel')
-    <div class="row d-flex justify-content-center text-center">
-        <div class="col-md-3 col-lg-3 mb-3">
+    <div class="row">
+        <div class="col-md-3  mb-3 d-flex  justify-content-center text-center ">
             <div class="card b-radius--10 cardImages {{ $user->userExtra->is_gold ? 'gold' : 'silver' }}">
                 <div class="card-body text-center" style="display: table; min-height: 15rem; overflow: hidden;">
                     <div style="display: table-cell; vertical-align: middle;">
@@ -56,11 +92,33 @@
             </div>
         </div>
         @if ($title)
-            <div class=" col-md-3 col-lg-3 mb-3">
-                <div class="card b-radius--10 cardImages " style=" height: 15rem;width: 16rem;background-color: #1B1B19;">
+            <div class="col-md-3  mb-3 d-flex  justify-content-center text-center ">
+                <div class="card b-radius--10 cardImages {{ $title }}">
                     <div class="card-body text-center" style="display: table; min-height: 15rem; overflow: hidden;">
                         <div style="display: table-cell; vertical-align: middle;">
-                            <img src="{{ asset('assets/assets/badges') . '/' . $title }}" alt="">
+                            {{-- <img src="{{ asset('assets/assets/badges') . '/' . $title }}" alt=""> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+        @foreach ($bonus as $item)
+            <div class="col-md-3  mb-3 d-flex  justify-content-center text-center ">
+                <div class="card b-radius--10 cardImages {{ $item->reward_id == 3 ? 'phone' : 'trip' }}">
+                    <div class="card-body text-center" style="display: table; min-height: 15rem; overflow: hidden;">
+                        <div style="display: table-cell; vertical-align: middle;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        @if ($title)
+            <div class="col-md-12">
+                <div class="card b-radius--10 sertif {{ $title }}">
+                    <div class="card-body text-center" style="display: table; min-height: 15rem; overflow: hidden;">
+                        <div style="display: table-cell; vertical-align: middle;">
+                            {{-- <img src="{{ asset('assets/assets/badges') . '/sertif-' . $title }}" alt=""> --}}
                         </div>
 
                     </div>
@@ -68,17 +126,4 @@
             </div>
         @endif
     </div>
-    @if ($title)
-        <div class="row d-flex justify-content-center text-center">
-            <div class="col-md-12">
-                <div class="card b-radius--10" style="background-color: #1B1B19;">
-                    <div class="card-body text-center" style="display: table; min-height: 15rem; overflow: hidden;">
-                        <div style="display: table-cell; vertical-align: middle;">
-                            <img src="{{ asset('assets/assets/badges') . '/sertif-' . $title }}" alt="">
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-    @endif
 @endsection
