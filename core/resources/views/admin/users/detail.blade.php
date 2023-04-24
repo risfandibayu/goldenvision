@@ -49,9 +49,9 @@
         }
 
         /* .btn-11:hover {
-                                                                                                                                                                                                                                                                text-decoration: none;
-                                                                                                                                                                                                                                                                color: #fff;
-                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                text-decoration: none;
+                                                                                                                                                                                                                                                                                                color: #fff;
+                                                                                                                                                                                                                                                                                            } */
         .btn-11:before {
             position: absolute;
             content: '';
@@ -65,14 +65,14 @@
         }
 
         /* .btn-11:hover{
-                                                                                                                                                                                                                                                              opacity: .7;
-                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                              opacity: .7;
+                                                                                                                                                                                                                                                                                            } */
         /* .btn-11:active{
-                                                                                                                                                                                                                                                              box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-                                                                                                                                                                                                                                                                          -4px -4px 6px 0 rgba(116, 125, 136, .2),
-                                                                                                                                                                                                                                                                inset -4px -4px 6px 0 rgba(255,255,255,.2),
-                                                                                                                                                                                                                                                                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                              box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+                                                                                                                                                                                                                                                                                                          -4px -4px 6px 0 rgba(116, 125, 136, .2),
+                                                                                                                                                                                                                                                                                                inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                                                                                                                                                                                                                                                                                                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+                                                                                                                                                                                                                                                                                            } */
 
 
         @-webkit-keyframes shiny-btn1 {
@@ -116,7 +116,7 @@
                                 class="text--small">@lang('Joined At ')<strong>{{ showDateTime(
                                     $user->created_at,
                                     'd M, Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
                                 ) }}</strong></span>
                         </div>
                     </div>
@@ -242,6 +242,24 @@
 
         <div class="col-xl-9 col-lg-7 col-md-7 mb-30">
             <div class="row mb-none-30">
+                <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
+                    <div class="dashboard-w1 bg--dark b-radius--10 box-shadow has--link">
+                        <a href="#" class="item--link"></a>
+                        <div class="icon">
+                            <i class="la la-exchange-alt"></i>
+                        </div>
+                        <div class="details">
+                            <div class="numbers">
+                                <span class="amount">{{ $user->pin }}</span>
+                                {{-- <span class="amount">{{$user->bro_qty + 1}}</span> --}}
+                                <span class="currency-sign">PIN</span>
+                            </div>
+                            <div class="desciption">
+                                <span>@lang('Available Pin')</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @if ($user->plan_id != 0)
                     <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
                         <div class="dashboard-w1 bg--gradi-18 b-radius--10 box-shadow has--link">
@@ -282,6 +300,7 @@
                         </div>
                     </div>
                 @endif
+
                 <div class="col-xl-4 col-lg-6 col-sm-6 mb-30">
                     <div class="dashboard-w1 bg--primary b-radius--10 box-shadow has--link">
                         <a href="{{ route('admin.users.deposits', $user->id) }}" class="item--link"></a>

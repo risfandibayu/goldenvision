@@ -36,6 +36,12 @@ Version: 1.0
     width: 100%;
     margin: auto;
 }
+.mt-n10{
+    margin-top: -10rem !important;
+}
+.mt-n15{
+    margin-top: -15rem !important;
+}
 @media (min-width: 1281px) {
   
   /* CSS */

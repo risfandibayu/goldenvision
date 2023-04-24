@@ -1,4 +1,4 @@
-<section class="payloan_header_bg header_bg_1 mt-n4" id="home">
+<section class="payloan_header_bg header_bg_1 mt-n10" id="home">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">

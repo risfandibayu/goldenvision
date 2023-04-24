@@ -3,7 +3,7 @@
            <div class="row">
                <div class="col-lg-4 col-md-6">
                    <aside class="widget about_widgets">
-                       <p>+62 817-863-555</p>
+                       <p>+62 818-809-808</p>
                        <p>official@masterplan.co.id</p>
                        <span>Ruko Mulyosari Tengah <br> Blok 95 J No.5 Jl. Mulyosari tengah, Kalisari, Kec. Mulyorejo
                            <br>
