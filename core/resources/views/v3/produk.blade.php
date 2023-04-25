@@ -16,7 +16,7 @@
                                        <p>Sebagai antioksidan yang dapat menjaga kesehatan tubuh dan kulit, serta
                                            membantu meningkatkan
                                            imunitas.</p>
-                                       <h5>+ Gratis Emas Micro Masterplan 0,025 gr</h5>
+                                       {{-- <h5>+ Gratis Emas Micro Masterplan 0,025 gr</h5> --}}
                                    </div>
                                </div>
                                {{-- <i class="flaticon-mortgage-loan"></i> --}}
@@ -42,7 +42,7 @@
                                        <p>Sebagai antioksidan yang dapat menjaga kesehatan tubuh dan kulit, serta
                                            membantu meningkatkan
                                            imunitas.</p>
-                                       <h5>+ Gratis Emas Micro Masterplan 0,025 gr</h5>
+                                       {{-- <h5>+ Gratis Emas Micro Masterplan 0,025 gr</h5> --}}
                                    </div>
                                </div>
                            </div>
