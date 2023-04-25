@@ -63,10 +63,44 @@
             margin-left: 65px;
         }
 
+        .imgPhone {
+            height: 100px;
+            margin-top: -28px;
+            display: flex;
+            justify-content: center;
+            /* margin-left: 30; */
+            margin-left: 105px;
+        }
+
         .username {
             margin-top: 45px;
             display: flex;
             justify-content: center
+        }
+
+        .usernamePhone {
+            /* margin-top: 15px; */
+            display: flex;
+            justify-content: center;
+            margin-left: 90px;
+            /* color: white; */
+        }
+
+        .imgTrip {
+            height: 70px;
+            margin-top: -3%;
+            display: flex;
+            justify-content: center;
+            /* margin-left: 30; */
+            margin-left: 140px;
+        }
+
+        .usernameTrip {
+            /* margin-top: 45px; */
+            display: flex;
+            justify-content: center;
+            margin-left: 120px;
+
         }
     </style>
 @endpush
@@ -107,7 +141,18 @@
                 <div class="card b-radius--10 cardImages {{ $item->reward_id == 3 ? 'phone' : 'trip' }}">
                     <div class="card-body text-center" style="display: table; min-height: 15rem; overflow: hidden;">
                         <div style="display: table-cell; vertical-align: middle;">
-
+                            @if ($item->reward_id == 3)
+                                <img class="rounded-circle imgPhone"
+                                    src="{{ getImage('assets/images/user/profile/' . auth()->user()->image, null, true) }}"
+                                    alt="@lang('image')">
+                                <span class="usernamePhone text-light">{{ $user->username }}</span>
+                            @endif
+                            @if ($item->reward_id == 4)
+                                <img class="imgTrip"
+                                    src="{{ getImage('assets/images/user/profile/' . auth()->user()->image, null, true) }}"
+                                    alt="@lang('image')">
+                                <span class="usernameTrip text-dark">{{ $user->username }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
