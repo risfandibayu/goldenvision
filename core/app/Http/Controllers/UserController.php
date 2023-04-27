@@ -1279,6 +1279,11 @@ class UserController extends Controller
 
         $userCheck = User::where('id', $request->ref_username)->first();
         $pos = User::where('no_bro',$request->upMp)->first();
+        if(auth()->user()->id == $request->upMp){
+            $ref_pos = $request->pos;
+        }else{
+            $ref_pos = $pos->position;
+        }
         $us = user::where('id',Auth::user()->id)->first();
         //User Create
         $user = new User();
@@ -1287,7 +1292,7 @@ class UserController extends Controller
         $user->plan_id      = 1;
         $user->pos_id       = $pos->id;
         $user->position     = $request->pos;
-        $user->position_by_ref = $pos->position;
+        $user->position_by_ref = $ref_pos;
         $user->firstname    = isset($us->firstname) ? $us->firstname : null;
         $user->lastname     = isset($us->lastname) ? $us->lastname.' '.$request->count : null;
         $user->email        = strtolower(trim($request->email));

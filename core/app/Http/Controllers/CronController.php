@@ -535,25 +535,30 @@ class CronController extends Controller
     }
     public function isGold(){
         $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',0)->get();
+        // dd($users);
         $record = 0;
         $true = 0;
         $false = 0;
         foreach ($users as $key => $value) {
-            $userID = $value->id;
+            $userID = $value->user_id;
             $user = User::where('ref_id',$userID)->get();
             $kiri = 0;
             $kanan = 0;
             $p_kiri =0;
             $p_kanan =0;
+            // dd($user);
             foreach ($user as $key => $value) {
                 if($value->position==1){
                     $kiri += 1;
-                }elseif ($value->position==2) {
+                }
+                if ($value->position==2) {
                     $kanan += 1;
-                }elseif($value->position_by_ref==1){
+                }
+                if($value->position_by_ref==1){
                     $p_kiri += 1;
-                }elseif($value->position_by_ref==2){
-                    $p_kanan += 2;
+                }
+                if($value->position_by_ref==2){
+                    $p_kanan += 1;
                 }
                 
             }
