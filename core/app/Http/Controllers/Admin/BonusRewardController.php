@@ -188,7 +188,8 @@ class BonusRewardController extends Controller
     public function UserBonus(){
         $page_title = 'User Rewards';
         $empty_message = 'No User Rewards Found';
-        $table = ureward::orderByDesc('id')->paginate(getPaginate());
+        $table = ureward::with('user')->orderBy('status','ASC')->paginate(getPaginate());
+        // dd($table);
         return view('admin.bonus_reward.user', compact('page_title','table', 'empty_message'));
     }
 

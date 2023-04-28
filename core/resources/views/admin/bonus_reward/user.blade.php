@@ -10,12 +10,13 @@
                             <thead>
                                 <tr>
                                     <th scope="col">@lang('Sl')</th>
-                                    <th scope="col">@lang('Code')</th>
+                                    {{-- <th scope="col">@lang('Code')</th> --}}
                                     <th scope="col">@lang('User')</th>
+                                    <th scope="col">@lang('Option')</th>
                                     <th scope="col">@lang('Reward')</th>
                                     <th scope="col">@lang('On Claim')</th>
                                     <th scope="col">@lang('Status')</th>
-                                    <th scope="col">@lang('Selected')</th>
+                                    <th scope="col">@lang('On Claim')</th>
                                     <th scope="col">@lang('Ket.')</th>
                                     <th scope="col">@lang('Action')</th>
                                 </tr>
@@ -25,11 +26,20 @@
                                     {{-- @dd($k->detail()); --}}
                                     <tr>
                                         <td data-label="@lang('No')">{{ $key + 1 }}</td>
-                                        <td data-label="@lang('code')">
+                                        {{-- <td data-label="@lang('code')">
                                             {{ $k->trx }}
-                                        </td>
+                                        </td> --}}
                                         <td data-label="@lang('user')">
                                             {{ $k->user->username }}
+                                        </td>
+                                        <td data-label="@lang('opt')">
+                                            <a href="http://wa.me/{{ $k->user->mobile }}" target="_blank"
+                                                class="btn btn-sm btn-success"><img
+                                                    src="{{ asset('assets/images/wa-ico.png') }}" alt=""
+                                                    width="20px"></a>
+                                            <a href="mailto:{{ $k->user->email }}" class="btn btn-sm btn-danger"><i
+                                                    class='fas fa-envelope'></i></a>
+
                                         </td>
                                         <td data-label="@lang('reward')">
                                             {{ $k->rewa->reward }}
@@ -41,9 +51,12 @@
                                         <td data-label="@lang('status')">
                                             {!! $k->status() !!}
                                         </td>
-                                        <td data-label="@lang('reward')">
-                                            {{ 'Claim ' . $k->claim() }}
+                                        <td>
+                                            {{ date('d M Y', strtotime($k->created_at)) }}
                                         </td>
+                                        {{-- <td data-label="@lang('reward')">
+                                            {{ 'Claim ' . $k->claim() }}
+                                        </td> --}}
                                         <td data-label="@lang('reward')">
                                             {{ $k->ket }}
                                         </td>
@@ -52,8 +65,8 @@
                                                 data-id="{{ $k->id }}" data-ket="{{ $k->ket }}"
                                                 data-claim="{{ json_decode($k->detail, true)['claim'] }}"
                                                 data-amount="{{ $k->claim() }}" data-status="{{ $k->status }}"
-                                                data-userid="{{ $k->user_id }}" data-original-title="Edit">
-
+                                                data-userid="{{ $k->user_id }}" data-original-title="Edit"
+                                                data-selected="{{ 'Claim ' . $k->claim() }}">
                                                 <i class="la la-pencil"></i>
                                             </button>
                                         </td>
@@ -91,13 +104,22 @@
                 <form method="post" action="{{ route('admin.reward.userUpdate') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
+                        {{-- <h3 class=""></h3> --}}
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label class="font-weight-bold"> @lang('Notes Claim User')</label>
+                                <input class="form-control claim-info" readonly></input>
+                            </div>
+
+                        </div>
                         <input type="hidden" name="id" id="id">
                         <input type="hidden" name="claim" id="claim">
                         <input type="hidden" name="amount" id="amount">
                         <input type="hidden" name="user" id="user">
                         <div class="form-row">
                             <div class="form-group col">
-                                <label class="font-weight-bold"> @lang('Details.')</label>
+                                <label class="font-weight-bold">
+                                    @lang('Details from admin')<span class="text-danger">*</span></label>
                                 <textarea name="ket" id="ket" class="form-control " cols="5" rows="5"></textarea>
                             </div>
 
@@ -131,6 +153,7 @@
             $('.edit').on('click', function() {
                 console.log();
                 var modal = $('#edit-product');
+                $('.claim-info').val($(this).data('selected'))
                 $('#id').val($(this).data('id'));
                 $('#ket').val($(this).data('ket'));
                 $('#status').val($(this).data('status'));
