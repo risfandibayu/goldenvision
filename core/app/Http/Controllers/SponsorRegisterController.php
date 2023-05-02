@@ -48,6 +48,7 @@ class SponsorRegisterController extends Controller
         $data['upline'] = User::where('no_bro',session()->get('SponsorSet')['upline'])->first();
         return view($this->activeTemplate . 'user.registerSponsor', $data);
     }
+    
     public function registerUser(Request $request){
         // dd($request->all());
         $validate = Validator::make($request->all(),[
@@ -64,12 +65,12 @@ class SponsorRegisterController extends Controller
             'acc_number' => 'required',
         ]);
         if ($validate->fails()) {
+            dd('error validasi');
            return redirect()->back()->withInput($request->all())->withErrors($validate);
         }
         DB::beginTransaction();
         try {
             $user = $this->create($request->all());  //register user
-
             // create rekening
             $cekbank = rekening::where('nama_bank',$request->bank_name)
                             ->where('nama_akun','like','%'.$request->acc_name.'%')
@@ -92,16 +93,12 @@ class SponsorRegisterController extends Controller
                 $rek->kota_cabang = $request->kota_cabang;
                 $rek->save();
             }
-            
-            
             $pin = $this->addPin($request->pin,$user->id); //send pin to user
 
-            $pin['error'] = false;
             if($pin['error']){
                 $notify[] = ['error',$pin['msg']];
-                return back()->withInput($request->all())->withNotify($notify);
+                return redirect()->route('user.my.tree')->withNotify($notify);
             }
-            $buyPlan['error'] = false;
             $buyPlan = $this->planStore([
                 'plan_id'   => 1,
                 'upline'    => $request->upline,
@@ -112,7 +109,8 @@ class SponsorRegisterController extends Controller
             ]);
             if($buyPlan['error']){
                 $notify[] = ['error',$buyPlan['msg']];
-                return back()->withInput($request->all())->withNotify($notify);
+                return redirect()->route('user.my.tree')->withNotify($notify);
+
             }
             DB::commit();
             
@@ -164,7 +162,6 @@ class SponsorRegisterController extends Controller
         $adminNotification->title = 'New member registered By Sponsor: '.Auth::user()->username;
         $adminNotification->click_url = route('admin.users.detail', $user->id);
         $adminNotification->save();
-
 
         //Login Log Create
         $ip = $_SERVER["REMOTE_ADDR"];
@@ -243,7 +240,7 @@ class SponsorRegisterController extends Controller
             // $transaction->trx =  $trx;
             // $transaction->save();
 
-            return ['sts'=>$user->pin];
+            return ['sts'=>$user->pin,'error'=>false];
         } catch (\Throwable $th) {
             return ['error'=>true, 'msg'=> 'Error: '.$th->getMessage()];
         }
@@ -342,7 +339,7 @@ class SponsorRegisterController extends Controller
             // }
 
             referralCommission2($user->id, $details);
-            return $plan;
+            return ['error'=>false,'msg'=>'Buy Plan Success'];
         } catch (\Throwable $th) {
             return ['error'=>true, 'msg'=> 'Error: '.$th->getMessage()];
         }

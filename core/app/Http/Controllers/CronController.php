@@ -564,16 +564,17 @@ class CronController extends Controller
             }
             $userex = UserExtra::where('user_id',$userID)->first();
             if($userex){
-                if($kiri == 3 && $kanan == 3){
-                    $userex->update([
-                        'is_gold'   => 1,
-                        'right_lv'  => $kanan,
-                        'left_lv'   => $kiri,
-                        'on_gold'   => date('Y-m-d H:i:s')
-                    ]);
-                    $true += 1;
-                }
-                else if($p_kiri == 3 && $p_kanan == 3){
+                // if($kiri == 3 && $kanan == 3){
+                //     $userex->update([
+                //         'is_gold'   => 1,
+                //         'right_lv'  => $kanan,
+                //         'left_lv'   => $kiri,
+                //         'on_gold'   => date('Y-m-d H:i:s')
+                //     ]);
+                //     $true += 1;
+                // }
+                // else 
+                if($p_kiri == 3 && $p_kanan == 3){
                     $userex->update([
                         'is_gold'   => 1,
                         'right_lv'  => $kanan,
