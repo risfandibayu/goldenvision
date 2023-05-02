@@ -1279,7 +1279,7 @@ class UserController extends Controller
 
         $userCheck = User::where('id', $request->ref_username)->first();
         $pos = User::where('no_bro',$request->upMp)->first();
-        if(auth()->user()->id == $request->upMp){
+        if(auth()->user()->id == $pos->id){
             $ref_pos = $request->pos;
         }else{
             $ref_pos = $pos->position;
