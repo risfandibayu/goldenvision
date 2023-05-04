@@ -90,6 +90,12 @@
                                         <span class="menu-title">@lang('Bonus Reward')</span>
                                     </a>
                                 </li>
+                                <li class="sidebar-menu-item {{ menuActive('admin.reward.checkTree') }} ">
+                                    <a href="{{ route('admin.reward.checkTree') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Check Reward')</span>
+                                    </a>
+                                </li>
 
 
 

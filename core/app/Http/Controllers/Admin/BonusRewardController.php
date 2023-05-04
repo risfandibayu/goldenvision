@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\GoldExport;
 use App\Models\corder;
 use App\Http\Controllers\Controller;
 use App\Models\BonusReward;
+use App\Models\DailyGold;
 use App\Models\GeneralSetting;
 use App\Models\Gold;
 use App\Models\Product;
@@ -12,10 +14,12 @@ use App\Models\Transaction;
 use App\Models\ureward;
 use App\Models\User;
 use App\Models\UserExtra;
+use App\Models\UserGold;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BonusRewardController extends Controller
 {
@@ -192,7 +196,19 @@ class BonusRewardController extends Controller
         // dd($table);
         return view('admin.bonus_reward.user', compact('page_title','table', 'empty_message'));
     }
+    public function userReport(){
+        $page_title = 'User Emas';
+        $empty_message = 'No User Rewards Found';
+        $table = UserExtra::userGold();
 
+        $goldNow = DailyGold::orderByDesc('id')->first();
+        // dd($table);
+        return view('admin.bonus_reward.report_check', compact('page_title','table', 'empty_message','goldNow'));
+    }
+
+    public function goldUserExport(){
+        return Excel::download(new GoldExport, 'gold-users.xlsx');
+    }
     public function UserUpdate(Request $request){
         // dd($request->all());
         $user = User::find($request->user);

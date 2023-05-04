@@ -310,6 +310,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // bonus reward
         // Route::resource('bonus-reward', 'BonusRewardController');
         Route::get('bonus-reward','BonusRewardController@index')->name('reward.allReward');
+        Route::get('bonus-reward-check','BonusRewardController@userReport')->name('reward.checkTree');
+        Route::get('bonus-reward-export','BonusRewardController@goldUserExport')->name('reward.goldExport');
         Route::post('bonus-reward','BonusRewardController@store')->name('reward.Store');
         Route::post('bonus-monthly','BonusRewardController@monthly')->name('reward.monthly');
         Route::get('bonus-reward/{id}','BonusRewardController@store')->name('reward.getId');
