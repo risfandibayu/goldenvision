@@ -25,7 +25,7 @@
                                             {{ $key['username'] }}
                                         </td>
                                         <td data-label="@lang('user')">
-                                            {{ nbk($key['gold']) }}
+                                            {{ $key['gold'] }}
                                         </td>
                                         <td data-label="@lang('user')">
                                             {{ nb($key['harga']) }}
