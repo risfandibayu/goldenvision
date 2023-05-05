@@ -81,9 +81,11 @@ class UserController extends Controller
         }else{
             $data['claim']              =  false;
         }
+        $data['checkDaily'] = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))->where('user_id',auth()->user()->id)->groupBy('user_id')->first();
+        
         $gold = DailyGold::orderByDesc('id')->first();  
         $userGold = auth()->user()->total_golds;
-        $goldRange = $gold->per_gram;
+        $goldRange = $gold->per_gram - ($gold->per_gram*8/100);
         $float = floatval(str_replace(',', '.', nbk(auth()->user()->total_golds)));
         // dd($goldRange * $float);
         $data['goldBonus']          = $goldRange;
