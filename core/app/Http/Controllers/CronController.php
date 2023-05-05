@@ -573,7 +573,6 @@ class CronController extends Controller
                     ]);
                     $true += 1;
                 }
-                else 
                 if($p_kiri == 3 && $p_kanan == 3){
                     $userex->update([
                         'is_gold'   => 1,
@@ -583,7 +582,7 @@ class CronController extends Controller
                     ]);
                     $true += 1;
                 }
-                else if($kiri > 3 && $kanan > 3){
+                if($kiri > 3 && $kanan > 3){
                     $userex->update([
                         'is_gold'           => 1,
                         'bonus_deliver'     => 1,
@@ -592,7 +591,7 @@ class CronController extends Controller
                     ]);
                     $true += 1;
                 }
-                else if($p_kiri > 3 && $p_kanan > 3){
+                if($p_kiri > 3 && $p_kanan > 3){
                     $userex->update([
                         'is_gold'           => 1,
                         'bonus_deliver'     => 1,
