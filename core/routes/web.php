@@ -673,6 +673,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::middleware(['checkKyc'])->group(function () {
                 Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
+                Route::post('gold/withdraw', 'UserController@withdrawGold')->name('withdraw.gold');
 
                 Route::middleware(['checkPaid'])->group(function () {
                     //

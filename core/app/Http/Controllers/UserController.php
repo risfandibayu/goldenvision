@@ -81,7 +81,9 @@ class UserController extends Controller
         }else{
             $data['claim']              =  false;
         }
-        $data['checkDaily'] = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))->where('user_id',auth()->user()->id)->groupBy('user_id')->first();
+        $checkDaily = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))->where('user_id',auth()->user()->id)->groupBy('user_id')->first();
+        $data['checkDaily_gold'] = $checkDaily->gold ??0;
+        $data['checkDaily_days'] = $checkDaily->days ??0;
         
         $gold = DailyGold::orderByDesc('id')->first();  
         $userGold = auth()->user()->total_golds;
@@ -283,6 +285,39 @@ class UserController extends Controller
         $data['withdrawMethod'] = WithdrawMethod::whereStatus(1)->get();
         $data['page_title'] = "Withdraw Money";
         return view(activeTemplate() . 'user.withdraw.methods', $data);
+    }
+    public function withdrawGold(Request $request){
+        $user = auth()->user();
+        $usergold = auth()->user()->total_golds;
+        $goldToday = DailyGold::orderByDesc('id')->first();
+        $goldTodayFee = $goldToday->per_gram - ($goldToday->per_gram*8/100);
+        $platfrom_fee = 5/100;
+        $totalWd = $usergold * $goldTodayFee - ($usergold * $goldTodayFee * $platfrom_fee);
+        DB::beginTransaction();
+        try {
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $totalWd;
+            $transaction->post_balance = $user->balance + $totalWd;
+            $transaction->charge = 0;
+            $transaction->trx_type = '+';
+            $transaction->details = 'Withdrawl Gold '.$usergold.' grams to IDR '.$totalWd;
+            $transaction->trx =  getTrx();
+            $transaction->save();
+
+            $user->balance += $totalWd;
+            $user->wd_gold = 1;
+            $user->save();
+
+            DB::commit();
+
+            $notify[] = ['success', 'Withdrawl Gold '.$usergold.' grams to IDR '.$totalWd.' Successfully'];
+            return redirect()->back()->withNotify($notify);
+        } catch (\Throwable $th) {
+            $notify[] = ['error', 'Error: '.$th->getMessage()];
+            return redirect()->back()->withNotify($notify);
+            DB::rollBack();
+        }
     }
 
     public function withdrawStore(Request $request)
