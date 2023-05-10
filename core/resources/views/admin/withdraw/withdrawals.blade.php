@@ -78,7 +78,9 @@
                                     @endphp
                                     <tr>
                                         <td data-label="@lang('Date')">
-                                            {{ $withdraw->user->userExtra->is_gold ? '<span class="badge badge-success">Qualified</span>' : '<span class="badge badge-danger">Not Qualified</span>' }}
+                                            {!! $withdraw->user->userExtra->is_gold
+                                                ? '<span class="badge badge-success">Qualified</span>'
+                                                : '<span class="badge badge-danger">Not Qualified</span>' !!}
                                         </td>
                                         <td data-label="@lang('Date')">{{ showDateTime($withdraw->created_at) }}</td>
                                         <td data-label="@lang('Trx Number')" class="font-weight-bold">
