@@ -515,7 +515,7 @@
 @section('panel')
     <div class="row mb-4">
         <div class="col-lg-12">
-            @if ($checkDaily_days < 100 && auth()->user()->userExtra->d_gold != 1)
+            @if ($checkDaily_days < 100 && auth()->user()->userExtra->d_gold != 1 && auth()->user()->userExtra->is_gold)
                 @if (\App\Models\User::canClaimDailyGold(Auth::id()))
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
