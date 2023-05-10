@@ -304,7 +304,7 @@ class UserController extends Controller
             $transaction->post_balance = $user->balance + $totalWd;
             $transaction->charge = 0;
             $transaction->trx_type = '+';
-            $transaction->details = 'Withdrawl Gold '.$usergold.' grams to IDR '.$totalWd;
+            $transaction->details = 'Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd);
             $transaction->trx =  getTrx();
             $transaction->save();
 
@@ -314,7 +314,7 @@ class UserController extends Controller
 
             DB::commit();
 
-            $notify[] = ['success', 'Withdrawl Gold '.$usergold.' grams to IDR '.$totalWd.' Successfully'];
+            $notify[] = ['success', 'Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd).' Successfully'];
             return redirect()->back()->withNotify($notify);
         } catch (\Throwable $th) {
             $notify[] = ['error', 'Error: '.$th->getMessage()];
