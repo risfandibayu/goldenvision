@@ -617,6 +617,30 @@ class CronController extends Controller
         ];
     }
 
+    public function isGoldBack(){
+        $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',1)->get();
+        $userData = [];
+        foreach ($users as $key => $value) {
+            $userID = $value->user_id;
+            $userRef = User::where('ref_id',$userID)->get();
+            $count = $userRef->count();
+            // dd($userRef);
+            if($count < 6){
+                $userData = [ 
+                    'user' => [
+                        'id' => $userID,
+                        'username' => $value->username,
+                        'count'     => $count
+                    ],
+                ];
+            }
+        }
+        return [
+            'status'=>'success',
+            'user'  => $userData,
+        ];
+    }
+
      public function dailyGold(){
         $url = 'https://www.hargaemas.com/';
         $page =  GoutteFacade::request('GET',$url);
