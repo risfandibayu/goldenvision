@@ -620,6 +620,7 @@ class CronController extends Controller
     public function isGoldBack(){
         $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',1)->where('username','not like','%masterplan%')->get();
         $userData = [];
+
         foreach ($users as $key => $value) {
             $userID = $value->user_id;
             $userRef = User::where('ref_id',$userID)->get();
@@ -633,6 +634,7 @@ class CronController extends Controller
                         'count'     => $count
                     ],
                 ];
+                $extra = UserExtra::where('user_id',$userID)->update(['is_gold'=>0,'bonus_deliver'=>0]);
             }
         }
         return [
