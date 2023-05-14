@@ -301,10 +301,10 @@
         }
 
         /* @keyframes show-profile {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    0% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    0% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
 
         .profile .photo {
             width: 100px;
@@ -318,14 +318,14 @@
         }
 
         /* @keyframes rotate-photo {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        0% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(0deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        0% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(0deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(-360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(-360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
         .profile .photo img {
             width: 100%;
@@ -772,22 +772,32 @@
                                                     <b> Bonus Sepesial
                                                         {{ $item->id == 3 ? ' Bulan Ini' : ' Sampai Bulan Juni' }}</b>
                                                     <br><br>
-                                                    Untuk mitra usaha yang telah memenuhi
-                                                    kualifikasi
-                                                    penjualan
-                                                    produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }} kanan
-                                                    {{ $item->id == 3 ? ' per bulan ini' : ' sampai bulan juni' }},
-                                                    akan
-                                                    mendapatkan
-                                                    kesempatan reward promo {{ $item['reward'] }}
-                                                    {{ $item['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($item['equal']) : '' }}
-                                                    segera tingkatkan
-                                                    penjualan anda dan raih kesuksesan bersama!!
-                                                    <br>
-                                                    <br>
-                                                    <b class="mt-5"> Total penjualan kamu saat ini
-                                                        {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
-                                                        {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img class="card-img-top"
+                                                                src="{{ getImage('assets/images/reward/' . $item->images, null, true) }}"
+                                                                alt="Bonus reward {{ $item->reward }}"
+                                                                style="height: 200px;width: 400px">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            Untuk mitra usaha yang telah memenuhi
+                                                            kualifikasi
+                                                            penjualan
+                                                            produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }}
+                                                            kanan,
+                                                            akan
+                                                            mendapatkan
+                                                            kesempatan reward {{ $item['reward'] }}
+                                                            {{ $item['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($item['equal']) : '' }}
+                                                            segera tingkatkan
+                                                            penjualan anda dan raih kesuksesan bersama!!
+                                                            <br>
+                                                            <br>
+                                                            <b class="mt-5"> Total penjualan kamu saat ini
+                                                                {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
+                                                                {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 @if (auth()->user()->userExtra->is_gold)
                                                     <div class="card-footer">
@@ -817,7 +827,71 @@
                                         </div>
                                     </div>
                                 @endforeach
+                                {{-- @dd($reward) --}}
+                                @foreach ($reward as $i => $item)
+                                    <div class="carousel-item ">
+                                        <div class="col-md-12">
+                                            <div class="bonus">
+                                                <div class="card-body bg--gradi-10 h5 text-center">
+                                                    <b> Bonus Sepesial
+                                                        {{ $item->reward }}</b>
+                                                    <br><br>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img class="card-img-top"
+                                                                src="{{ getImage('assets/images/reward/' . $item->images, null, true) }}"
+                                                                alt="Bonus reward {{ $item->reward }}"
+                                                                style="height: 200px;width: 400px">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            Untuk mitra usaha yang telah memenuhi
+                                                            kualifikasi
+                                                            penjualan
+                                                            produk {{ $item['kiri'] }} kiri dan {{ $item['kanan'] }}
+                                                            kanan,
+                                                            akan
+                                                            mendapatkan
+                                                            kesempatan reward {{ $item['reward'] }}
+                                                            {{ $item['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($item['equal']) : '' }}
+                                                            segera tingkatkan
+                                                            penjualan anda dan raih kesuksesan bersama!!
+                                                            <br>
+                                                            <br>
+                                                            <b class="mt-5"> Total penjualan kamu saat ini
+                                                                {{ $p_kiri < 3 ? 0 : $p_kiri - 3 }} :
+                                                                {{ $p_kanan < 3 ? 0 : $p_kanan - 3 }}</b>
+                                                        </div>
+                                                    </div>
 
+                                                </div>
+                                                @if (auth()->user()->userExtra->is_gold)
+                                                    <div class="card-footer">
+                                                        <form action="{{ route('user.claim-reward') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="type"
+                                                                value="{{ $item['id'] }}">
+                                                            <div class="input-group">
+                                                                @if ($item['equal'] == 0)
+                                                                    <button class="btn btn-primary btn-block">Claim
+                                                                        Reward</button>
+                                                                @else
+                                                                    <input type="submit"
+                                                                        class="form-control bg-primary form-control-lg"
+                                                                        name="claim" value="{{ $item['reward'] }}">
+                                                                    <input type="submit"
+                                                                        class="form-control bg-primary form-control-lg"
+                                                                        aria-label="Large" name="claim"
+                                                                        value="{{ $item['equal'] }}">
+                                                                @endif
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                             <a class="carousel-control-prev w-auto" href="#recipeCarousel1" role="button"
                                 data-slide="prev">
@@ -837,35 +911,6 @@
 
             </div>
 
-
-            {{-- <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-                <hr>
-                <h4>#CLAIM BONUS BY USER</h4>
-                <ol class="carousel-indicators">
-                    @if ($urewardCount == 1)
-                        <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
-                    @elseif($urewardCount == 2)
-                        <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
-                    @else
-                        <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
-                    @endif
-
-                </ol>
-                <div class="carousel-inner">
-                    {!! $ureward !!}
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div> --}}
             <div class="container text-center my-3">
                 <h5 class="font-weight-light font-weight-bold">User Claim Reward</h5>
                 <div class="row mx-auto my-auto">
@@ -895,9 +940,9 @@
                                             <p class="card-text">{{ $value->reward->reward }} </p>
                                             <p class="card-text">{!! $value->details()['is_gold']
                                                 ? '<span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    class="badge rounded-pill badge-warning">Gold</span>'
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    class="badge rounded-pill badge-warning">Gold</span>'
                                                 : '<span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    class="badge rounded-pill badge-secondary">Silver</span>' !!}</p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    class="badge rounded-pill badge-secondary">Silver</span>' !!}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1236,9 +1281,6 @@
                     class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
-
-
-
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--info b-radius--10 box-shadow">
                 <div class="icon">
@@ -1276,25 +1318,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-            <div class="dashboard-w1 bg--info b-radius--10 box-shadow">
-                <div class="icon">
-                    <i class="fa fa-tree"></i>
-                </div>
-                <div class="details">
-                    <div class="numbers">
-                        <span class="amount">{{ nb(getAmount(auth()->user()->total_ref_com)) }}</span>
-                        <span class="currency-sign">{{ $general->cur_text }}</span>
-                    </div>
-                    <div class="desciption">
-                        <span class="text--small">@lang('Total Bonus Sponsor')</span>
-                    </div>
-                </div>
-                <br>
-                <a href="{{ route('user.report.binaryCom') }}"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-            </div>
-        </div> --}}
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
                 <div class="icon">
@@ -1315,24 +1338,6 @@
                     class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
-        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-        <div class="dashboard-w1 bg--3 b-radius--10 box-shadow">
-            <div class="icon">
-                <i class="las la-users"></i>
-            </div>
-            <div class="details">
-                <div class="numbers">
-                    <span class="amount">{{$total_ref}}</span>
-                </div>
-                <div class="desciption">
-                    <span class="text--small">@lang('Total Referral')</span>
-                </div>
-                <a href="{{route('user.my.ref')}}"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-            </div>
-        </div>
-    </div> --}}
-
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
             <div class="dashboard-w1 bg--15 b-radius--10 box-shadow">
                 <div class="icon">
@@ -1352,84 +1357,6 @@
                     class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
         </div>
-
-
-
-        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-        <div class="dashboard-w1 bg--17 b-radius--10 box-shadow">
-            <div class="icon">
-                <i class="las la-cart-arrow-down"></i>
-            </div>
-            <div class="details">
-                <div class="numbers">
-                    <span class="amount">{{auth()->user()->userExtra->bv_left +
-                        auth()->user()->userExtra->bv_right}}</span>
-                </div>
-                <div class="desciption">
-                    <span class="text--small">@lang('Total BV')</span>
-                </div>
-                <a href="{{route('user.bv.log')}}?type=paidBV"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-        <div class="dashboard-w1 bg--19 b-radius--10 box-shadow">
-            <div class="icon">
-                <i class="las la-arrow-alt-circle-left"></i>
-            </div>
-            <div class="details">
-                <div class="numbers">
-                    <span class="amount">{{getAmount(auth()->user()->userExtra->bv_left)}}</span>
-                </div>
-                <div class="desciption">
-                    <span class="text--small">@lang('Left BV')</span>
-                </div>
-                <a href="{{route('user.bv.log')}}?type=leftBV"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-        <div class="dashboard-w1 bg--11 b-radius--10 box-shadow">
-            <div class="icon">
-                <i class="las la-arrow-alt-circle-right"></i>
-            </div>
-            <div class="details">
-                <div class="numbers">
-                    <span class="amount">{{getAmount(auth()->user()->userExtra->bv_right)}}</span>
-                </div>
-                <div class="desciption">
-                    <span class="text--small">@lang('Right BV')</span>
-                </div>
-                <a href="{{route('user.bv.log')}}?type=rightBV"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-        <div class="dashboard-w1 bg--13 b-radius--10 box-shadow">
-            <div class="icon">
-                <i class="las la-hand-holding-usd"></i>
-            </div>
-            <div class="details">
-                <div class="numbers">
-                    <span class="amount">{{getAmount($totalBvCut)}}</span>
-                    <span class="currency-sign">{{$general->cur_text}}</span>
-                </div>
-                <div class="desciption">
-                    <span class="text--small">@lang('Total Bv Cut')</span>
-                </div>
-                <a href="{{route('user.bv.log')}}?type=cutBV"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-            </div>
-        </div>
-    </div> --}}
         @if ($isReward)
             <div class="col-xl-12 col-lg-12 col-sm-12 mb-30">
                 <div class="card bg--gradi-51">
@@ -1468,14 +1395,7 @@
                         </div> --}}
                             @foreach ($reward as $item)
                                 {{-- {{$item->id}} --}}
-                                @if (auth()->user()->userExtra->left <= $item->kiri && auth()->user()->userExtra->right <= $item->kanan)
-                                @else
-                                    {{-- @if (cekReward($item->id) == 1)
-                                2
-                            @else
-                                1
-                            @endif --}}
-                                    {{-- {{$item->id}} --}}
+                                @if (auth()->user()->userExtra->left >= $item->kiri && auth()->user()->userExtra->right >= $item->kanan)
                                     <div class="col-md-4 mt-3 text-center">
                                         <div class="card">
                                             <img class="card-img-top"
