@@ -29,12 +29,16 @@ class ureward extends Model
         }
     }
     public function detail(){
-        $data = json_decode($this->detail,true);
-        $rs = '<p>'.$data['left'].' | '.$data['right'].'</p> ';
-        if($data['is_gold']){
-            $rs .= '<span class="badge badge-warning">Gold</span>';
+        if ($this->detail()) {
+            $data = json_decode($this->detail,true);
+            $rs = '<p>'.$data['left'].' | '.$data['right'].'</p> ';
+            if($data['is_gold']){
+                $rs .= '<span class="badge badge-warning">Gold</span>';
+            }else{
+                $rs .=  '<span class="badge badge-secondary">Silver</span>';
+            }
         }else{
-            $rs .=  '<span class="badge badge-secondary">Silver</span>';
+            $rs = '<span class="badge badge-secondary">Not Set</span>';
         }
         return $rs;
     }

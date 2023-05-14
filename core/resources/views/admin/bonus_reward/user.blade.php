@@ -44,7 +44,7 @@
                                         <td data-label="@lang('reward')">
                                             {{ $k->rewa->reward }}
                                         </td>
-                                        <td data-label="@lang('status')">
+                                        <td data-label="@lang('on_claim')">
                                             {!! $k->detail() !!}
                                         </td>
 
