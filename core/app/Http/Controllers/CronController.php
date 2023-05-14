@@ -618,7 +618,7 @@ class CronController extends Controller
     }
 
     public function isGoldBack(){
-        $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',1)->get();
+        $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',1)->where('username','not like','%masterplan%')->get();
         $userData = [];
         foreach ($users as $key => $value) {
             $userID = $value->user_id;
@@ -626,7 +626,7 @@ class CronController extends Controller
             $count = $userRef->count();
             // dd($userRef);
             if($count < 6){
-                $userData = [ 
+                $userData[] = [ 
                     'user' => [
                         'id' => $userID,
                         'username' => $value->username,
