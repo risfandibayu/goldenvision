@@ -542,69 +542,72 @@ class CronController extends Controller
         foreach ($users as $key => $value) {
             $userID = $value->user_id;
             $user = User::where('ref_id',$userID)->get();
-            $kiri = 0;
-            $kanan = 0;
-            $p_kiri =0;
-            $p_kanan =0;
-            // dd($user);
-            foreach ($user as $key => $value) {
-                if($value->position==1){
-                    $kiri += 1;
+            $count = $user->count();
+            if ($count >= 6) {
+                $kiri = 0;
+                $kanan = 0;
+                $p_kiri =0;
+                $p_kanan =0;
+                // dd($user);
+                foreach ($user as $key => $value) {
+                    if($value->position==1){
+                        $kiri += 1;
+                    }
+                    if ($value->position==2) {
+                        $kanan += 1;
+                    }
+                    if($value->position_by_ref==1){
+                        $p_kiri += 1;
+                    }
+                    if($value->position_by_ref==2){
+                        $p_kanan += 1;
+                    }
+                    
                 }
-                if ($value->position==2) {
-                    $kanan += 1;
-                }
-                if($value->position_by_ref==1){
-                    $p_kiri += 1;
-                }
-                if($value->position_by_ref==2){
-                    $p_kanan += 1;
-                }
-                
-            }
-            $userex = UserExtra::where('user_id',$userID)->first();
-            if($userex){
-                if($kiri == 3 && $kanan == 3){
-                    $userex->update([
-                        'is_gold'   => 1,
-                        'right_lv'  => $kanan,
-                        'left_lv'   => $kiri,
-                        'on_gold'   => date('Y-m-d H:i:s')
-                    ]);
-                    $true += 1;
-                }
-                if($kiri > 3 || $kanan > 3){
-                    $userex->update([
-                        'is_gold'           => 1,
-                        'bonus_deliver'     => 1,
-                        'right_lv'          => $kanan,
-                        'left_lv'           => $kiri
-                    ]);
-                    $true += 1;
-                }
-                if($p_kiri >= 3 && $p_kanan >= 3){
-                    $userex->update([
-                        'is_gold'   => 1,
-                        'right_lv'  => $kanan,
-                        'left_lv'   => $kiri,
-                        'on_gold'   => date('Y-m-d H:i:s')
-                    ]);
-                    $true += 1;
-                }
-                if($p_kiri > 3 || $p_kanan > 3){
-                    $userex->update([
-                        'is_gold'           => 1,
-                        'bonus_deliver'     => 1,
-                        'right_lv'          => $kanan,
-                        'left_lv'           => $kiri
-                    ]);
-                    $true += 1;
-                }
-                else{
-                    $userex->update([
-                        'right_lv'  => $kanan,
-                        'left_lv'   => $kiri
-                    ]);
+                $userex = UserExtra::where('user_id',$userID)->first();
+                if($userex){
+                    if($kiri == 3 && $kanan == 3){
+                        $userex->update([
+                            'is_gold'   => 1,
+                            'right_lv'  => $kanan,
+                            'left_lv'   => $kiri,
+                            'on_gold'   => date('Y-m-d H:i:s')
+                        ]);
+                        $true += 1;
+                    }
+                    if($kiri > 3 || $kanan > 3){
+                        $userex->update([
+                            'is_gold'           => 1,
+                            'bonus_deliver'     => 1,
+                            'right_lv'          => $kanan,
+                            'left_lv'           => $kiri
+                        ]);
+                        $true += 1;
+                    }
+                    if($p_kiri >= 3 && $p_kanan >= 3){
+                        $userex->update([
+                            'is_gold'   => 1,
+                            'right_lv'  => $kanan,
+                            'left_lv'   => $kiri,
+                            'on_gold'   => date('Y-m-d H:i:s')
+                        ]);
+                        $true += 1;
+                    }
+                    if($p_kiri > 3 || $p_kanan > 3){
+                        $userex->update([
+                            'is_gold'           => 1,
+                            'bonus_deliver'     => 1,
+                            'right_lv'          => $kanan,
+                            'left_lv'           => $kiri
+                        ]);
+                        $true += 1;
+                    }
+                    else{
+                        $userex->update([
+                            'right_lv'  => $kanan,
+                            'left_lv'   => $kiri
+                        ]);
+                    }
                 }
             }
             
