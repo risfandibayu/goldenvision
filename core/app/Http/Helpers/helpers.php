@@ -2247,7 +2247,6 @@ function brodev($user_id, $bro_qty){
 function cekReward($id){
     $ure = ureward::where('user_id',Auth::user()->id)->where('reward_id',$id)->first();
     if ($ure) {
-        # code...
         return true;
     }
     return false;
