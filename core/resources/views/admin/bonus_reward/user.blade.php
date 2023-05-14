@@ -63,7 +63,7 @@
                                         <td data-label="@lang('Action')">
                                             <button type="button" class="icon-btn edit" data-toggle="tooltip"
                                                 data-id="{{ $k->id }}" data-ket="{{ $k->ket }}"
-                                                data-claim="{{ json_decode($k->detail, true)['claim'] }}"
+                                                data-claim="{{ json_decode($k->detail, true)['claim'] ?? '' }}"
                                                 data-amount="{{ $k->claim() }}" data-status="{{ $k->status }}"
                                                 data-userid="{{ $k->user_id }}" data-original-title="Edit"
                                                 data-selected="{{ 'Claim ' . $k->claim() }}">
