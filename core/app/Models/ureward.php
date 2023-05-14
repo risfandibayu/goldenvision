@@ -29,7 +29,7 @@ class ureward extends Model
         }
     }
     public function detail(){
-        if ($this->detail()) {
+        if ($this->detail) {
             $data = json_decode($this->detail,true);
             $rs = '<p>'.$data['left'].' | '.$data['right'].'</p> ';
             if($data['is_gold']){
