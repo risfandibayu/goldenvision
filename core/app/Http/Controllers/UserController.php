@@ -1991,8 +1991,8 @@ class UserController extends Controller
             $notify[] = ['error', 'Bonus Not Found'];
             return back()->withNotify($notify);
         }
-        $req_kiri = $user->userExtra->p_left - 3; //30
-        $req_kanan = $user->userExtra->p_right - 3; //0
+        $req_kiri = $user->userExtra->p_left; //30
+        $req_kanan = $user->userExtra->p_right; //0
         if($req_kiri < $reward->kiri || $req_kanan < $reward->kanan){
             $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
             return back()->withNotify($notify);
@@ -2011,7 +2011,14 @@ class UserController extends Controller
                 'status'    => 1,
                 'detail'    => json_encode($onClaim)
             ]);
-            $notify[] = ['success', 'Your data has been on record, get your reward: '.$reward->$claim.' soon'];
+            $userExtra = UserExtra::where('user_id',$user->id)->first();
+            if($reward->rp){
+                $userExtra->p_right -= $reward->kanan;
+                $userExtra->p_left  -= $reward->kiri;
+                $userExtra->save();
+            }
+            $claim = $reward->claim==0?$reward->reward:$reward->claim;
+            $notify[] = ['success', 'Your data has been on record, get your reward: '.$claim.' soon'];
             return back()->withNotify($notify);
         }
             $notify[] = ['error', "Can't Claim Reward!, Error!"];

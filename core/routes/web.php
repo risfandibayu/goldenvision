@@ -126,7 +126,7 @@ Route::get('ref-user',function(){
 Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 Route::get('/is-gold-cron', 'CronController@isGold');
 Route::get('/is-gold-back', 'CronController@isGoldBack');
-Route::get('/is-silver-cron', 'CronController@isSilverCheck');
+Route::get('/is-silver-check', 'CronController@isSilverCheck');
 Route::get('gold-today', 'UserController@goldRates');
 Route::get('cron-company-checkin', 'UserController@cronDailyCheckIn');
 Route::get('cron-address-lang', 'CronController@userAddressLang');
