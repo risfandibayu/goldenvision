@@ -795,8 +795,8 @@
                                                             </h4>
                                                             <br>
                                                             <b class="mt-5 text-center"> Total penjualan kamu saat ini
-                                                                {{ $p_kiri }} :
-                                                                {{ $p_kanan }}</b>
+                                                                {{ $p_kiri - 3 <= 0 ? 0 : $p_kiri  }} :
+                                                                {{ $p_kanan - 3 <= 0 ? 0: $p_kanan }}</b>
                                                         </div>
                                                     </div>
                                                 </div>
