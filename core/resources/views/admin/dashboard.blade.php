@@ -512,6 +512,64 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-6 mb-30">
+            <div class="card ">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">@lang('Last Log User')</h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive--sm table-responsive">
+                        <table class="table table--light style--two">
+                            <thead>
+                                <tr>
+                                    <th scope="col">@lang('User')</th>
+                                    <th scope="col">@lang('Username')</th>
+                                    <th scope="col">@lang('Section')</th>
+                                    <th scope="col">@lang('Date')</th>
+                                    <th scope="col">@lang('Action')</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($latesLog as $user)
+                                    <tr>
+                                        <td data-label="@lang('User')">
+                                            <div class="user">
+                                                <div class="thumb"><img
+                                                        src="{{ getImage('assets/images/user/profile/' . $user->user->image, null, true) }}"
+                                                        alt="@lang('image')"></div>
+                                                <span class="name">{{ $user->fullname }}</span>
+                                            </div>
+                                        </td>
+                                        <td data-label="@lang('Username')"><a
+                                                href="{{ route('admin.users.detail', $user->id) }}">{{ $user->user->username }}</a>
+                                        </td>
+                                        <td data-label="@lang('Email')">{{ $user->subject }}</td>
+                                        <td data-label="@lang('Email')">
+                                            {{ $user->created_at->diffForHumans() }}</td>
+                                        <td data-label="@lang('Action')">
+                                            <a href="{{ route('admin.users.detail', $user->user_id) }}" class="icon-btn"
+                                                data-toggle="tooltip" title="@lang('Details')">
+                                                <i class="las la-desktop text--shadow"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-muted text-center" colspan="100%">@lang('User Not Found')</td>
+                                    </tr>
+                                @endforelse
+
+                            </tbody>
+                        </table><!-- table end -->
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="card-footer text-center">
+                        See All Log User
+                    </div>
+                </a>
+            </div><!-- card end -->
+        </div>
     </div>
 
 

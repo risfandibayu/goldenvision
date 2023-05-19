@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\AdminNotification;
 use App\Models\BonusReward;
+use App\Models\LogActivity;
 use App\Models\ureward;
 
 class AdminController extends Controller
@@ -132,15 +133,15 @@ class AdminController extends Controller
         $ure2 = ureward::where('status',2)->count();
 
         $latestUser = User::latest()->limit(6)->get();
-
+        $latesLog = LogActivity::with(['user'])->where('subject','like','%Login.%')->orderByDesc('id')->limit(5)->get();
         if(auth()->guard('admin')->user()->role == 'su'){
             return view('admin.dashboard', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth','registered'));
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog', 'withdrawalMonth','registered'));
         }else{
             return view('admin.dashboard_ar', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }
 
         
