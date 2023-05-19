@@ -562,6 +562,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
             Route::post('weekly-checkin', 'UserController@weeklyCheckIn')->name('weekly-checkin');
             Route::post('clam-bonus-reward', 'UserController@claimBonusReward')->name('claim-reward');
+            Route::post('serial-number', 'UserController@serialNum')->name('serialnum');
 
             Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
             Route::post('profile-setting', 'UserController@submitProfile');

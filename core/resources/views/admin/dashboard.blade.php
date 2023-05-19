@@ -503,9 +503,19 @@
         </div>
     </div>
 
+    <div class="row mb-none-30 mt-5">
+        <div class="col-xl-6 mb-30">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@lang('Monthly Registered User')</h5>
+                    <div id="registered-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="row mb-none-30 mt-5">
-
         <div class="col-xl-6 mb-30">
             <div class="card ">
                 <div class="card-header">
@@ -556,7 +566,6 @@
                 </div>
             </div><!-- card end -->
         </div>
-
         <div class="col-xl-6 mb-30">
             <div class="card">
                 <div class="card-body">
@@ -565,8 +574,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <div class="row mb-none-30 mt-5">
@@ -607,6 +614,8 @@
         </div>
 
     </div>
+
+    {{-- @dd($withdrawals['per_day_amount']->flatten()) --}}
 
     @include('admin.partials.matchingBonusModal')
 @endsection
@@ -856,6 +865,69 @@
             }
         });
 
+
+
+        var options = {
+            chart: {
+                height: 430,
+                type: "area",
+                toolbar: {
+                    show: false
+                },
+                dropShadow: {
+                    enabled: true,
+                    enabledSeries: [0],
+                    top: -2,
+                    left: 0,
+                    blur: 10,
+                    opacity: 0.08
+                },
+                animations: {
+                    enabled: true,
+                    easing: 'linear',
+                    dynamicAnimation: {
+                        speed: 1000
+                    }
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            series: [{
+                name: "Total",
+                data: @json($registered['total'])
+            }],
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.7,
+                    opacityTo: 0.9,
+                    stops: [0, 90, 100]
+                }
+            },
+            xaxis: {
+                categories: @json($registered['month'])
+            },
+            grid: {
+                padding: {
+                    left: 5,
+                    right: 5
+                },
+                xaxis: {
+                    lines: {
+                        show: false
+                    }
+                },
+                yaxis: {
+                    lines: {
+                        show: false
+                    }
+                },
+            },
+        };
+        var chart = new ApexCharts(document.querySelector("#registered-line"), options);
+        chart.render();
 
         var ctx = document.getElementById('userOsChart');
         var myChart = new Chart(ctx, {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
+use App\Models\LogActivity;
 use App\Models\User;
 use App\Models\UserLogin;
 use App\Providers\RouteServiceProvider;
@@ -85,6 +86,7 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
+            addToLog('Login.');
             return $this->sendLoginResponse($request);
         }
 

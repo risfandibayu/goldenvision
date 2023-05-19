@@ -121,6 +121,9 @@ class SponsorRegisterController extends Controller
                 'user' => $user->username,
                 'url' => url('/login?username='.$user->username.'&password='.$user->username),
             ]);
+
+            addToLog('Created User '.$user->username.' & Purchased Plan');
+
             $notify[] = ['success', 'Created User '.$user->username.' & Purchased Plan Successfully'];
             return redirect(session()->get('SponsorSet')['url'])->withNotify($notify);
         } catch (\Throwable $th) {
@@ -225,6 +228,7 @@ class SponsorRegisterController extends Controller
                 'end_pin'   => $user->pin + $pin,
                 'ket'       => 'Added Pin By Sponsor: '. $sponsor->username
             ]);
+            addToLog('Sponsor Create and Send '.$pin.' Pin to: '. $user->username);
            
             
             $user->pin += $pin;
@@ -337,6 +341,7 @@ class SponsorRegisterController extends Controller
             // if ($plan->tree_com > 0) {
             //     treeComission($user->id, $plan->tree_com, $details);
             // }
+            addToLog('Purchased ' . $plan->name . ' For '.$data['pin'].' MP as Sponsor');
 
             referralCommission2($user->id, $details);
             return ['error'=>false,'msg'=>'Buy Plan Success'];
@@ -368,7 +373,8 @@ class SponsorRegisterController extends Controller
             ]);
             $sponsor->pin -= $request->pin;
             $sponsor->save();
-            
+            addToLog('Send '.$request->pin.' Pin to: '. $user->username);
+
             $upin = UserPin::create([
                 'user_id' => $user->id,
                 'pin'     => $request->pin,
@@ -449,7 +455,10 @@ class SponsorRegisterController extends Controller
             $transaction->trx =  $trx;
             $transaction->save();
 
+
             DB::commit();
+            addToLog('Convert '.$request->idr.' Balance To '.$request->qty.' Pin');
+            
             $notify[] = ['success', 'Convert '.$request->idr.' Balance To '.$request->qty.' Pin'];
             return redirect()->back()->withNotify($notify);
 

@@ -62,15 +62,15 @@ class PlanController extends Controller
         $user->bro_qty += $request->qtyy;
         $user->save();
 
-        // $trx = $user->transactions()->create([
-        //     'amount' => $plan->price * $request->qtyy,
-        //     'trx_type' => '-',
-        //     'details' => 'Purchased ' . $plan->name . ' For '.$request->qtyy.' MP',
-        //     'remark' => 'purchased_plan',
-        //     'trx' => getTrx(),
-        //     'post_balance' => getAmount($user->balance),
-        // ]);
-
+        $trx = $user->transactions()->create([
+            'amount' => $plan->price * $request->qty,
+            'trx_type' => '-',
+            'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' MP',
+            'remark' => 'purchased_plan',
+            'trx' => getTrx(),
+            'post_balance' => getAmount($user->balance),
+        ]);
+        addToLog('Purchased ' . $plan->name . ' For '.$request->qty.' MP');
 
         $notify[] = ['success', 'Purchased new MP quantity for '.$request->qtyy.' MP Successfully'];
         return redirect()->route('user.home')->withNotify($notify);
@@ -257,8 +257,7 @@ class PlanController extends Controller
             'trx' => getTrx(),
             'post_balance' => getAmount($user->balance),
         ]);
-
-        // dd($user);
+        addToLog('Purchased ' . $plan->name . ' For '.$request->qty.' MP');
 
         sendEmail2($user->id, 'plan_purchased', [
             'plan' => $plan->name. ' For '.$request->qty.' MP',

@@ -80,6 +80,7 @@ class AdminController extends Controller
             $report['withdraw_month_amount']->push(getAmount($bb->withdrawAmount));
         });
 
+        $registered = userRegiteredChart();
 
 
 
@@ -135,11 +136,11 @@ class AdminController extends Controller
         if(auth()->guard('admin')->user()->role == 'su'){
             return view('admin.dashboard', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth'));
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth','registered'));
         }else{
             return view('admin.dashboard_ar', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth','bonusr','bonusa','ure','ure2'));
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }
 
         

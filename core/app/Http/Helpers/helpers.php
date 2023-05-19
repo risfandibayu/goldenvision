@@ -6,6 +6,7 @@ use App\Models\EmailTemplate;
 use App\Models\Extension;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
+use App\Models\LogActivity;
 use App\Models\Plan;
 use App\Models\SmsTemplate;
 use App\Models\ureward;
@@ -15,6 +16,8 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 function sidebarVariation(){
 
@@ -2250,4 +2253,48 @@ function cekReward($id){
         return true;
     }
     return false;
+}
+
+function userRegiteredChart(){
+    $lastFiveMonths = collect([]);
+
+        // Mengambil data 5 bulan terakhir
+    for ($i = 0; $i < 12; $i++) {
+        $lastFiveMonths->push(now()->subMonths($i)->format('Y-m'));
+    }
+
+    // Query untuk mendapatkan jumlah pengguna terdaftar dalam 5 bulan terakhir
+    $registrations = User::select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS month'), DB::raw('COUNT(*) as total'))
+        ->whereIn(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), $lastFiveMonths)
+        ->groupBy('month')
+        ->orderBy('month', 'asc')
+        ->get();
+
+    $response = [
+        'month' => [],
+        'total' => []
+    ];
+
+    foreach ($registrations as $registration) {
+        $month = \Carbon\Carbon::parse($registration->month);
+        $monthYear = $month->translatedFormat('F Y');
+        $response['month'][] = $monthYear;
+        $response['total'][] = $registration->total;
+    }
+
+    return $response;
+}
+
+
+function addToLog($subject)
+{
+    $info = json_decode(json_encode(getIpInfo()), true);
+    $log = [];
+    $log['subject'] = $subject;
+    $log['url'] = Request::fullUrl();
+    $log['method'] = Request::method();
+    $log['agent'] = Request::header('user-agent');
+    $log['location'] =  @implode(',', $info['city']) . (" - " . @implode(',', $info['area']) . "- ") . @implode(',', $info['country']) . (" - " . @implode(',', $info['code']) . " ");
+    $log['user_id'] = auth()->check() ? auth()->user()->id : 1;
+    LogActivity::create($log);
 }
