@@ -136,7 +136,7 @@ class AdminController extends Controller
         $ure2 = ureward::where('status',2)->count();
 
         $latestUser = User::latest()->limit(6)->get();
-        $latesLog = LogActivity::with(['user'])->where('subject','like','%Login.%')->orderByDesc('id')->groupBy('user_id')->limit(5)->get();
+        $latesLog = LogActivity::with(['user'])->where('subject','like','%Login.%')->orderByDesc('id')->groupBy('user_id')->limit(4)->get();
         if(auth()->guard('admin')->user()->role == 'su'){
             return view('admin.dashboard', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
