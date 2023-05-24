@@ -9,6 +9,7 @@ use App\Models\GeneralSetting;
 use App\Models\LogActivity;
 use App\Models\Plan;
 use App\Models\SmsTemplate;
+use App\Models\Transaction;
 use App\Models\ureward;
 use App\Models\User;
 use App\Models\UserExtra;
@@ -2283,6 +2284,49 @@ function userRegiteredChart(){
     }
 
     return $response;
+}
+
+function registerThisMount()
+{
+    $currentMonth = Carbon::now()->format('m');
+    $currentYear = Carbon::now()->format('Y');
+
+    $startDate = Carbon::now()->startOfMonth();
+    $endDate = Carbon::now()->endOfMonth();
+
+    $dates = [];
+    $totals = [];
+
+    // Initialize dates array
+    for ($date = clone $startDate; $date->lte($endDate); $date->addDay()) {
+        $dates[] = $date->format('d');
+    }
+
+    // Get user registrations count for each date
+    $userRegistrations = Transaction::whereYear('created_at', $currentYear)
+        ->where('remark','purchased_plan')
+        ->whereMonth('created_at', $currentMonth)
+        ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
+        ->groupBy('date')
+        ->get();
+
+    // Initialize totals array
+    foreach ($dates as $date) {
+        $totals[$date] = 0;
+    }
+
+    // Fill totals array with user registration counts
+    foreach ($userRegistrations as $userRegistration) {
+        $date = Carbon::parse($userRegistration->date)->format('d');
+        $totals[$date] = $userRegistration->total;
+    }
+
+    $response = [
+        'month' => $dates,
+        'total' => array_values($totals)
+    ];
+
+   return $response;
 }
 
 

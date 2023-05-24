@@ -504,15 +504,15 @@
     </div>
 
     <div class="row mb-none-30 mt-5">
-        <div class="col-xl-6 mb-30">
+        <div class="col-xl-8 mb-30">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">@lang('Monthly Registered User')</h5>
+                    <h5 class="card-title">@lang('Daily Buy Plan')</h5>
                     <div id="registered-line"></div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-6 mb-30">
+        <div class="col-xl-4 mb-30">
             <div class="card ">
                 <div class="card-header">
                     <h6 class="card-title mb-0">@lang('Last Log User')</h6>
@@ -525,7 +525,6 @@
                                     <th scope="col">@lang('User')</th>
                                     <th scope="col">@lang('Username')</th>
                                     <th scope="col">@lang('Section')</th>
-                                    <th scope="col">@lang('Date')</th>
                                     <th scope="col">@lang('Action')</th>
                                 </tr>
                             </thead>
@@ -543,9 +542,9 @@
                                         <td data-label="@lang('Username')"><a
                                                 href="{{ route('admin.users.detail', $user->id) }}">{{ $user->user->username }}</a>
                                         </td>
-                                        <td data-label="@lang('Email')">{{ $user->subject }}</td>
-                                        <td data-label="@lang('Email')">
-                                            {{ $user->created_at->diffForHumans() }}</td>
+                                        <td data-label="@lang('Email')" class="text-left">{{ $user->subject }} <br>
+                                            <span style="color: #999">{{ $user->created_at->diffForHumans() }}</span>
+                                        </td>
                                         <td data-label="@lang('Action')">
                                             <a href="{{ route('admin.users.detail', $user->user_id) }}" class="icon-btn"
                                                 data-toggle="tooltip" title="@lang('Details')">
@@ -925,64 +924,131 @@
 
 
 
+        // var options = {
+        //     chart: {
+        //         height: 430,
+        //         type: "rangeBar",
+        //         toolbar: {
+        //             show: false
+        //         },
+        //         dropShadow: {
+        //             enabled: true,
+        //             enabledSeries: [0],
+        //             top: -2,
+        //             left: 0,
+        //             blur: 10,
+        //             opacity: 0.08
+        //         },
+        //         animations: {
+        //             enabled: true,
+        //             easing: 'linear',
+        //             dynamicAnimation: {
+        //                 speed: 1000
+        //             }
+        //         },
+        //     },
+        //     dataLabels: {
+        //         enabled: false
+        //     },
+        //     series: [{
+        //         name: "Total",
+        //         data: @json($registered['total'])
+        //     }],
+        //     fill: {
+        //         type: "gradient",
+        //         gradient: {
+        //             shadeIntensity: 1,
+        //             opacityFrom: 0.7,
+        //             opacityTo: 0.9,
+        //             stops: [0, 90, 100]
+        //         }
+        //     },
+        //     xaxis: {
+        //         categories: @json($registered['month'])
+        //     },
+        //     grid: {
+        //         padding: {
+        //             left: 5,
+        //             right: 5
+        //         },
+        //         xaxis: {
+        //             lines: {
+        //                 show: false
+        //             }
+        //         },
+        //         yaxis: {
+        //             lines: {
+        //                 show: false
+        //             }
+        //         },
+        //     },
+        // };
         var options = {
-            chart: {
-                height: 430,
-                type: "area",
-                toolbar: {
-                    show: false
-                },
-                dropShadow: {
-                    enabled: true,
-                    enabledSeries: [0],
-                    top: -2,
-                    left: 0,
-                    blur: 10,
-                    opacity: 0.08
-                },
-                animations: {
-                    enabled: true,
-                    easing: 'linear',
-                    dynamicAnimation: {
-                        speed: 1000
+            series: [{
+                name: 'Totals',
+                data: @json($registered['total'])
+            }],
+            annotations: {
+                points: [{
+                    x: 'Bananas',
+                    seriesIndex: 0,
+                    label: {
+                        borderColor: '#775DD0',
+                        offsetY: 0,
+                        style: {
+                            color: '#fff',
+                            background: '#775DD0',
+                        },
+                        text: 'Bananas are good',
                     }
-                },
+                }]
+            },
+            chart: {
+                height: 350,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '50%',
+                }
             },
             dataLabels: {
                 enabled: false
             },
-            series: [{
-                name: "Total",
-                data: @json($registered['total'])
-            }],
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.7,
-                    opacityTo: 0.9,
-                    stops: [0, 90, 100]
+            stroke: {
+                width: 2
+            },
+
+            grid: {
+                row: {
+                    colors: ['#fff', '#f2f2f2']
                 }
             },
             xaxis: {
-                categories: @json($registered['month'])
+                labels: {
+                    rotate: -45
+                },
+                categories: @json($registered['month']),
+                tickPlacement: 'on'
             },
-            grid: {
-                padding: {
-                    left: 5,
-                    right: 5
-                },
-                xaxis: {
-                    lines: {
-                        show: false
-                    }
-                },
-                yaxis: {
-                    lines: {
-                        show: false
-                    }
+            yaxis: {
+                title: {
+                    text: 'Total Buy',
                 },
             },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    type: "horizontal",
+                    shadeIntensity: 0.25,
+                    gradientToColors: undefined,
+                    inverseColors: true,
+                    opacityFrom: 0.85,
+                    opacityTo: 0.85,
+                    stops: [50, 0, 100]
+                },
+            }
         };
         var chart = new ApexCharts(document.querySelector("#registered-line"), options);
         chart.render();

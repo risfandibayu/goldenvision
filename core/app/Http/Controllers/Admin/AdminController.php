@@ -81,10 +81,9 @@ class AdminController extends Controller
             $report['withdraw_month_amount']->push(getAmount($bb->withdrawAmount));
         });
 
-        $registered = userRegiteredChart();
-
-
-
+        // $registered = userRegiteredChart();
+        // dd($registered);
+        $registered = registerThisMount();
         // Withdraw Graph
         $withdrawal = Withdrawal::where('created_at', '>=', \Carbon\Carbon::now()->subDays(30))->where('status', 1)
             ->select(array(DB::Raw('sum(amount)   as totalAmount'), DB::Raw('DATE(created_at) day')))
