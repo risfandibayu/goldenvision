@@ -2329,6 +2329,34 @@ function registerThisMount()
    return $response;
 }
 
+function sumPurchasedPlan()
+{
+    $totalAmount = DB::table('transactions')
+        ->where('remark', 'purchased_plan')
+        ->sum('amount');
+
+    return $totalAmount;
+}
+
+function totalWdGold(){
+     $totalAmount = DB::table('transactions')
+        ->where('details', 'LIKE', '%Withdrawl Gold %')
+        ->sum('amount');
+
+    return $totalAmount;
+}
+function totalMpProd(){
+    $userCount = User::whereNotNull('no_bro')->whereNotBetween('id', [16, 213])->count();
+
+    return $userCount * 15000;
+    
+}
+function totalColagenProd(){
+    $userCount = User::whereNotNull('no_bro')->whereNotBetween('id', [16, 213])->count();
+
+    return $userCount * 35000;
+    
+}
 
 function addToLog($subject)
 {

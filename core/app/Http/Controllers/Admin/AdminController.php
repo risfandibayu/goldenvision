@@ -49,6 +49,10 @@ class AdminController extends Controller
         $widget['smsUnverified'] = User::smsUnverified()->count();
 
         $widget['users_balance'] = User::sum('balance');
+        $widget['totalWdGold'] = totalWdGold();
+        $widget['totalMpProd'] = totalMpProd();
+        $widget['totalColagenProd'] = totalColagenProd();
+        $widget['totalPurchasedPlan'] = sumPurchasedPlan();
         $widget['users_invest'] = User::sum('total_invest');
         $widget['last7days_invest'] = Transaction::whereDate('created_at', '>=', Carbon::now()->subDays(6))->where('remark', 'purchased_plan')->sum('amount');
         $widget['total_binary_com'] = User::sum('total_binary_com');
