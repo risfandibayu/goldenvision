@@ -1143,7 +1143,7 @@
         // };
         var options = {
             series: [{
-                name: 'Totals',
+                name: 'Purchase',
                 data: @json($registered['total'])
             }],
             annotations: {

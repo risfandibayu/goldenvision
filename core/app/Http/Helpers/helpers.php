@@ -2392,13 +2392,23 @@ function registerThisMount()
         $date = Carbon::parse($userRegistration->date)->format('d');
         $totals[$date] = $userRegistration->total;
     }
-
+    $month_date = addMonthNames($dates);
     $response = [
-        'month' => $dates,
+        'month' => $month_date,
         'total' => array_values($totals)
     ];
 
    return $response;
+}
+function addMonthNames($array) {
+    $result = array();
+
+    foreach ($array as $value) {
+        $month = date('F'); // Get the current month
+        $result[] = $value . ' ' . $month;
+    }
+
+    return $result;
 }
 
 function sumPurchasedPlan()
