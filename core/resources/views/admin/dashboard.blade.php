@@ -384,7 +384,7 @@
             </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
-            <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
+            <div class="dashboard-w1 bg--gradi-10 b-radius--10 box-shadow">
                 <div class="details">
                     <div class="numbers ">
                         <span class="amount">Leader PIN</span>
@@ -521,7 +521,7 @@
         <div class="col-xl-7 mb-30">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">@lang('Daily Buy Plan')</h5>
+                    <h5 class="card-title">@lang('Daily purchase Plan')</h5>
                     <div id="registered-line"></div>
                 </div>
             </div>
@@ -1191,7 +1191,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Total Buy',
+                    text: 'Total Purchase',
                 },
             },
             fill: {
