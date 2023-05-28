@@ -139,7 +139,7 @@ class LoginController extends Controller
         $this->guard()->logout();
         request()->session()->invalidate();
         $notify[] = ['success', 'You have been logged out.'];
-        return redirect('/login')->withNotify($notify);
+        return redirect()->route('landing.home')->withNotify($notify);
     }
 
 

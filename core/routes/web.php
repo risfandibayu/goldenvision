@@ -25,7 +25,7 @@ Route::get('getfile',[UserController::class,'fileDownload']);
 
 Route::get('/',function(){
     return view('v3.home');
-})->name('home');
+})->name('landing.home');
 Route::get('/build',function(){
     return view('v3.build');
 });

@@ -53,6 +53,7 @@ class AdminController extends Controller
         $widget['totalMpProd'] = totalMpProd();
         $widget['totalColagenProd'] = totalColagenProd();
         $widget['totalPurchasedPlan'] = sumPurchasedPlan();
+        $widget['totalReferalsCommision'] = sumRefComm();
         $widget['users_invest'] = User::sum('total_invest');
         $widget['last7days_invest'] = Transaction::whereDate('created_at', '>=', Carbon::now()->subDays(6))->where('remark', 'purchased_plan')->sum('amount');
         $widget['total_binary_com'] = User::sum('total_binary_com');
@@ -137,14 +138,16 @@ class AdminController extends Controller
 
         $latestUser = User::latest()->limit(6)->get();
         $latesLog = LogActivity::with(['user'])->where('subject','like','%Login.%')->orderByDesc('id')->groupBy('user_id')->limit(4)->get();
+        $leader = User::where('is_leader',1)->where('id','!=',115)->get();
+// dd($leader);
         if(auth()->guard('admin')->user()->role == 'su'){
             return view('admin.dashboard', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog', 'withdrawalMonth','registered'));
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }else{
             return view('admin.dashboard_ar', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }
 
         

@@ -21,7 +21,7 @@
                           <li><a href="#contact">Contact</a></li>
                           {{-- <hr>
                           <li><a href="#">Login</a></li> --}}
-                          <li><a href="{{ url('/build') }}" class="text-primary btn btn-light btn-block">Sign
+                          <li><a href="{{ url('/login') }}" class="text-primary btn btn-light btn-block">Sign
                                   In</a></li>
                       </ul>
                   </nav>

@@ -346,6 +346,25 @@
             </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="las fa-money-bill-wave-alt"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['totalReferalsCommision'])) }}</span>
+
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Refeerals Commision')</span>
+                    </div>
+                    {{-- <a href="#"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a> --}}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las fa-money-bill-wave-alt"></i>
@@ -364,7 +383,68 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
+                <div class="details">
+                    <div class="numbers ">
+                        <span class="amount">Leader PIN</span>
+                    </div>
+                </div>
+                <div class="icon">
+                    <i class="las fa-info"></i>
+                </div>
+                @foreach ($leader as $user)
+                    <div class="details mr-3">
+                        <div class="desciption">
+                            <span class="text--small">{{ $user->fullname }}</span>
+                        </div>
+                        <div class="numbers">
+                            <span class="amount">{{ $user->pin }} PIN</span>
+                        </div>
+                    </div>
+                @endforeach
 
+            </div>
+        </div>
+        {{-- <div class="col-md-6">
+            <div class="card ">
+                <div class="card-body p-0">
+                    <div class="table-responsive--sm table-responsive">
+                        <table class="table table--light style--two">
+                            <thead>
+                                <tr class="text-center">
+                                    <th colspan="3">Leader Not Distributed PIN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($leader as $user)
+                                    <tr>
+                                        <td data-label="@lang('User')">
+                                            <div class="user">
+                                                <div class="thumb"><img
+                                                        src="{{ getImage('assets/images/user/profile/' . $user->image, null, true) }}"
+                                                        alt="@lang('image')"></div>
+                                                <span class="name">{{ $user->fullname }}</span>
+                                            </div>
+                                        </td>
+                                        <td data-label="@lang('Username')"><a
+                                                href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a>
+                                        </td>
+                                        <td data-label="@lang('Email')" class="text-left">{{ $user->pin }}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-muted text-center" colspan="100%">@lang('User Not Found')</td>
+                                    </tr>
+                                @endforelse
+
+                            </tbody>
+                        </table><!-- table end -->
+                    </div>
+                </div>
+            </div>
+        </div> --}}
         {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--deep-purple b-radius--10 box-shadow">
                 <div class="icon">
@@ -447,6 +527,7 @@
             </div>
         </div>
         <div class="col-xl-5 mb-30">
+
             <div class="card ">
                 <div class="card-header">
                     <h6 class="card-title mb-0">@lang('Last Log User')</h6>
@@ -501,7 +582,7 @@
                         See All Log User
                     </div>
                 </a>
-            </div><!-- card end -->
+            </div>
         </div>
     </div>
     <div class="row mt-50 mb-none-30">

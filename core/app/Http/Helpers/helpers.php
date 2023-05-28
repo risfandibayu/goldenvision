@@ -2409,6 +2409,13 @@ function sumPurchasedPlan()
 
     return $totalAmount;
 }
+function sumRefComm()
+{
+    $totalAmount = DB::table('transactions')
+        ->where('remark', 'referral_commission')
+        ->sum('amount');
+    return $totalAmount;
+}
 
 function totalWdGold(){
      $totalAmount = DB::table('transactions')
@@ -2427,7 +2434,6 @@ function totalColagenProd(){
     $userCount = User::whereNotNull('no_bro')->whereNotBetween('id', [16, 213])->count();
 
     return $userCount * 35000;
-    
 }
 
 function addToLog($subject)
