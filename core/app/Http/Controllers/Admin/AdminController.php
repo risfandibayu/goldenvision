@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\AdminNotification;
 use App\Models\BonusReward;
+use App\Models\LogActivity;
 use App\Models\ureward;
 
 class AdminController extends Controller
@@ -48,6 +49,10 @@ class AdminController extends Controller
         $widget['smsUnverified'] = User::smsUnverified()->count();
 
         $widget['users_balance'] = User::sum('balance');
+        $widget['totalWdGold'] = totalWdGold();
+        $widget['totalMpProd'] = totalMpProd();
+        $widget['totalColagenProd'] = totalColagenProd();
+        $widget['totalPurchasedPlan'] = sumPurchasedPlan();
         $widget['users_invest'] = User::sum('total_invest');
         $widget['last7days_invest'] = Transaction::whereDate('created_at', '>=', Carbon::now()->subDays(6))->where('remark', 'purchased_plan')->sum('amount');
         $widget['total_binary_com'] = User::sum('total_binary_com');
@@ -80,9 +85,9 @@ class AdminController extends Controller
             $report['withdraw_month_amount']->push(getAmount($bb->withdrawAmount));
         });
 
-
-
-
+        // $registered = userRegiteredChart();
+        // dd($registered);
+        $registered = registerThisMount();
         // Withdraw Graph
         $withdrawal = Withdrawal::where('created_at', '>=', \Carbon\Carbon::now()->subDays(30))->where('status', 1)
             ->select(array(DB::Raw('sum(amount)   as totalAmount'), DB::Raw('DATE(created_at) day')))
@@ -131,15 +136,15 @@ class AdminController extends Controller
         $ure2 = ureward::where('status',2)->count();
 
         $latestUser = User::latest()->limit(6)->get();
-
+        $latesLog = LogActivity::with(['user'])->where('subject','like','%Login.%')->orderByDesc('id')->groupBy('user_id')->limit(4)->get();
         if(auth()->guard('admin')->user()->role == 'su'){
             return view('admin.dashboard', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth'));
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog', 'withdrawalMonth','registered'));
         }else{
             return view('admin.dashboard_ar', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth', 'withdrawalMonth','bonusr','bonusa','ure','ure2'));
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }
 
         

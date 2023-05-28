@@ -287,6 +287,83 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--gradi-51 b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="las la-coins"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['totalWdGold'])) }}</span>
+
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total DailyGold Withdrawl')</span>
+                    </div>
+                    {{-- <a href="#"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a> --}}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--17 b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="las fa-money-bill-wave-alt"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['totalMpProd'])) }}</span>
+
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Gold Card')</span>
+                    </div>
+                    {{-- <a href="#"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a> --}}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--pink b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="las fa-money-bill-wave-alt"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['totalColagenProd'])) }}</span>
+
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Colagen Production')</span>
+                    </div>
+                    {{-- <a href="#"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a> --}}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="las fa-money-bill-wave-alt"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['totalPurchasedPlan'])) }}</span>
+
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Purchased Plan')</span>
+                    </div>
+                    {{-- <a href="#"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a> --}}
+                </div>
+            </div>
+        </div>
 
         {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--deep-purple b-radius--10 box-shadow">
@@ -360,7 +437,73 @@
             </div>
         </div> --}}
     </div>
+    <div class="row mb-none-30 mt-5">
+        <div class="col-xl-7 mb-30">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@lang('Daily Buy Plan')</h5>
+                    <div id="registered-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 mb-30">
+            <div class="card ">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">@lang('Last Log User')</h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive--sm table-responsive">
+                        <table class="table table--light style--two">
+                            <thead>
+                                <tr>
+                                    <th scope="col">@lang('User')</th>
+                                    <th scope="col">@lang('Username')</th>
+                                    <th scope="col">@lang('Section')</th>
+                                    <th scope="col">@lang('Action')</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($latesLog as $user)
+                                    <tr>
+                                        <td data-label="@lang('User')">
+                                            <div class="user">
+                                                <div class="thumb"><img
+                                                        src="{{ getImage('assets/images/user/profile/' . $user->user->image, null, true) }}"
+                                                        alt="@lang('image')"></div>
+                                                <span class="name">{{ $user->fullname }}</span>
+                                            </div>
+                                        </td>
+                                        <td data-label="@lang('Username')"><a
+                                                href="{{ route('admin.users.detail', $user->id) }}">{{ $user->user->username }}</a>
+                                        </td>
+                                        <td data-label="@lang('Email')" class="text-left">{{ $user->subject }} <br>
+                                            <span style="color: #999">{{ $user->created_at->diffForHumans() }}</span>
+                                        </td>
+                                        <td data-label="@lang('Action')">
+                                            <a href="{{ route('admin.users.detail', $user->user_id) }}" class="icon-btn"
+                                                data-toggle="tooltip" title="@lang('Details')">
+                                                <i class="las la-desktop text--shadow"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-muted text-center" colspan="100%">@lang('User Not Found')</td>
+                                    </tr>
+                                @endforelse
 
+                            </tbody>
+                        </table><!-- table end -->
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="card-footer text-center">
+                        See All Log User
+                    </div>
+                </a>
+            </div><!-- card end -->
+        </div>
+    </div>
     <div class="row mt-50 mb-none-30">
         <div class="col-xl-6 mb-30">
             <div class="card">
@@ -504,8 +647,9 @@
     </div>
 
 
-    <div class="row mb-none-30 mt-5">
 
+
+    <div class="row mb-none-30 mt-5">
         <div class="col-xl-6 mb-30">
             <div class="card ">
                 <div class="card-header">
@@ -556,7 +700,6 @@
                 </div>
             </div><!-- card end -->
         </div>
-
         <div class="col-xl-6 mb-30">
             <div class="card">
                 <div class="card-body">
@@ -565,8 +708,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <div class="row mb-none-30 mt-5">
@@ -607,6 +748,8 @@
         </div>
 
     </div>
+
+    {{-- @dd($withdrawals['per_day_amount']->flatten()) --}}
 
     @include('admin.partials.matchingBonusModal')
 @endsection
@@ -856,6 +999,136 @@
             }
         });
 
+
+
+        // var options = {
+        //     chart: {
+        //         height: 430,
+        //         type: "rangeBar",
+        //         toolbar: {
+        //             show: false
+        //         },
+        //         dropShadow: {
+        //             enabled: true,
+        //             enabledSeries: [0],
+        //             top: -2,
+        //             left: 0,
+        //             blur: 10,
+        //             opacity: 0.08
+        //         },
+        //         animations: {
+        //             enabled: true,
+        //             easing: 'linear',
+        //             dynamicAnimation: {
+        //                 speed: 1000
+        //             }
+        //         },
+        //     },
+        //     dataLabels: {
+        //         enabled: false
+        //     },
+        //     series: [{
+        //         name: "Total",
+        //         data: @json($registered['total'])
+        //     }],
+        //     fill: {
+        //         type: "gradient",
+        //         gradient: {
+        //             shadeIntensity: 1,
+        //             opacityFrom: 0.7,
+        //             opacityTo: 0.9,
+        //             stops: [0, 90, 100]
+        //         }
+        //     },
+        //     xaxis: {
+        //         categories: @json($registered['month'])
+        //     },
+        //     grid: {
+        //         padding: {
+        //             left: 5,
+        //             right: 5
+        //         },
+        //         xaxis: {
+        //             lines: {
+        //                 show: false
+        //             }
+        //         },
+        //         yaxis: {
+        //             lines: {
+        //                 show: false
+        //             }
+        //         },
+        //     },
+        // };
+        var options = {
+            series: [{
+                name: 'Totals',
+                data: @json($registered['total'])
+            }],
+            annotations: {
+                points: [{
+                    x: 'Bananas',
+                    seriesIndex: 0,
+                    label: {
+                        borderColor: '#775DD0',
+                        offsetY: 0,
+                        style: {
+                            color: '#fff',
+                            background: '#775DD0',
+                        },
+                        text: 'Bananas are good',
+                    }
+                }]
+            },
+            chart: {
+                height: 350,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '50%',
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 2
+            },
+
+            grid: {
+                row: {
+                    colors: ['#fff', '#f2f2f2']
+                }
+            },
+            xaxis: {
+                labels: {
+                    rotate: -45
+                },
+                categories: @json($registered['month']),
+                tickPlacement: 'on'
+            },
+            yaxis: {
+                title: {
+                    text: 'Total Buy',
+                },
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    type: "horizontal",
+                    shadeIntensity: 0.25,
+                    gradientToColors: undefined,
+                    inverseColors: true,
+                    opacityFrom: 0.85,
+                    opacityTo: 0.85,
+                    stops: [50, 0, 100]
+                },
+            }
+        };
+        var chart = new ApexCharts(document.querySelector("#registered-line"), options);
+        chart.render();
 
         var ctx = document.getElementById('userOsChart');
         var myChart = new Chart(ctx, {

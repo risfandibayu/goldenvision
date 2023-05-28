@@ -75,7 +75,14 @@
                         <span class="menu-title">@lang('My Tree')</span>
                     </a>
                 </li>
-
+                @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null || auth()->user()->no_bro !== '')
+                    <li class="sidebar-menu-item {{ menuActive('user.ref.tree') }}">
+                        <a href="{{ route('user.ref.tree') }}" class="nav-link">
+                            <i class="menu-icon las la-tree"></i>
+                            <span class="menu-title">@lang('Referals Tree')</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('user.pins*', 2) }} my-2">
                         <i class="menu-icon las la-exchange-alt"></i>
@@ -127,14 +134,7 @@
                         <span class="menu-title">@lang('Bonus Reward')</span>
                     </a>
                 </li>
-                @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null || auth()->user()->no_bro !== '')
-                    <li class="sidebar-menu-item {{ menuActive('user.ref.tree') }}">
-                        <a href="{{ route('user.ref.tree') }}" class="nav-link">
-                            <i class="menu-icon las la-tree"></i>
-                            <span class="menu-title">@lang('Referals Tree')</span>
-                        </a>
-                    </li>
-                @endif
+
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
                         <a href="{{ route('user.gold.invest') }}" class="nav-link">
                             <i class="menu-icon las la-coins"></i>

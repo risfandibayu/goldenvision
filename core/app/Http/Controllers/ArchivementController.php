@@ -15,7 +15,7 @@ class ArchivementController extends Controller
         $data['page_title'] = "Archivement";
         $data['user']       = auth()->user();
         $data['title']          = title();
-        $data['bonus']      = ureward::where('user_id',auth()->user()->id)->get();
+        $data['bonus']      = ureward::with(['user'])->where('user_id',auth()->user()->id)->get();
         return view($this->activeTemplate . 'user.archivement', $data);
     }
 

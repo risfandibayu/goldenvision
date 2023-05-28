@@ -6,8 +6,10 @@ use App\Models\EmailTemplate;
 use App\Models\Extension;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
+use App\Models\LogActivity;
 use App\Models\Plan;
 use App\Models\SmsTemplate;
+use App\Models\Transaction;
 use App\Models\ureward;
 use App\Models\User;
 use App\Models\UserExtra;
@@ -15,6 +17,8 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 function sidebarVariation(){
 
@@ -2319,8 +2323,122 @@ function brodev($user_id, $bro_qty){
 function cekReward($id){
     $ure = ureward::where('user_id',Auth::user()->id)->where('reward_id',$id)->first();
     if ($ure) {
-        # code...
         return true;
     }
     return false;
+}
+
+function userRegiteredChart(){
+    $lastFiveMonths = collect([]);
+
+        // Mengambil data 5 bulan terakhir
+    for ($i = 0; $i < 12; $i++) {
+        $lastFiveMonths->push(now()->subMonths($i)->format('Y-m'));
+    }
+
+    // Query untuk mendapatkan jumlah pengguna terdaftar dalam 5 bulan terakhir
+    $registrations = User::select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS month'), DB::raw('COUNT(*) as total'))
+        ->whereIn(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), $lastFiveMonths)
+        ->groupBy('month')
+        ->orderBy('month', 'asc')
+        ->get();
+
+    $response = [
+        'month' => [],
+        'total' => []
+    ];
+
+    foreach ($registrations as $registration) {
+        $month = \Carbon\Carbon::parse($registration->month);
+        $monthYear = $month->translatedFormat('F Y');
+        $response['month'][] = $monthYear;
+        $response['total'][] = $registration->total;
+    }
+
+    return $response;
+}
+
+function registerThisMount()
+{
+    $currentMonth = Carbon::now()->format('m');
+    $currentYear = Carbon::now()->format('Y');
+
+    $startDate = Carbon::now()->startOfMonth();
+    $endDate = Carbon::now()->endOfMonth();
+
+    $dates = [];
+    $totals = [];
+
+    // Initialize dates array
+    for ($date = clone $startDate; $date->lte($endDate); $date->addDay()) {
+        $dates[] = $date->format('d');
+    }
+
+    // Get user registrations count for each date
+    $userRegistrations = Transaction::whereYear('created_at', $currentYear)
+        ->where('remark','purchased_plan')
+        ->whereMonth('created_at', $currentMonth)
+        ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
+        ->groupBy('date')
+        ->get();
+
+    // Initialize totals array
+    foreach ($dates as $date) {
+        $totals[$date] = 0;
+    }
+
+    // Fill totals array with user registration counts
+    foreach ($userRegistrations as $userRegistration) {
+        $date = Carbon::parse($userRegistration->date)->format('d');
+        $totals[$date] = $userRegistration->total;
+    }
+
+    $response = [
+        'month' => $dates,
+        'total' => array_values($totals)
+    ];
+
+   return $response;
+}
+
+function sumPurchasedPlan()
+{
+    $totalAmount = DB::table('transactions')
+        ->where('remark', 'purchased_plan')
+        ->sum('amount');
+
+    return $totalAmount;
+}
+
+function totalWdGold(){
+     $totalAmount = DB::table('transactions')
+        ->where('details', 'LIKE', '%Withdrawl Gold %')
+        ->sum('amount');
+
+    return $totalAmount;
+}
+function totalMpProd(){
+    $userCount = User::whereNotNull('no_bro')->whereNotBetween('id', [16, 213])->count();
+
+    return $userCount * 15000;
+    
+}
+function totalColagenProd(){
+    $userCount = User::whereNotNull('no_bro')->whereNotBetween('id', [16, 213])->count();
+
+    return $userCount * 35000;
+    
+}
+
+function addToLog($subject)
+{
+    $info = json_decode(json_encode(getIpInfo()), true);
+    $log = [];
+    $log['subject'] = $subject;
+    $log['url'] = Request::fullUrl();
+    $log['method'] = Request::method();
+    $log['agent'] = Request::header('user-agent');
+    $log['location'] =  @implode(',', $info['city']) . (" - " . @implode(',', $info['area']) . "- ") . @implode(',', $info['country']) . (" - " . @implode(',', $info['code']) . " ");
+    $log['user_id'] = auth()->check() ? auth()->user()->id : 1;
+    LogActivity::create($log);
 }

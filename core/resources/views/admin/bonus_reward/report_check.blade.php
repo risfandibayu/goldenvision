@@ -9,66 +9,26 @@
                         <table class="table table--light style--two">
                             <thead>
                                 <tr>
-                                    <th scope="col">@lang('Sl')</th>
+                                    <th scope="col">@lang('NO')</th>
                                     {{-- <th scope="col">@lang('Code')</th> --}}
-                                    <th scope="col">@lang('User')</th>
-                                    <th scope="col">@lang('Option')</th>
-                                    <th scope="col">@lang('Reward')</th>
-                                    <th scope="col">@lang('On Claim')</th>
-                                    <th scope="col">@lang('Status')</th>
-                                    <th scope="col">@lang('On Claim')</th>
-                                    <th scope="col">@lang('Ket.')</th>
-                                    <th scope="col">@lang('Action')</th>
+                                    <th scope="col">@lang('Username')</th>
+                                    <th scope="col">@lang('Gram Emas Check In 100 hari ')</th>
+                                    <th scope="col">@lang('Equal Rupiah')</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($table as $key => $k)
-                                    {{-- @dd($k->detail()); --}}
+                                @forelse($table as $key)
                                     <tr>
-                                        <td data-label="@lang('No')">{{ $key + 1 }}</td>
-                                        {{-- <td data-label="@lang('code')">
-                                            {{ $k->trx }}
-                                        </td> --}}
+
+                                        <td data-label="@lang('No')">{{ $key['no'] }}</td>
                                         <td data-label="@lang('user')">
-                                            {{ $k->user->username }}
+                                            {{ $key['username'] }}
                                         </td>
-                                        <td data-label="@lang('opt')">
-                                            <a href="http://wa.me/{{ $k->user->mobile }}" target="_blank"
-                                                class="btn btn-sm btn-success"><img
-                                                    src="{{ asset('assets/images/wa-ico.png') }}" alt=""
-                                                    width="20px"></a>
-                                            <a href="mailto:{{ $k->user->email }}" class="btn btn-sm btn-danger"><i
-                                                    class='fas fa-envelope'></i></a>
-
+                                        <td data-label="@lang('user')">
+                                            {{ $key['gold'] }}
                                         </td>
-                                        <td data-label="@lang('reward')">
-                                            {{ $k->rewa->reward }}
-                                        </td>
-                                        <td data-label="@lang('on_claim')">
-                                            {!! $k->detail() !!}
-                                        </td>
-
-                                        <td data-label="@lang('status')">
-                                            {!! $k->status() !!}
-                                        </td>
-                                        <td>
-                                            {{ date('d M Y', strtotime($k->created_at)) }}
-                                        </td>
-                                        {{-- <td data-label="@lang('reward')">
-                                            {{ 'Claim ' . $k->claim() }}
-                                        </td> --}}
-                                        <td data-label="@lang('reward')">
-                                            {{ $k->ket }}
-                                        </td>
-                                        <td data-label="@lang('Action')">
-                                            <button type="button" class="icon-btn edit" data-toggle="tooltip"
-                                                data-id="{{ $k->id }}" data-ket="{{ $k->ket }}"
-                                                data-claim="{{ json_decode($k->detail, true)['claim'] ?? '' }}"
-                                                data-amount="{{ $k->claim() }}" data-status="{{ $k->status }}"
-                                                data-userid="{{ $k->user_id }}" data-original-title="Edit"
-                                                data-selected="{{ 'Claim ' . $k->claim() }}">
-                                                <i class="la la-pencil"></i>
-                                            </button>
+                                        <td data-label="@lang('user')">
+                                            {{ nb($key['harga']) }}
                                         </td>
                                     </tr>
                                 @empty
@@ -78,11 +38,12 @@
                                 @endforelse
 
                             </tbody>
-                        </table><!-- table end -->
+                        </table>
+                        <!-- table end -->
                     </div>
                 </div>
                 <div class="card-footer py-4">
-                    {{ $table->links('admin.partials.paginate') }}
+                    {{-- {{ $table->links('admin.partials.paginate') }} --}}
                 </div>
             </div>
         </div>
@@ -144,6 +105,18 @@
         </div>
     </div>
 @endsection
+{{-- 
+@push('breadcrumb-plugins')
+    <div class="row">
+        <div class="col-md-6 col-6">
+
+            <form action="{{ route('admin.reward.goldExport') }}" method="GET" class="form-inline float-sm-right">
+
+                <button class="btn btn--primary" type="submit">Export Excel</button>
+            </form>
+        </div>
+    </div>
+@endpush --}}
 
 
 @push('script')

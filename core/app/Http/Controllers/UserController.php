@@ -97,9 +97,13 @@ class UserController extends Controller
         }else{
             $data['claim']              =  false;
         }
+        $checkDaily = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))->where('user_id',auth()->user()->id)->groupBy('user_id')->first();
+        $data['checkDaily_gold'] = $checkDaily->gold ??0;
+        $data['checkDaily_days'] = $checkDaily->days ??0;
+
         $gold = DailyGold::orderByDesc('id')->first();  
         $userGold = auth()->user()->total_golds;
-        $goldRange = $gold->per_gram;
+        $goldRange = $gold->per_gram - ($gold->per_gram*8/100);
         $float = floatval(str_replace(',', '.', nbk(auth()->user()->total_golds)));
         // dd($goldRange * $float);
         $data['goldBonus']          = $goldRange;
@@ -108,8 +112,6 @@ class UserController extends Controller
         $data['p_kiri']             = auth()->user()->userExtra->p_left;
         $data['p_kanan']            = auth()->user()->userExtra->p_right;
         $data['promo']              = BonusReward::where(['status'=>1,'type'=>'monthly'])->get();
-        // $data['promo']              = BonusReward::where(['status'=>1,'type'=>'monthly'])->first();
-        // $data['promo3']              = BonusReward::where(['status'=>1,'id'=>3,'type'=>'monthly'])->first();
         $ux = UserExtra::where('user_id',auth()->user()->id)->first();
         if(!$ux){
             $kiri = 0;
@@ -120,8 +122,8 @@ class UserController extends Controller
         }
         // $data['ureward']        = ureward::slideUser();
         $data['ure']            = ureward::with(['user','reward'])->whereHas('reward', function ($query) {return $query->where('type', '=', 'monthly');})->orderByDesc('id')->get();
-        // $data['isReward']       = BonusReward::where('kiri','<',$kiri)->orWhere('kanan','<',$kanan)->get();
-        $data['isReward']       = false;
+        $data['isReward']       = BonusReward::where('kiri','<',$kiri)->orWhere('kanan','<',$kanan)->get();
+        // $data['isReward']       = false;
         $data['urewardCount']   = ureward::with('user')->whereHas('reward', function ($query) {return $query->where('type', '=', 'monthly');})->count() / 3;
         $data['title']          = title();
         $data['persen_bonus']   = auth()->user()->total_binary_com / 10000000 * 100;
@@ -166,6 +168,7 @@ class UserController extends Controller
         $data['user'] = Auth::user();
         $data['alamat'] = alamat::where('user_id',Auth::user()->id)->get();
         $data['provinsi'] = \Indonesia::allProvinces();
+        addToLog('Access Profile Setting');
         return view($this->activeTemplate. 'user.profile-setting', $data);
     }
 
@@ -242,6 +245,8 @@ class UserController extends Controller
             $image->save($location);
         }
         $user->fill($in)->save();
+
+        addToLog('Updated Profile');
         $notify[] = ['success', 'Profile Updated successfully.'];
         return back()->withNotify($notify);
     }
@@ -249,6 +254,7 @@ class UserController extends Controller
     public function changePassword()
     {
         $data['page_title'] = "CHANGE PASSWORD";
+        addToLog('Access Change Password');
         return view($this->activeTemplate . 'user.password', $data);
     }
 
@@ -266,6 +272,7 @@ class UserController extends Controller
                 $user->password = $password;
                 $user->save();
                 $notify[] = ['success', 'Password Changes successfully.'];
+                addToLog('Successfully Changes Password');
                 return back()->withNotify($notify);
             } else {
                 $notify[] = ['error', 'Current password not match.'];
@@ -284,6 +291,7 @@ class UserController extends Controller
     {
         $page_title = 'Deposit History';
         $empty_message = 'No history found.';
+        addToLog('Access Deposit History');
         $logs = auth()->user()->deposits()->with(['gateway'])->latest()->paginate(getPaginate());
         return view($this->activeTemplate . 'user.deposit_history', compact('page_title', 'empty_message', 'logs'));
     }
@@ -296,7 +304,45 @@ class UserController extends Controller
     {
         $data['withdrawMethod'] = WithdrawMethod::whereStatus(1)->get();
         $data['page_title'] = "Withdraw Money";
+        addToLog('Access Withdraw Money');
         return view(activeTemplate() . 'user.withdraw.methods', $data);
+    }
+    public function withdrawGold(Request $request){
+        $user = auth()->user();
+
+        $usergold = auth()->user()->total_golds; //total gold user
+        $goldToday = DailyGold::orderByDesc('id')->first(); //harga emas terakhir
+        $goldTodayFee = $goldToday->per_gram - ($goldToday->per_gram*8/100); // harga_emas sekarang - harga_emas - 8%
+        $platfrom_fee = 5/100; //palform_fee
+        $totalWd = $usergold * $goldTodayFee - ($usergold * $goldTodayFee * $platfrom_fee); //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
+
+
+        DB::beginTransaction();
+        try {
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $totalWd;
+            $transaction->post_balance = $user->balance + $totalWd;
+            $transaction->charge = 0;
+            $transaction->trx_type = '+';
+            $transaction->details = 'Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd);
+            $transaction->trx =  getTrx();
+            $transaction->save();
+
+            $user->balance += $totalWd;
+            $user->wd_gold = 1;
+            $user->save();
+
+            DB::commit();
+            addToLog('Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd));
+
+            $notify[] = ['success', 'Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd).' Successfully'];
+            return redirect()->back()->withNotify($notify);
+        } catch (\Throwable $th) {
+            $notify[] = ['error', 'Error: '.$th->getMessage()];
+            return redirect()->back()->withNotify($notify);
+            DB::rollBack();
+        }
     }
 
     public function withdrawStore(Request $request)
@@ -395,6 +441,8 @@ class UserController extends Controller
             $withdraw->after_charge = $afterCharge;
             $withdraw->trx = $trx_no;
             $withdraw->save();
+
+            addToLog('User Withdrawl '. getAmount($request->amount));
         }
 
         session()->put('wtrx', $withdraw->trx);
@@ -434,6 +482,7 @@ class UserController extends Controller
         $data['withdraw'] = Withdrawal::with('method','user')->where('trx', session()->get('wtrx'))->where('status', 0)->latest()->firstOrFail();
         $data['user'] = Auth::user();
         $data['page_title'] = "Withdraw Preview";
+        addToLog('Preview Withdraw');
         return view($this->activeTemplate . 'user.withdraw.preview', $data);
     }
 
@@ -543,7 +592,7 @@ class UserController extends Controller
             'post_balance' => getAmount($user->balance),
             'delay' => $withdraw->method->delay
         ]);
-
+        addToLog('Request Withdraw '.getAmount($withdraw->final_amount) . ' ' . $withdraw->currency . ' Withdraw Via ' . $withdraw->method->name);
         $notify[] = ['success', 'Withdraw Request Successfully Send'];
         return redirect()->route('user.withdraw.history')->withNotify($notify);
     }
@@ -553,6 +602,7 @@ class UserController extends Controller
         $data['page_title'] = "Withdraw Log";
         $data['withdraws'] = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->with('method')->latest()->paginate(getPaginate());
         $data['empty_message'] = "No Data Found!";
+        addToLog('Access Withdraw Log');
         return view($this->activeTemplate.'user.withdraw.log', $data);
     }
 
@@ -728,6 +778,7 @@ class UserController extends Controller
                 'balance_now' => getAmount($trans_user->balance),
             ]);
 
+            addToLog('Transferred '.getAmount($request->amount).' Balance');
             $notify[] = ['success', 'Balance Transferred Successfully.'];
             return back()->withNotify($notify);
         } else {
@@ -1040,6 +1091,7 @@ class UserController extends Controller
         }
         // dd($reg);
         // $d = json_decode(json_encode($dd), true);
+        addToLog('Open Manage User');
         return view('templates.basic.user.user_boom',compact('page_title','ref','ref_user','reg','get_bv','tree'));
         // $user = User::find(Auth::user()->id);
 
@@ -1295,6 +1347,11 @@ class UserController extends Controller
 
         $userCheck = User::where('id', $request->ref_username)->first();
         $pos = User::where('no_bro',$request->upMp)->first();
+        if(auth()->user()->id == $pos->id){
+            $ref_pos = $request->pos;
+        }else{
+            $ref_pos = $pos->position;
+        }
         $us = user::where('id',Auth::user()->id)->first();
         //User Create
         $user = new User();
@@ -1303,7 +1360,7 @@ class UserController extends Controller
         $user->plan_id      = 1;
         $user->pos_id       = $pos->id;
         $user->position     = $request->pos;
-        $user->position_by_ref = $pos->position;
+        $user->position_by_ref = $ref_pos;
         $user->firstname    = isset($us->firstname) ? $us->firstname : null;
         $user->lastname     = isset($us->lastname) ? $us->lastname.' '.$request->count : null;
         $user->email        = strtolower(trim($request->email));
@@ -1340,6 +1397,8 @@ class UserController extends Controller
         $rek->save();
         // updateFreeCount($user->id);
         // dd($user);
+        addToLog('Placed '.$user->username .' From Manage User');
+
         $notify[] = ['success', 'Account '.$user->username.' successfully registered.'];
         return redirect()->back()->withNotify($notify);
     }
@@ -1350,6 +1409,7 @@ class UserController extends Controller
         $data['bank_user'] = rekening::where('user_id',Auth::user()->id)->first();
         $data['user'] = Auth::user();
         $data['provinsi'] = \Indonesia::allProvinces();
+        addToLog('Data Verifications');
         return view('templates.basic.user.kyc',$data);
     }
 
@@ -1478,6 +1538,8 @@ class UserController extends Controller
             $image->save($location);
         }
         $user->fill($in)->save();
+
+        addToLog('Send Data Verification.');
 
         $notify[] = ['success', 'Data Verification send successfully.'];
         return redirect()->route('user.home')->withNotify($notify);
@@ -1614,7 +1676,7 @@ class UserController extends Controller
         $rek->no_rek = $request->acc_number;
         $rek->kota_cabang = $request->kota_cabang;
         $rek->save();
-
+        addToLog("Edit Bank Account");
         $notify[] = ['success', 'Bank Account Information, Success edited!!'];
         return redirect()->back()->withNotify($notify);
 
@@ -1637,6 +1699,7 @@ class UserController extends Controller
         $rek->kota_cabang = $request->kota_cabang;
         $rek->save();
 
+        addToLog('Add Bank Account');
         $notify[] = ['success', 'Bank Account Information, Success added!!'];
         return redirect()->back()->withNotify($notify);
 
@@ -1721,6 +1784,7 @@ class UserController extends Controller
                     ]);
                 }
             }
+            addToLog('Daily Gold Check-In');
             return redirect()->back()->with('notify', [
                 ['success', 'Successfully Claimed You and '. $no .' Same Bank Account, Daily Gold Check-In']
             ]);
@@ -1877,6 +1941,8 @@ class UserController extends Controller
             $transaction->trx =  $trx;
             $transaction->save();
 
+            addToLog('Added ' . $general->cur_sym . $amount . ' to ' . $user->username . ' balance');
+
             $notify[] = ['success', $general->cur_sym . $amount . ' has been added to ' . $user->username . ' balance'];
 
             notify($user, 'BAL_ADD', [
@@ -1893,6 +1959,7 @@ class UserController extends Controller
             }
             $user->balance -= $amount;
             $user->save();
+
             $transaction = new Transaction();
             $transaction->user_id = $user->id;
             $transaction->amount = $amount;
@@ -1905,6 +1972,7 @@ class UserController extends Controller
 
             $userStockiest->balance += $amount;
             $userStockiest->save();
+
             $transaction = new Transaction();
             $transaction->user_id = $userStockiest->id;
             $transaction->amount = $amount;
@@ -1914,6 +1982,8 @@ class UserController extends Controller
             $transaction->details = 'Leader Subtract Balance: '.$user->username;
             $transaction->trx =  $trx;
             $transaction->save();
+
+            addToLog('Subtract '.$amount.' Balance '.$user->username);
 
             notify($user, 'BAL_SUB', [
                 'trx' => $trx,
@@ -1943,6 +2013,20 @@ class UserController extends Controller
     public function villages(Request $request)
     {
         return \Indonesia::findDistrict($request->id, ['villages'])->villages->pluck('name', 'id');
+    }
+    public function serialNum(Request $request){
+        // dd(strtoupper($request->serial));
+        $user = auth()->user();
+        $cek = User::where('gold_no',strtoupper($request->serial))->first();
+        if($cek){
+            $notify[] = ['error', 'Serial Number Sudah Terdaftar Di User Lain, Cek Serial Number Lain!'];
+            return back()->withNotify($notify);
+        }
+        $user->gold_no = strtoupper($request->serial);
+        $user->save();
+        $notify[] = ['success', 'Your data saved successfully'];
+        addToLog('Add Gold Serial Number');
+        return back()->withNotify($notify);
     }
 
     public function claimBonusReward(Request $request){
@@ -1984,7 +2068,17 @@ class UserController extends Controller
                 'status'    => 1,
                 'detail'    => json_encode($onClaim)
             ]);
-            $notify[] = ['success', 'Your data has been on record, get your reward: '.$reward->$claim.' soon'];
+            $userExtra = UserExtra::where('user_id',$user->id)->first();
+            if($reward->rp){
+                $userExtra->p_right -= $reward->kanan;
+                $userExtra->p_left  -= $reward->kiri;
+                $userExtra->save();
+            }
+            $claim = $reward->claim==0?$reward->reward:$reward->claim;
+            $notify[] = ['success', 'Your data has been on record, get your reward: '.$claim.' soon'];
+
+            addToLog('Claim Reward '.$claim);
+
             return back()->withNotify($notify);
         }
             $notify[] = ['error', "Can't Claim Reward!, Error!"];

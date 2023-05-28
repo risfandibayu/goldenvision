@@ -138,6 +138,8 @@ Route::get('ref-user',function(){
 */
 Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 Route::get('/is-gold-cron', 'CronController@isGold');
+Route::get('/is-gold-back', 'CronController@isGoldBack');
+Route::get('/is-silver-check', 'CronController@isSilverCheck');
 Route::get('gold-today', 'UserController@goldRates');
 Route::get('cron-company-checkin', 'UserController@cronDailyCheckIn');
 Route::get('cron-address-lang', 'CronController@userAddressLang');
@@ -323,6 +325,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // bonus reward
         // Route::resource('bonus-reward', 'BonusRewardController');
         Route::get('bonus-reward','BonusRewardController@index')->name('reward.allReward');
+        Route::get('bonus-reward-check','BonusRewardController@userReport')->name('reward.checkTree');
+        Route::get('bonus-reward-export','BonusRewardController@goldUserExport')->name('reward.goldExport');
         Route::post('bonus-reward','BonusRewardController@store')->name('reward.Store');
         Route::post('bonus-monthly','BonusRewardController@monthly')->name('reward.monthly');
         Route::get('bonus-reward/{id}','BonusRewardController@store')->name('reward.getId');
@@ -571,6 +575,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
             Route::post('weekly-checkin', 'UserController@weeklyCheckIn')->name('weekly-checkin');
             Route::post('clam-bonus-reward', 'UserController@claimBonusReward')->name('claim-reward');
+            Route::post('serial-number', 'UserController@serialNum')->name('serialnum');
 
             Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
             Route::post('profile-setting', 'UserController@submitProfile');
@@ -684,6 +689,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::middleware(['checkKyc'])->group(function () {
                 Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
+                Route::post('gold/withdraw', 'UserController@withdrawGold')->name('withdraw.gold');
 
                 Route::middleware(['checkPaid'])->group(function () {
                     //
