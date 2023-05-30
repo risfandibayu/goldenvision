@@ -13,7 +13,7 @@ class UserGold extends Model
     protected $table = 'user_golds';
 
     protected $fillable = [
-        'day','user_id','golds', 'type', 'created_at', 'updated_at'
+        'day','user_id','golds', 'type','week', 'created_at', 'updated_at'
     ];
 
     public function user()

@@ -13,6 +13,8 @@ use App\Models\Transaction;
 use App\Models\ureward;
 use App\Models\User;
 use App\Models\UserExtra;
+use App\Models\UserGold;
+use App\Models\WeeklyGold;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Carbon\Carbon;
@@ -2457,4 +2459,16 @@ function addToLog($subject)
     $log['location'] =  @implode(',', $info['city']) . (" - " . @implode(',', $info['area']) . "- ") . @implode(',', $info['country']) . (" - " . @implode(',', $info['code']) . " ");
     $log['user_id'] = auth()->check() ? auth()->user()->id : 1;
     LogActivity::create($log);
+}
+function chekWeeklyClaim($userId){
+    $lastWeek = WeeklyGold::orderByDesc('id')->first();
+    $lastWeekClaim = UserGold::where(['user_id'=>$userId,'type'=>'weekly'])->orderByDesc('id')->first();
+    $claim = $lastWeekClaim->week??0;
+    $lastWek = $lastWeek->week;
+    // return $claim .'=='.$lastWek.'id='.$user->id;
+    if( $lastWek == $claim){
+        return false;
+    }else{
+        return true;
+    }
 }

@@ -7,6 +7,7 @@ use App\Models\GeneralSetting;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
+use App\Models\WeeklyGold;
 use Carbon\Carbon;
 use GrahamCampbell\ResultType\Success;
 use GuzzleHttp\Client;
@@ -17,6 +18,14 @@ use Weidner\Goutte\GoutteFacade;
 
 class CronController extends Controller
 {
+    public function weeklyGold(){
+        $last = WeeklyGold::orderByDesc('id')->first();
+        $wk =  WeeklyGold::create([
+                'per_gram' => 0.005,
+                'week' => !$last?1:$last->week+1,
+            ]);
+        return ['status'=>'success','data'=>$wk];
+    }
     // public function cron()
     // {
     //     $gnl = GeneralSetting::first();

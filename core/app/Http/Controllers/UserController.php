@@ -25,6 +25,7 @@ use App\Models\rekening;
 use App\Models\ureward;
 use App\Models\UserExtra;
 use App\Models\UserGold;
+use App\Models\WeeklyGold;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Failed;
@@ -82,6 +83,7 @@ class UserController extends Controller
 
     public function home()
     {
+        // dd(chekWeeklyClaim());
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
         $data['totalWithdraw']      = Withdrawal::where('user_id', auth()->id())->where('status', 1)->sum('amount');
@@ -326,6 +328,7 @@ class UserController extends Controller
             $transaction->charge = 0;
             $transaction->trx_type = '+';
             $transaction->details = 'Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd);
+            $transaction->remark = 'gold_withdraw';
             $transaction->trx =  getTrx();
             $transaction->save();
 
@@ -1792,6 +1795,80 @@ class UserController extends Controller
             dd($th->getMessage());
         }
     }
+     public function weeklyCheckIn(Request $request)
+    {
+        $user = $request->user();
+        $lastWeek = WeeklyGold::orderByDesc('id')->first();
+
+        if (!chekWeeklyClaim($user->id)) {
+            return Redirect::back()->with('notify',[
+                ['warning', 'You already claimed your weekly gold or your quota has reached the limit.']
+            ]);
+        }
+        
+        //send to same bank account;
+        try {
+            $no = 1;
+
+            $userBank = rekening::where('user_id',$user->id)->first();
+            if($userBank){
+                // $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                //                     ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
+                $checkSame = User::leftJoin('rekenings','users.id','=','rekenings.user_id')->where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                                    ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->groupBy('users.id')->select('users.id AS users', 'rekenings.*') ->get();
+                foreach ($checkSame as $key => $value) {
+                    $latest = UserGold::where('user_id',$value->user_id)->orderByDesc('id')->first();
+    
+                   
+                    if(chekWeeklyClaim($value->user_id)){
+                        if($latest){
+                        UserGold::create([
+                            'user_id'   => $value->user_id,
+                            'day'       => $latest->day + 1,
+                            'type'      => 'weekly',
+                            'golds'     => 0.005,
+                            'week'      => $lastWeek->week
+                        ]);
+                    }else{
+                          UserGold::create([
+                            'user_id'   => $value->user_id,
+                            'day'       => 1,
+                            'type'      => 'weekly',
+                            'golds'     => 0.005,
+                            'week'      => $lastWeek->week
+
+                        ]);
+                    }
+                    }
+                    $no++;
+                }
+            }else{
+                $latest = UserGold::where('user_id',$user->id)->orderByDesc('id')->first();
+
+                if($latest){
+                    UserGold::create([
+                        'user_id'   => $user->id,
+                        'day'       => $latest->day + 1,
+                        'type'      => 'weekly',
+                        'golds'     => 0.005
+                    ]);
+                }else{
+                        UserGold::create([
+                        'user_id'   => $user->id,
+                        'day'       => 1,
+                        'type'      => 'weekly',
+                        'golds'     => 0.005
+                    ]);
+                }
+            }
+            addToLog('Daily Gold Check-In');
+            return redirect()->back()->with('notify', [
+                ['success', 'Successfully Claimed You and '. $no .' Same Bank Account, Weekly Gold Check-In']
+            ]);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+    }
 
     public function cronDailyCheckIn(Request $request)
     {
@@ -1862,44 +1939,7 @@ class UserController extends Controller
     }
 
 
-    public function weeklyCheckIn(Request $request)
-    {
-        $user = $request->user();
-
-        if (! User::canClaimWeeklyGold($user->id)) {
-            return Redirect::back()->with('notify',[
-                ['warning', 'You already claimed your weekly gold or your quota has reached the limit.']
-            ]);
-        }
-
-        
-        //send to same bank account;
-        try {
-            $userBank = rekening::where('user_id',$user->id)->first();
-            if($userBank){
-                $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
-                                    ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->get();
-                foreach ($checkSame as $key => $value) {
-                    $user = User::find($value->user_id);
-                        $user->golds()->create([
-                            'type'  => UserGoldReward::Weekly->value,
-                            'golds' => 0.005
-                        ]);
-                }
-            }else{
-                $user->golds()->create([
-                    'type'  => UserGoldReward::Weekly->value,
-                    'golds' => 0.005
-                ]);
-            }
-
-            return redirect()->back()->with('notify', [
-                ['success', 'Successfully Claimed Your Weekly Gold Check-In']
-            ]);
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
-        }
-    }
+   
     public function addSubBalance(Request $request, $id)
     {
         $amount = preg_replace("/[^0-9]/", "", $request->amount);

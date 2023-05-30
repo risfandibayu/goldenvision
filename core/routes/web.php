@@ -108,6 +108,7 @@ Route::get('test-ex',function(){
 // });
 
 Route::get('cron-daily-gold',[CronController::class,'dailyGold']);
+Route::get('cron-weekly-gold',[CronController::class,'weeklyGold']);
 
 Route::get('/cek_bit', function(){
     dd(PHP_INT_MAX);
