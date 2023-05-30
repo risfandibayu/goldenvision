@@ -614,8 +614,7 @@
                             data-toggle="modal" data-target="#modalWeek">
                             <strong>Hey {{ Auth::user()->fullname }}! &emsp;</strong> <br>
                             <div>
-                                Kamu Sudah Check-In Emas Selama
-                                {{ $checkDaily_days ?? '' }} Hari Nih Sekarang Kamu Bisa Claim Weekly Gold. <strong> Claim
+                                Kamu Sudah Check-In Emas Selama 100 Hari Nih Sekarang Kamu Bisa Claim Weekly Gold. <strong> Claim
                                     Gold
                                     Mingguan Kamu Disini</strong>
                                 &nbsp;
@@ -624,7 +623,7 @@
                                 </button>
                             </div>
                         </div>
-                    @endif
+                    @endif`
                     <div class="modal fade" id="modalWeek" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
