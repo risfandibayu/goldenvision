@@ -1817,7 +1817,7 @@ class UserController extends Controller
                 $checkSame = User::leftJoin('rekenings','users.id','=','rekenings.user_id')->where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
                                     ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')->groupBy('users.id')->select('users.id AS users', 'rekenings.*') ->get();
                 foreach ($checkSame as $key => $value) {
-                    $latest = UserGold::where('user_id',$value->user_id)->orderByDesc('id')->first();
+                    $latest = UserGold::where('user_id',$value->user_id)->where('type','weekly')->orderByDesc('id')->first();
     
                    
                     if(chekWeeklyClaim($value->user_id)){
@@ -1843,7 +1843,8 @@ class UserController extends Controller
                     $no++;
                 }
             }else{
-                $latest = UserGold::where('user_id',$user->id)->orderByDesc('id')->first();
+                $latest = UserGold::where('user_id',$user->id)->where('type','weekly')->orderByDesc('id')->first();
+
 
                 if($latest){
                     UserGold::create([
