@@ -25,7 +25,7 @@ Route::get('getfile',[UserController::class,'fileDownload']);
 
 Route::get('/',function(){
     return view('v3.home');
-})->name('landing.home');
+})->name('home');
 Route::get('/build',function(){
     return view('v3.build');
 });
@@ -145,9 +145,9 @@ Route::get('gold-today', 'UserController@goldRates');
 Route::get('cron-company-checkin', 'UserController@cronDailyCheckIn');
 Route::get('cron-address-lang', 'CronController@userAddressLang');
 
-Route::get('/landing',function(){
-    return view('home.index');
-});
+// Route::get('/landing',function(){
+//     return view('home.index');
+// });
 // Route::get('/',function(){
 //     return redirect(url('login'));
 // })->name('home');
