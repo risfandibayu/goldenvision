@@ -26,9 +26,11 @@ Route::get('getfile',[UserController::class,'fileDownload']);
 Route::get('/',function(){
     return view('v3.home');
 })->name('home');
+
 Route::get('/build',function(){
     return view('v3.build');
 });
+
 Route::get('up-day',function(){
     $gold = UserGold::where('user_id',1)->get();
     $no = $gold->count();
