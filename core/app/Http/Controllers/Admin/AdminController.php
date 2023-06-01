@@ -48,6 +48,9 @@ class AdminController extends Controller
         $widget['emailUnverified'] = User::emailUnverified()->count();
         $widget['smsUnverified'] = User::smsUnverified()->count();
 
+        $widget['gold_silver'] = countGold();
+        $widget['r_hp'] = rewardHp();
+        // dd($widget);
         $widget['users_balance'] = User::sum('balance');
         $widget['totalWdGold'] = totalWdGold();
         $widget['totalMpProd'] = totalMpProd();

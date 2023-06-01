@@ -346,7 +346,7 @@
             </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
-            <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
+            <div class="dashboard-w1 bg--danger b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="las fa-money-bill-wave-alt"></i>
                 </div>
@@ -384,10 +384,29 @@
             </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--primary b-radius--10 box-shadow">
+                <div class="icon">
+                    <i class="las fa-money-bill-wave-alt"></i>
+                </div>
+                <div class="details">
+                    <div class="numbers">
+                        <span class="currency-sign">{{ $general->cur_sym }}</span>
+                        <span class="amount">{{ nb(getAmount($widget['r_hp'])) }}</span>
+
+                    </div>
+                    <div class="desciption">
+                        <span class="text--small">@lang('Total Bonus Reward Phone')</span>
+                    </div>
+                    {{-- <a href="#"
+                        class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a> --}}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--gradi-10 b-radius--10 box-shadow">
                 <div class="details">
                     <div class="numbers ">
-                        <span class="amount">Leader PIN</span>
+                        {{-- <span class="amount">Leader</span> --}}
                     </div>
                 </div>
                 <div class="icon">
@@ -406,6 +425,37 @@
 
             </div>
         </div>
+
+        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+            <div class="dashboard-w1 bg--gradi-5 b-radius--10 box-shadow">
+                <div class="details">
+                    <div class="numbers ">
+                        {{-- <span class="amount">User Badges</span> --}}
+                    </div>
+                </div>
+                <div class="icon">
+                    <i class="las fa-info"></i>
+                </div>
+                <div class="details mr-3">
+                    <div class="desciption">
+                        <span class="text--small">{{ 'GOLD' }}</span>
+                    </div>
+                    <div class="numbers">
+                        <span class="amount">{{ $widget['gold_silver']['gold'] }}</span>
+                    </div>
+                </div>
+                <div class="details mr-3">
+                    <div class="desciption">
+                        <span class="text--small">{{ 'SILVER' }}</span>
+                    </div>
+                    <div class="numbers">
+                        <span class="amount">{{ $widget['gold_silver']['silver'] }}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         {{-- <div class="col-md-6">
             <div class="card ">
                 <div class="card-body p-0">

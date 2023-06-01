@@ -2472,3 +2472,15 @@ function chekWeeklyClaim($userId){
         return true;
     }
 }
+function countGold(){
+    $gold= UserExtra::where('is_gold',1)->count('id');
+    $silver = UserExtra::where('is_gold',0)->count('id');
+    return [
+        'gold' => $gold,
+        'silver'=> $silver
+    ];
+}
+function rewardHp(){
+    $hp = ureward::where('reward_id',3)->count('id');
+    return $hp * 600000;
+}
