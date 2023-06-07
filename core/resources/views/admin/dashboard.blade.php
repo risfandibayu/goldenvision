@@ -840,6 +840,20 @@
             </div>
         </div>
     </div>
+    {{-- <div class="row mb-none-30 mt-5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-tilte">
+                        Grow Member
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div id="grow-line"></div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 
     <div class="row mb-none-30 mt-5">
         <div class="col-xl-4 col-lg-6 mb-30">
@@ -1129,6 +1143,48 @@
                 }
             }
         });
+
+        var options = {
+            series: [{
+                name: 'series1',
+                data: [31, 40, 28, 51, 42, 109, 100]
+            }, {
+                name: 'series2',
+                data: [11, 32, 45, 32, 34, 52, 41]
+            }, {
+
+                name: 'series3',
+                data: [12, 31, 40, 39, 30, 51, 10]
+            }],
+            chart: {
+                height: 350,
+                type: 'area'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'datetime',
+                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z",
+                    "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z",
+                    "2018-09-19T06:30:00.000Z"
+                ]
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#grow-line"), options);
+        chart.render();
+        // var chart = new ApexCharts(document.querySelector("#grow-line"), optionsSmall2);
+        // chart.render();
+
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DailyGold;
 use App\Models\GeneralSetting;
+use App\Models\MemberGrow;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
@@ -25,6 +26,20 @@ class CronController extends Controller
                 'week' => !$last?1:$last->week+1,
             ]);
         return ['status'=>'success','data'=>$wk];
+    }
+    public function memberGrow(){
+        $user = User::where('sharing_profit',1)->get();
+        foreach ($user as $key => $value) {
+            $late = MemberGrow::where('user_id',$value->userExtra->user_id)->first();
+            $mm             = new MemberGrow();
+            $mm->user_id    = $value->userExtra->user_id;
+            $mm->left       = $value->userExtra->left;
+            $mm->right      = $value->userExtra->right;
+            $mm->grow_l     = $value->userExtra->left - ($late->left??0);
+            $mm->grow_r     = $value->userExtra->right - ($late->right??0);
+            $mm->save();
+        }
+        return 'success';
     }
     // public function cron()
     // {

@@ -21,6 +21,7 @@ use App\Models\Admin;
 use App\Models\AdminNotification;
 use App\Models\BonusReward;
 use App\Models\LogActivity;
+use App\Models\MemberGrow;
 use App\Models\ureward;
 
 class AdminController extends Controller
@@ -92,6 +93,7 @@ class AdminController extends Controller
         // $registered = userRegiteredChart();
         // dd($registered);
         $registered = registerThisMount();
+        // dd( memberGrow());
         // Withdraw Graph
         $withdrawal = Withdrawal::where('created_at', '>=', \Carbon\Carbon::now()->subDays(30))->where('status', 1)
             ->select(array(DB::Raw('sum(amount)   as totalAmount'), DB::Raw('DATE(created_at) day')))
