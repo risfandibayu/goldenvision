@@ -2405,7 +2405,102 @@ function registerThisMount()
 }
 
 function memberGrow(){
-    
+    $mm = User::where('sharing_profit',1)->get();
+    $startDate = Carbon::now()->startOfMonth();
+    $endDate = Carbon::now()->endOfMonth();
+    $user = [];
+    $dates = [];
+    $totals = [];
+
+    // Initialize dates array
+    for ($date = clone $startDate; $date->lte($endDate); $date->addDay()) {
+        $dates[] = $date->format('d');
+    }
+    foreach($mm as $m){
+       
+
+        $dates = [];
+        $totals = [];
+
+        // Initialize dates array
+        for ($date = clone $startDate; $date->lte($endDate); $date->addDay()) {
+            $dates[] = $date->format('d');
+        }
+        $mm2 = MemberGrow::with(['user'])->where('user_id',$m->id)
+            ->selectRaw('DATE(created_at) as date, grow_l as total_left,grow_r as total_right')
+            ->get();
+
+        foreach ($dates as $date) {
+            $totals[$date] = 0;
+        }
+
+        foreach ($mm2 as $userRegistration) {
+            $date = Carbon::parse($userRegistration->date)->format('d');
+            $totals[$date] = $userRegistration->total_left +  $userRegistration->total_right;
+        }
+        $user[] = [
+            'name' => $m->username,
+            'data' => array_values($totals)
+        ];
+    }
+    $month_date = addMonthNames($dates);
+    $response = [
+        'date' => $month_date,
+        'series' => $user
+    ];
+    return $response;
+}
+function memberGrowId($id){
+    $mm = User::find($id);
+    $startDate = Carbon::now()->startOfMonth();
+    $endDate = Carbon::now()->endOfMonth();
+    $user = [];
+    $dates = [];
+    $totals = [];
+
+    // Initialize dates array
+    for ($date = clone $startDate; $date->lte($endDate); $date->addDay()) {
+        $dates[] = $date->format('d');
+    }
+       
+
+    $dates = [];
+    $totals = [];
+
+    // Initialize dates array
+    for ($date = clone $startDate; $date->lte($endDate); $date->addDay()) {
+        $dates[] = $date->format('d');
+    }
+    $mm2 = MemberGrow::with(['user'])->where('user_id',$mm->id)
+        ->selectRaw('DATE(created_at) as date, grow_l as total_left,grow_r as total_right')
+        ->get();
+
+    foreach ($dates as $date) {
+        $totals[$date] = 0;
+    }
+
+    foreach ($mm2 as $userRegistration) {
+        $date = Carbon::parse($userRegistration->date)->format('d');
+        $totals[$date] = $userRegistration->total_left;
+    }
+    $user[] = [
+        'name' => 'left',
+        'data' => array_values($totals)
+    ];
+    foreach ($mm2 as $userRegistration) {
+        $date = Carbon::parse($userRegistration->date)->format('d');
+        $totals[$date] =  $userRegistration->total_right;
+    }
+    $user[] = [
+        'name' => 'right',
+        'data' => array_values($totals)
+    ];
+    $month_date = addMonthNames($dates);
+    $response = [
+        'date' => $month_date,
+        'series' => $user
+    ];
+    return $response;
 }
 
 

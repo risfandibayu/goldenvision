@@ -339,6 +339,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('user-reward','BonusRewardController@UserBonus')->name('reward.userBonus');
         Route::post('user-reward-update','BonusRewardController@UserUpdate')->name('reward.userUpdate');
 
+        Route::get('all-member-grow','BonusRewardController@memberGrow')->name('reward.memberGrow');
     
 
         // Subscriber

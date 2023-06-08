@@ -206,6 +206,16 @@ class BonusRewardController extends Controller
         return view('admin.bonus_reward.report_check', compact('page_title','table', 'empty_message','goldNow'));
     }
 
+    public function memberGrow(){
+    // dd(memberGrowId(1));
+        $page_title = 'Member Grow';
+        $empty_message = 'No User Rewards Found';
+        $table =  User::where('sharing_profit',1)->get();
+        // dd($table);
+        return view('admin.bonus_reward.member_grow', compact('page_title','table', 'empty_message'));
+    }
+    // public function
+
     public function goldUserExport(){
         return Excel::download(new GoldExport, 'gold-users.xlsx');
     }

@@ -840,20 +840,25 @@
             </div>
         </div>
     </div>
-    {{-- <div class="row mb-none-30 mt-5">
+    <div class="row mb-none-30 mt-5">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h6 class="card-tilte">
-                        Grow Member
+                        Grow Member <span class="text-secondary">(left + right)</span>
                     </h6>
                 </div>
                 <div class="card-body">
                     <div id="grow-line"></div>
                 </div>
+                <a href="{{ url('admin/all-member-grow') }}">
+                    <div class="card-footer text-center">
+                        See All Details
+                    </div>
+                </a>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <div class="row mb-none-30 mt-5">
         <div class="col-xl-4 col-lg-6 mb-30">
@@ -894,7 +899,7 @@
 
     </div>
 
-    {{-- @dd($withdrawals['per_day_amount']->flatten()) --}}
+    {{-- @dd($mem['series']) --}}
 
     @include('admin.partials.matchingBonusModal')
 @endsection
@@ -1145,20 +1150,10 @@
         });
 
         var options = {
-            series: [{
-                name: 'series1',
-                data: [31, 40, 28, 51, 42, 109, 100]
-            }, {
-                name: 'series2',
-                data: [11, 32, 45, 32, 34, 52, 41]
-            }, {
-
-                name: 'series3',
-                data: [12, 31, 40, 39, 30, 51, 10]
-            }],
+            series: @json($mem['series']),
             chart: {
                 height: 350,
-                type: 'area'
+                type: 'line'
             },
             dataLabels: {
                 enabled: false
@@ -1168,14 +1163,11 @@
             },
             xaxis: {
                 type: 'datetime',
-                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z",
-                    "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z",
-                    "2018-09-19T06:30:00.000Z"
-                ]
+                categories: @json($mem['date'])
             },
             tooltip: {
                 x: {
-                    format: 'dd/MM/yy HH:mm'
+                    format: 'dd/MM/yy'
                 },
             },
         };

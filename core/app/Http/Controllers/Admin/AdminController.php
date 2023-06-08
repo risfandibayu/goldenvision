@@ -93,7 +93,8 @@ class AdminController extends Controller
         // $registered = userRegiteredChart();
         // dd($registered);
         $registered = registerThisMount();
-        // dd( memberGrow());
+        $mem = memberGrow();
+        // dd($mem);
         // Withdraw Graph
         $withdrawal = Withdrawal::where('created_at', '>=', \Carbon\Carbon::now()->subDays(30))->where('status', 1)
             ->select(array(DB::Raw('sum(amount)   as totalAmount'), DB::Raw('DATE(created_at) day')))
@@ -146,13 +147,13 @@ class AdminController extends Controller
         $leader = User::where('is_leader',1)->where('id','!=',115)->get();
 // dd($leader);
         if(auth()->guard('admin')->user()->role == 'su'){
-            return view('admin.dashboard', compact('page_title',
+            return view('admin.dashboard', compact('page_title','mem',
                 'widget', 'report', 'withdrawals', 'chart','payment',
                 'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }else{
             return view('admin.dashboard_ar', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
+                'paymentWithdraw','latestUser', 'bv','mem', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }
 
         
