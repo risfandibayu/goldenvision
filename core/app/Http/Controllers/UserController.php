@@ -1380,6 +1380,7 @@ class UserController extends Controller
         $user->sv = 1;
         $user->ts = 0;
         $user->tv = 1;
+        $user->new_ps = 1;
         $user->save();
 
         $user_extras = new UserExtra();

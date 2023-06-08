@@ -154,7 +154,8 @@ class SponsorRegisterController extends Controller
             'ev'        => 1,
             'sv'        => 1,
             'ts'        => 0,
-            'tv'        => 1
+            'tv'        => 1,
+            'new_ps'    => 1,
 
         ]);
         UserExtra::create([
