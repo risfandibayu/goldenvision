@@ -693,7 +693,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/manage-user', 'UserController@user_boom')->name('user_boom');
             Route::get('/tree', 'PlanController@myTree')->name('my.tree');
 
-            Route::middleware(['checkKyc'])->group(function () {
+            Route::middleware(['checkKyc','checkRO'])->group(function () {
                 Route::get('withdraw', 'UserController@withdrawMoney')->name('withdraw');
                 Route::post('gold/withdraw', 'UserController@withdrawGold')->name('withdraw.gold');
 

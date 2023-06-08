@@ -128,7 +128,8 @@ class UserController extends Controller
         // $data['isReward']       = false;
         $data['urewardCount']   = ureward::with('user')->whereHas('reward', function ($query) {return $query->where('type', '=', 'monthly');})->count() / 3;
         $data['title']          = title();
-        $data['persen_bonus']   = auth()->user()->total_binary_com / 10000000 * 100;
+        $data['persen_bonus']   = countAllBonus() / 10000000 * 100;
+        // dd($data);
         return view($this->activeTemplate . 'user.dashboard', $data);
     }
 

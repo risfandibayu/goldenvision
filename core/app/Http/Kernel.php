@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'demo' => \App\Http\Middleware\Demo::class,
         'checkPaid' => \App\Http\Middleware\CheckPaid::class,
         'checkKyc' => \App\Http\Middleware\CheckKyc::class,
+        'checkRO' => \App\Http\Middleware\checkRO::class,
     ];
 }

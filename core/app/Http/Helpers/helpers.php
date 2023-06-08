@@ -2587,3 +2587,9 @@ function rewardHp(){
     $hp = ureward::where('reward_id',3)->count('id');
     return $hp * 600000;
 }
+function countAllBonus(){
+    $binary_com =  auth()->user()->total_binary_com;
+    $sharing_profit = Transaction::where('remark','porfit_sharing')->where('user_id',auth()->user()->id)->sum('amount');
+    $last_ro = auth()->user()->userExtra->last_ro;
+    return ($binary_com + $sharing_profit) - $last_ro;
+}

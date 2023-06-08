@@ -70,6 +70,12 @@ class PlanController extends Controller
             'trx' => getTrx(),
             'post_balance' => getAmount($user->balance),
         ]);
+        if(countAllBonus() >= 10000000){
+            $ux = UserExtra::where('user_id',auth()->user()->id)->first();
+            $ux->last_ro = countAllBonus();
+            $ux->save();
+        }
+
         addToLog('Purchased ' . $plan->name . ' For '.$request->qty.' MP');
 
         $notify[] = ['success', 'Purchased new MP quantity for '.$request->qtyy.' MP Successfully'];
