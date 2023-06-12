@@ -36,7 +36,6 @@ class BonusRewardController extends Controller
         $monthly = BonusReward::where('type','monthly')->orderByDesc('id')->get();
         return view('admin.bonus_reward.index', compact('page_title','table', 'empty_message','monthly'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -196,6 +195,29 @@ class BonusRewardController extends Controller
     // dd($table);
         return view('admin.bonus_reward.user', compact('page_title','table', 'empty_message'));
     }
+
+    public function phone(){
+        $page_title = 'Phone Rewards';
+        $empty_message = 'No User Rewards Found';
+        $table = ureward::with('user')->where('reward_id',3)->orderBy('status','ASC')->paginate(getPaginate());
+    // dd($table);
+        return view('admin.bonus_reward.reward', compact('page_title','table', 'empty_message'));
+    }
+    public function thai(){
+        $page_title = 'Phone Rewards';
+        $empty_message = 'No User Rewards Found';
+        $table = ureward::with('user')->where('reward_id',4)->orderBy('status','ASC')->paginate(getPaginate());
+    // dd($table);
+        return view('admin.bonus_reward.reward', compact('page_title','table', 'empty_message'));
+    }
+    public function turkie(){
+        $page_title = 'Phone Rewards';
+        $empty_message = 'No User Rewards Found';
+        $table = ureward::with('user')->where('reward_id',1)->orderBy('status','ASC')->paginate(getPaginate());
+    // dd($table);
+        return view('admin.bonus_reward.reward', compact('page_title','table', 'empty_message'));
+    }
+
     public function userReport(){
         $page_title = 'User Emas';
         $empty_message = 'No User Rewards Found';
