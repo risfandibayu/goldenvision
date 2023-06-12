@@ -238,36 +238,33 @@ class User extends Authenticatable
             ->whereColumn('user_golds.user_id', 'users.id')
             ->where('type', $reward->value);
     }
-
-    public static function userTree($userId){
-        // dd($userId);
+    public static function userTree($id){
         $group = [];
-        $user  = User::find($userId);
-        $user1 = User::where('ref_id',$user->id)->get();
-        $group[1] = $user1;
-        $user2 = [];
-        foreach ($user1 as $key => $value) {
-            $user2 = User::where('ref_id',$value->id)->get(); 
+        $user = User::find($id);
+        $group[1] = User::where('ref_id',$user->id)->get();
+        $id2 = [];
+        $id3 = [];
+        $id4 = [];
+        $id5 = [];
+        foreach ($group[1] as $key => $value) {
+            $id2[] = $value->id; 
         }
-        $group[2] = $user2;
-        $user3 = [];
-        foreach ($user2 as $key => $value) {
-            $user3 = User::where('ref_id',$value->id)->get(); 
+        $group[2] = User::WhereIn('ref_id',$id2)->get();
+        foreach ($group[2] as $key => $value) {
+             $id3[] = $value->id; 
         }
-        $group[3] = $user3;
-        $user4 = [];
-        foreach ($user3 as $key => $value) {
-            $user4 = User::where('ref_id',$value->id)->get(); 
+        $group[3] = User::WhereIn('ref_id',$id3)->get();
+        foreach ($group[3] as $key => $value) {
+             $id4[] = $value->id; 
         }
-        $group[4] = $user4;
-        $user5 = [];
-        foreach ($user4 as $key => $value) {
-            $user5 = User::where('ref_id',$value->id)->get(); 
+        $group[4] = User::WhereIn('ref_id',$id4)->get();
+        foreach ($group[4] as $key => $value) {
+             $id5[] = $value->id; 
         }
-        $group[5] = $user5;
+        $group[5] = User::WhereIn('ref_id',$id5)->get();
         return $group;
-       
-    }
+    } 
+
     public function position(){
         $data = $this->position_by_ref;
         if($data == null){

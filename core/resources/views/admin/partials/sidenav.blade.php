@@ -678,7 +678,7 @@
                                 <li class="sidebar-menu-item {{ menuActive('admin.reward.userBonus') }} ">
                                     <a href="{{ route('admin.reward.userBonus') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('User Reward')</span>
+                                        <span class="menu-title">@lang('All User Reward')</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item {{ menuActive('admin.reward.allReward') }} ">
@@ -690,9 +690,21 @@
                             </ul>
                         </div>
                     </li>
-
+                    <li class="sidebar-menu-item {{ menuActive('admin.seo') }}">
+                        <a href="{{ route('admin.seo') }}" class="nav-link">
+                            <i class="menu-icon las la-globe"></i>
+                            <span class="menu-title">@lang('Reward HP')</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item {{ menuActive('admin.seo') }}">
+                        <a href="{{ route('admin.seo') }}" class="nav-link">
+                            <i class="menu-icon las la-globe"></i>
+                            <span class="menu-title">@lang('Reward Trip')</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
+
         @endif
 
     </div>
