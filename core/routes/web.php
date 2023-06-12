@@ -331,9 +331,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // Route::resource('bonus-reward', 'BonusRewardController');
         Route::get('bonus-reward','BonusRewardController@index')->name('reward.allReward');
 
-        Route::get('phone-reward','BonusRewardController@phone')->name('reward.phoneReward');
-        Route::get('thai-reward','BonusRewardController@thai')->name('reward.thaiReward');
-        Route::get('turkie-reward','BonusRewardController@turkie')->name('reward.turkieReward');
+        Route::get('phone-reward','BonusRewardController@phone')->name('phoneReward');
+        Route::get('thai-reward','BonusRewardController@thai')->name('thaiReward');
+        Route::get('turkie-reward','BonusRewardController@turkie')->name('turkieReward');
 
         Route::get('bonus-reward-check','BonusRewardController@userReport')->name('reward.checkTree');
         Route::get('bonus-reward-export','BonusRewardController@goldUserExport')->name('reward.goldExport');

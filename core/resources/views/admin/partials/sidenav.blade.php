@@ -690,20 +690,20 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="sidebar-menu-item {{ menuActive('admin.reward.phoneReward') }}">
-                        <a href="{{ route('admin.reward.phoneReward') }}" class="nav-link">
+                    <li class="sidebar-menu-item {{ menuActive('admin.phoneReward') }}">
+                        <a href="{{ route('admin.phoneReward') }}" class="nav-link">
                             <i class="menu-icon las la-mobile"></i>
                             <span class="menu-title">@lang('Reward HP')</span>
                         </a>
                     </li>
-                    <li class="sidebar-menu-item {{ menuActive('admin.reward.thaiReward') }}">
-                        <a href="{{ route('admin.reward.thaiReward') }}" class="nav-link">
+                    <li class="sidebar-menu-item {{ menuActive('admin.thaiReward') }}">
+                        <a href="{{ route('admin.thaiReward') }}" class="nav-link">
                             <i class="menu-icon las la-map-marked"></i>
                             <span class="menu-title">@lang('Trip Thai')</span>
                         </a>
                     </li>
-                    <li class="sidebar-menu-item {{ menuActive('admin.reward.turkieReward') }}">
-                        <a href="{{ route('admin.reward.turkieReward') }}" class="nav-link">
+                    <li class="sidebar-menu-item {{ menuActive('admin.turkieReward') }}">
+                        <a href="{{ route('admin.turkieReward') }}" class="nav-link">
                             <i class="menu-icon las la-map-marked"></i>
                             <span class="menu-title">@lang('Trip Turkie')</span>
                         </a>
