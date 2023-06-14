@@ -2593,3 +2593,23 @@ function countAllBonus(){
     $last_ro = auth()->user()->userExtra->last_ro;
     return ($binary_com + $sharing_profit) - $last_ro;
 }
+function oncreate(){
+    $on_create = auth()->user()->created_at;
+    $tanggalPembuatan = new DateTime($on_create);
+    $hariIni = new DateTime();
+    // dd()
+    $selisih = $tanggalPembuatan->diff($hariIni)->days;
+    
+    if ($selisih >= 30) {
+        return 100;
+    } else {
+        return round(($selisih / 30) * 100);
+    }
+}
+function umurakun(){
+    $on_create = auth()->user()->created_at;
+    $tanggalPembuatan = new DateTime($on_create);
+    $hariIni = new DateTime();
+    // dd()
+    return $tanggalPembuatan->diff($hariIni)->days;
+}
