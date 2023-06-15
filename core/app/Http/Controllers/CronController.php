@@ -348,7 +348,7 @@ class CronController extends Controller
                                             if($uex->level_binary == 0){
                                                 if (Carbon::parse($uex->updated_at)->format('Y-m-d') != Carbon::now()->toDateString()) {
                                                     $payment->save();
-                                                    $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
+                                                    $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
                                                 // }else{
                                                 //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
                                                 // }
@@ -373,7 +373,7 @@ class CronController extends Controller
                                                 }else{
                                                 
                                                         $payment->save();
-                                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
+                                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
     
                                                         $trx->save();
                                                     
@@ -479,7 +479,7 @@ class CronController extends Controller
                                                     if (Carbon::parse($uex->updated_at)->format('Y-m-d') != Carbon::now()->toDateString()) {
                                                         $payment->save();
                                                         // $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
-                                                        $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
+                                                        $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
                                                     // }else{
                                                     //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
                                                     // }
@@ -502,7 +502,7 @@ class CronController extends Controller
                                                         $cron[] = $user.'/'.$pair.'/'.Carbon::parse($uex->last_flush_out)->format('Y-m-d').'/FlushOut1';
                                                     }else{
                                                             $payment->save();
-                                                            $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
+                                                            $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
     
                                                             $trx->save();
                                                         
