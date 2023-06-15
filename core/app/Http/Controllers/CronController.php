@@ -174,6 +174,11 @@ class CronController extends Controller
                         
                         $us = user::where('id',$uex->user_id)->first();
 
+                        if(Date('H') == "00"){
+                            $uex->limit = 0;
+                            $uex->save();
+                        }
+
                         if (!$user_plan) {
                             # code...
                             continue;
