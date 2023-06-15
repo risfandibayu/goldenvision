@@ -294,7 +294,7 @@ class CronController extends Controller
                             //     $trx->post_balance = $payment->balance;
                             //     $trx->remark = 'binary_commission';
                             //     $trx->trx = getTrx();
-                            //     $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' BRO.';
+                            //     $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
                             //     $trx->save();
 
                             //     $uex->paid_left = 0;
@@ -348,9 +348,9 @@ class CronController extends Controller
                                             if($uex->level_binary == 0){
                                                 if (Carbon::parse($uex->updated_at)->format('Y-m-d') != Carbon::now()->toDateString()) {
                                                     $payment->save();
-                                                    $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+                                                    $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
                                                 // }else{
-                                                //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' BRO.';
+                                                //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
                                                 // }
 
                                             // }
@@ -371,10 +371,9 @@ class CronController extends Controller
                                                     // Carbon::now()->toDateString()
                                                     $cron[] = $user.'/'.$pair.'/'.Carbon::parse($uex->last_flush_out)->format('Y-m-d').'/FlushOut2';
                                                 }else{
-                                                    if (strtolower(Date('D')) == 'wed'){
                                                 
                                                         $payment->save();
-                                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' BRO.';
+                                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
     
                                                         $trx->save();
                                                     
@@ -389,7 +388,6 @@ class CronController extends Controller
             
                                                         // Carbon::now()->toDateString()
                                                         $cron[] = $user.'/'.$pair.'/'.Carbon::parse($uex->last_flush_out)->format('Y-m-d');
-                                                    }
                                                 }
                                                 
                                             }else{
@@ -480,10 +478,10 @@ class CronController extends Controller
                                                 if($uex->level_binary == 0){
                                                     if (Carbon::parse($uex->updated_at)->format('Y-m-d') != Carbon::now()->toDateString()) {
                                                         $payment->save();
-                                                        // $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
-                                                        $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' BRO.';
+                                                        // $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
+                                                        $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 6 . ' MP.';
                                                     // }else{
-                                                    //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' BRO.';
+                                                    //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
                                                     // }
 
                                                 // }
@@ -503,9 +501,8 @@ class CronController extends Controller
                                                         // Carbon::now()->toDateString()
                                                         $cron[] = $user.'/'.$pair.'/'.Carbon::parse($uex->last_flush_out)->format('Y-m-d').'/FlushOut1';
                                                     }else{
-                                                        if (strtolower(Date('D')) == 'wed'){
                                                             $payment->save();
-                                                            $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' BRO.';
+                                                            $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
     
                                                             $trx->save();
                                                         
@@ -520,7 +517,6 @@ class CronController extends Controller
                 
                                                             // Carbon::now()->toDateString()
                                                             $cron[] = $user.'/'.$pair.'/'.Carbon::parse($uex->last_flush_out)->format('Y-m-d');
-                                                        }
                                                     }
                                                     
                                                 }else{
@@ -590,7 +586,7 @@ class CronController extends Controller
         // dd($dd);
 
     }
-    // public function cron30bro()
+    // public function cron30MP()
     // {
     //     $gnl = GeneralSetting::first();
     //     $gnl->last_cron = Carbon::now()->toDateTimeString();
