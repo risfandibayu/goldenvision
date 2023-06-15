@@ -363,6 +363,8 @@ class CronController extends Controller
                                                     $uex->level_binary = 0;
                                                     
                                                     // $uex->last_flush_out = Carbon::now()->toDateTimeString();
+                                                    $uex->limit += $pair;
+                                                    $uex->last_getcomm = Carbon::now()->toDateTimeString();
                                                     $uex->save();
 
                                                     $gnl->last_paid = Carbon::now()->toDateTimeString();
@@ -381,6 +383,8 @@ class CronController extends Controller
                                                         $uex->paid_right -= 30;
                                                         $uex->level_binary = 0;
                                                         // $uex->last_flush_out = Carbon::now()->toDateTimeString();
+                                                        $uex->limit += ($pair-$uex->level_binary);
+                                                        $uex->last_getcomm = Carbon::now()->toDateTimeString();
                                                         $uex->save();
             
                                                         $gnl->last_paid = Carbon::now()->toDateTimeString();
@@ -492,7 +496,9 @@ class CronController extends Controller
                                                         $uex->paid_left -= $weak;
                                                         $uex->paid_right -= $weak;
                                                         $uex->level_binary = 0;
+                                                        $uex->limit += $pair;
                                                         $uex->last_flush_out = Carbon::now()->toDateTimeString();
+                                                        $uex->last_getcomm = Carbon::now()->toDateTimeString();
                                                         $uex->save();
 
                                                         $gnl->last_paid = Carbon::now()->toDateTimeString();
@@ -509,7 +515,9 @@ class CronController extends Controller
                                                             $uex->paid_left -= 30;
                                                             $uex->paid_right -= 30;
                                                             $uex->level_binary = 0;
+                                                            $uex->limit += ($pair-$uex->level_binary);
                                                             // $uex->last_flush_out = Carbon::now()->toDateTimeString();
+                                                            $uex->last_getcomm = Carbon::now()->toDateTimeString();
                                                             $uex->save();
                 
                                                             $gnl->last_paid = Carbon::now()->toDateTimeString();
