@@ -15,6 +15,7 @@ use App\Models\ureward;
 use App\Models\User;
 use App\Models\UserExtra;
 use App\Models\UserGold;
+use App\Models\UserPin;
 use App\Models\WeeklyGold;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -2612,4 +2613,139 @@ function umurakun(){
     $hariIni = new DateTime();
     // dd()
     return $tanggalPembuatan->diff($hariIni)->days;
+}
+function goldNum(){
+    $code = Auth::user()->bro_code;
+    return str_replace('M', 'SN', $code);
+}
+
+
+function pinLeader(){
+    $mm = User::where('is_leader',1)->where('username', 'not like', "%masterplan%")->get();
+    $startDate = Carbon::now()->startOfMonth();
+    $endDate = Carbon::now()->endOfMonth();
+    $user = [];
+    $dates = [];
+    $totals = [];
+
+    // Initialize dates array
+    for ($date = clone $startDate; $date->lte($endDate); $date->addDay()) {
+        $dates[] = $date->format('d');
+    }
+    foreach($mm as $m){
+       
+
+        $dates = [];
+        $totals = [];
+
+        // Initialize dates array
+        for ($date = clone $startDate; $date->lte($endDate); $date->addDay()) {
+            $dates[] = $date->format('d');
+        }
+        $mm2 = UserPin::select('user_id', DB::raw('DATE(created_at) AS date'), DB::raw('SUM(pin) as pin'))
+                ->where('user_id', $m->id)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->groupBy('user_id', 'date')
+                ->orderBy('date')
+                ->get()
+                ->toArray();
+        foreach ($dates as $date) {
+            $totals[$date] = 0;
+        }
+        // dd($totals);
+        foreach ($mm2 as $ms) {
+            // dd($ms['date']);
+            $date = Carbon::parse($ms['date'])->format('d');
+            $totals[$date] = $ms['pin'];
+        }
+        $user[] = [
+            'name' => $m->username,
+            'data' => array_values($totals)
+        ];
+    }
+    $month_date = addMonthNames($dates);
+    $response = [
+        'date' => $month_date,
+        'pin' => $user
+    ];
+    return $response;
+}
+
+
+function getMonthlyPinTotals($userId=1)
+{
+    $startDate = Carbon::now()->startOfMonth()->toDateString();
+    $endDate = Carbon::now()->endOfMonth()->toDateString();
+
+    $data = UserPin::with('user')
+        ->select('user_id', DB::raw('DATE(created_at) AS date'), DB::raw('SUM(pin) as pin'))
+        ->where('user_id', 1)
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->groupBy('user_id', 'date')
+        ->orderBy('date')
+        ->get()
+        ->toArray();
+    $data2 = UserPin::with('user')
+        ->select('user_id', DB::raw('DATE(created_at) AS date'), DB::raw('SUM(pin) as pin'))
+        ->where('user_id', 442)
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->groupBy('user_id', 'date')
+        ->orderBy('date')
+        ->get()
+        ->toArray();
+
+    // Create an array with all dates in the current month
+    $dates = [];
+    $currentDate = Carbon::now()->startOfMonth();
+    $lastDate = Carbon::now()->endOfMonth();
+
+    while ($currentDate <= $lastDate) {
+        $dates[] = $currentDate->format('d M');
+        $currentDate->addDay();
+    }
+
+    // Create an array to hold the pin data for each user
+    $pinData = [];
+
+    // Iterate through the data and build the pin data array
+    foreach ($data as $row) {
+        $userId = $row['user']['id'];
+        $username = $row['user']['username'];
+        $pin = $row['pin'];
+        $date = $row['date'];
+
+        if (!isset($pinData[$userId])) {
+            $pinData[$userId] = [
+                'username' => $username,
+                'data' => array_fill(0, count($dates), 0),
+            ];
+        }
+
+        $dateIndex = array_search($date, $dates);
+        $pinData[$userId]['data'][$dateIndex] = $pin;
+    }
+    foreach ($data2 as $row) {
+        $userId = $row['user']['id'];
+        $username = $row['user']['username'];
+        $pin = $row['pin'];
+        $date = $row['date'];
+
+        if (!isset($pinData[$userId])) {
+            $pinData[$userId] = [
+                'username' => $username,
+                'data' => array_fill(0, count($dates), 0),
+            ];
+        }
+
+        $dateIndex = array_search($date, $dates);
+        $pinData[$userId]['data'][$dateIndex] = $pin;
+    }
+
+    // Prepare the final result array
+    $result = [
+        'date' => $dates,
+        'pin' => array_values($pinData),
+    ];
+
+    return $result;
 }

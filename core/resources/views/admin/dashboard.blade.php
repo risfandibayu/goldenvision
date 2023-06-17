@@ -784,9 +784,12 @@
         <div class="col-xl-6 mb-30">
             <div class="card ">
                 <div class="card-header">
-                    <h6 class="card-title mb-0">@lang('New User list')</h6>
+                    <h6 class="card-title mb-0">@lang('Leader Sell Pin')</h6>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body">
+                    <div id="leaderPin"></div>
+                </div>
+                {{-- <div class="card-body p-0">
                     <div class="table-responsive--sm table-responsive">
                         <table class="table table--light style--two">
                             <thead>
@@ -828,7 +831,7 @@
                             </tbody>
                         </table><!-- table end -->
                     </div>
-                </div>
+                </div> --}}
             </div><!-- card end -->
         </div>
         <div class="col-xl-6 mb-30">
@@ -1174,8 +1177,32 @@
 
         var chart = new ApexCharts(document.querySelector("#grow-line"), options);
         chart.render();
-        // var chart = new ApexCharts(document.querySelector("#grow-line"), optionsSmall2);
-        // chart.render();
+
+        var options = {
+            series: @json($lPin['pin']),
+            chart: {
+                height: 350,
+                type: 'area'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'datetime',
+                categories: @json($lPin['date'])
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy'
+                },
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#leaderPin"), options);
+        chart.render();
 
 
 

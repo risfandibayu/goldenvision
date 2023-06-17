@@ -38,7 +38,6 @@ class AdminController extends Controller
             return response()->json(['status'=>200,'data'=>$ll,'status'=>'success']);
         }
         $page_title = 'Dashboard';
-
         // User Info
         $widget['total_users'] = User::count();
         $widget['verified_users'] = User::where('status', 1)->count();
@@ -94,7 +93,8 @@ class AdminController extends Controller
         // dd($registered);
         $registered = registerThisMount();
         $mem = memberGrow();
-        // dd($mem);
+        $lPin = pinLeader();
+        // dd($lPin);
         // Withdraw Graph
         $withdrawal = Withdrawal::where('created_at', '>=', \Carbon\Carbon::now()->subDays(30))->where('status', 1)
             ->select(array(DB::Raw('sum(amount)   as totalAmount'), DB::Raw('DATE(created_at) day')))
@@ -147,13 +147,13 @@ class AdminController extends Controller
         $leader = User::where('is_leader',1)->where('id','!=',115)->get();
 // dd($leader);
         if(auth()->guard('admin')->user()->role == 'su'){
-            return view('admin.dashboard', compact('page_title','mem',
+            return view('admin.dashboard', compact('page_title','mem','lPin',
                 'widget', 'report', 'withdrawals', 'chart','payment',
                 'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }else{
             return view('admin.dashboard_ar', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv','mem', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
+                'paymentWithdraw','latestUser', 'bv','mem','lPin', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }
 
         
