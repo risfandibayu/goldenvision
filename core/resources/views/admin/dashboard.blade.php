@@ -781,10 +781,39 @@
 
 
     <div class="row mb-none-30 mt-5">
+
         <div class="col-xl-6 mb-30">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="mb-2"> #Leader Sell Pin Weekly</h6>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">Week 1</th>
+                                <th scope="col">Week 2</th>
+                                <th scope="col">Week 3</th>
+                                <th scope="col">Week 4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($weekleader as $item)
+                                <tr>
+                                    <th scope="row">{{ $item['name'] }}</th>
+                                    <td>{{ $item['week1'] }}</td>
+                                    <td>{{ $item['week2'] }}</td>
+                                    <td>{{ $item['week3'] }}</td>
+                                    <td>{{ $item['week4'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="card ">
                 <div class="card-header">
-                    <h6 class="card-title mb-0">@lang('Leader Sell Pin')</h6>
+                    <h6 class="card-title mb-0">@lang('Leader Sell Pin Daily')</h6>
                 </div>
                 <div class="card-body">
                     <div id="leaderPin"></div>
@@ -834,6 +863,8 @@
                 </div> --}}
             </div><!-- card end -->
         </div>
+
+
         <div class="col-xl-6 mb-30">
             <div class="card">
                 <div class="card-body">
@@ -843,6 +874,7 @@
             </div>
         </div>
     </div>
+
     <div class="row mb-none-30 mt-5">
         <div class="col-md-12">
             <div class="card">

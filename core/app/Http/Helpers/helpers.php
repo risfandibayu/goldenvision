@@ -2644,6 +2644,7 @@ function pinLeader(){
         }
         $mm2 = UserPin::select('user_id', DB::raw('DATE(created_at) AS date'), DB::raw('SUM(pin) as pin'))
                 ->where('user_id', $m->id)
+                ->where('ket','like','%Sponsor Send%')
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->groupBy('user_id', 'date')
                 ->orderBy('date')
@@ -2749,3 +2750,140 @@ function getMonthlyPinTotals($userId=1)
 
     return $result;
 }
+
+function getWeekStartAndEndDates($year, $month)
+{
+ $weekDates = [];
+
+    // Get the first day of the specified month
+    $firstDayOfMonth = Carbon::create($year, $month, 1);
+
+    // Calculate the start and end dates for week 1 (days 1 to 7)
+    $week1StartDate = $firstDayOfMonth->copy();
+    $week1EndDate = $week1StartDate->copy()->addDays(6);
+
+    $weekDates[1] = [
+        'start' => $week1StartDate->format('Y-m-d'),
+        'end' => $week1EndDate->format('Y-m-d')
+    ];
+
+    // Calculate the start and end dates for week 2 (days 8 to 15)
+    $week2StartDate = $week1EndDate->copy()->addDay();
+    $week2EndDate = $week2StartDate->copy()->addDays(7);
+
+    $weekDates[2] = [
+        'start' => $week2StartDate->format('Y-m-d'),
+        'end' => $week2EndDate->format('Y-m-d')
+    ];
+
+    // Calculate the start and end dates for week 3 (days 16 to 23)
+    $week3StartDate = $week2EndDate->copy()->addDay();
+    $week3EndDate = $week3StartDate->copy()->addDays(7);
+
+    $weekDates[3] = [
+        'start' => $week3StartDate->format('Y-m-d'),
+        'end' => $week3EndDate->format('Y-m-d')
+    ];
+
+    // Calculate the start and end dates for week 4 (days 24 to end of the month)
+    $week4StartDate = $week3EndDate->copy()->addDay();
+    $lastDayOfMonth = $firstDayOfMonth->copy()->endOfMonth();
+    $week4EndDate = $lastDayOfMonth->copy()->min($week4StartDate->copy()->endOfWeek());
+
+    $weekDates[4] = [
+        'start' => $week4StartDate->format('Y-m-d'),
+        'end' => $lastDayOfMonth->format('Y-m-d'),
+    ];
+
+    return $weekDates;
+}
+
+
+function sumPinByWeek()
+{
+    // Get the current month and year
+    $currentMonth = now()->format('m');
+    $currentYear = now()->format('Y');
+
+    // Retrieve the start and end dates for all four weeks
+    $weekDates = getWeekStartAndEndDates($currentYear, $currentMonth);
+
+    // Assign the variables for each week
+    $week1Start = $weekDates[1]['start'];
+    $week1End = $weekDates[1]['end'];
+    $week2Start = $weekDates[2]['start'];
+    $week2End = $weekDates[2]['end'];
+    $week3Start = $weekDates[3]['start'];
+    $week3End = $weekDates[3]['end'];
+    $week4Start = $weekDates[4]['start'];
+    $week4End = $weekDates[4]['end'];
+
+    $week1 = DB::table('user_pin')
+        ->select(DB::raw('SUM(pin) as sum_pin'))
+        ->where('user_id',1)
+        ->where('ket','like','%Sponsor Send%')
+        ->whereBetween('created_at',[$week1Start,$week1End])
+        ->first();
+    $week2 = DB::table('user_pin')
+        ->select(DB::raw('SUM(pin) as sum_pin'))
+        ->where('user_id',1)
+        ->where('ket','like','%Sponsor Send%')
+        ->whereBetween('created_at',[$week2Start,$week2End])
+        ->first();
+    $week3 = DB::table('user_pin')
+        ->select(DB::raw('SUM(pin) as sum_pin'))
+        ->where('user_id',1)
+        ->where('ket','like','%Sponsor Send%')
+        ->whereBetween('created_at',[$week3Start,$week3End])
+        ->first();
+    $week4 = DB::table('user_pin')
+        ->select(DB::raw('SUM(pin) as sum_pin'))
+        ->where('user_id',1)
+        ->where('ket','like','%Sponsor Send%')
+        ->whereBetween('created_at',[$week4Start,$week4End])
+        ->first();
+    $reborn = [
+        'name' => 'Reborn',
+        'week1' => $week1->sum_pin ??0,
+        'week2' => $week2->sum_pin ??0,
+        'week3' => $week3->sum_pin ??0,
+        'week4' => $week4->sum_pin ??0,
+    ];
+    $week11 = DB::table('user_pin')
+        ->select(DB::raw('SUM(pin) as sum_pin'))
+        ->where('user_id',442)
+        ->where('ket','like','%Sponsor Send%')
+        ->whereBetween('created_at',[$week1Start,$week1End])
+        ->first();
+    $week12 = DB::table('user_pin')
+        ->select(DB::raw('SUM(pin) as sum_pin'))
+        ->where('user_id',442)
+        ->where('ket','like','%Sponsor Send%')
+        ->whereBetween('created_at',[$week2Start,$week2End])
+        ->first();
+    $week13 = DB::table('user_pin')
+        ->select(DB::raw('SUM(pin) as sum_pin'))
+        ->where('user_id',442)
+        ->where('ket','like','%Sponsor Send%')
+        ->whereBetween('created_at',[$week3Start,$week3End])
+        ->first();
+    $week14 = DB::table('user_pin')
+        ->select(DB::raw('SUM(pin) as sum_pin'))
+        ->where('user_id',442)
+        ->where('ket','like','%Sponsor Send%')
+        ->whereBetween('created_at',[$week4Start,$week4End])
+        ->first();
+    $queen = [
+        'name' => 'Queen01',
+        'week1' => $week11->sum_pin ??0,
+        'week2' => $week12->sum_pin ??0,
+        'week3' => $week13->sum_pin ??0,
+        'week4' => $week14->sum_pin ??0,
+    ];
+    return [
+        $reborn,
+        $queen
+    ];
+}
+
+

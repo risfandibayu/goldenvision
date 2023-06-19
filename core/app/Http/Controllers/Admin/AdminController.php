@@ -94,8 +94,9 @@ class AdminController extends Controller
         $registered = registerThisMount();
         $mem = memberGrow();
         $lPin = pinLeader();
-        // dd($lPin);
-        // Withdraw Graph
+        $weekleader = sumPinByWeek();
+        // dd($weekleader);
+
         $withdrawal = Withdrawal::where('created_at', '>=', \Carbon\Carbon::now()->subDays(30))->where('status', 1)
             ->select(array(DB::Raw('sum(amount)   as totalAmount'), DB::Raw('DATE(created_at) day')))
             ->groupBy('day')->get();
@@ -147,12 +148,12 @@ class AdminController extends Controller
         $leader = User::where('is_leader',1)->where('id','!=',115)->get();
 // dd($leader);
         if(auth()->guard('admin')->user()->role == 'su'){
-            return view('admin.dashboard', compact('page_title','mem','lPin',
+            return view('admin.dashboard', compact('page_title','mem','lPin','weekleader',
                 'widget', 'report', 'withdrawals', 'chart','payment',
                 'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }else{
             return view('admin.dashboard_ar', compact('page_title',
-                'widget', 'report', 'withdrawals', 'chart','payment',
+                'widget', 'report', 'withdrawals', 'chart','payment','weekleader',
                 'paymentWithdraw','latestUser', 'bv','mem','lPin', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }
 
