@@ -2895,5 +2895,12 @@ function sumPinByWeek()
         $queen
     ];
 }
+function findWeek($w)
+{
+    $currentMonth = now()->format('m');
+    $currentYear = now()->format('Y');
 
-
+    // Retrieve the start and end dates for all four weeks
+    $weekDates = getWeekStartAndEndDates($currentYear, $currentMonth);
+    return '('. date('d',strtotime($weekDates[$w]['start'])) . ' - '. date('d',strtotime($weekDates[$w]['end'])) . ')';
+}

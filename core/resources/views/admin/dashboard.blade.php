@@ -782,19 +782,19 @@
 
     <div class="row mb-none-30 mt-5">
 
-        <div class="col-xl-6 mb-30">
+        <div class="col-xl-7 mb-30">
             <div class="card mb-3">
                 <div class="card-body">
                     <h6 class="mb-2"> #Leader Sell Pin Weekly</h6>
-                    <div class="table-responsive">
+                    <div style="overflow-x:auto;">
                         <table class="table ">
                             <thead>
                                 <tr>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">W1</th>
-                                    <th scope="col">W2</th>
-                                    <th scope="col">W3</th>
-                                    <th scope="col">W4</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">W1 <br><span>{{ findWeek(1) }}</span></th>
+                                    <th scope="col">W2 <br><span>{{ findWeek(2) }}</span></th>
+                                    <th scope="col">W3 <br><span>{{ findWeek(3) }}</span></th>
+                                    <th scope="col">W4 <br><span>{{ findWeek(4) }}</span></th>
                                     <th scope="col">Total</th>
                                 </tr>
                             </thead>
@@ -869,7 +869,7 @@
         </div>
 
 
-        <div class="col-xl-6 mb-30">
+        <div class="col-xl-5 mb-30">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@lang('Last 30 days Withdraw History')</h5>
