@@ -786,28 +786,32 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h6 class="mb-2"> #Leader Sell Pin Weekly</h6>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Week 1</th>
-                                <th scope="col">Week 2</th>
-                                <th scope="col">Week 3</th>
-                                <th scope="col">Week 4</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($weekleader as $item)
+                    <div class="table-responsive">
+                        <table class="table ">
+                            <thead>
                                 <tr>
-                                    <th scope="row">{{ $item['name'] }}</th>
-                                    <td>{{ $item['week1'] }}</td>
-                                    <td>{{ $item['week2'] }}</td>
-                                    <td>{{ $item['week3'] }}</td>
-                                    <td>{{ $item['week4'] }}</td>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">W1</th>
+                                    <th scope="col">W2</th>
+                                    <th scope="col">W3</th>
+                                    <th scope="col">W4</th>
+                                    <th scope="col">Total</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($weekleader as $item)
+                                    <tr>
+                                        <th scope="row">{{ $item['name'] }}</th>
+                                        <td>{{ $item['week1'] }}</td>
+                                        <td>{{ $item['week2'] }}</td>
+                                        <td>{{ $item['week3'] }}</td>
+                                        <td>{{ $item['week4'] }}</td>
+                                        <td>{{ $item['total'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
