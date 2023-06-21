@@ -785,7 +785,7 @@
         <div class="col-xl-7 mb-30">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h6 class="mb-2"> #Leader Sell Pin Weekly</h6>
+                    <h6 class="mb-2"> #Admin Sell Pin Weekly</h6>
                     <div style="overflow-x:auto;">
                         <table class="table ">
                             <thead>
