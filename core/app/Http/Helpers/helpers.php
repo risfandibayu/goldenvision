@@ -2842,17 +2842,19 @@ function sumPinByWeek()
         ->where('ket','like','%Sponsor Send%')
         ->whereBetween('created_at',[$week4Start,$week4End])
         ->first();
-    $w1r= $week1->sum_pin ??0;
-    $w2r= $week2->sum_pin ??0;
-    $w3r= $week3->sum_pin ??0;
-    $w4r= $week4->sum_pin ??0;
+    $w1r= (int)$week1->sum_pin ??0;
+    $w2r= (int)$week2->sum_pin ??0;
+    $w3r= (int)$week3->sum_pin ??0;
+    $w4r= (int)$week4->sum_pin ??0;
+
+    $totr = $w1r + $w2r + $w3r+ $w4r;
     $reborn = [
         'name' => 'Reborn',
         'week1' => $w1r,
         'week2' => $w2r,
-        'week3' => $w4r,
+        'week3' => $w3r,
         'week4' => $w4r,
-        'total' => $w1r + $w2r + $w3r + $w4r
+        'total' => $totr
     ];
     $week11 = DB::table('user_pin')
         ->select(DB::raw('SUM(pin) as sum_pin'))
@@ -2878,23 +2880,27 @@ function sumPinByWeek()
         ->where('ket','like','%Sponsor Send%')
         ->whereBetween('created_at',[$week4Start,$week4End])
         ->first();
-    $w1q = $week11->sum_pin ??0;
-    $w2q = $week12->sum_pin ??0;
-    $w3q = $week13->sum_pin ??0;
-    $w4q = $week14->sum_pin ??0;
+    $w1q = (int)$week11->sum_pin ??0;
+    $w2q = (int)$week12->sum_pin ??0;
+    $w3q = (int)$week13->sum_pin ??0;
+    $w4q = (int)$week14->sum_pin ??0;
+    $totq = $w1q + $w2q + $w3q + $w4q;
+    // dd($totq);
     $queen = [
         'name' => 'Queen01',
         'week1' => $w1q,
         'week2' => $w2q,
         'week3' => $w3q,
         'week4' => $w4q,
-        'total' => $w1q + $w2q + $w3q + $w4q
+        'total' => $totq
     ];
+    // dd($queen);
     return [
         $reborn,
         $queen
     ];
 }
+
 function findWeek($w)
 {
     $currentMonth = now()->format('m');
