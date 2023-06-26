@@ -65,7 +65,7 @@ class SponsorRegisterController extends Controller
             'acc_number' => 'required',
         ]);
         if ($validate->fails()) {
-            dd('error validasi');
+            // dd('error validasi');
            return redirect()->back()->withInput($request->all())->withErrors($validate);
         }
         DB::beginTransaction();
