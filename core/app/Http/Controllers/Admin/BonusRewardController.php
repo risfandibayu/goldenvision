@@ -54,6 +54,7 @@ class BonusRewardController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $prod = new BonusReward();
         if ($request->hasFile('images')) {
             $image = $request->file('images');
@@ -78,7 +79,7 @@ class BonusRewardController extends Controller
         $prod->kiri            = $request->kiri;
         $prod->kanan           = $request->kanan;
         $prod->reward          = $request->bonus;
-        $prod->type            = $request->type;
+        $prod->type            = 'monthly';
         $prod->status          = 0;
         $prod->save();
 
@@ -168,7 +169,7 @@ class BonusRewardController extends Controller
         // dd($request->file('images'));
         $prod->kiri            = $request->kiri;
         $prod->kanan           = $request->kanan;
-        $prod->reward           = $request->bonus;
+        $prod->reward          = $request->bonus;
         $prod->type            = $request->type;
         $prod->status          = $request->status;
         $prod->save();
