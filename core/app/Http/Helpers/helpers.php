@@ -2615,7 +2615,7 @@ function umurakun(){
     return $tanggalPembuatan->diff($hariIni)->days;
 }
 function goldNum(){
-    $code = Auth::user()->bro_code;
+    $code = Auth::user()->no_bro;
     return str_replace('M', 'SN', $code);
 }
 
