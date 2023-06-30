@@ -115,6 +115,7 @@ class UserController extends Controller
         $data['p_kiri']             = auth()->user()->userExtra->p_left;
         $data['p_kanan']            = auth()->user()->userExtra->p_right;
         $data['promo']              = BonusReward::where(['status'=>1,'type'=>'monthly'])->get();
+        // dd($data['promo']);
         $ux = UserExtra::where('user_id',auth()->user()->id)->first();
         if(!$ux){
             $kiri = 0;
