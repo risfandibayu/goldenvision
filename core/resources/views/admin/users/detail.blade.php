@@ -49,9 +49,9 @@
         }
 
         /* .btn-11:hover {
-                                                                                                                                                                                                                                                                                                text-decoration: none;
-                                                                                                                                                                                                                                                                                                color: #fff;
-                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                            text-decoration: none;
+                                                                                                                                                                                                                                                                                                                                                            color: #fff;
+                                                                                                                                                                                                                                                                                                                                                        } */
         .btn-11:before {
             position: absolute;
             content: '';
@@ -65,14 +65,14 @@
         }
 
         /* .btn-11:hover{
-                                                                                                                                                                                                                                                                                              opacity: .7;
-                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                          opacity: .7;
+                                                                                                                                                                                                                                                                                                                                                        } */
         /* .btn-11:active{
-                                                                                                                                                                                                                                                                                              box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-                                                                                                                                                                                                                                                                                                          -4px -4px 6px 0 rgba(116, 125, 136, .2),
-                                                                                                                                                                                                                                                                                                inset -4px -4px 6px 0 rgba(255,255,255,.2),
-                                                                                                                                                                                                                                                                                                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                          box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+                                                                                                                                                                                                                                                                                                                                                                      -4px -4px 6px 0 rgba(116, 125, 136, .2),
+                                                                                                                                                                                                                                                                                                                                                            inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                                                                                                                                                                                                                                                                                                                                                            inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+                                                                                                                                                                                                                                                                                                                                                        } */
 
 
         @-webkit-keyframes shiny-btn1 {
@@ -116,7 +116,7 @@
                                 class="text--small">@lang('Joined At ')<strong>{{ showDateTime(
                                     $user->created_at,
                                     'd M, Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                h:i A',
                                 ) }}</strong></span>
                         </div>
                     </div>
@@ -1081,6 +1081,24 @@
     </div>
 
 @endsection
+
+@push('breadcrumb-plugins')
+    <div class="row">
+
+        <div class="col-md-10 col-12">
+            <form action="{{ route('admin.users.detail.find') }}" method="POST"
+                class="form-inline float-sm-right bg--white">
+                @csrf
+                <div class="input-group has_append">
+                    <input type="text" name="search" class="form-control" placeholder="@lang('Username')">
+                    <div class="input-group-append">
+                        <button class="btn btn--primary" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+@endpush
 
 @push('script')
     <script>

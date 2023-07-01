@@ -96,7 +96,12 @@
                                         <span class="menu-title">@lang('Check Reward')</span>
                                     </a>
                                 </li>
-
+                                <li class="sidebar-menu-item {{ menuActive('admin.reward.provitSharing') }} ">
+                                    <a href="{{ route('admin.reward.provitSharing') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Sharing Provit')</span>
+                                    </a>
+                                </li>
 
 
                             </ul>

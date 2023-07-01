@@ -11,7 +11,8 @@
                                 <tr>
                                     <th scope="col">@lang('Sl')</th>
                                     {{-- <th scope="col">@lang('Code')</th> --}}
-                                    <th scope="col">@lang('User')</th>
+                                    <th scope="col">@lang('Username')</th>
+                                    <th scope="col">@lang('Fullname')</th>
                                     <th scope="col">@lang('Option')</th>
                                     <th scope="col">@lang('Reward')</th>
                                     <th scope="col">@lang('On Claim')</th>
@@ -31,6 +32,9 @@
                                         </td> --}}
                                         <td data-label="@lang('user')">
                                             {{ $k->user->username }}
+                                        </td>
+                                        <td data-label="@lang('user')">
+                                            {{ $k->user->fullname }}
                                         </td>
                                         <td data-label="@lang('opt')">
                                             <a href="http://wa.me/{{ $k->user->mobile }}" target="_blank"

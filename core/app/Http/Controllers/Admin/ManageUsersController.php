@@ -227,6 +227,16 @@ class ManageUsersController extends Controller
         return view('admin.users.detail', compact('page_title','ref_id','user','totalDeposit',
             'totalWithdraw','totalTransaction',  'totalBvCut','emas','bank','provinsi'));
     }
+    public function detailFind(Request $request){
+        // dd($request->all());
+        $user = User::where('username','=',$request->search)->first();
+        if($user){
+            return redirect()->route('admin.users.detail',$user->id);
+        }else{
+             $notify[] = ['success', 'User Not Found'];
+            return redirect()->back()->withNotify($notify);
+        }
+    }
 
     public function goldDetail($id){
         $user = user::where('id',$id)->first();

@@ -15,6 +15,7 @@ use App\Models\ureward;
 use App\Models\User;
 use App\Models\UserExtra;
 use App\Models\UserGold;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,9 +42,46 @@ class BonusRewardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function SharingProvit()
     {
-        //
+        $data['page_title'] = 'Sharing Provit';
+        $data['empty_message'] = 'No Users Found';
+        $data['table'] = User::where('sharing_profit',1)->paginate(getPaginate());
+        $data['b'] = Carbon::create(2023, 5, 1)->startOfMonth()->diffInMonths(Carbon::now()->startOfMonth()) +1;
+        $data['b2'] = getMonthArray();
+        return view('admin.bonus_reward.sharing_provit', $data);
+    }
+    public function SharingProvitPost(Request $request){
+        // update new user who qulified new left:right
+        $user = User::join('user_extras','users.id','=','user_extras.user_id')
+                ->where('users.sharing_profit',0)
+                ->where('user_extras.left','>=',$request->kiri)
+                ->where('user_extras.right','>=',$request->kanan)
+                ->where('users.id','!=',130) //masterplan16
+                ->update(['sharing_profit'=>1]); //update
+        
+        // find all user where sharing_profit = 1;
+        $sharing = User::where('sharing_profit',1)->get();
+        $count = $sharing->count();
+        foreach ($sharing as $key => $user) {
+
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $request->amount;
+            $transaction->post_balance = $user->balance + $request->amount;
+            $transaction->charge = 0;
+            $transaction->trx_type = '+';
+            $transaction->details = $request->ket;
+            $transaction->remark = 'profit_sharing';
+            $transaction->trx =  getTrx();
+            $transaction->save();
+
+            $user->balance += $request->amount;
+            $user->save();
+        }
+        $notify[] = ['success', 'Send Profit Sharing ' . $request->amount . ' to '. $count . ' users' ];
+        return redirect()->back()->withNotify($notify);
+        
     }
 
     /**

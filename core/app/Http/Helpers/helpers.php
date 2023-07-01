@@ -2910,3 +2910,38 @@ function findWeek($w)
     $weekDates = getWeekStartAndEndDates($currentYear, $currentMonth);
     return '('. date('d',strtotime($weekDates[$w]['start'])) . ' - '. date('d',strtotime($weekDates[$w]['end'])) . ')';
 }
+
+function getMonthArray()
+{
+    $startMonth = Carbon::create(2023, 5, 1)->startOfMonth();
+    $currentMonth = Carbon::now()->startOfMonth();
+
+    $months = [];
+
+    while ($startMonth <= $currentMonth) {
+        $months[] = $startMonth->format('F Y');
+        $startMonth->addMonth();
+    }
+    return $months;
+}
+function getSharingProvitUserByMonth($userID){
+    
+    $data = [];
+    foreach (getMonthArray() as $i) {
+        $date = Carbon::createFromFormat('F Y', $i)->startOfMonth();
+        $startDate = $date->copy()->startOfMonth();
+        $endDate = $date->copy()->endOfMonth();
+
+        $trx = Transaction::where('user_id', $userID)
+            ->where('remark', 'profit_sharing')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->first();
+        if($trx){
+            $data[] = $trx->amount;
+        }else{
+            $data[] = 0;
+        }
+    }
+    return $data;
+   
+}

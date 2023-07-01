@@ -264,6 +264,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('users/{scope}/search', 'ManageUsersController@search')->name('users.search');
         Route::get('user/detail/{id}', 'ManageUsersController@detail')->name('users.detail');
+        Route::post('user/detail/find', 'ManageUsersController@detailFind')->name('users.detail.find');
         Route::get('user/gold_invest', 'ManageUsersController@userGold')->name('invest.gdetail');
         Route::get('user/gold_invest_export', 'ManageUsersController@exportUserGold')->name('invest.gdetail.export');
         Route::get('user/gold_invest_detail/{id}', 'ManageUsersController@goldDetail')->name('users.invest.detail');
@@ -343,6 +344,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('bonus-reward/update', 'BonusRewardController@upreward')->name('reward.update');
         Route::get('user-reward','BonusRewardController@UserBonus')->name('reward.userBonus');
         Route::post('user-reward-update','BonusRewardController@UserUpdate')->name('reward.userUpdate');
+        Route::get('sharing-provit','BonusRewardController@SharingProvit')->name('reward.provitSharing');
+        Route::post('sharing-provit','BonusRewardController@SharingProvitPost')->name('reward.provitSharingPost');
 
         Route::get('all-member-grow','BonusRewardController@memberGrow')->name('reward.memberGrow');
     
