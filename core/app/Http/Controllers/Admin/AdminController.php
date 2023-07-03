@@ -37,6 +37,7 @@ class AdminController extends Controller
             }
             return response()->json(['status'=>200,'data'=>$ll,'status'=>'success']);
         }
+        // dd(SellingOmset());
         $page_title = 'Dashboard';
         // User Info
         $widget['total_users'] = User::count();

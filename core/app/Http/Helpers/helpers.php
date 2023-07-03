@@ -2945,3 +2945,12 @@ function getSharingProvitUserByMonth($userID){
     return $data;
    
 }
+function goldDeliver(){
+    $gold_del = UserExtra::where('is_gold',1)->where('bonus_deliver',1)->count();
+    $gold_un = UserExtra::where('is_gold',1)->where('bonus_deliver',0)->count();
+    return ['true'=>$gold_del,'false'=>$gold_un];
+}
+function SellingOmset(){
+    $deliver = User::where('no_bro','!=','')->count();
+    return $deliver * 330000;
+}
