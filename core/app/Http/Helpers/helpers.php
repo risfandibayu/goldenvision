@@ -2946,8 +2946,14 @@ function getSharingProvitUserByMonth($userID){
    
 }
 function goldDeliver(){
-    $gold_del = UserExtra::where('is_gold',1)->where('bonus_deliver',1)->count();
-    $gold_un = UserExtra::where('is_gold',1)->where('bonus_deliver',0)->count();
+    $gold_del = UserExtra::where(['is_gold'=>1,'bonus_deliver'=>1])->count('id');
+    $gold_un =  DB::table('user_extras')
+                ->where('is_gold', 1)
+                ->where(function ($query) {
+                    $query->whereNull('bonus_deliver')
+                        ->orWhere('bonus_deliver', 0);
+                })
+                ->count('id');
     return ['true'=>$gold_del,'false'=>$gold_un];
 }
 function SellingOmset(){
