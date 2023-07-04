@@ -110,7 +110,7 @@ class UserController extends Controller
         $float = floatval(str_replace(',', '.', nbk(auth()->user()->total_golds)));
         // dd($goldRange * $float);
         $data['goldBonus']          = $goldRange;
-        $data['reward']             = BonusReward::where('type','alltime')->get();
+        $data['reward']             = BonusReward::where(['type'=>'alltime','status'=>1])->get();
         $data['goldToday']          = DailyGold::orderByDesc('id')->first();
         $data['p_kiri']             = auth()->user()->userExtra->p_left;
         $data['p_kanan']            = auth()->user()->userExtra->p_right;
