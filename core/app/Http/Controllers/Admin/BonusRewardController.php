@@ -243,14 +243,14 @@ class BonusRewardController extends Controller
         return view('admin.bonus_reward.reward', compact('page_title','table', 'empty_message'));
     }
     public function thai(){
-        $page_title = 'Phone Rewards';
+        $page_title = 'Trip to Bangkok';
         $empty_message = 'No User Rewards Found';
         $table = ureward::with('user')->where('reward_id',4)->orderBy('status','ASC')->paginate(getPaginate());
     // dd($table);
         return view('admin.bonus_reward.reward', compact('page_title','table', 'empty_message'));
     }
     public function turkie(){
-        $page_title = 'Phone Rewards';
+        $page_title = 'Trip to Turkie';
         $empty_message = 'No User Rewards Found';
         $table = ureward::with('user')->where('reward_id',1)->orderBy('status','ASC')->paginate(getPaginate());
     // dd($table);
