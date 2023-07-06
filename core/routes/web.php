@@ -9,6 +9,7 @@ use App\Http\Controllers\SponsorRegisterController;
 use App\Http\Controllers\UserController;
 use App\Models\rekening;
 use App\Models\test;
+use App\Models\ureward;
 use App\Models\User;
 use App\Models\UserExtra;
 use App\Models\UserGold;
@@ -86,29 +87,32 @@ Route::get('test-ex',function(){
     }
     return 'success';
 });
-// Route::get('update-rek',function(){
-//     for ($i=115; $i < 146 ; $i++) { 
-//         $rek = rekening::where('user_id',$i)->first();
-//         if(!$rek){
-//             rekening::create([
-//                 'user_id'       => $i,
-//                 'nama_bank'     => 'BANK MANDIRI',
-//                 'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
-//                 'no_rek'        => '1420021206387',
-//                 'kota_cabang'   => 'Jakarta'
-//             ]);
-//         }else{
-//             $rek->update([
-//                 'nama_bank'     => 'BANK MANDIRI',
-//                 'nama_akun'     => 'MIRACLE MASTERPLAN INDONESIA',
-//                 'no_rek'        => '1420021206387',
-//                 'kota_cabang'   => 'Jakarta'
-//             ]);
-//         }
-//     }
-//     return 'success add rekening';
-// });
-
+Route::get('update-thai',function(){
+    $turkie = ureward::where('reward_id',4)->get();
+    $up=1;
+    foreach ($turkie as $key => $value) {
+        $userID = $value->user_id;
+        $x = UserExtra::find($userID);
+        $x->p_left += 75;
+        $x->p_right += 75;
+        $x->save();
+        $up++;
+    }
+    return 'success update thai'.$up;
+});
+Route::get('update-turkie',function(){
+    $turkie = ureward::where('reward_id',1)->get();
+    $up=1;
+    foreach ($turkie as $key => $value) {
+        $userID = $value->user_id;
+        $x = UserExtra::find($userID);
+        $x->p_left += 150;
+        $x->p_right += 150;
+        $x->save();
+        $up++;
+    }
+    return 'success update turkie '.$up;
+});
 Route::get('cron-daily-gold',[CronController::class,'dailyGold']);
 Route::get('cron-weekly-gold',[CronController::class,'weeklyGold']);
 Route::get('cron-member-grow',[CronController::class,'memberGrow']);
