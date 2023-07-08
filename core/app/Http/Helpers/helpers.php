@@ -2960,3 +2960,23 @@ function SellingOmset(){
     $deliver = User::where('no_bro','!=','')->count();
     return $deliver * 330000;
 }
+
+function emas25(){
+    $user = Auth::user();
+    $email= explode('@', $user->email)[0];
+    $sameuser = User::where('email','like','%'.$email.'%')->get();
+    $dividend = $sameuser->count();
+    if($dividend >= 40){
+        $divisor = 40;
+        $quotient = (int)($dividend / $divisor);
+        $modulus = $dividend % $divisor;
+        $includeUser = $quotient * $quotient; 
+        if($modulus != 0){
+            $sameuser = User::where('email','like','%'.$email.'%')->where('id','!=',$user->id)->get();
+        }else{
+            
+        }
+        return ['user'=>$sameuser,'bagi'=>$quotient,'sisa'=>$modulus,'tot'=>$includeUser,'id'=>$user->id];
+    }
+    
+}

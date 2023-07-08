@@ -58,7 +58,7 @@ class SponsorRegisterController extends Controller
             'username'  => 'required|alpha_num|unique:users|min:6',
             'email'     => 'required|email',
             'phone'     => 'required',
-            'pin'       => 'required|numeric',
+            'pin'       => 'required|numeric|min:1',
             'bank_name' => 'required',
             'kota_cabang' => 'required',
             'acc_name' => 'required',
@@ -354,7 +354,12 @@ class SponsorRegisterController extends Controller
     }
 
     public function sendPin(Request $request,$id){
-       
+         $validate = Validator::make($request->all(),[
+            'pin'       => 'required|numeric|min:1',
+        ]);
+        if ($validate->fails()) {
+           return redirect()->back()->withErrors($validate);
+        }
         $user = User::find($id);
         $sponsor = Auth::user();
         $trx = getTrx();

@@ -60,20 +60,19 @@ Route::get('day-gold',function(){
     return 'success update';
 });
 
-route::get('test-tree',function(){
-dd(inTreeUser(auth()->user()->id));
-// dd(User::orderByDesc('id')->limit(15)->get());
+route::get('wd-25emas',function(){
+    $sisa = emas25()['sisa'];
+    if($sisa != 0){
+        $user = emas25()['user'];
+        $data = [];
+        foreach ($user as $key => $value) {
+           
+        }
+    }
+    dd($user);
 });
 
 Route::get('test-ex',function(){
-    // $ux = UserExtra::all();
-    // $data = [];
-    // foreach ($ux as $key => $value) {
-    //     $data[$value->id] = ['p_left' => $value->p_left , 'p_right' => $value->p_right];
-    // }
-    // $t = test::create([
-    //     'test' => json_encode($data)
-    // ]);
 
     $test = test::find(2);
   
@@ -87,32 +86,7 @@ Route::get('test-ex',function(){
     }
     return 'success';
 });
-Route::get('update-thai',function(){
-    $turkie = ureward::where('reward_id',4)->get();
-    $up=1;
-    foreach ($turkie as $key => $value) {
-        $userID = $value->user_id;
-        $x = UserExtra::find($userID);
-        $x->p_left += 75;
-        $x->p_right += 75;
-        $x->save();
-        $up++;
-    }
-    return 'success update thai'.$up;
-});
-Route::get('update-turkie',function(){
-    $turkie = ureward::where('reward_id',1)->get();
-    $up=1;
-    foreach ($turkie as $key => $value) {
-        $userID = $value->user_id;
-        $x = UserExtra::find($userID);
-        $x->p_left += 150;
-        $x->p_right += 150;
-        $x->save();
-        $up++;
-    }
-    return 'success update turkie '.$up;
-});
+
 Route::get('cron-daily-gold',[CronController::class,'dailyGold']);
 Route::get('cron-weekly-gold',[CronController::class,'weeklyGold']);
 Route::get('cron-member-grow',[CronController::class,'memberGrow']);
