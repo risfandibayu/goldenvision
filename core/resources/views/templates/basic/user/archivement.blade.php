@@ -19,14 +19,20 @@
             background-size: 100% 100%;
         }
 
-        .cardImages.phone {
+        .cardImages.reward-3 {
             background-image: url("{{ asset('assets/assets/badges/phone-bonus-sertif.jpeg') }}");
             background-repeat: no-repeat;
             background-size: 100% 100%;
         }
 
-        .cardImages.trip {
+        .cardImages.reward-4 {
             background-image: url("{{ asset('assets/assets/badges/reward-monthly.jpeg') }}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .cardImages.reward-1 {
+            background-image: url("{{ asset('assets/assets/badges/reward-turkey.jpeg') }}");
             background-repeat: no-repeat;
             background-size: 100% 100%;
         }
@@ -95,6 +101,24 @@
             margin-left: 140px;
         }
 
+        .imgTurkie {
+            height: 70px;
+            margin-top: -3%;
+            display: flex;
+            justify-content: center;
+            /* margin-left: 30; */
+            margin-left: 75px;
+        }
+
+        .usernameTurkie {
+            /* margin-top: 45px; */
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+            /* margin-left: 10px; */
+
+        }
+
         .usernameTrip {
             /* margin-top: 45px; */
             display: flex;
@@ -138,7 +162,7 @@
         @endif
         @foreach ($bonus as $item)
             <div class="col-md-3  mb-3 d-flex  justify-content-center text-center ">
-                <div class="card b-radius--10 cardImages {{ $item->reward_id == 3 ? 'phone' : 'trip' }}">
+                <div class="card b-radius--10 cardImages {{ 'reward-' . $item->reward_id }}">
                     <div class="card-body text-center" style="display: table; min-height: 15rem; overflow: hidden;">
                         <div style="display: table-cell; vertical-align: middle;">
                             @if ($item->reward_id == 3)
@@ -152,6 +176,12 @@
                                     src="{{ getImage('assets/images/user/profile/' . auth()->user()->image, null, true) }}"
                                     alt="@lang('image')">
                                 <span class="usernameTrip text-dark">{{ $user->username }}</span>
+                            @endif
+                            @if ($item->reward_id == 1)
+                                <img class="imgTurkie"
+                                    src="{{ getImage('assets/images/user/profile/' . auth()->user()->image, null, true) }}"
+                                    alt="@lang('image')">
+                                <span class="usernameTurkie text-dark">{{ $user->username }}</span>
                             @endif
                         </div>
                     </div>
