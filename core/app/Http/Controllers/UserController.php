@@ -83,6 +83,7 @@ class UserController extends Controller
 
     public function home()
     {
+        dd(emas25());
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
         $data['totalWithdraw']      = Withdrawal::where('user_id', auth()->id())->where('status', 1)->sum('amount');
@@ -103,8 +104,10 @@ class UserController extends Controller
         $data['checkDaily_days'] = $checkDaily->days ??0;
 
         $gold = DailyGold::orderByDesc('id')->first();  
+        $goldRange = $gold->per_gram - ($gold->per_gram*8/100); //gold per gram today - 8%
+
         $userGold = auth()->user()->total_golds;
-        $goldRange = $gold->per_gram - ($gold->per_gram*8/100);
+
         $float = floatval(str_replace(',', '.', nbk(auth()->user()->total_golds)));
         // dd($goldRange * $float);
         $data['goldBonus']          = $goldRange;
@@ -130,7 +133,7 @@ class UserController extends Controller
         $data['title']          = title();
         $data['persen_bonus']   = countAllBonus() / 10000000 * 100;
         // dd($data);
-        return view($this->activeTemplate . 'user.dashboard', $data);
+        return view($this->activeTemplate . 'user.dashboard.dashboard', $data);
     }
 
     public function ref(){

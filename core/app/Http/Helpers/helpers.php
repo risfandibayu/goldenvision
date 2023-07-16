@@ -9,6 +9,7 @@ use App\Models\GeneralSetting;
 use App\Models\LogActivity;
 use App\Models\MemberGrow;
 use App\Models\Plan;
+use App\Models\rekening;
 use App\Models\SmsTemplate;
 use App\Models\Transaction;
 use App\Models\ureward;
@@ -2962,21 +2963,35 @@ function SellingOmset(){
 }
 
 function emas25(){
+    //joinkan dengan users yg emas = 1
     $user = Auth::user();
-    $email= explode('@', $user->email)[0];
-    $sameuser = User::where('email','like','%'.$email.'%')->get();
-    $dividend = $sameuser->count();
-    if($dividend >= 40){
-        $divisor = 40;
-        $quotient = (int)($dividend / $divisor);
-        $modulus = $dividend % $divisor;
-        $includeUser = $quotient * $quotient; 
-        if($modulus != 0){
-            $sameuser = User::where('email','like','%'.$email.'%')->where('id','!=',$user->id)->get();
+    $rek= rekening::where('user_id',$user->id)->first();
+    $sameuser = rekening::join('users','rekenings.user_id','=','users.id')
+                    ->where(['rekenings.nama_bank'=>$rek->nama_bank,'rekenings.nama_akun'=>$rek->nama_akun,'rekenings.no_rek'=>$rek->no_rek,'users.emas'=>1])
+                    ->get();
+    $countUser = $sameuser->count();
+    $jml1Gr = 40;
+    $jmlGrmEmas = (int)($countUser / $jml1Gr);
+    $id = [];
+    if($countUser >= 40){
+        $sisaUser = $countUser % $jml1Gr;
+        $includeUser = $jmlGrmEmas * $jml1Gr; 
+        if($sisaUser != 0){
+            $sameuser2 = rekening::join('users','rekenings.user_id','=','users.id')->where(['rekenings.nama_bank'=>$rek->nama_bank,'rekenings.nama_akun'=>$rek->nama_akun,'rekenings.no_rek'=>$rek->no_rek,'users.emas'=>1])->where('rekenings.user_id','!=',$user->id)->take($includeUser)->get(); //where not user_id;
+            //jika ada sisa user. maka emas user yg wd tidak termasuk
+            foreach ($sameuser2 as $key => $value) {
+                $id[] += $value->user_id;
+            }
+            // $user = User::whereIn('id',$id)->get();
+            // dd($user);
+            return ['userId'=>$id,'gold'=>$jmlGrmEmas,'same'=>$countUser,'totuser'=>$includeUser,'sisa'=>$sisaUser,'id'=>$user->id,'status'=>1];
         }else{
-            
+            foreach ($sameuser as $key => $value) {
+                $id[] += $value->user_id;
+            }
+            return ['userId'=>$id,'gold'=>$jmlGrmEmas,'same'=>$countUser, 'totuser'=>$includeUser,'sisa'=>$sisaUser,'id'=>$user->id,'status'=>1];
         }
-        return ['user'=>$sameuser,'bagi'=>$quotient,'sisa'=>$modulus,'tot'=>$includeUser,'id'=>$user->id];
+    }else{
+        return ['userId'=>[],'gold'=>0,'same'=>$countUser,'sisa'=>0,'totuser'=>0,'id'=>$user->id,'status'=>0];
     }
-    
 }

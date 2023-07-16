@@ -595,6 +595,8 @@ Route::name('user.')->prefix('user')->group(function () {
             //F
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
             Route::get('/archivement',[ArchivementController::class,'index'])->name('archivement.view');
+            Route::get('/tarik-emas',[ArchivementController::class,'tarikEmas'])->name('archivement.terikEmas');
+            Route::post('/tarik-emas',[ArchivementController::class,'tarikEmasPost'])->name('terikEmas.post');
 
             Route::get('/user-pin',[SponsorRegisterController::class,'userSendPin'])->name('pins.view');
             Route::get('pin/log', 'UserReportController@PinDeliveriyLog')->name('pins.PinDeliveriyLog');
