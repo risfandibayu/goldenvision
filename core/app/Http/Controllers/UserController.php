@@ -83,7 +83,7 @@ class UserController extends Controller
 
     public function home()
     {
-        dd(emas25());
+        // dd(emas25());
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
         $data['totalWithdraw']      = Withdrawal::where('user_id', auth()->id())->where('status', 1)->sum('amount');
@@ -113,8 +113,8 @@ class UserController extends Controller
         $data['goldBonus']          = $goldRange;
         $data['reward']             = BonusReward::where(['type'=>'alltime','status'=>1])->get();
         $data['goldToday']          = DailyGold::orderByDesc('id')->first();
-        $data['p_kiri']             = auth()->user()->userExtra->p_left;
-        $data['p_kanan']            = auth()->user()->userExtra->p_right;
+        $data['p_kiri']             = auth()->user()->userExtra->left;
+        $data['p_kanan']            = auth()->user()->userExtra->right;
         $data['promo']              = BonusReward::where(['status'=>1,'type'=>'monthly'])->get();
         // dd($data['promo']);
         $ux = UserExtra::where('user_id',auth()->user()->id)->first();
