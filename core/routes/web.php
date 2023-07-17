@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\URL;
 // })
 Route::get('getfile',[UserController::class,'fileDownload']);
 
-Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
+// Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
 Route::get('/',function(){
     return view('v3.home');
 })->name('home');

@@ -3,8 +3,8 @@
 @section('content')
     <!-- page-wrapper start -->
     <div class="page-wrapper default-version">
-        {{-- @include('admin.partials.sidenav')
-        @include('admin.partials.topnav') --}}
+        {{-- @include('admin.partials.sidenav') --}}
+        @include('admin.partials.topview')
 
         <div class="container">
             <div class="bodywrapper__inner">

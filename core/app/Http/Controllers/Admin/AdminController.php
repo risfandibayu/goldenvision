@@ -27,136 +27,6 @@ use App\Models\ureward;
 class AdminController extends Controller
 {
 
-    public function viewOnly(Request $request){
-        if($request->all()){
-            $user = User::whereNotNull('lat')->get();
-            $ll = [];
-            foreach ($user as $key => $value) {
-                $ll[] = ['lat' => $value->lat, 'lng' => $value->lng];
-            }
-            return response()->json(['status'=>200,'data'=>$ll,'status'=>'success']);
-        }
-        // dd(SellingOmset());
-        $page_title = 'Dashboard';
-        // User Info
-        $widget['total_users'] = User::count();
-        $widget['verified_users'] = User::where('status', 1)->count();
-        $widget['email_verified_users'] = User::where('ev', 1)->count();
-        $widget['sms_verified_users'] = User::where('sv', 1)->count();
-
-        $widget['banned_users'] = User::where('status', 0)->count();
-        $widget['emailUnverified'] = User::emailUnverified()->count();
-        $widget['smsUnverified'] = User::smsUnverified()->count();
-
-        $widget['gold_silver'] = countGold();
-        $widget['r_hp'] = rewardHp();
-        // dd($widget);
-        $widget['users_balance'] = User::sum('balance');
-        $widget['totalWdGold'] = totalWdGold();
-        $widget['totalMpProd'] = totalMpProd();
-        $widget['totalColagenProd'] = totalColagenProd();
-        $widget['totalPurchasedPlan'] = sumPurchasedPlan();
-        $widget['totalReferalsCommision'] = sumRefComm();
-        $widget['users_invest'] = User::sum('total_invest');
-        $widget['last7days_invest'] = Transaction::whereDate('created_at', '>=', Carbon::now()->subDays(6))->where('remark', 'purchased_plan')->sum('amount');
-        $widget['total_binary_com'] = User::sum('total_binary_com');
-        $widget['total_ref_com'] = User::sum('total_ref_com');
-        $widget['total_bro_joined'] = User::where('plan_id','!=',0)->count();
-
-
-        // Monthly Deposit & Withdraw Report Graph
-        $report['months'] = collect([]);
-        $report['deposit_month_amount'] = collect([]);
-        $report['withdraw_month_amount'] = collect([]);
-
-        $depositsMonth = Deposit::whereYear('created_at', '>=', Carbon::now()->subYear())
-            ->selectRaw("SUM( CASE WHEN status = 1 THEN amount END) as depositAmount")
-            ->selectRaw("DATE_FORMAT(created_at,'%M') as months")
-            ->orderBy('created_at')
-            ->groupBy(DB::Raw("MONTH(created_at)"))->get();
-
-        $depositsMonth->map(function ($aaa) use ($report) {
-            $report['months']->push($aaa->months);
-            $report['deposit_month_amount']->push(getAmount($aaa->depositAmount));
-        });
-
-        $withdrawalMonth = Withdrawal::whereYear('created_at', '>=', Carbon::now()->subYear())->where('status', 1)
-            ->selectRaw("SUM( CASE WHEN status = 1 THEN amount END) as withdrawAmount")
-            ->selectRaw("DATE_FORMAT(created_at,'%M') as months")
-            ->orderBy('created_at')
-            ->groupBy(DB::Raw("MONTH(created_at)"))->get();
-        $withdrawalMonth->map(function ($bb) use ($report){
-            $report['withdraw_month_amount']->push(getAmount($bb->withdrawAmount));
-        });
-
-        // $registered = userRegiteredChart();
-        // dd($registered);
-        $registered = registerThisMount();
-        $mem = memberGrow();
-        $lPin = pinLeader();
-        $weekleader = sumPinByWeek();
-        // dd($weekleader);
-
-        $withdrawal = Withdrawal::where('created_at', '>=', \Carbon\Carbon::now()->subDays(30))->where('status', 1)
-            ->select(array(DB::Raw('sum(amount)   as totalAmount'), DB::Raw('DATE(created_at) day')))
-            ->groupBy('day')->get();
-        $withdrawals['per_day'] = collect([]);
-        $withdrawals['per_day_amount'] = collect([]);
-        $withdrawal->map(function ($a) use ($withdrawals) {
-            $withdrawals['per_day']->push(date('d M', strtotime($a->day)));
-            $withdrawals['per_day_amount']->push($a->totalAmount + 0);
-        });
-
-
-        // user Browsing, Country, Operating Log
-        $user_login_data = UserLogin::whereDate('created_at', '>=', \Carbon\Carbon::now()->subDay(30))->get(['browser', 'os', 'country']);
-
-        $chart['user_browser_counter'] = $user_login_data->groupBy('browser')->map(function ($item, $key) {
-            return collect($item)->count();
-        });
-        $chart['user_os_counter'] = $user_login_data->groupBy('os')->map(function ($item, $key) {
-            return collect($item)->count();
-        });
-        $chart['user_country_counter'] = $user_login_data->groupBy('country')->map(function ($item, $key) {
-            return collect($item)->count();
-        })->sort()->reverse()->take(5);
-
-
-        $payment['payment_method'] = Gateway::count();
-        $payment['total_deposit_amount'] = Deposit::where('status',1)->sum('amount');
-        $payment['total_deposit_charge'] = Deposit::where('status',1)->sum('charge');
-        $payment['total_deposit_pending'] = Deposit::where('status',2)->count();
-        $payment['total_deposit_reject'] = Deposit::where('status',3)->count();
-
-        $paymentWithdraw['withdraw_method'] = WithdrawMethod::count();
-        $paymentWithdraw['total_withdraw_amount'] = Withdrawal::where('status',1)->sum('amount');
-        $paymentWithdraw['total_withdraw_charge'] = Withdrawal::where('status',1)->sum('charge');
-        $paymentWithdraw['total_withdraw_pending'] = Withdrawal::where('status',2)->count();
-
-
-        $bv['bvLeft'] = UserExtra::sum('bv_left');
-        $bv['bvRight'] = UserExtra::sum('bv_right');
-        $bv['totalBvCut'] = BvLog::where('trx_type', '-')->sum('amount');
-        
-        $bonusr = BonusReward::where('type','monthly')->count();
-        $bonusa = BonusReward::where('type','alltime')->count();
-        $ure = ureward::all()->count();
-        $ure2 = ureward::where('status',2)->count();
-
-        $latestUser = User::latest()->limit(6)->get();
-        $latesLog = LogActivity::with(['user'])->where('subject','like','%Login.%')->orderByDesc('id')->groupBy('user_id')->limit(4)->get();
-        $leader = User::where('is_leader',1)->where('id','!=',115)->get();
-// dd($leader);
-        // if(auth()->guard('admin')->user()->role == 'su'){
-            return view('admin.dasboardView', compact('page_title','mem','lPin','weekleader',
-                'widget', 'report', 'withdrawals', 'chart','payment',
-                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
-        // }else{
-        //     return view('admin.dashboard_ar', compact('page_title',
-        //         'widget', 'report', 'withdrawals', 'chart','payment','weekleader',
-        //         'paymentWithdraw','latestUser', 'bv','mem','lPin', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
-        // }
-    }
 
     public function dashboard(Request $request)
     {
@@ -281,6 +151,10 @@ class AdminController extends Controller
 // dd($leader);
         if(auth()->guard('admin')->user()->role == 'su'){
             return view('admin.dashboard', compact('page_title','mem','lPin','weekleader',
+                'widget', 'report', 'withdrawals', 'chart','payment',
+                'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
+        }elseif(auth()->guard('admin')->user()->role == 'vu'){
+            return view('admin.dasboardView', compact('page_title','mem','lPin','weekleader',
                 'widget', 'report', 'withdrawals', 'chart','payment',
                 'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }else{
