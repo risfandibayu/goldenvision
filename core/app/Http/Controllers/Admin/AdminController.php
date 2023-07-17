@@ -187,7 +187,7 @@ class AdminController extends Controller
         $widget['totalWdGold'] = totalWdGold();
         $widget['totalMpProd'] = totalMpProd();
         $widget['totalColagenProd'] = totalColagenProd();
-        $widget['totalPurchasedPlan'] = sumPurchasedPlan();
+        $widget['totalPurchasedPlan'] = sumPurchasedPlan(); //sum semua purched plan dari amount transaksi;
         $widget['totalReferalsCommision'] = sumRefComm();
         $widget['users_invest'] = User::sum('total_invest');
         $widget['last7days_invest'] = Transaction::whereDate('created_at', '>=', Carbon::now()->subDays(6))->where('remark', 'purchased_plan')->sum('amount');

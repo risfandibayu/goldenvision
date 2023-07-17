@@ -10,8 +10,10 @@
             <div class="bodywrapper__inner">
 
                 @include('admin.partials.breadcrumb')
+                <div class="mt-5">
 
-                @yield('panel')
+                    @yield('panel')
+                </div>
             </div><!-- bodywrapper__inner end -->
         </div><!-- body-wrapper end -->
     </div>

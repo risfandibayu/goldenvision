@@ -117,7 +117,7 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--red b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-ban"></i>
@@ -133,10 +133,10 @@
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--indigo b-radius--10 box-shadow ">
                 <div class="icon">
                     <i class="la la-envelope"></i>
@@ -152,10 +152,10 @@
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--danger b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-envelope"></i>
@@ -171,9 +171,9 @@
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--primary b-radius--10 box-shadow ">
                 <div class="icon">
                     <i class="fa fa-phone"></i>
@@ -189,9 +189,9 @@
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--pink b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-window-close"></i>
@@ -207,10 +207,10 @@
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-money-bill-wave-alt"></i>
@@ -227,9 +227,9 @@
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--info b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-money-bill-wave-alt"></i>
@@ -246,7 +246,7 @@
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
         {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
