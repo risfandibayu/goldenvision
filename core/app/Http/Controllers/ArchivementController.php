@@ -55,7 +55,7 @@ class ArchivementController extends Controller
             $transaction->charge = 0;
             $transaction->trx_type = '+';
             $transaction->details = 'Tarik Emas '.$gram.' grams to IDR '.nb($totalFee);
-            $transaction->remark = 'gold_withdraw';
+            $transaction->remark = 'tarik_emas';
             $transaction->trx =  getTrx();
             $transaction->save();
 
