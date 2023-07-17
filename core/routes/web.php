@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BonusRewardController;
 use App\Http\Controllers\ArchivementController;
 use App\Http\Controllers\Auth\LoginController;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\URL;
 // })
 Route::get('getfile',[UserController::class,'fileDownload']);
 
+Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
 Route::get('/',function(){
     return view('v3.home');
 })->name('home');
