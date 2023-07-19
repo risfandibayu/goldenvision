@@ -2966,9 +2966,20 @@ function emas25(){
     //joinkan dengan users yg emas = 1
     $user = Auth::user();
     $rek= rekening::where('user_id',$user->id)->first();
-    $sameuser = rekening::join('users','rekenings.user_id','=','users.id')
-                    ->where(['rekenings.nama_bank'=>$rek->nama_bank,'rekenings.nama_akun'=>$rek->nama_akun,'rekenings.no_rek'=>$rek->no_rek,'users.emas'=>1])
-                    ->get();
+    // $sameuser = rekening::selectRaw('COUNT(*) AS result')
+    //                 ->join('users','rekenings.user_id','=','users.id')
+    //                 ->where(['rekenings.nama_bank'=>$rek->nama_bank,'rekenings.nama_akun'=>$rek->nama_akun,'rekenings.no_rek'=>$rek->no_rek,'users.emas'=>1])
+    //                 ->groupBy('user_id','username')
+    //                 ->get();
+    $sameuser = DB::table('rekenings as r')
+            ->join('users as u', 'r.user_id', '=', 'u.id')
+            ->select('u.username', 'r.user_id', DB::raw('MAX(r.nama_bank) as nama_bank'), DB::raw('MAX(r.nama_akun) as nama_akun'), DB::raw('MAX(r.no_rek) as no_rek'))
+            ->where('nama_bank', $rek->nama_bank)
+            ->where('nama_akun', $rek->nama_akun)
+            ->where('no_rek', $rek->no_rek)
+            ->groupBy('r.user_id', 'u.username')
+            ->get();
+// dd($sameuser);
     $countUser = $sameuser->count();
     $jml1Gr = 40;
     $jmlGrmEmas = (int)($countUser / $jml1Gr);
@@ -2977,13 +2988,22 @@ function emas25(){
         $sisaUser = $countUser % $jml1Gr;
         $includeUser = $jmlGrmEmas * $jml1Gr; 
         if($sisaUser != 0){
-            $sameuser2 = rekening::join('users','rekenings.user_id','=','users.id')->where(['rekenings.nama_bank'=>$rek->nama_bank,'rekenings.nama_akun'=>$rek->nama_akun,'rekenings.no_rek'=>$rek->no_rek,'users.emas'=>1])->where('rekenings.user_id','!=',$user->id)->take($includeUser)->get(); //where not user_id;
+            // $sameuser2 = rekening::join('users','rekenings.user_id','=','users.id')->where(['rekenings.nama_bank'=>$rek->nama_bank,'rekenings.nama_akun'=>$rek->nama_akun,'rekenings.no_rek'=>$rek->no_rek,'users.emas'=>1])->where('rekenings.user_id','!=',$user->id)->take($includeUser)->get(); //where not user_id;
             //jika ada sisa user. maka emas user yg wd tidak termasuk
+            $sameuser2 = DB::table('rekenings as r')
+                ->join('users as u', 'r.user_id', '=', 'u.id')
+                ->select('u.username', 'r.user_id', DB::raw('MAX(r.nama_bank) as nama_bank'), DB::raw('MAX(r.nama_akun) as nama_akun'), DB::raw('MAX(r.no_rek) as no_rek'))
+                ->where('nama_bank', $rek->nama_bank)
+                ->where('nama_akun', $rek->nama_akun)
+                ->where('no_rek', $rek->no_rek)
+                ->where('r.user_id','!=',$user->id)
+                ->groupBy('r.user_id', 'u.username')
+                ->take($includeUser)//where not user_id;
+                ->get();
             foreach ($sameuser2 as $key => $value) {
+                // dd($value->user_id);
                 $id[] += $value->user_id;
             }
-            // $user = User::whereIn('id',$id)->get();
-            // dd($user);
             return ['userId'=>$id,'gold'=>$jmlGrmEmas,'same'=>$countUser,'totuser'=>$includeUser,'sisa'=>$sisaUser,'id'=>$user->id,'status'=>1];
         }else{
             foreach ($sameuser as $key => $value) {

@@ -57,6 +57,7 @@ class ArchivementController extends Controller
             $transaction->details = 'Tarik Emas '.$gram.' grams to IDR '.nb($totalFee);
             $transaction->remark = 'tarik_emas';
             $transaction->trx =  getTrx();
+            $transaction->notes = json_encode(emas25());
             $transaction->save();
 
             $user->balance += $totalFee;
