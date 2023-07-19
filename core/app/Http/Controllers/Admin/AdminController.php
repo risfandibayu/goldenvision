@@ -150,15 +150,15 @@ class AdminController extends Controller
         $leader = User::where('is_leader',1)->where('id','!=',115)->get();
 // dd($leader);
         if(auth()->guard('admin')->user()->role == 'su'){
-            return view('admin.dashboard', compact('page_title','mem','lPin','weekleader',
+            return view('admin.dashboard.dashboard', compact('page_title','mem','lPin','weekleader',
                 'widget', 'report', 'withdrawals', 'chart','payment',
                 'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }elseif(auth()->guard('admin')->user()->role == 'vu'){
-            return view('admin.dasboardView', compact('page_title','mem','lPin','weekleader',
+            return view('admin.dashboard.dasboardView', compact('page_title','mem','lPin','weekleader',
                 'widget', 'report', 'withdrawals', 'chart','payment',
                 'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }else{
-            return view('admin.dashboard_ar', compact('page_title',
+            return view('admin.dashboard.dashboard_ar', compact('page_title',
                 'widget', 'report', 'withdrawals', 'chart','payment','weekleader',
                 'paymentWithdraw','latestUser', 'bv','mem','lPin', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }
