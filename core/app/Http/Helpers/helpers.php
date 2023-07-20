@@ -2977,6 +2977,7 @@ function emas25(){
             ->where('nama_bank', $rek->nama_bank)
             ->where('nama_akun', $rek->nama_akun)
             ->where('no_rek', $rek->no_rek)
+            ->where('u.emas','=',1)
             ->groupBy('r.user_id', 'u.username')
             ->get();
 // dd($sameuser);
@@ -2997,8 +2998,9 @@ function emas25(){
                 ->where('nama_akun', $rek->nama_akun)
                 ->where('no_rek', $rek->no_rek)
                 ->where('r.user_id','!=',$user->id)
+                ->where('u.emas','=',1)
                 ->groupBy('r.user_id', 'u.username')
-                ->take($includeUser)//where not user_id;
+                ->take($includeUser)
                 ->get();
             foreach ($sameuser2 as $key => $value) {
                 // dd($value->user_id);
