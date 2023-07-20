@@ -2978,6 +2978,7 @@ function emas25(){
             ->where('nama_akun', $rek->nama_akun)
             ->where('no_rek', $rek->no_rek)
             ->where('u.emas','=',1)
+            ->where('u.no_bro','!=','')
             ->groupBy('r.user_id', 'u.username')
             ->get();
 // dd($sameuser);
@@ -2999,6 +3000,7 @@ function emas25(){
                 ->where('no_rek', $rek->no_rek)
                 ->where('r.user_id','!=',$user->id)
                 ->where('u.emas','=',1)
+                ->where('u.no_bro','!=','')
                 ->groupBy('r.user_id', 'u.username')
                 ->take($includeUser)
                 ->get();
