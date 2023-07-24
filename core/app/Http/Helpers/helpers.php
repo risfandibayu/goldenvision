@@ -2561,7 +2561,7 @@ function addToLog($subject)
     $log['url'] = Request::fullUrl();
     $log['method'] = Request::method();
     $log['agent'] = Request::header('user-agent');
-    $log['location'] =  @implode(',', $info['city']) . (" - " . @implode(',', $info['area']) . "- ") . @implode(',', $info['country']) . (" - " . @implode(',', $info['code']) . " ");
+    $log['location'] = '';  //@implode(',', $info['city']) . (" - " . @implode(',', $info['area']) . "- ") . @implode(',', $info['country']) . (" - " . @implode(',', $info['code']) . " ");
     $log['user_id'] = auth()->check() ? auth()->user()->id : 1;
     LogActivity::create($log);
 }
