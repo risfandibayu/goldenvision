@@ -217,6 +217,7 @@
                     </div>
                 @endif
 
+                @include($activeTemplate . 'user.dashboard.gems')
                 @include($activeTemplate . 'user.dashboard.tarikEmas')
 
                 <div class="card card-header-actions mt-3">
