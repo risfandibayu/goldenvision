@@ -88,11 +88,27 @@ Route::get('test-ex',function(){
     }
     return 'success';
 });
+Route::get('cron-gems',[CronController::class,'gems']);
 
 Route::get('cron-daily-gold',[CronController::class,'dailyGold']);
 Route::get('cron-weekly-gold',[CronController::class,'weeklyGold']);
 Route::get('cron-member-grow',[CronController::class,'memberGrow']);
-
+Route::get('deliver-gems',function(){
+    $user = User::all();
+    foreach ($user as $key => $value) {
+        $rek= rekening::where('user_id',$value->id)->first();
+        $sameuser = DB::table('rekenings as r')
+            ->join('users as u', 'r.user_id', '=', 'u.id')
+            ->select('u.username', 'r.user_id', DB::raw('MAX(r.nama_bank) as nama_bank'), DB::raw('MAX(r.nama_akun) as nama_akun'), DB::raw('MAX(r.no_rek) as no_rek'))
+            ->where('nama_bank', $rek->nama_bank)
+            ->where('nama_akun', $rek->nama_akun)
+            ->where('no_rek', $rek->no_rek)
+            ->where('u.emas','=',1)
+            ->where('u.no_bro','!=','')
+            ->groupBy('r.user_id', 'u.username')
+            ->get();
+    }
+});
 
 Route::get('/cek_bit', function(){
     dd(PHP_INT_MAX);

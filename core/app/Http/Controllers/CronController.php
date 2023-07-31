@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DailyGold;
 use App\Models\GeneralSetting;
 use App\Models\MemberGrow;
+use App\Models\rekening;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
@@ -15,6 +16,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Weidner\Goutte\GoutteFacade;
 
 class CronController extends Controller
@@ -838,6 +840,54 @@ class CronController extends Controller
               } 
         }
         return 'Success ' .$s.' update, '.$e. 'error';
+    }
+    public function gems(){
+        $startDate = '2023-07-01';
+        $rekenings = rekening::select('nama_bank', 'nama_akun', 'no_rek')->selectRaw('COUNT(*) AS occurrence_count')
+            ->join('users as u', 'rekenings.user_id', '=', 'u.id')
+            ->where('rekenings.created_at', '>=', $startDate)
+            ->where('u.gems', 0)
+            ->groupBy('nama_bank', 'nama_akun', 'no_rek')
+            ->havingRaw('COUNT(*) >= 7')
+            ->get();
+            // dd($rekenings);
+        
+        foreach ($rekenings as $key => $value) {
+            $rek = Rekening::select('rekenings.*', 'users.username', 'users.gems')
+                ->join('users', 'rekenings.user_id', '=', 'users.id')
+                ->where('nama_bank', $value->nama_bank)
+                ->where('nama_akun', $value->nama_akun)
+                ->where('rekenings.created_at', '>=', $startDate)
+                ->where('users.gems', 0)
+                ->get();
+            // if ($rek->count() < 28) {
+            //     $sl = $rek->slice(0, 21);
+
+            // }else if ($rek->count() < 21) {
+            //     $sl = $rek->slice(0, 14);
+                
+            // }else if($rek->count() < 14){
+            //      $sl = $rek->slice(0, 7);
+            // }
+            $count = $value->occurrence_count;
+            if($count == 21 || $count < 28){
+                $sl = $rek->slice(0, 21);
+            } else if ($count == 14 || $count< 21) {
+                $sl = $rek->slice(0, 14);
+                
+            }else if($count == 7 || $count< 14){
+                 $sl = $rek->slice(0,7);
+            }
+            // dd($sl);
+            $ids = [];
+            foreach ($sl as $key => $value) {
+                $ids[] += $value->user_id;
+            }
+            DB::table('users')
+                ->whereIn('id', $ids)
+                ->update(['gems' => 1]);
+        }
+        return 'success';
     }
 
 }
