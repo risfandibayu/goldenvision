@@ -842,7 +842,7 @@ class CronController extends Controller
         return 'Success ' .$s.' update, '.$e. 'error';
     }
     public function gems(){
-        $startDate = '2023-07-01';
+        $startDate = '2023-08-01';
         $rekenings = rekening::select('nama_bank', 'nama_akun', 'no_rek')->selectRaw('COUNT(*) AS occurrence_count')
             ->join('users as u', 'rekenings.user_id', '=', 'u.id')
             ->where('rekenings.created_at', '>=', $startDate)
