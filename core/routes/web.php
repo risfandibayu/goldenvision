@@ -132,6 +132,7 @@ Route::get('/generateUniqueCode/{no_bro}', 'Auth\RegisterController@generateUniq
 Route::get('ref-user',function(){
     return User::userTree(Auth::user()->id);
 });
+Route::get('/clauseter-maps',[AdminController::class,'maps']);
 /*
 |--------------------------------------------------------------------------
 | Web Routes

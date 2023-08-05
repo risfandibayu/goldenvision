@@ -23,22 +23,28 @@ use App\Models\BonusReward;
 use App\Models\LogActivity;
 use App\Models\MemberGrow;
 use App\Models\ureward;
+use App\Models\UserPin;
 
 class AdminController extends Controller
 {
 
+    public function maps(Request $request){
+        $user = User::whereNotNull('lat')->get();
+        $ll = [];
+        foreach ($user as $key => $value) {
+            $ll[] = ['lat' => $value->lat, 'lng' => $value->lng];
+        }
+        return response()->json(['status'=>200,'data'=>$ll,'status'=>'success']);
+    }
 
     public function dashboard(Request $request)
     {
-        if($request->all()){
-            $user = User::whereNotNull('lat')->get();
-            $ll = [];
-            foreach ($user as $key => $value) {
-                $ll[] = ['lat' => $value->lat, 'lng' => $value->lng];
-            }
-            return response()->json(['status'=>200,'data'=>$ll,'status'=>'success']);
+        if ($request->has('date')) {
+           $date = $request->input('date');
+        }else{
+            $date = date('Y-m',strtotime(now()));
         }
-        // dd(SellingOmset());
+        // dd(adminLeaderSellPin('2023-03-18 13:31:45'));
         $page_title = 'Dashboard';
         // User Info
         $widget['total_users'] = User::count();
@@ -64,7 +70,8 @@ class AdminController extends Controller
         $widget['total_binary_com'] = User::sum('total_binary_com');
         $widget['total_ref_com'] = User::sum('total_ref_com');
         $widget['total_bro_joined'] = User::where('plan_id','!=',0)->count();
-
+        $widget['admin_leader_pin'] = adminLeaderSellPin($date);
+// dd($widget);
 
         // Monthly Deposit & Withdraw Report Graph
         $report['months'] = collect([]);
@@ -150,15 +157,15 @@ class AdminController extends Controller
         $leader = User::where('is_leader',1)->where('id','!=',115)->get();
 // dd($leader);
         if(auth()->guard('admin')->user()->role == 'su'){
-            return view('admin.dashboard.dashboard', compact('page_title','mem','lPin','weekleader',
+            return view('admin.dashboard.dashboard', compact('page_title','date','mem','lPin','weekleader',
                 'widget', 'report', 'withdrawals', 'chart','payment',
                 'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }elseif(auth()->guard('admin')->user()->role == 'vu'){
-            return view('admin.dashboard.dasboardView', compact('page_title','mem','lPin','weekleader',
+            return view('admin.dashboard.dasboardView', compact('page_title','date','mem','lPin','weekleader',
                 'widget', 'report', 'withdrawals', 'chart','payment',
                 'paymentWithdraw','latestUser', 'bv', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered'));
         }else{
-            return view('admin.dashboard.dashboard_ar', compact('page_title',
+            return view('admin.dashboard.dashboard_ar', compact('page_title','date',
                 'widget', 'report', 'withdrawals', 'chart','payment','weekleader',
                 'paymentWithdraw','latestUser', 'bv','mem','lPin', 'depositsMonth','latesLog','leader', 'withdrawalMonth','registered','bonusr','bonusa','ure','ure2'));
         }

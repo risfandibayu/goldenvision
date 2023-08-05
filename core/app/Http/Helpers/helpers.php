@@ -2547,6 +2547,58 @@ function totalMpProd(){
     return $userCount * 15000;
     
 }
+function totalBinnaryCom(){
+    return  User::sum('total_binary_com');
+}
+
+function totalGlobalPayout(){
+    $hp = rewardHp();
+    $ref = sumRefComm();
+    $gold = totalWdGold();
+    $bin = totalBinnaryCom();
+
+    $total = $hp + $ref + $gold + $bin;
+
+    return $total;
+
+}
+function adminLeaderSellPin($inputDate){
+    $results = DB::table('user_pin as p')
+        ->select(DB::raw('CASE 
+                            WHEN p.pin_by IS NULL THEN "admin"
+                            ELSE u.username
+                        END as username'), 
+                DB::raw('SUM(p.pin) as total_pin'),
+                DB::raw('CONCAT(CASE MONTH(p.created_at)
+                                WHEN 1 THEN "January"
+                                WHEN 2 THEN "February"
+                                WHEN 3 THEN "March"
+                                WHEN 4 THEN "April"
+                                WHEN 5 THEN "May"
+                                WHEN 6 THEN "June"
+                                WHEN 7 THEN "July"
+                                WHEN 8 THEN "August"
+                                WHEN 9 THEN "September"
+                                WHEN 10 THEN "October"
+                                WHEN 11 THEN "November"
+                                WHEN 12 THEN "December"
+                                ELSE ""
+                              END," ",YEAR(p.created_at) ) as month_year')
+                )
+        ->leftJoin('users as u', 'u.id', '=', 'p.pin_by')
+        ->where(function ($query) {
+            $query->whereNull('p.pin_by')
+                ->orWhere('p.pin_by', 1)
+                ->orWhere('p.pin_by', 442);
+        })
+        ->where('p.type', '+')
+        ->whereMonth('p.created_at', '=', date('m', strtotime($inputDate)))
+        ->whereYear('p.created_at', '=', date('Y', strtotime($inputDate)))
+        ->groupBy('username')
+        ->get();
+
+    return $results;
+}
 function totalColagenProd(){
     $userCount = User::whereNotNull('no_bro')->whereNotBetween('id', [16, 213])->count();
 

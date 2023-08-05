@@ -44,8 +44,51 @@
     @endif
 
     @include('admin.dashboard.cardInfo')
-
+    {{-- @dd($date) --}}
     <div class="row mb-none-30 mt-5">
+        <div class="col-xl-5 mb-30">
+            <div class="card ">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">@lang('Admin & Leader Sell Pin')</h6>
+                    <form action="">
+                        <div class="input-group">
+                            <input type="month" name="date" id="" class="form-control mr-2"
+                                value="{{ $date }}">
+                            <button class="btn btn-primary" type="submit">Check</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive--sm table-responsive">
+                        <table class="table table--light style--two">
+                            <thead>
+                                <tr>
+                                    <th scope="col">@lang('Username')</th>
+                                    <th scope="col">@lang('Total Pin')</th>
+                                    <th scope="col">@lang('Date')</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($widget['admin_leader_pin'] as $u)
+                                    {{-- @dd($u) --}}
+                                    <tr>
+                                        <td>{{ $u->username }}</td>
+                                        <td>{{ $u->total_pin }}</td>
+                                        <td>{{ $u->month_year }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-muted text-center" colspan="100%">@lang('Data Not Found')</td>
+                                    </tr>
+                                @endforelse
+
+                            </tbody>
+                        </table><!-- table end -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <div class="col-xl-7 mb-30">
             <div class="card">
                 <div class="card-body">
@@ -54,8 +97,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-5 mb-30">
 
+    </div>
+    <div class="row mb-none-30 mt-5">
+        <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
                     <h6 class="card-title mb-0">@lang('Last Log User')</h6>
@@ -418,7 +463,8 @@
 
     {{-- @dd($mem['series']) --}}
 
-    @include('admin.partials.matchingBonusModal')
+    {{-- @include('admin.partials.matchingBonusModal') --}}
+
 @endsection
 
 @push('breadcrumb-plugins')
@@ -443,7 +489,7 @@
         });
 
         $.ajax({
-            url: "{{ url('/admin/dashboard') }}",
+            url: "{{ url('clauseter-maps') }}",
             cache: false,
             success: function(res) {
                 $.each(res.data, function(key, val) {
