@@ -190,7 +190,6 @@
                                 <div style="display: table-cell; vertical-align: middle;">
 
                                 </div>
-
                             </div>
                         </div>
                     </div>

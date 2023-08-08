@@ -72,8 +72,8 @@ function title(){
     $user = Auth::user();
     $kiri = $user->userExtra->left;
     $kanan = $user->userExtra->right;
-    $master_gold = 100;
-    $grand_master = 1000;
+    $master_gold = 103;
+    $grand_master = 1003;
     if($kiri >= $master_gold && $kanan >= $master_gold){
         return 'masterGold';
     }elseif($kiri >= $grand_master && $kanan >= $grand_master){
