@@ -6,6 +6,7 @@ use App\Models\DailyGold;
 use App\Models\GeneralSetting;
 use App\Models\MemberGrow;
 use App\Models\rekening;
+use App\Models\SilverCheck;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
@@ -769,16 +770,61 @@ class CronController extends Controller
             'user'  => $userData,
         ];
     }
+    public function sendMessege($msg){
+        $data = [
+            'api_key' => env('WA_API_KEY'), // isi api key di menu profile -> setting
+            'sender' => env('WA_SENDER'), // isi no device yang telah di scan
+            'number' => env('WA_NUMBER'), // isi no pengirim
+            'message' => $msg // isi pesan
+        ];
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://wa.srv5.wapanels.com/send-message',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        return response()->json($response); 
+    }
+
     public function isSilverCheck(){
+
         $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',0)->get();
         $userData = [];
-
+        // dd($silver);
         foreach ($users as $key => $value) {
             $userID = $value->user_id;
             $userRef = User::where('ref_id',$userID)->get();
             $count = $userRef->count();
             // dd($userRef);
             if($count >= 6){
+                // check in database.
+                $silver = SilverCheck::where('user_id',$userID)->first();
+                if(!$silver){
+                    // simpan ke db
+                    SilverCheck::create([
+                        'user_id' => $userID,
+                        'username' => $value->username,
+                        'count'     => $count
+                    ]);
+                    //send message
+                    $msg = "New is-gold need to check: " . PHP_EOL . "id : $userID" . PHP_EOL . "username : $value->username" . PHP_EOL . "count : $count";
+                    $this->sendMessege($msg);
+                }
                 $userData[] = [ 
                     'user' => [
                         'id' => $userID,
@@ -786,13 +832,40 @@ class CronController extends Controller
                         'count'     => $count
                     ],
                 ];
-                $extra = UserExtra::where('user_id',$userID)->update(['is_gold'=>0,'bonus_deliver'=>0]);
+                
             }
         }
         return [
             'status'=>'success',
             'user'  => $userData,
         ];
+    }
+    public function isSilverCron(){
+        $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',0)->get();
+        $userData = [];
+        // dd($silver);
+        foreach ($users as $key => $value) {
+            $userID = $value->user_id;
+            $userRef = User::where('ref_id',$userID)->get();
+            $count = $userRef->count();
+            // dd($userRef);
+            if($count >= 6){
+                // check in database.
+                $silver = SilverCheck::where('user_id',$userID)->first();
+                if(!$silver){
+                    // simpan ke db
+                    SilverCheck::create([
+                        'user_id' => $userID,
+                        'username' => $value->username,
+                        'count'     => $count
+                    ]);
+                    //send message
+                    $msg = "New is-gold need to check: " . PHP_EOL . "id : $userID" . PHP_EOL . "username : $value->username" . PHP_EOL . "count : $count";
+                    $this->sendMessege($msg);
+                }
+            }
+        }
+        return ['sts'=>200,'msg'=>'ok'];
     }
 
      public function dailyGold(){
