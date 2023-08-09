@@ -2563,8 +2563,7 @@ function totalGlobalPayout(){
 
 }
 function adminLeaderSellPin($inputDate){
-    $result = [];
-    $admin = DB::table('user_pin as p')
+    $results= DB::table('user_pin as p')
         ->select(DB::raw('CASE 
                             WHEN p.pin_by IS NULL THEN "admin"
                             ELSE u.username
