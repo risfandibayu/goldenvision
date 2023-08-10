@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RekeningController;
 use App\Models\brodev;
 use App\Models\BvLog;
 use App\Models\EmailTemplate;
@@ -3069,5 +3070,25 @@ function emas25(){
         }
     }else{
         return ['userId'=>[],'gold'=>0,'same'=>$countUser,'sisa'=>0,'totuser'=>0,'id'=>$user->id,'status'=>0];
+    }
+}
+
+function checkGems(){
+    $rek = rekening::where('user_id',auth()->user()->id)->first();
+    $checksame = rekening::where('nama_bank', $rek->nama_bank)
+                ->where('nama_akun', $rek->nama_akun)
+                ->where('no_rek', $rek->no_rek)
+                ->get();
+    $group = [];
+    foreach ($checksame as $key => $value) {
+        $group[] += $value->user_id; 
+    }
+    $gems = User::whereIn('id',$group)
+            ->where('gems',1)
+            ->get();
+    if ($gems->count() >= 7) {
+      return true;
+    }else{
+        return false;
     }
 }

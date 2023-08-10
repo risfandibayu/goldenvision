@@ -83,7 +83,7 @@ class UserController extends Controller
 
     public function home()
     {
-        // dd(emas25());
+        // dd(checkGems());
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
         $data['totalWithdraw']      = Withdrawal::where('user_id', auth()->id())->where('status', 1)->sum('amount');

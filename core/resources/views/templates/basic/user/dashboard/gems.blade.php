@@ -32,7 +32,7 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 </style>
-@if (auth()->user()->gems)
+@if (checkGems())
     <div class="mb-3 d-flex justify-content-center shing">
         <div class="card b-radius--10 3 d-flex justify-content-center mb-3" style=" width: 300px; height: 200px;">
             <div class="card-body cardGems">
