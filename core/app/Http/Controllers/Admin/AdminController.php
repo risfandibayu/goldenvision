@@ -39,6 +39,7 @@ class AdminController extends Controller
 
     public function dashboard(Request $request)
     {
+        // dd(sharingProfit());
         if ($request->has('date')) {
            $date = $request->input('date');
         }else{

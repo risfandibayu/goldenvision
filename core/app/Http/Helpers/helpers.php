@@ -2557,8 +2557,8 @@ function totalGlobalPayout(){
     $ref = sumRefComm();
     $gold = totalWdGold();
     $bin = totalBinnaryCom();
-
-    $total = $hp + $ref + $gold + $bin;
+    $shring = sharingProfit();
+    $total = $hp + $ref + $gold + $bin + $shring;
 
     return $total;
 
@@ -3091,4 +3091,9 @@ function checkGems(){
     }else{
         return false;
     }
+}
+function sharingProfit(){
+    $chek = Transaction::where('remark','profit_sharing')
+            ->sum('amount');
+    return $chek;
 }

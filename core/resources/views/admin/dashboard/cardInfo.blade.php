@@ -204,24 +204,22 @@
         </div> --}}
 
 
-    {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
-            <div class="dashboard-w1 bg--3 b-radius--10 box-shadow">
-                <div class="icon">
-                    <i class="las la-hand-holding-usd"></i>
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="dashboard-w1 bg--3 b-radius--10 box-shadow">
+            <div class="icon">
+                <i class="las la-hand-holding-usd"></i>
+            </div>
+            <div class="details">
+                <div class="numbers">
+                    <span class="currency-sign">{{ $general->cur_sym }}</span>
+                    <span class="amount">{{ nb(sharingProfit()) }}</span>
                 </div>
-                <div class="details">
-                    <div class="numbers">
-                        <span class="currency-sign">{{$general->cur_sym}}</span>
-                        <span class="amount">{{getAmount($widget['total_ref_com'])}}</span>
-                    </div>
-                    <div class="desciption">
-                        <span class="text--small">@lang('Total Referral Commission')</span>
-                    </div>
-                    <a href="{{route('admin.report.refCom')}}"
-                       class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('Lihat Semua')</a>
+                <div class="desciption">
+                    <span class="text--small">@lang('Total Sharing Profit')</span>
                 </div>
             </div>
-        </div> --}}
+        </div>
+    </div>
 
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
         <div class="dashboard-w1 bg--17 b-radius--10 box-shadow">
@@ -237,8 +235,8 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Komisi Binary')</span>
                 </div>
-                <a href="{{ route('admin.report.binaryCom') }}"
-                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('Lihat Semua')</a>
+                {{-- <a href="{{ route('admin.report.binaryCom') }}"
+                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('Lihat Semua')</a> --}}
             </div>
         </div>
     </div>
