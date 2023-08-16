@@ -31,6 +31,7 @@ class ArchivementController extends Controller
         return view($this->activeTemplate . 'user.archivement', $data);
     }
     public function tarikEmasPost(Request $request){
+        if($gram = emas25()['gold'])
         $user = Auth::user();
         $gold = DailyGold::orderByDesc('id')->first();  
         $goldToday = $gold->per_gram - ($gold->per_gram*8/100); //gold per gram today - 8%
@@ -39,6 +40,10 @@ class ArchivementController extends Controller
         $total = round($goldToday * $gram);
         $platformFee = 0.05 * $total;
         $totalFee =round($total-$platformFee);
+        if($totalFee <= 0){
+            $notify[] = ['error', 'Belum Qualified untuk tarik emas'];
+            return back()->withNotify($notify);
+        }
         DB::beginTransaction();
         try {
             $id = emas25()['userId'];
