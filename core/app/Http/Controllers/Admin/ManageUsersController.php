@@ -227,6 +227,14 @@ class ManageUsersController extends Controller
         return view('admin.users.detail', compact('page_title','ref_id','user','totalDeposit',
             'totalWithdraw','totalTransaction',  'totalBvCut','emas','bank','provinsi'));
     }
+    public function BalanceLog($id){
+        $user = User::find($id);
+        $data['page_title'] = 'Transaction Log';
+        $data['transactions'] = $user->transactions()->latest()->paginate(getPaginate());
+        $data['search'] = '';
+        $data['empty_message'] = 'No transactions.';
+        return view($this->activeTemplate . 'user.transactions', $data);
+    }
     public function detailFind(Request $request){
         // dd($request->all());
         $user = User::where('username','=',$request->search)->first();

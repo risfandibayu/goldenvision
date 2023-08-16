@@ -3075,6 +3075,7 @@ function emas25(){
 
 function checkGems(){
     $rek = rekening::where('user_id',auth()->user()->id)->first();
+    
     $checksame = rekening::where('nama_bank', $rek->nama_bank)
                 ->where('nama_akun', $rek->nama_akun)
                 ->where('no_rek', $rek->no_rek)
