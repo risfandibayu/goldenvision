@@ -73,15 +73,18 @@
                                          <td>User Kurang</td>
                                          <td>{{ emas25()['minus'] }}</td>
                                      </tr>
-                                     <tr>
+                                     {{-- <tr>
                                          <td>Include ID</td>
-                                         <td>[
+                                         <td>
+                                            
+                                            
+                                            [
                                              @foreach (emas25()['userId'] as $id)
                                                  {{ $id . ',' }}
                                              @endforeach
                                              ]
                                          </td>
-                                     </tr>
+                                     </tr> --}}
                                  @endif
                              </tbody>
                          </table>
