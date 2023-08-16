@@ -5,13 +5,12 @@
                  {{ goldNum() }}
              </div>
          </div>
-         @if (emas25()['status'])
-             <div class="card-footer">
-                 <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#tarikEmas">
-                     <i class="menu-icon las la-wallet"></i> Tarik
-                     Emas</button>
-             </div>
-         @endif
+
+         <div class="card-footer">
+             <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#tarikEmas">
+                 <i class="menu-icon las la-wallet"></i> Tarik
+                 Emas</button>
+         </div>
      </div>
  @endif
  <div class="modal fade" id="tarikEmas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -69,17 +68,19 @@
                              </tr>
                          </table>
                      </div>
-                     <div class="row mt-4">
-                         <div class="col-12 text-sm-center">
-                             <input type="hidden" name="total"
-                                 value="{{ $goldBonus * emas25()['gold'] - $goldBonus * emas25()['gold'] * 0.05 }}">
-                             <button type="submit" class="btn btn-warning btn-block">Transfer to
-                                 Balance
-                                 Rp
-                                 {{ nb($goldBonus * emas25()['gold'] - $goldBonus * emas25()['gold'] * 0.05) }}
-                                 <i class="me-2 fas fa-arrow-right"></i></button>
+                     @if (emas25()['status'])
+                         <div class="row mt-4">
+                             <div class="col-12 text-sm-center">
+                                 <input type="hidden" name="total"
+                                     value="{{ $goldBonus * emas25()['gold'] - $goldBonus * emas25()['gold'] * 0.05 }}">
+                                 <button type="submit" class="btn btn-warning btn-block">Transfer to
+                                     Balance
+                                     Rp
+                                     {{ nb($goldBonus * emas25()['gold'] - $goldBonus * emas25()['gold'] * 0.05) }}
+                                     <i class="me-2 fas fa-arrow-right"></i></button>
+                             </div>
                          </div>
-                     </div>
+                     @endif
                  </form>
              </div>
          </div>
