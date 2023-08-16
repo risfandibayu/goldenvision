@@ -31,41 +31,50 @@
                                  <td>Total User</td>
                                  <td>{{ emas25()['same'] }}</td>
                              </tr>
-                             <tr>
-                                 <td>Total User WD</td>
-                                 <td>{{ emas25()['totuser'] }}</td>
-                             </tr>
-                             <tr>
-                                 <td>User Staging</td>
-                                 <td>{{ emas25()['sisa'] }}</td>
-                             </tr>
-                             <tr>
-                                 <td>Emas /gr</td>
-                                 <td>Rp {{ nb($goldBonus) }}</td>
-                             </tr>
-                             <tr>
-                                 <td>Total Gold</td>
-                                 <td>{{ emas25()['gold'] . ' gr' }}</td>
-                             </tr>
+                             @if (emas25()['status'])
+                                 <tr>
+                                     <td>Total User WD</td>
+                                     <td>{{ emas25()['totuser'] }}</td>
+                                 </tr>
+                                 <tr>
+                                     <td>User Staging</td>
+                                     <td>{{ emas25()['sisa'] }}</td>
+                                 </tr>
+                                 <tr>
+                                     <td>Emas /gr</td>
+                                     <td>Rp {{ nb($goldBonus) }}</td>
+                                 </tr>
+                                 <tr>
+                                     <td>Total Gold</td>
+                                     <td>{{ emas25()['gold'] . ' gr' }}</td>
+                                 </tr>
 
 
-                             <tr>
-                                 <td colspan="2">----------------------------------------------------</td>
-                             </tr>
-                             <tr>
-                                 <td>Harga Total</td>
-                                 <td>Rp {{ nb($goldBonus * emas25()['gold']) }}</td>
-                             </tr>
-                             <tr>
-                                 <td>Platform Fee (5%)</td>
-                                 <td>Rp {{ nb(($goldBonus * emas25()['gold'] * 5) / 100) }}</td>
-                             </tr>
-                             <tr>
-                                 <th>Total</th>
-                                 <th>
-                                     {{ nb($goldBonus * emas25()['gold'] - $goldBonus * emas25()['gold'] * 0.05) }}
-                                 </th>
-                             </tr>
+                                 <tr>
+                                     <td colspan="2">----------------------------------------------------</td>
+                                 </tr>
+                                 <tr>
+                                     <td>Harga Total</td>
+                                     <td>Rp {{ nb($goldBonus * emas25()['gold']) }}</td>
+                                 </tr>
+                                 <tr>
+                                     <td>Platform Fee (5%)</td>
+                                     <td>Rp {{ nb(($goldBonus * emas25()['gold'] * 5) / 100) }}</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Total</th>
+                                     <th>
+                                         {{ nb($goldBonus * emas25()['gold'] - $goldBonus * emas25()['gold'] * 0.05) }}
+                                     </th>
+                                 </tr>
+                             @else
+                                 <tr>
+                                     <td>User Kurang</td>
+                                     <td>{{ emas25()['minus'] }}</td>
+                                 </tr>
+                             @endif
+
+
                          </table>
                      </div>
                      @if (emas25()['status'])

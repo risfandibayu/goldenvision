@@ -3069,7 +3069,10 @@ function emas25(){
             return ['userId'=>$id,'gold'=>$jmlGrmEmas,'same'=>$countUser, 'totuser'=>$includeUser,'sisa'=>$sisaUser,'id'=>$user->id,'status'=>1];
         }
     }else{
-        return ['userId'=>[],'gold'=>0,'same'=>$countUser,'sisa'=>0,'totuser'=>0,'id'=>$user->id,'status'=>0];
+        foreach ($sameuser as $key => $value) {
+            $id[] += $value->user_id;
+        }
+        return ['userId'=>$id,'gold'=>0,'same'=>$countUser,'sisa'=>0,'totuser'=>$countUser,'minus' => $countUser, 'id'=>$user->id,'status'=>0];
     }
 }
 
