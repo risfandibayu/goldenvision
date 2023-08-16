@@ -27,12 +27,13 @@
                      @csrf
                      <div class="container col-md-12">
                          <table class="table table-borderless">
-                             <tbody>
-                                 <tr>
-                                     <td>Total User</td>
-                                     <td>{{ emas25()['same'] }}</td>
-                                 </tr>
-                                 @if (emas25()['status'])
+
+                             @if (emas25()['status'])
+                                 <tbody>
+                                     <tr>
+                                         <td>Total User</td>
+                                         <td>{{ emas25()['same'] }}</td>
+                                     </tr>
                                      <tr>
                                          <td>Total User WD</td>
                                          <td>{{ emas25()['totuser'] }}</td>
@@ -49,11 +50,8 @@
                                          <td>Total Gold</td>
                                          <td>{{ emas25()['gold'] . ' gr' }}</td>
                                      </tr>
-
-
-                                     <tr>
-                                         <td colspan="2">----------------------------------------------------</td>
-                                     </tr>
+                                 </tbody>
+                                 <tfoot>
                                      <tr>
                                          <td>Harga Total</td>
                                          <td>Rp {{ nb($goldBonus * emas25()['gold']) }}</td>
@@ -68,12 +66,19 @@
                                              {{ nb($goldBonus * emas25()['gold'] - $goldBonus * emas25()['gold'] * 0.05) }}
                                          </th>
                                      </tr>
-                                 @else
+                                 </tfoot>
+                             @else
+                                 <tbody>
+                                     <tr>
+                                         <td>Total User</td>
+                                         <td>{{ emas25()['same'] }}</td>
+                                     </tr>
                                      <tr>
                                          <td>User Kurang</td>
                                          <td>{{ emas25()['minus'] }}</td>
                                      </tr>
-                                     {{-- <tr>
+                                 </tbody>
+                                 {{-- <tr>
                                          <td>Include ID</td>
                                          <td>
                                             
@@ -85,8 +90,8 @@
                                              ]
                                          </td>
                                      </tr> --}}
-                                 @endif
-                             </tbody>
+                             @endif
+
                          </table>
                      </div>
                      @if (emas25()['status'])
