@@ -3072,7 +3072,7 @@ function emas25(){
         foreach ($sameuser as $key => $value) {
             $id[] += $value->user_id;
         }
-        return ['userId'=>$id,'gold'=>0,'same'=>$countUser,'sisa'=>0,'totuser'=>$countUser,'minus' => $countUser, 'id'=>$user->id,'status'=>0];
+        return ['userId'=>$id,'gold'=>0,'same'=>$countUser,'sisa'=>0,'totuser'=>$countUser,'minus' => 40-$countUser, 'id'=>$user->id,'status'=>0];
     }
 }
 
