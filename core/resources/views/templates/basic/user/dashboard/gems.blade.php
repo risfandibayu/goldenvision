@@ -51,7 +51,7 @@
                     </form>
                 @else
                     <form action="{{ route('user.register.ayamku') }}" method="post">
-
+                        @csrf
                         <button class="btn btn-warning btn-block" type="submit">
                             <i class="menu-icon las la-sign-in-alt"></i> Buat Akun & Convert Gems</button>
                     </form>
