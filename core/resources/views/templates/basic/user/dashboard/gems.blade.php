@@ -44,6 +44,7 @@
             <div class="card-footer">
                 @if (auth()->user()->xgems)
                     <form action="{{ env('AYAMKU_URL') . 'register-post-masterplan' }}" method="post" target="_blank">
+                        @csrf
                         <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
                         <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
                         <button class="btn btn-warning btn-block" type="submit">
