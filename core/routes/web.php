@@ -583,7 +583,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
         Route::middleware(['checkStatus'])->group(function () {
             Route::post('register-ayam','UserController@ayamkuRegister')->name('register.ayamku');
-            Route::post('login-ayam','UserController@ayamkuLogin')->name('login.ayamku');
+            Route::get('login-ayam','UserController@ayamkuLogin')->name('login.ayamku');
 
             Route::get('dashboard', 'UserController@home')->name('home');
             Route::get('referals', 'UserController@ref')->name('ref.tree');

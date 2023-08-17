@@ -38,18 +38,21 @@
             <div class="card-body cardGems">
                 <div class="text-view-info shadow-text">
                     <h4 class="bold-text text-light">Ayamku.</h4>
-                    <h1 class="display-5 text-light bold-text"> {{ auth()->user()->xgems ? '0' : '350.000' }}GEMS</h1>
+                    <h1 class="display-5 text-light bold-text"> {{ auth()->user()->xgems ? '0' : '350.000' }} GEMS</h1>
                 </div>
             </div>
             <div class="card-footer">
                 @if (auth()->user()->xgems)
-                    <form action="{{ env('AYAMKU_URL') . 'register-post-masterplan' }}" method="post" target="_blank">
-                        @csrf
-                        <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
+                    <form action="{{ route('user.login.ayamku') }}" method="get" target="_blank">
                         <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
                         <button class="btn btn-warning btn-block" type="submit">
                             <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
                     </form>
+                    {{-- <form action="{{ 'http://xgems.ai' }}" method="get" target="_blank">
+                        <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
+                        <button class="btn btn-warning btn-block" type="submit">
+                            <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
+                    </form> --}}
                 @elseif(!auth()->user()->xgems && checkxgems())
                     <form action="{{ route('user.register.ayamku') }}" method="post">
                         @csrf

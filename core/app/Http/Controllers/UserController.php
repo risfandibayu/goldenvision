@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Image;
 use Validator;
@@ -2162,16 +2163,19 @@ class UserController extends Controller
     
     }
     public function ayamkuLogin(Request $request){
+
         $user = Auth::user();
-        $apiEndpoint = env('AYAMKU_URL').'login-post-masterplan';
+        $apiEndpoint = env('AYAMKU_URL').'api/v1/login-masterplan';
         $postData = [
-            'username'  => $user->username,
-            'password'  => $user->password
+            'username'  => $user->username
         ];
         $response = Http::post($apiEndpoint, $postData);
         $res = json_decode($response->body(),true);
+        dd($res);
         if($res['status']==200){
-            return Redirect::to($res['url']);
+            $cookieValue = 'your_cookie_value';
+            $cookie = Cookie::make('user', $cookieValue, 1440); 
+            return Redirect::to('http://xgems.ai');
         }
     }
 }
