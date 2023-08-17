@@ -2171,9 +2171,8 @@ class UserController extends Controller
         ];
         $response = Http::post($apiEndpoint, $postData);
         $res = json_decode($response->body(),true);
-        dd($res);
         if($res['status']==200){
-            $cookieValue = 'your_cookie_value';
+            $cookieValue = $res['token'];
             $cookie = Cookie::make('user', $cookieValue, 1440); 
             return Redirect::to('http://xgems.ai');
         }
