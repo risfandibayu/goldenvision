@@ -3116,15 +3116,41 @@ function checkxgems(){
             ->where('gems',1)
             ->get();
     $xgems = User::whereIn('id',$group)
-            ->where('gems',1)
+            ->where('xgems',1)
             ->get();
-    if ($xgems->count() < 8) {
+    if ($xgems->count() <=1) {
       return true;
     }elseif (auth()->user()->username=="masterplan16") {
        return true;
     }else{
         return false;
     }
+}
+function tarikGems(){
+    $rek = rekening::where('user_id',auth()->user()->id)->first();
+    
+    $checksame = rekening::where('nama_bank', $rek->nama_bank)
+                ->where('nama_akun', $rek->nama_akun)
+                ->where('no_rek', $rek->no_rek)
+                ->get();
+    $group = [];
+    $groupID = [];
+    foreach ($checksame as $key => $value) {
+        $group[] += $value->user_id; 
+    }
+
+    $gems = User::whereIn('id',$group)
+            ->where('gems',1)
+            ->get();
+    foreach ($gems as $key => $id) {
+        $groupID[] += $id->id; 
+    }
+    $count = $gems->count(); //7
+    $hasil = floor($count / 7); //1
+    $totgems = ($count * $hasil) * 350000; //
+    $bonus = $totgems * 42/100;
+    $deliver = $totgems + $bonus;
+    return ['gems' => $deliver,'id'=>$groupID];
 }
 
 function sharingProfit(){

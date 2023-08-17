@@ -32,13 +32,14 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 </style>
-@if (checkGems())
+@if (checkGems() || auth()->user()->xgems)
     <div class="mb-3 d-flex justify-content-center shing">
         <div class="card b-radius--10 3 d-flex justify-content-center mb-3">
             <div class="card-body cardGems">
                 <div class="text-view-info shadow-text">
                     <h4 class="bold-text text-light">Ayamku.</h4>
-                    <h1 class="display-5 text-light bold-text"> {{ auth()->user()->xgems ? '0' : '350.000' }} GEMS</h1>
+                    <h2 class=" text-light bold-text"> {{ auth()->user()->xgems ? '0' : nb(tarikGems()['gems']) }} GEMS
+                    </h2>
                 </div>
             </div>
             <div class="card-footer">

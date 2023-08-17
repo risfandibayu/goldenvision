@@ -2136,12 +2136,14 @@ class UserController extends Controller
 
     public function ayamkuRegister(Request $request){
         $user = Auth::user();
+        $groupId = tarikGems()['id'];
+        // dd($groupId);
         $apiEndpoint = env('AYAMKU_URL').'api/v1/register-masterplan';
         $postData = [
             'username'  => $user->username,
             'phone'     => $user->mobile,
             'email'     => $user->email,
-            'gems'      => 350000,
+            'gems'      => tarikGems()['gems'],
             'password'  => $user->password
         ];
 
@@ -2152,10 +2154,16 @@ class UserController extends Controller
             $notify[] = ['error','Ayamku: '. $res['message']];
             return back()->withNotify($notify);
         }elseif($res['status']==200){
+            //akun xgems
             $user->xgems = 1;
             $user->save();
-            
+
+            //tarik gems
+            DB::table('users')
+                ->whereIn('id', $groupId)
+                ->update(['gems' => 0]);
             //login
+
             $notify[] = ['success','Ayamku: '. $res['message']];
             return back()->withNotify($notify);
         }
