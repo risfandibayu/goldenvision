@@ -34,18 +34,29 @@
 </style>
 @if (checkGems())
     <div class="mb-3 d-flex justify-content-center shing">
-        <div class="card b-radius--10 3 d-flex justify-content-center mb-3" style=" width: 300px; height: 200px;">
+        <div class="card b-radius--10 3 d-flex justify-content-center mb-3">
             <div class="card-body cardGems">
                 <div class="text-view-info shadow-text">
                     <h4 class="bold-text text-light">Ayamku.</h4>
                     <h1 class="display-5 text-light bold-text">350.000 GEMS</h1>
                 </div>
             </div>
-            {{-- <div class="card-footer">
-            <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#tarikEmas">
-                <i class="menu-icon las la-wallet"></i> Tarik
-                Emas</button>
-        </div> --}}
+            <div class="card-footer">
+                @if (auth()->user()->xgems)
+                    <form action="{{ env('AYAMKU_URL') . 'register-post-masterplan' }}" method="post" target="_blank">
+                        <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
+                        <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
+                        <button class="btn btn-warning btn-block" type="submit">
+                            <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
+                    </form>
+                @else
+                    <form action="{{ route('user.register.ayamku') }}" method="post">
+
+                        <button class="btn btn-warning btn-block" type="submit">
+                            <i class="menu-icon las la-sign-in-alt"></i> Buat Akun & Convert Gems</button>
+                    </form>
+                @endif
+            </div>
         </div>
     </div>
 @endif

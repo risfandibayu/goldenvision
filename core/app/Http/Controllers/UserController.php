@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Hash;
 use Image;
 use Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 
@@ -2132,7 +2133,45 @@ class UserController extends Controller
         
     }
 
-    public function WDEmas(){
+    public function ayamkuRegister(Request $request){
+        $user = Auth::user();
+        $apiEndpoint = env('AYAMKU_URL').'api/v1/register-masterplan';
+        $postData = [
+            'username'  => $user->username,
+            'phone'     => $user->mobile,
+            'email'     => $user->email,
+            'gems'      => 350000,
+            'password'  => $user->password
+        ];
 
+        $response = Http::post($apiEndpoint, $postData);
+        $res = json_decode($response->body(),true);
+        // if($re)
+        if($res['status']==401){
+            $notify[] = ['error','Ayamku: '. $res['message']];
+            return back()->withNotify($notify);
+        }elseif($res['status']==200){
+            $user->xgems = 1;
+            $user->save();
+            
+            //login
+            $notify[] = ['success','Ayamku: '. $res['message']];
+            return back()->withNotify($notify);
+        }
+        dd($res);    
+    
+    }
+    public function ayamkuLogin(Request $request){
+        $user = Auth::user();
+        $apiEndpoint = env('AYAMKU_URL').'login-post-masterplan';
+        $postData = [
+            'username'  => $user->username,
+            'password'  => $user->password
+        ];
+        $response = Http::post($apiEndpoint, $postData);
+        $res = json_decode($response->body(),true);
+        if($res['status']==200){
+            return Redirect::to($res['url']);
+        }
     }
 }
