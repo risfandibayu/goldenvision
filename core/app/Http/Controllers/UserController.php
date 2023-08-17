@@ -2175,7 +2175,7 @@ class UserController extends Controller
         $user = Auth::user();
         $apiEndpoint = env('AYAMKU_URL').'api/v1/login-masterplan';
         $postData = [
-            'username'  => $user->username
+            'username'  => $request->username
         ];
         $response = Http::post($apiEndpoint, $postData);
         $res = json_decode($response->body(),true);
