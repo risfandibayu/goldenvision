@@ -2183,6 +2183,10 @@ class UserController extends Controller
             $cookieValue = $res['token'];
             $cookie = Cookie::make('user', $cookieValue, 1440); 
             return Redirect::to('http://xgems.ai?id='.$res['token']);
+        }else{
+            $msg = $res['message'];
+            $notify[] = ['error', $msg];
+            return back()->withNotify($notify);
         }
     }
 }
