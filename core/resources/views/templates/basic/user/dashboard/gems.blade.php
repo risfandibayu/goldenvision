@@ -38,7 +38,7 @@
             <div class="card-body cardGems">
                 <div class="text-view-info shadow-text">
                     <h4 class="bold-text text-light">Ayamku.</h4>
-                    <h1 class="display-5 text-light bold-text">350.000 GEMS</h1>
+                    <h1 class="display-5 text-light bold-text"> {{ auth()->user()->xgems ? '0' : '350.000' }}GEMS</h1>
                 </div>
             </div>
             <div class="card-footer">
@@ -49,7 +49,7 @@
                         <button class="btn btn-warning btn-block" type="submit">
                             <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
                     </form>
-                @else
+                @elseif(!auth()->user()->xgems && checkxgems())
                     <form action="{{ route('user.register.ayamku') }}" method="post">
                         @csrf
                         <button class="btn btn-warning btn-block" type="submit">
