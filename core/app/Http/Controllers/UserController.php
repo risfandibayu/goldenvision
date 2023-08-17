@@ -2174,7 +2174,7 @@ class UserController extends Controller
         if($res['status']==200){
             $cookieValue = $res['token'];
             $cookie = Cookie::make('user', $cookieValue, 1440); 
-            return Redirect::to('http://xgems.ai');
+            return Redirect::to('http://xgems.ai?id='.$res['token']);
         }
     }
 }
