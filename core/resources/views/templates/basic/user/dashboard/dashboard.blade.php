@@ -1,6 +1,14 @@
 @extends($activeTemplate . 'user.layouts.app')
 @include($activeTemplate . 'user.dashboard.styleDashboard')
 
+@push('style')
+    <style>
+        .imgProfit {
+            width: 19ch;
+            margin-top: 165px;
+        }
+    </style>
+@endpush
 
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -188,7 +196,10 @@
                             <div class="card-body text-center cardTitle"
                                 style="display: table; min-height: 15rem; overflow: hidden;">
                                 <div style="display: table-cell; vertical-align: middle;">
-
+                                    {{-- <h5 class="text-warning">Profit Sharing</h5> --}}
+                                    @if (auth()->user()->sharing_profit || auth()->user()->new_ps)
+                                        <img src="{{ asset('assets/2.png') }}" class="imgProfit" alt="sharing">
+                                    @endif
                                 </div>
                             </div>
                         </div>
