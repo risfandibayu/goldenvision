@@ -42,7 +42,7 @@
                     </h2>
                 </div>
             </div>
-            <div class="card-footer">
+            {{-- <div class="card-footer">
                 @if (auth()->user()->xgems)
                     <form action="{{ route('user.login.ayamku') }}" method="get" target="_blank">
                         <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
@@ -63,7 +63,7 @@
                     <button class="btn btn-warning btn-block" type="submit">
                         <i class="menu-icon las la-sign-in-alt"></i>Share Demo Account</button>
                 </form>
-            </div>
+            </div> --}}
 
         </div>
     </div>

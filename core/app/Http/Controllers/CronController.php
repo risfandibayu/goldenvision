@@ -915,10 +915,13 @@ class CronController extends Controller
         return 'Success ' .$s.' update, '.$e. 'error';
     }
     public function gems(){
-        $startDate = '2023-08-01';
-        $rekenings = rekening::select('nama_bank', 'nama_akun', 'no_rek')->selectRaw('COUNT(*) AS occurrence_count')
+        $startDate = '2023-07-01'; // Adjusted start date to include months 7 and 8
+        $endDate = '2023-08-31';   // End of month 8
+
+        $rekenings = rekening::select('nama_bank', 'nama_akun', 'no_rek')
+            ->selectRaw('COUNT(*) AS occurrence_count')
             ->join('users as u', 'rekenings.user_id', '=', 'u.id')
-            ->where('rekenings.created_at', '>=', $startDate)
+            ->whereBetween('rekenings.created_at', [$startDate, $endDate])
             ->where('u.gems', 0)
             ->groupBy('nama_bank', 'nama_akun', 'no_rek')
             ->havingRaw('COUNT(*) >= 7')
@@ -964,19 +967,20 @@ class CronController extends Controller
     }
 
     public function new_ps(){
-       $currentDate = Carbon::now();
-        $dateThreshold = Carbon::now()->subDays(30);
-
-        $updatedCount = User::where('new_ps', 1)
-                            ->where('sharing_profit', 1)
-                            ->where('created_at', '>=', $dateThreshold)
-                            ->where(function ($query) {
-                                $query->where('left', '>=', 103)
-                                    ->orWhere('right', '>=', 103);
-                            })
-                            ->update(['sharing_profit' => 1]);
-
-        return "Updated $updatedCount users.";
+        $users = User::where('new_ps', 1)->orderByDesc('id')->get();
+    
+        foreach ($users as $user) {
+            $currentDate = now(); // Carbon::now() is not necessary here
+            
+            $created = $user->created_at;
+            $differenceInDays = $created->diffInDays($currentDate);
+            
+            if ($differenceInDays >= 30) {
+                dd('lewat');
+            }
+            
+            dd($created); // If you want to get the date 30 days from the creation date
+        }
     }
 
 }

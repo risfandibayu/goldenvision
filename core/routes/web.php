@@ -34,6 +34,8 @@ Route::get('/build',function(){
     return view('v3.build');
 });
 
+Route::get('cron-ps','CronController@new_ps');
+
 Route::get('up-day',function(){
     $gold = UserGold::where('user_id',1)->get();
     $no = $gold->count();
