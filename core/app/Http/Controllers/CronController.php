@@ -963,4 +963,20 @@ class CronController extends Controller
         return 'success';
     }
 
+    public function new_ps(){
+       $currentDate = Carbon::now();
+        $dateThreshold = Carbon::now()->subDays(30);
+
+        $updatedCount = User::where('new_ps', 1)
+                            ->where('sharing_profit', 1)
+                            ->where('created_at', '>=', $dateThreshold)
+                            ->where(function ($query) {
+                                $query->where('left', '>=', 103)
+                                    ->orWhere('right', '>=', 103);
+                            })
+                            ->update(['sharing_profit' => 1]);
+
+        return "Updated $updatedCount users.";
+    }
+
 }

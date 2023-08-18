@@ -160,7 +160,7 @@
                     <div class="card-body text-center" style="display: table; min-height: 15rem; overflow: hidden;">
                         <div style="display: table-cell; vertical-align: middle;">
                             {{-- <img src="{{ asset('assets/assets/badges') . '/' . $title }}" alt=""> --}}
-                            @if (auth()->user()->sharing_profit || auth()->user()->new_ps)
+                            @if (auth()->user()->sharing_profit)
                                 <img src="{{ asset('assets/2.png') }}" class="imgProfit" alt="sharing">
                             @endif
                         </div>

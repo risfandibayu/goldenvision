@@ -197,7 +197,7 @@
                                 style="display: table; min-height: 15rem; overflow: hidden;">
                                 <div style="display: table-cell; vertical-align: middle;">
                                     {{-- <h5 class="text-warning">Profit Sharing</h5> --}}
-                                    @if (auth()->user()->sharing_profit || auth()->user()->new_ps)
+                                    @if (auth()->user()->sharing_profit)
                                         <img src="{{ asset('assets/2.png') }}" class="imgProfit" alt="sharing">
                                     @endif
                                 </div>
