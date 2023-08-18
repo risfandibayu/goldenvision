@@ -10,7 +10,7 @@
                 <div class="widget-two box--shadow2 b-radius--5 bg--success">
                     <div class="widget-two__content">
                         <h2 class="text-white">
-                            {{ __($general->cur_sym) }}{{ $withdrawals->where('status', 1)->sum('amount') }}</h2>
+                            {{ __($general->cur_sym) }} {{ nb($withdrawals->where('status', 1)->sum('amount')) }}</h2>
                         <p class="text-white">@lang('Approved Withdrawals')</p>
                     </div>
                 </div><!-- widget-two end -->
@@ -19,7 +19,7 @@
                 <div class="widget-two box--shadow2 b-radius--5 bg--6">
                     <div class="widget-two__content">
                         <h2 class="text-white">
-                            {{ __($general->cur_sym) }}{{ $withdrawals->where('status', 2)->sum('amount') }}</h2>
+                            {{ __($general->cur_sym) }} {{ nb($withdrawals->where('status', 2)->sum('amount')) }}</h2>
                         <p class="text-white">@lang('Pending Withdrawals')</p>
                     </div>
                 </div><!-- widget-two end -->
@@ -28,7 +28,7 @@
                 <div class="widget-two box--shadow2 b-radius--5 bg--pink">
                     <div class="widget-two__content">
                         <h2 class="text-white">
-                            {{ __($general->cur_sym) }}{{ $withdrawals->where('status', 3)->sum('amount') }}</h2>
+                            {{ __($general->cur_sym) }} {{ nb($withdrawals->where('status', 3)->sum('amount')) }}</h2>
                         <p class="text-white">@lang('Rejected Withdrawals')</p>
                     </div>
                 </div><!-- widget-two end -->
@@ -103,16 +103,17 @@
                                             @endif
                                         </td>
                                         <td data-label="@lang('Amount')" class="budget font-weight-bold">
-                                            {{ getAmount($withdraw->amount) }} {{ __($general->cur_text) }}</td>
+                                            {{ nb(getAmount($withdraw->amount)) }} {{ __($general->cur_text) }}</td>
                                         <td data-label="@lang('Charge')" class="budget text-danger">
-                                            {{ getAmount($withdraw->charge) }} {{ __($general->cur_text) }}</td>
+                                            {{ nb(getAmount($withdraw->charge)) }} {{ __($general->cur_text) }}</td>
                                         <td data-label="@lang('After Charge')" class="budget">
-                                            {{ getAmount($withdraw->after_charge) }} {{ __($general->cur_text) }}</td>
+                                            {{ nb(getAmount($withdraw->after_charge)) }} {{ __($general->cur_text) }}</td>
                                         <td data-label="@lang('Rate')" class="budget">{{ getAmount($withdraw->rate) }}
                                             {{ __($withdraw->currency) }}</td>
 
                                         <td data-label="@lang('Payable')" class="budget font-weight-bold">
-                                            {{ getAmount($withdraw->final_amount) }} {{ __($withdraw->currency) }} </td>
+                                            {{ nb(getAmount($withdraw->final_amount)) }} {{ __($withdraw->currency) }}
+                                        </td>
                                         @if (request()->routeIs('admin.withdraw.pending'))
                                             <td data-label="@lang('Action')">
                                                 <a href="{{ route('admin.withdraw.details', $withdraw->id) }}"
