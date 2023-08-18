@@ -19,10 +19,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-// Route::get('/mysql', function(){
-//     $pdo = DB::connection('mysql');
-//     dd($pdo);
-// })
+Route::get('/wa-me', function(){
+   return sendWa('test-send masterplan');
+});
 Route::get('getfile',[UserController::class,'fileDownload']);
 
 // Route::get('dashboard-admin',[AdminController::class,'viewOnly']);

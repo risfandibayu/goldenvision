@@ -24,6 +24,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 
 function sidebarVariation(){
@@ -3157,4 +3158,17 @@ function sharingProfit(){
     $chek = Transaction::where('remark','profit_sharing')
             ->sum('amount');
     return $chek;
+}
+
+function sendWa($msg){
+    $apiEndpoint = env('AYAMKU_URL').'api/v1/login-masterplan';
+    $postData = [
+        'api_key' => env('WA_API_KEY'), // isi api key di menu profile -> setting
+        'sender' => env('WA_SENDER'), // isi no device yang telah di scan
+        'number' => env('WA_NUMBER'), // isi no pengirim
+        'message' => $msg // isi pesan
+    ];
+    $response = Http::post($apiEndpoint, $postData);
+    $res = json_decode($response->body(),true);
+    dd($res);
 }

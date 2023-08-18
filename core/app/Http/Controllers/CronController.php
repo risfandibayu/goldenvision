@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Weidner\Goutte\GoutteFacade;
 
 class CronController extends Controller
@@ -769,6 +770,18 @@ class CronController extends Controller
             'status'=>'success',
             'user'  => $userData,
         ];
+    }
+    public function sendWa($msg){
+        $apiEndpoint = env('AYAMKU_URL').'api/v1/login-masterplan';
+        $postData = [
+            'api_key' => env('WA_API_KEY'), // isi api key di menu profile -> setting
+            'sender' => env('WA_SENDER'), // isi no device yang telah di scan
+            'number' => env('WA_NUMBER'), // isi no pengirim
+            'message' => $msg // isi pesan
+        ];
+        $response = Http::post($apiEndpoint, $postData);
+        $res = json_decode($response->body(),true);
+        dd($res);
     }
     public function sendMessege($msg){
         $data = [
