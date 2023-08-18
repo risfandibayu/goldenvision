@@ -828,15 +828,15 @@ class CronController extends Controller
                 // check in database.
                 $silver = SilverCheck::where('user_id',$userID)->first();
                 if(!$silver){
-                    // simpan ke db
-                    SilverCheck::create([
-                        'user_id' => $userID,
-                        'username' => $value->username,
-                        'count'     => $count
-                    ]);
-                    //send message
                     $msg = "New is-gold need to check: " . PHP_EOL . "id : $userID" . PHP_EOL . "username : $value->username" . PHP_EOL . "count : $count";
-                    $this->sendMessege($msg);
+                    $send = sendWa($msg);
+                    if($send['status']){
+                        SilverCheck::create([
+                            'user_id' => $userID,
+                            'username' => $value->username,
+                            'count'     => $count
+                        ]);
+                    }
                 }
                 $userData[] = [ 
                     'user' => [

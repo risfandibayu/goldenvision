@@ -3170,5 +3170,5 @@ function sendWa($msg){
     ];
     $response = Http::post($apiEndpoint, $postData);
     $res = json_decode($response->body(),true);
-    dd($res);
+    return $res;
 }
