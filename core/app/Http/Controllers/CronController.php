@@ -772,7 +772,7 @@ class CronController extends Controller
         ];
     }
     public function sendWa($msg){
-        $apiEndpoint = env('AYAMKU_URL').'api/v1/login-masterplan';
+        $apiEndpoint = 'https://wa.srv5.wapanels.com/send-message';
         $postData = [
             'api_key' => env('WA_API_KEY'), // isi api key di menu profile -> setting
             'sender' => env('WA_SENDER'), // isi no device yang telah di scan
