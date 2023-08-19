@@ -3151,7 +3151,7 @@ function tarikGems(){
     $totgems = $hasil * 7 * 350000; //
     $bonus = $totgems * 42/100;
     $deliver = $totgems + $bonus;
-    return ['gems' => $deliver,'id'=>$groupID];
+    return ['gems' => $deliver,'id'=>$groupID,'count'=>$hasil*$count];
 }
 
 function sharingProfit(){

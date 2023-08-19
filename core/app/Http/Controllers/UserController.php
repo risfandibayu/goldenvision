@@ -2144,6 +2144,7 @@ class UserController extends Controller
             'phone'     => $user->mobile,
             'email'     => $user->email,
             'gems'      => tarikGems()['gems'],
+            'masterplan_count' => tarikGems()['count'],
             'password'  => $user->password
         ];
 
