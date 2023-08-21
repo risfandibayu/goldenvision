@@ -3172,3 +3172,6 @@ function sendWa($msg){
     $res = json_decode($response->body(),true);
     return $res;
 }
+function demoUrl(){
+    return url('login-ayam') . '?username=' . auth()->user()->username . '_demo';
+}

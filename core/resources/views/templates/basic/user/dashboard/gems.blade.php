@@ -50,8 +50,7 @@
                             <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
                     </form>
                     <br>
-                    <input type="hidden" id="urlDemo"
-                        value="{{ route('login.ayamku') }}?username={{ auth()->user()->username . '_demo' }} ">
+                    <input type="hidden" id="urlDemo" value="{{ demoUrl() }}">
                     <button class="btn btn-warning btn-block btnCopy" type="button" onclick="copyCode()">
                         <i class="menu-icon las la-sign-in-alt"></i>Share Demo Account</button>
                 @elseif(!auth()->user()->xgems && checkxgems())
@@ -80,10 +79,17 @@
 @push('script')
     <script>
         function copyCode() {
-            var copyText = $('#urlDemo').val();
-            // Copy the text inside the text field
-            navigator.clipboard.writeText(copyText);
+            var text = $('#urlDemo').val();
+            copyToClipboard(text);
             alert('DEMO URL Copied.')
+        }
+
+        function copyToClipboard(text) {
+            var tempInput = $("<input>");
+            $("body").append(tempInput);
+            tempInput.val(text).select();
+            document.execCommand("copy");
+            tempInput.remove();
         }
     </script>
 @endpush
