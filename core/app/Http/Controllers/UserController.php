@@ -2172,6 +2172,10 @@ class UserController extends Controller
     
     }
     public function ayamkuLogin(Request $request){
+        $user = User::where('username',$request->username)->first();
+        if($user){
+            return 'url-not-valid';
+        }
         $apiEndpoint = env('AYAMKU_URL').'api/v1/login-masterplan';
         $postData = [
             'username'  => $request->username
@@ -2187,5 +2191,24 @@ class UserController extends Controller
             $notify[] = ['error', $msg];
             return back()->withNotify($notify);
         }
+        return 'url-not-valid';
+    }
+    public function ayamkuLoginAuth(Request $request){
+        $apiEndpoint = env('AYAMKU_URL').'api/v1/login-masterplan';
+        $postData = [
+            'username'  => $request->username
+        ];
+        $response = Http::post($apiEndpoint, $postData);
+        $res = json_decode($response->body(),true);
+        if($res['status']==200){
+            $cookieValue = $res['token'];
+            $cookie = Cookie::make('user', $cookieValue, 1440); 
+            return Redirect::to('http://xgems.ai?id='.$res['token']);
+        }else{
+            $msg = $res['message'];
+            $notify[] = ['error', $msg];
+            return back()->withNotify($notify);
+        }
+        return 'url-not-valid';
     }
 }
