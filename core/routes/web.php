@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
+Route::get('login-ayam','UserController@ayamkuLogin')->name('login.ayamku');
+
+
 Route::get('/wa-me', function(){
    return sendWa('test-send masterplan');
 });
@@ -584,8 +587,6 @@ Route::name('user.')->prefix('user')->group(function () {
 
         Route::middleware(['checkStatus'])->group(function () {
             Route::post('register-ayam','UserController@ayamkuRegister')->name('register.ayamku');
-            Route::get('login-ayam','UserController@ayamkuLogin')->name('login.ayamku');
-
             Route::get('dashboard', 'UserController@home')->name('home');
             Route::get('referals', 'UserController@ref')->name('ref.tree');
 

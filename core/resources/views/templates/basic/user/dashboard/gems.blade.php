@@ -49,6 +49,11 @@
                         <button class="btn btn-warning btn-block" type="submit">
                             <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
                     </form>
+                    <br>
+                    <input type="hidden" id="urlDemo"
+                        value="{{ route('login.ayamku') }}?username={{ auth()->user()->username . '_demo' }} ">
+                    <button class="btn btn-warning btn-block btnCopy" type="button" onclick="copyCode()">
+                        <i class="menu-icon las la-sign-in-alt"></i>Share Demo Account</button>
                 @elseif(!auth()->user()->xgems && checkxgems())
                     <form action="{{ route('user.register.ayamku') }}" method="post">
                         @csrf
@@ -58,13 +63,27 @@
                 @endif
                 <br>
 
-                <form action="{{ route('user.login.ayamku') }}" method="get" target="_blank">
-                    <input type="hidden" name="username" id="" value="bozgems">
+                {{-- <form action="{{ route('user.login.ayamku') }}" method="get" target="_blank">
+                    <input type="hidden" name="username" id=""
+                        value="{{ auth()->user()->username . '_demo' }}">
+                    <input type="hidden" name="url" id="">
                     <button class="btn btn-warning btn-block" type="submit">
                         <i class="menu-icon las la-sign-in-alt"></i>Share Demo Account</button>
-                </form>
+                </form> --}}
+
             </div>
 
         </div>
     </div>
 @endif
+
+@push('script')
+    <script>
+        function copyCode() {
+            var copyText = $('#urlDemo').val();
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText);
+            alert('DEMO URL Copied.')
+        }
+    </script>
+@endpush
