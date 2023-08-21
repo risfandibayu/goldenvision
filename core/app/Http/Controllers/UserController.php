@@ -2172,8 +2172,6 @@ class UserController extends Controller
     
     }
     public function ayamkuLogin(Request $request){
-
-        $user = Auth::user();
         $apiEndpoint = env('AYAMKU_URL').'api/v1/login-masterplan';
         $postData = [
             'username'  => $request->username
