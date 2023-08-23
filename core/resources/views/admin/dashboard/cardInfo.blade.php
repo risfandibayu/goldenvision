@@ -252,7 +252,7 @@
 
                 </div>
                 <div class="desciption">
-                    <span class="text--small">@lang('Total Withdrawl Gold Harian')</span>
+                    <span class="text--small">@lang('Total Gold Harian')</span>
                 </div>
                 {{-- <a href="#"
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('Lihat Semua')</a> --}}

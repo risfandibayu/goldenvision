@@ -2546,11 +2546,13 @@ function totalWdGold(){
         $id[] += $t->user_id; 
     }
     $user = User::where('firstname','!=','ptmmi')->where('firstname','!=','masterplan')->whereNotIn('id',$id)->get();
-    $total = $user->count();
+    $total = $user->count() /2;
     // dd($total);
     $totalAmount = $total * goldToday();
     return $totalAmount;
 }
+
+
 function totalMpProd(){
     $userCount = User::whereNotNull('no_bro')->whereNotBetween('id', [16, 213])->count();
 
@@ -3171,7 +3173,7 @@ function tarikGems(){
     $deliver = $totgems + $bonus;
 
     if(auth()->user()->gems_dlv){
-        $deliver    = 350000;
+        $deliver    = 350000 +(350000*0.42);
         $count      = 1;
     }else{
         $deliver    = $totgems + $bonus;
