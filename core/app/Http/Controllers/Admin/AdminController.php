@@ -45,6 +45,7 @@ class AdminController extends Controller
         }else{
             $date = date('Y-m',strtotime(now()));
         }
+        // dd($date);
         // dd(adminLeaderSellPin('2023-03-18 13:31:45'));
         $page_title = 'Dashboard';
         // User Info

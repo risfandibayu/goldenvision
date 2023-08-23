@@ -3076,7 +3076,6 @@ function emas25(){
         return ['userId'=>$id,'gold'=>0,'same'=>$countUser,'sisa'=>0,'totuser'=>$countUser,'minus' => 40-$countUser, 'id'=>$user->id,'status'=>0];
     }
 }
-
 function checkGems(){
     $rek = rekening::where('user_id',auth()->user()->id)->first();
     
@@ -3097,6 +3096,8 @@ function checkGems(){
     if ($gems->count() >= 7) {
       return true;
     }elseif (auth()->user()->username=="masterplan16") {
+       return true;
+    }elseif (auth()->user()->gems_dlv) {
        return true;
     }else{
         return false;
@@ -3122,6 +3123,8 @@ function checkxgems(){
     if ($xgems->count() <=1) {
       return true;
     }elseif (auth()->user()->username=="masterplan16") {
+       return true;
+    }elseif (auth()->user()->gems_dlv) {
        return true;
     }else{
         return false;
@@ -3151,7 +3154,16 @@ function tarikGems(){
     $totgems = $hasil * 7 * 350000; //
     $bonus = $totgems * 42/100;
     $deliver = $totgems + $bonus;
-    return ['gems' => $deliver,'id'=>$groupID,'count'=>$hasil*$count];
+
+    if(auth()->user()->gems_dlv){
+        $deliver    = 350000;
+        $count      = 1;
+    }else{
+        $deliver    = $totgems + $bonus;
+        $count      = $hasil*$count;
+    }
+
+    return ['gems' => $deliver,'id'=>$groupID,'count'=>$count];
 }
 
 function sharingProfit(){
