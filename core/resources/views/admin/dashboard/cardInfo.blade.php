@@ -267,11 +267,11 @@
             <div class="details">
                 <div class="numbers">
                     <span class="currency-sign">{{ $general->cur_sym }}</span>
-                    <span class="amount">{{ nb(getAmount($widget['totalMpProd'])) }}</span>
+                    <span class="amount">{{ nb(tarik_emas()) }}</span>
 
                 </div>
                 <div class="desciption">
-                    <span class="text--small">@lang('Total Kartu Gold')</span>
+                    <span class="text--small">@lang('Total Mini Gold')</span>
                 </div>
                 {{-- <a href="#"
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('Lihat Semua')</a> --}}

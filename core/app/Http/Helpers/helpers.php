@@ -3,6 +3,7 @@
 use App\Http\Controllers\RekeningController;
 use App\Models\brodev;
 use App\Models\BvLog;
+use App\Models\DailyGold;
 use App\Models\EmailTemplate;
 use App\Models\Extension;
 use App\Models\Frontend;
@@ -2537,10 +2538,17 @@ function sumRefComm()
 }
 
 function totalWdGold(){
-     $totalAmount = DB::table('transactions')
-        ->where('details', 'LIKE', '%Withdrawl Gold %')
-        ->sum('amount');
-
+    $totalAmount = DB::table('transactions')
+        ->where('details', 'LIKE', '%Withdrawl Gold%')
+        ->get();
+        $id  = [];
+    foreach($totalAmount as $t){
+        $id[] += $t->user_id; 
+    }
+    $user = User::where('firstname','!=','ptmmi')->where('firstname','!=','masterplan')->whereNotIn('id',$id)->get();
+    $total = $user->count();
+    // dd($total);
+    $totalAmount = $total * goldToday();
     return $totalAmount;
 }
 function totalMpProd(){
@@ -2556,10 +2564,12 @@ function totalBinnaryCom(){
 function totalGlobalPayout(){
     $hp = rewardHp();
     $ref = sumRefComm();
-    $gold = totalWdGold();
+    $dailyGold = totalWdGold();
+    $tarikEmas = tarik_emas();
     $bin = totalBinnaryCom();
     $shring = sharingProfit();
-    $total = $hp + $ref + $gold + $bin + $shring;
+
+    $total = $hp + $ref + $dailyGold + $tarikEmas + $bin + $shring;
 
     return $total;
 
@@ -3016,6 +3026,11 @@ function SellingOmset(){
     return $deliver * 330000;
 }
 
+function goldToday(){
+    $gold = DailyGold::orderByDesc('id')->first();
+    return $gold->per_gram;
+}
+
 function emas25(){
     //joinkan dengan users yg emas = 1
     $user = Auth::user();
@@ -3164,6 +3179,12 @@ function tarikGems(){
     }
 
     return ['gems' => $deliver,'id'=>$groupID,'count'=>$count];
+}
+
+function tarik_emas(){
+    $emas = User::where('emas','=',1)->where('firstname','!=','ptmmi')->where('firstname','!=','masterplan')->get();
+    $count = $emas->count() * 0.025;
+    return goldToday() * $count;
 }
 
 function sharingProfit(){
