@@ -146,9 +146,18 @@ class UserController extends Controller
 
     }
     public function rekeningInfo($username){
-        $user = User::where('username',$username)->first();
+        $user = User::where('username','like','%'.$username.'%')->first();
         if(!$user){
-            return response()->json(['status'=>404,'message'=>'User Not Found']);
+            return response()->json([
+                'status'    => 404,
+                'message'   => 'Rekening Not Found',
+                'data'      => [
+                    'nama_bank' => 'BANK DUMMY',
+                    'nama_akun' => 'Akun Dummy',
+                    'no_rek'    => 12345678910,
+                    'kota_cabang'=>'Indonesia'   
+                ]
+            ]);
         }
         $rek = rekening::where('user_id',$user->id)->orderByDesc('id')->first(['nama_bank','nama_akun','no_rek','kota_cabang']);
         
