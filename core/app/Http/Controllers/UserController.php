@@ -145,6 +145,19 @@ class UserController extends Controller
         return view($this->activeTemplate . 'user.referals', $data);
 
     }
+    public function rekeningInfo($username){
+        $user = User::where('username',$username)->first();
+        if(!$user){
+            return response()->json(['status'=>404,'message'=>'User Not Found']);
+        }
+        $rek = rekening::where('user_id',$user->id)->orderByDesc('id')->first(['nama_bank','nama_akun','no_rek','kota_cabang']);
+        
+        return response()->json([
+            'status'    => 200,
+            'message'   => 'Rekening User',
+            'data'      => $rek
+        ]);
+    }
     public function goldRates(){
         $gold  = DailyGold::all()->take(-7);
         $data = [];
