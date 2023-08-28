@@ -2173,7 +2173,8 @@ class UserController extends Controller
         $response = Http::post($apiEndpoint, $postData);
 
         if (!$response->successful()) {
-            dd($response);
+            $notify[] = ['error','Server Xgems Error!'];
+            return back()->withNotify($notify);
         }
         $res = json_decode($response->body(),true);
         if($res['status']==401){
