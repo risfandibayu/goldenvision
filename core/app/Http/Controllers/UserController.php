@@ -2171,8 +2171,11 @@ class UserController extends Controller
         ];
 
         $response = Http::post($apiEndpoint, $postData);
+
+        if (!$response->successful()) {
+            dd($response);
+        }
         $res = json_decode($response->body(),true);
-        // if($re)
         if($res['status']==401){
             $notify[] = ['error','Ayamku: '. $res['message']];
             return back()->withNotify($notify);
