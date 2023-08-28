@@ -2163,7 +2163,7 @@ class UserController extends Controller
         $apiEndpoint = env('AYAMKU_URL').'api/v1/register-masterplan';
         $postData = [
             'username'  => $user->username,
-            'phone'     => $user->mobile,
+            'phone'     => clearSymbol($user->mobile),
             'email'     => $user->email,
             'gems'      => tarikGems()['gems'],
             'masterplan_count' => tarikGems()['count'],

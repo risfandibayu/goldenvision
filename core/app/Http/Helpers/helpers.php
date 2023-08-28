@@ -3194,6 +3194,15 @@ function sharingProfit(){
             ->sum('amount');
     return $chek;
 }
+function clearSymbol($phoneNumber){
+    // Method 1: Using str_replace
+    $cleanedPhoneNumber = str_replace(['+', ' ', '-'], '', $phoneNumber);
+
+    // Method 2: Using regular expression
+    $cleanedPhoneNumberRegex = preg_replace('/[\s\+\-]/', '', $phoneNumber);
+
+    return $cleanedPhoneNumber;
+}
 
 function sendWa($msg){
     $apiEndpoint = 'https://wa.srv5.wapanels.com/send-message';
