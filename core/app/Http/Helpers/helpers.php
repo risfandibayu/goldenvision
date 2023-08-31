@@ -3219,3 +3219,184 @@ function sendWa($msg){
 function demoUrl(){
     return url('login-ayam') . '?username=' . auth()->user()->username . '_demo';
 }
+function check100Days($created_at){
+    // dd('diffDay'.$created_at);
+    $differenceInDays = Carbon::now()->diffInDays($created_at);
+    // Check if the difference is less than 100 days
+    if ($differenceInDays <= 100) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function check100Week($created_at){
+    $createdAt = Carbon::parse($created_at);
+
+    // Calculate the difference in weeks between created_at and current date
+    $differenceInWeeks = Carbon::now()->diffInWeeks($createdAt);
+
+    // Check if the difference is less than 100 weeks
+    if ($differenceInWeeks <= 100) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function check100Gold($user_id,$type){
+    // dd(Auth::user());
+    $checkDaily = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))->where(['user_id'=>$user_id,'type'=>$type])->groupBy('user_id')->first();
+    
+    if(!$checkDaily){
+        return ['type'=>true,'day'=>1];
+    }
+    if($checkDaily->days <= 100){
+        return ['type'=>true,'day'=>$checkDaily->days + 1];
+    }else{
+        return ['type'=>false,'day'=>0];
+    }
+}
+
+function deliverDailyGold($user_id){
+    $user = User::find($user_id);
+    //check gold user;
+    $dailyCheck = check100Gold($user->id,'daily');
+    if(!$dailyCheck['type']){
+        return false;
+    }
+    //check umur account;
+    $umur = check100Days($user->created_at);
+    if(!$umur){
+        return false;
+    }
+    $day = $dailyCheck['day'];
+    UserGold::create([
+        'user_id'   => $user->id,
+        'day'       => $day,
+        'golds'     => 0.005,
+        'grams'     => 0,
+        'type'      => 'daily',
+        'week'      => 0
+    ]);
+    return 1;
+}
+
+function deliverWeeklyGold($user_id){
+    $user = User::find($user_id);
+    //check gold user;
+    $dailyCheck = check100Gold($user->id,'weekly');
+    if(!$dailyCheck['type']){
+        return false;
+    }
+    //check umur account;
+    $umur = check100Week($user->created_at);
+    if(!$umur){
+        return false;
+    }
+    $day = $dailyCheck['day'];
+    UserGold::create([
+        'user_id'   => $user->id,
+        'day'       => $day,
+        'golds'     => 0.005,
+        'grams'     => 0,
+        'type'      => 'weekly',
+        'week'      => 0
+    ]);
+    return 1;
+}
+
+function checkClaimDailyWeekly($user){
+    // return false;
+    if(!check100Gold($user->id,'daily')){
+        return false;
+    }
+    // dd($user->created_at);
+
+    if(check100Days($user->created_at)){
+        $checkLastDaily = UserGold::where(['user_id' => $user->id, 'type' => 'daily'])->orderByDesc('id')->first();
+        // dd($checkLastDaily);
+        if ($checkLastDaily) {
+        // Convert the created_at string to a Carbon instance
+        $createdAt = Carbon::parse($checkLastDaily->created_at);
+
+        // Calculate the difference in days between created_at and current date
+        $differenceInDays = Carbon::now()->diffInDays($createdAt);
+        //  dd($differenceInDays);
+        if ($differenceInDays > 1) {
+            return 'daily';
+        } else {
+            return false;
+        }
+    } else {
+        return 'daily';
+    }
+    }
+    
+
+    if(!check100Gold($user->id,'weekly')){
+        return false;
+    }
+
+    if(check100Week($user->created_at)){   
+        //    check last created weekly;
+        $checkLastCreate = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->orderByDesc('id')->first();
+        if ($checkLastCreate) {
+            // Convert the created_at string to a Carbon instance
+            $createdAt = Carbon::parse($checkLastCreate->created_at);
+
+            // Calculate the difference in weeks between created_at and current date
+            $differenceInWeeks = Carbon::now()->diffInWeeks($createdAt);
+
+            if ($differenceInWeeks > 1) {
+                return 'weekly';
+            }else{
+                return false;
+            } 
+        }else{
+            return 'weekly';
+        }
+    }
+}
+
+function checkWdGold($user){
+    if($user->wd_gold && !$user->userExtra->is_gold)
+    {
+        return false;
+    }
+    if(!check100Gold($user->id,'daily') && !check100Days($user->created_at)){
+        return 'daily';
+    }
+    if(!check100Gold($user->id,'weekly') && !check100Week($user->created_at)){
+        return 'weekly';
+    }
+}
+function todayGold(){
+    $goldToday      = DailyGold::orderByDesc('id')->first(); //harga emas terakhir
+    $goldSell       = $goldToday->per_gram - ($goldToday->per_gram*8/100); // harga_emas sekarang - harga_emas - 8%
+    return  $goldSell;
+}
+
+function withdrawGold($type='daily'){
+
+    $user_gold      = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))
+                        ->where(['user_id'=>auth()->user()->id,'type'=>$type])
+                        ->groupBy('user_id')->first();
+                        
+    $total_gold     = $user_gold->days;
+    if($total_gold >=100){
+        $userGold = 0.5;
+    }else{
+        $userGold = 0.005 * $total_gold;
+    }
+    
+    $goldToday      = todayGold();
+    $platfrom_fee   = 5/100; //palform_fee
+    $totalWd        = $userGold * $goldToday - ($userGold * $goldToday * $platfrom_fee); //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
+
+    return [
+        'user_gold'         => $userGold,
+        'gold_today'        => $goldToday,
+        'platform_fee'      => $platfrom_fee,
+        'total_wd'          => $totalWd
+    ];
+}

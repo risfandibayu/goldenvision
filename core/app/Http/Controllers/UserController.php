@@ -85,7 +85,7 @@ class UserController extends Controller
 
     public function home()
     {
-        // dd(checkGems());
+        
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
         $data['totalWithdraw']      = Withdrawal::where('user_id', auth()->id())->where('status', 1)->sum('amount');
@@ -337,15 +337,17 @@ class UserController extends Controller
         addToLog('Access Withdraw Money');
         return view(activeTemplate() . 'user.withdraw.methods', $data);
     }
+
+
     public function withdrawGold(Request $request){
+        
         $user = auth()->user();
 
-        $usergold = auth()->user()->total_golds; //total gold user
-        $goldToday = DailyGold::orderByDesc('id')->first(); //harga emas terakhir
-        $goldTodayFee = $goldToday->per_gram - ($goldToday->per_gram*8/100); // harga_emas sekarang - harga_emas - 8%
-        $platfrom_fee = 5/100; //palform_fee
-        $totalWd = $usergold * $goldTodayFee - ($usergold * $goldTodayFee * $platfrom_fee); //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
+        $userGold = withdrawGold()['user_gold'];
 
+        $goldToday      = todayGold();
+        $platfrom_fee   = 5/100; //palform_fee
+        $totalWd        = $userGold * $goldToday - ($userGold * $goldToday * $platfrom_fee); //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
 
         DB::beginTransaction();
         try {
@@ -355,7 +357,7 @@ class UserController extends Controller
             $transaction->post_balance = $user->balance + $totalWd;
             $transaction->charge = 0;
             $transaction->trx_type = '+';
-            $transaction->details = 'Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd);
+            $transaction->details = 'Withdrawl Gold '.nbk($userGold).' grams to IDR '.nb($totalWd);
             $transaction->remark = 'gold_withdraw';
             $transaction->trx =  getTrx();
             $transaction->save();
@@ -365,9 +367,9 @@ class UserController extends Controller
             $user->save();
 
             DB::commit();
-            addToLog('Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd));
+            addToLog('Withdrawl Gold '.nbk($userGold).' grams to IDR '.nb($totalWd));
 
-            $notify[] = ['success', 'Withdrawl Gold '.nbk($usergold).' grams to IDR '.nb($totalWd).' Successfully'];
+            $notify[] = ['success', 'Withdrawl Gold '.nbk($userGold).' grams to IDR '.nb($totalWd).' Successfully'];
             return redirect()->back()->withNotify($notify);
         } catch (\Throwable $th) {
             $notify[] = ['error', 'Error: '.$th->getMessage()];
@@ -1754,8 +1756,54 @@ class UserController extends Controller
         $user->save();
         return response()->json(['status'=>200,'msg'=>'success update'],200);
     }
+    
+    public function newDailyCheckIn(Request $request){
+        $user = $request->user();
+        // dd($user);
+        // dd(checkClaimDailyWeekly($user));
+        if(!checkClaimDailyWeekly($user)){
+            return Redirect::back()->with('notify',[
+                ['warning', 'You already claimed gold or your quota has reached the limit.']
+            ]);
+        }
+        DB::beginTransaction();
+        try {
+            $no = 0;
+            $userBank = rekening::where('user_id',$user->id)->first();
+            $checkSame = User::leftJoin('rekenings','users.id','=','rekenings.user_id')
+                            ->where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
+                            ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')
+                            ->groupBy('users.id')->select('users.id AS users', 'rekenings.*')
+                            ->get();
+            
+            foreach ($checkSame as $key => $value) {
+                    $userID = $value->user_id;
+                    if(checkClaimDailyWeekly($value)){
+                        $type = checkClaimDailyWeekly($value);
+                        if($type=='daily'){
+                            $no += deliverDailyGold($userID);
+                        }
+                        if($type=='weekly'){
+                            $no += deliverWeeklyGold($userID);
+                        }
+                    };
+            }              
+            DB::commit();
+            addToLog('Gold Check-In to '.$no .' users');
+            return redirect()->back()->with('notify', [
+                ['success', 'Successfully Claimed You and '. $no .' Same Bank Account Gold Check-In']
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('notify', [
+                ['error', 'Error:'.$th->getMessage()]
+            ]);
+            //throw $th;
+        }
+    }
 
-    public function dailyCheckIn(Request $request)
+
+    public function dailyCheckInOld(Request $request)
     {
        
         $user = $request->user();
@@ -1769,8 +1817,7 @@ class UserController extends Controller
         
         //send to same bank account;
         try {
-                $no = 1;
-
+            $no = 1;
             $userBank = rekening::where('user_id',$user->id)->first();
             if($userBank){
                 // $checkSame = rekening::where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])

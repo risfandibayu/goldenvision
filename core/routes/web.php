@@ -593,6 +593,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('dashboard', 'UserController@home')->name('home');
             Route::get('referals', 'UserController@ref')->name('ref.tree');
 
+            Route::post('daily-checkin-new', 'UserController@newDailyCheckIn')->name('new-daily-checkin');
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
             Route::post('weekly-checkin', 'UserController@weeklyCheckIn')->name('weekly-checkin');
             Route::post('clam-bonus-reward', 'UserController@claimBonusReward')->name('claim-reward');
