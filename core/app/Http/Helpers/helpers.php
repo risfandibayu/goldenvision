@@ -3400,3 +3400,23 @@ function withdrawGold($type='daily'){
         'total_wd'          => $totalWd
     ];
 }
+
+function userGold(){
+    $user = auth()->user();
+    $daily = $user->total_daily_golds;
+    $weekly = $user->total_weekly_golds;
+    if($daily > 0.5){
+        $daily = 0.5;
+    }
+    if($weekly > 0.5){
+        $weekly = 0.5;
+    }
+    $total = $daily + $weekly;
+    $equal = todayGold() * $total;
+    return [
+        'total' => $total,
+        'daily' => $daily,
+        'weekly'=> $weekly,
+        'equal' => $equal
+    ];
+}

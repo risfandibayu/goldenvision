@@ -7,20 +7,20 @@
             <div class="details">
                 <div class="numbers">
                     <span
-                        class="amount">{{ auth()->user()->wd_gold ? auth()->user()->total_weekly_golds : nbk(auth()->user()->total_golds) }}</span>
+                        class="amount">{{ auth()->user()->wd_gold ? userGold()['weekly'] : userGold()['total'] }}</span>
                     <span class="currency-sign">Gram</span>
                 </div>
                 <div class="desciption">
                     <span class="text--small font-weight-bold">Equal To <span
-                            class="badge badge-danger">{{ auth()->user()->wd_gold ? 0 : nb($goldBonus * (auth()->user()->wd_gold ? auth()->user()->total_weekly_golds : auth()->user()->total_golds)) }}
+                            class="badge badge-danger">{{ auth()->user()->wd_gold ? 0 : nb(userGold()['equal']) }}
                             IDR</span>
                     </span>
                 </div>
                 <div class="desciption">
-                    <span class="text--small ">{{ auth()->user()->wd_gold ? 0 : auth()->user()->total_daily_golds }}gr
+                    <span class="text--small ">{{ auth()->user()->wd_gold ? 0 : userGold()['daily'] }}gr
                         Daily</span>
                     |
-                    <span class="text--small ">{{ auth()->user()->total_weekly_golds }}gr
+                    <span class="text--small ">{{ userGold()['weekly'] }}gr
                         Weekly</span>
                 </div>
             </div>
