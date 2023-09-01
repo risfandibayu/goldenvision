@@ -3322,7 +3322,7 @@ function checkClaimDailyWeekly($user){
         // Calculate the difference in days between created_at and current date
         $differenceInDays = Carbon::now()->diffInDays($createdAt);
         //  dd($differenceInDays);
-        if ($differenceInDays > 1) {
+        if ($differenceInDays >= 1) {
             return 'daily';
         } else {
             return false;
@@ -3347,7 +3347,7 @@ function checkClaimDailyWeekly($user){
             // Calculate the difference in weeks between created_at and current date
             $differenceInWeeks = Carbon::now()->diffInWeeks($createdAt);
 
-            if ($differenceInWeeks > 1) {
+            if ($differenceInWeeks >= 1) {
                 return 'weekly';
             }else{
                 return false;
