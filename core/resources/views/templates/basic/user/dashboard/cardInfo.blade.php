@@ -6,8 +6,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span
-                        class="amount">{{ auth()->user()->wd_gold ? userGold()['weekly'] : userGold()['total'] }}</span>
+                    <span class="amount">{{ nbk(userGold()['total']) }}</span>
                     <span class="currency-sign">Gram</span>
                 </div>
                 <div class="desciption">
@@ -17,10 +16,10 @@
                     </span>
                 </div>
                 <div class="desciption">
-                    <span class="text--small ">{{ auth()->user()->wd_gold ? 0 : userGold()['daily'] }} gr
+                    <span class="text--small ">{{ nbk(userGold()['daily']) }} gr
                         Daily</span>
                     |
-                    <span class="text--small ">{{ userGold()['weekly'] }} gr
+                    <span class="text--small ">{{ nbk(userGold()['weekly']) }} gr
                         Weekly</span>
                 </div>
             </div>
