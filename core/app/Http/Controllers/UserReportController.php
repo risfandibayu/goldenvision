@@ -140,13 +140,17 @@ class UserReportController extends Controller
         }
         $log =  UserGold::where(['user_id'=>$user->id,'type'=>'daily'])->limit(5)->orderByDesc('id')->get();
         $logGold = [];
+        $totalGold = userGold()['total'];
         foreach ($log as $key => $value) {
             $logGold[] = [
                 'day' => $count,
+                'gold'=>$totalGold,
                 'created_at' => $value->created_at
             ];
             $count -= 1;
+            $totalGold -= 0.005;
         }
+        // dd($logGold);
         $data['logs'] = $logGold;
         $data['empty_message'] = 'No history found.';
 

@@ -3425,3 +3425,11 @@ function userGold(){
         'equal' => $equal
     ];
 }
+function tanggal($date){
+    Carbon::setLocale('id'); // Mengatur bahasa ke bahasa Indonesia
+
+    // Memformat tanggal dengan nama hari dalam bahasa Indonesia
+    $formattedDate = $date->isoFormat('dddd, DD/MM/YY');
+
+    echo $formattedDate;
+}

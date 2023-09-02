@@ -24,7 +24,7 @@
 
 
         .icons {
-            max-width: 100px;
+            max-width: 60px;
         }
 
         .card-rad {
@@ -63,14 +63,14 @@
                             <div class="card-body card-content">
                                 <div class="row dis">
                                     <div class="col-md-4 col-sm-4 text-center">
-                                        <img src="{{ asset('assets/hand.png') }}" alt="hands-icon" class="icons">
-                                        <h3 class="mt-2 text-gold text-on"> </h3>
+                                        <img src="{{ asset('assets/gold-ico.png') }}" alt="hands-icon" class="icons">
+                                        <span class="text-gold text-on"> {{ $item['gold'] }} gr</span>
 
                                     </div>
                                     <div class="col-md-8 col-sm-8 text-center">
                                         <h3 class="mt-2 text-gold text-on"> Hari {{ $item['day'] }} </h3>
                                         <h3 class="mt-2 text-prima text-on">
-                                            {{ date('d/m/Y', strtotime($item['created_at'])) }}</h3>
+                                            {{ tanggal($item['created_at']) }}</h3>
                                     </div>
                                 </div>
 
