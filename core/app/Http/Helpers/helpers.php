@@ -3413,6 +3413,8 @@ function userGold(){
     }
     if($user->wd_gold){
         $daily=0;
+    }else{
+         $weekly = 0;
     }
     $total = $daily + $weekly;
     $equal = todayGold() * $total;
