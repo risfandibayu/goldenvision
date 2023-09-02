@@ -85,6 +85,8 @@ class UserController extends Controller
 
     public function home()
     {
+        // dd(Auth::user()->wd_gold);
+        // dd(checkWdGold(auth()->user()));
         
         $data['page_title']         = "Dashboard";
         $data['totalDeposit']       = Deposit::where('user_id', auth()->id())->where('status', 1)->sum('amount');
@@ -340,15 +342,12 @@ class UserController extends Controller
 
 
     public function withdrawGold(Request $request){
-        
-        $user = auth()->user();
+        $user = $request->user();
+        $type = $request->type;
+        // dd($request->all());
 
         $userGold = withdrawGold()['user_gold'];
-
-        $goldToday      = todayGold();
-        $platfrom_fee   = 5/100; //palform_fee
-        $totalWd        = $userGold * $goldToday - ($userGold * $goldToday * $platfrom_fee); //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
-
+        $totalWd  = withdrawGold()['total_wd']; //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
         DB::beginTransaction();
         try {
             $transaction = new Transaction();
@@ -357,17 +356,21 @@ class UserController extends Controller
             $transaction->post_balance = $user->balance + $totalWd;
             $transaction->charge = 0;
             $transaction->trx_type = '+';
-            $transaction->details = 'Withdrawl Gold '.nbk($userGold).' grams to IDR '.nb($totalWd);
+            $transaction->details = 'Withdrawl '.$type.' gold '.nbk($userGold).' grams to IDR '.nb($totalWd);
             $transaction->remark = 'gold_withdraw';
             $transaction->trx =  getTrx();
             $transaction->save();
 
             $user->balance += $totalWd;
-            $user->wd_gold = 1;
+            if($type=='daily'){
+                $user->wd_gold = 1;
+            }else{
+                $user->wd_gold_week = 1;
+            }
             $user->save();
 
             DB::commit();
-            addToLog('Withdrawl Gold '.nbk($userGold).' grams to IDR '.nb($totalWd));
+            addToLog('Withdraw  '.$type.' Gold '.nbk($userGold).' grams to IDR '.nb($totalWd));
 
             $notify[] = ['success', 'Withdrawl Gold '.nbk($userGold).' grams to IDR '.nb($totalWd).' Successfully'];
             return redirect()->back()->withNotify($notify);

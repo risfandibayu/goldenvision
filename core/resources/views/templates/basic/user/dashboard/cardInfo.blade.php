@@ -12,15 +12,15 @@
                 </div>
                 <div class="desciption">
                     <span class="text--small font-weight-bold">Equal To <span
-                            class="badge badge-danger">{{ auth()->user()->wd_gold ? 0 : nb(userGold()['equal']) }}
+                            class="badge badge-danger">{{ nb(userGold()['equal']) }}
                             IDR</span>
                     </span>
                 </div>
                 <div class="desciption">
-                    <span class="text--small ">{{ auth()->user()->wd_gold ? 0 : userGold()['daily'] }}gr
+                    <span class="text--small ">{{ auth()->user()->wd_gold ? 0 : userGold()['daily'] }} gr
                         Daily</span>
                     |
-                    <span class="text--small ">{{ userGold()['weekly'] }}gr
+                    <span class="text--small ">{{ userGold()['weekly'] }} gr
                         Weekly</span>
                 </div>
             </div>

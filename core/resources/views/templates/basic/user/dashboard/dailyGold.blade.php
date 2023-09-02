@@ -87,6 +87,8 @@
                                  <div class="row mt-4">
                                      <div class="col-12 text-sm-center">
                                          <input type="hidden" name="total" value="{{ withdrawGold()['total_wd'] }}">
+                                         <input type="hidden" name="type" value="{{ withdrawGold()['type'] }}"
+                                             id="">
                                          <button type="submit" class="btn btn-warning btn-block">Transfer to
                                              Balance
                                              Rp
@@ -103,8 +105,8 @@
              <div class="alert alert-success alert-dismissible fade show p-3 text-center" role="alert"
                  data-toggle="modal" data-target="#modalWd">
                  <strong>Hey {{ Auth::user()->fullname }}! &emsp;</strong> <br>
-                 <div>Kamu Sudah Check-In Emas Selama
-                     {{ $checkDaily_days ?? '' }} Hari Nih Sebanyak {{ nbk($checkDaily_gold) ?? '' }} Gram,
+                 <div>Kamu Sudah Check-In Emas Selama {{ withdrawGold()['notif'] }} Nih Sebanyak
+                     {{ nbk(withdrawGold()['user_gold']) ?? '' }} Gram,
                      Sekarang emas itu bisa di withdraw loh. <br> >>Click Disini<< <button type="button" class="close"
                          data-dismiss="alert" aria-label="Close">
                          <span aria-hidden="true">&times;</span>

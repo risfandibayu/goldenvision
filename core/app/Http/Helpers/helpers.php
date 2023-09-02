@@ -3222,6 +3222,7 @@ function demoUrl(){
 function check100Days($created_at){
     // dd('diffDay'.$created_at);
     $differenceInDays = Carbon::now()->diffInDays($created_at);
+    // dd($differenceInDays);
     // Check if the difference is less than 100 days
     if ($differenceInDays <= 100) {
         return true;
@@ -3246,14 +3247,13 @@ function check100Week($created_at){
 function check100Gold($user_id,$type){
     // dd(Auth::user());
     $checkDaily = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))->where(['user_id'=>$user_id,'type'=>$type])->groupBy('user_id')->first();
-    
     if(!$checkDaily){
         return ['type'=>true,'day'=>1];
     }
     if($checkDaily->days <= 100){
         return ['type'=>true,'day'=>$checkDaily->days + 1];
     }else{
-        return ['type'=>false,'day'=>0];
+        return ['type'=>false,'day'=>$checkDaily->days];
     }
 }
 
@@ -3359,45 +3359,45 @@ function checkClaimDailyWeekly($user){
 }
 
 function checkWdGold($user){
-    if($user->wd_gold && !$user->userExtra->is_gold)
+    // dd(check100Week($user->created_at));
+    if(!$user->userExtra->is_gold)
     {
         return false;
     }
-    if(!check100Gold($user->id,'daily') && !check100Days($user->created_at)){
+    // dd
+    if(!$user->wd_gold &&  !check100Gold($user->id,'daily')['type'] && !check100Days($user->created_at)){
         return 'daily';
     }
-    if(!check100Gold($user->id,'weekly') && !check100Week($user->created_at)){
+    if(!check100Gold($user->id,'weekly')['type'] && !check100Week($user->created_at)){
         return 'weekly';
     }
+    return false;
+    // dd(check100Days($user->created_at));
 }
+
+
 function todayGold(){
     $goldToday      = DailyGold::orderByDesc('id')->first(); //harga emas terakhir
     $goldSell       = $goldToday->per_gram - ($goldToday->per_gram*8/100); // harga_emas sekarang - harga_emas - 8%
     return  $goldSell;
 }
 
-function withdrawGold($type='daily'){
+function withdrawGold(){
+    $user = auth()->user();
+    $gold_user = $user->wd_gold == 0 ? userGold()['daily']:userGold()['weekly']; 
 
-    $user_gold      = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))
-                        ->where(['user_id'=>auth()->user()->id,'type'=>$type])
-                        ->groupBy('user_id')->first();
-                        
-    $total_gold     = $user_gold->days;
-    if($total_gold >=100){
-        $userGold = 0.5;
-    }else{
-        $userGold = 0.005 * $total_gold;
-    }
-    
+    $userGold     = $gold_user;
     $goldToday      = todayGold();
     $platfrom_fee   = 5/100; //palform_fee
     $totalWd        = $userGold * $goldToday - ($userGold * $goldToday * $platfrom_fee); //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
-
+    $notif          = checkWdGold($user)=='daily'?'100 Hari':'100 Minggu';
     return [
         'user_gold'         => $userGold,
         'gold_today'        => $goldToday,
         'platform_fee'      => $platfrom_fee,
-        'total_wd'          => $totalWd
+        'total_wd'          => $totalWd,
+        'type'              => checkWdGold($user),
+        'notif'             => $notif
     ];
 }
 
@@ -3410,6 +3410,9 @@ function userGold(){
     }
     if($weekly > 0.5){
         $weekly = 0.5;
+    }
+    if($user->wd_gold){
+        $daily=0;
     }
     $total = $daily + $weekly;
     $equal = todayGold() * $total;
