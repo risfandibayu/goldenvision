@@ -93,7 +93,19 @@ Route::get('test-ex',function(){
     return 'success';
 });
 Route::get('cron-gems',[CronController::class,'gems']);
-
+Route::get('mark-lf',function(){
+    $ux = UserExtra::all();
+    foreach ($ux as $key => $value) {
+       $mark_lf = [
+        'date'  => now(),
+        'left'  => $value->left,
+        'right' => $value->right
+       ];
+       $value->mark_lf = json_encode($mark_lf);
+       $value->save();
+    }
+    return 'success';
+});
 Route::get('cron-daily-gold',[CronController::class,'dailyGold']);
 Route::get('cron-weekly-gold',[CronController::class,'weeklyGold']);
 Route::get('cron-member-grow',[CronController::class,'memberGrow']);
