@@ -1770,8 +1770,7 @@ class UserController extends Controller
                 ['warning', 'You already claimed gold or your quota has reached the limit.']
             ]);
         }
-        
-        DB::beginTransaction();
+
         try {
             $type = checkClaimDailyWeekly($user);
             if($type=='daily'){
@@ -1809,13 +1808,11 @@ class UserController extends Controller
                         }
                     };
             }              
-            DB::commit();
             addToLog('Gold Check-In to '.$no .' users');
             return redirect()->back()->with('notify', [
                 ['success', 'Successfully Claimed You and '. $no .' Same Bank Account Gold Check-In']
             ]);
         } catch (\Throwable $th) {
-            DB::rollBack();
             return redirect()->back()->with('notify', [
                 ['error', 'Error:'.$th->getMessage()]
             ]);

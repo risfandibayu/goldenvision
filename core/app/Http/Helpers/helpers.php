@@ -3266,10 +3266,10 @@ function deliverDailyGold($user_id){
         return false;
     }
     //check umur account;
-    $umur = check100Days($user->created_at);
-    if(!$umur){
-        return false;
-    }
+    // $umur = check100Days($user->created_at);
+    // if(!$umur){
+    //     return false;
+    // }
     $day = $dailyCheck['day'];
     UserGold::create([
         'user_id'   => $user->id,
@@ -3380,10 +3380,10 @@ function checkWdGold($user){
         return false;
     }
     // dd
-    if(!$user->wd_gold && !check100Days($user->created_at)){
+    if(!$user->wd_gold && !check100Gold($user->id,'daily')){
         return 'daily';
     }
-    if(!check100Week($user->created_at)){
+    if(!check100Gold($user->id,'weekly')){
         return 'weekly';
     }
     return false;
