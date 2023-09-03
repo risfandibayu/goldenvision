@@ -78,7 +78,7 @@
 
                                      <h6>-----------------------------------------------</h6>
                                      <h6>Harga Total: Rp
-                                         {{ nb(withdrawGold()['user_gold'] * withdrawGold()['gold_today']) }}</h6>
+                                         {{ nb(withdrawGold()['harga_total']) }}</h6>
                                      <h6>Platform Fee: Rp {{ nb(withdrawGold()['platform_fee']) }}</h6>
                                      <strong>Total:
                                          {{ nb(withdrawGold()['total_wd']) }}</strong>

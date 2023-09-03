@@ -3377,10 +3377,10 @@ function checkWdGold($user){
         return false;
     }
     // dd
-    if(!$user->wd_gold &&  !check100Gold($user->id,'daily')['type'] && !check100Days($user->created_at)){
+    if(!$user->wd_gold && !check100Days($user->created_at)){
         return 'daily';
     }
-    if(!check100Gold($user->id,'weekly')['type'] && !check100Week($user->created_at)){
+    if(!check100Week($user->created_at)){
         return 'weekly';
     }
     return false;
@@ -3398,15 +3398,18 @@ function withdrawGold(){
     $user = auth()->user();
     $gold_user = $user->wd_gold == 0 ? userGold()['daily']:userGold()['weekly']; 
 
-    $userGold     = $gold_user;
+    $userGold       = $gold_user;
     $goldToday      = todayGold();
-    $platfrom_fee   = 5/100; //palform_fee
-    $totalWd        = $userGold * $goldToday - ($userGold * $goldToday * $platfrom_fee); //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
+    $platfrom_fee_pr = 5/100; //palform_fee
+    $harga_total    = $userGold * $goldToday;
+    $platfrom_fee   = $harga_total * $platfrom_fee_pr;
+    $totalWd        = $harga_total - $platfrom_fee;
     $notif          = checkWdGold($user)=='daily'?'100 Hari':'100 Minggu';
     return [
         'user_gold'         => $userGold,
         'gold_today'        => $goldToday,
         'platform_fee'      => $platfrom_fee,
+        'harga_total'       => $harga_total,
         'total_wd'          => $totalWd,
         'type'              => checkWdGold($user),
         'notif'             => $notif
