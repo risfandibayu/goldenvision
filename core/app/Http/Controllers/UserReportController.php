@@ -132,7 +132,7 @@ class UserReportController extends Controller
     public function dailyGoldLog(Request $request)
     {
         $user = Auth::user();
-        $data['page_title'] = 'Daily Gold Log';
+        $data['page_title'] = 'Claim Gold Log';
         $count = UserGold::where(['user_id'=>$user->id,'type'=>'daily'])->count();
         // $count = $total->count();
         if($count >=100){
@@ -140,7 +140,7 @@ class UserReportController extends Controller
         }
         $log =  UserGold::where(['user_id'=>$user->id,'type'=>'daily'])->limit(5)->orderByDesc('id')->get();
         $logGold = [];
-        $totalGold = userGold()['total'];
+        $totalGold = userGold()['daily'];
         foreach ($log as $key => $value) {
             $logGold[] = [
                 'day' => $count,
@@ -150,11 +150,32 @@ class UserReportController extends Controller
             $count -= 1;
             $totalGold -= 0.005;
         }
+
+        $logweek = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->limit(5)->orderByDesc('id')->get();
+        // dd($user->total_weekly_golds);
+        $count_w = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->count();
+        // $count = $total->count();
+        if($count_w >=100){
+            $count_w = 100;
+        }
+        $logGoldWeek = [];
+        $totalGoldWeek = userGold()['weekly'];
+        // dd($totalGoldWeek);
+        foreach ($logweek as $key => $value) {
+            $logGoldWeek[] = [
+                'day' => $count_w,
+                'gold'=>$totalGoldWeek,
+                'created_at' => $value->created_at
+            ];
+            $count_w -= 1;
+            $totalGoldWeek -= 0.005;
+        }
         // dd($logGold);
-        $data['logs'] = $logGold;
+        $data['logs_day'] = $logGold;
+        $data['logs_week'] = $logGoldWeek;
         $data['empty_message'] = 'No history found.';
 
-
+// dd($data);
         return view($this->activeTemplate . 'user.gold_history', $data);
     }
 

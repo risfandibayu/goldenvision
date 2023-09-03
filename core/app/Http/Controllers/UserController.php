@@ -85,6 +85,7 @@ class UserController extends Controller
 
     public function home()
     {
+        // dd(typeClaimGold(auth()->user()));
         // dd(Auth::user()->wd_gold);
         // dd(checkWdGold(auth()->user()));
         
