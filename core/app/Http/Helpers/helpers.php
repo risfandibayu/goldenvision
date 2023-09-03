@@ -3317,11 +3317,7 @@ function checkClaimDailyWeekly($user){
     // return false;
     if(!check100Gold($user->id,'daily')){
         return false;
-    }
-    // dd(check100Days($user->created_at));
-
-    if(check100Days($user->created_at)){
-        // dd('true p');
+    }else{
         $checkLastDaily = UserGold::where(['user_id' => $user->id, 'type' => 'daily'])->orderByDesc('id')->first();
         // dd($checkLastDaily);
         if ($checkLastDaily) {
@@ -3341,6 +3337,12 @@ function checkClaimDailyWeekly($user){
             return 'daily';
         }
     }
+    // dd(check100Days($user->created_at));
+
+    // if(check100Days($user->created_at)){
+    //     // dd('true p');
+       
+    // }
 
     if(!check100Gold($user->id,'weekly')){
         // dd('false 100');

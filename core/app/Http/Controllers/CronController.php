@@ -928,18 +928,14 @@ class CronController extends Controller
         return 'Success ' .$s.' update, '.$e. 'error';
     }
     public function gems(){
-        $startDate = '2023-07-01'; // Adjusted start date to include months 7 and 8
-        $endDate = '2023-08-31';   // End of month 8
-
+        $today = now();
         $rekenings = rekening::select('nama_bank', 'nama_akun', 'no_rek')
-            ->selectRaw('COUNT(*) AS occurrence_count')
+            ->selectRaw('COUNT(*) AS count_user')
             ->join('users as u', 'rekenings.user_id', '=', 'u.id')
-            ->whereBetween('rekenings.created_at', [$startDate, $endDate])
+            ->where('users.created_at', $today)
             ->where('u.gems', 0)
             ->groupBy('nama_bank', 'nama_akun', 'no_rek')
-            ->havingRaw('COUNT(*) >= 7')
             ->get();
-            // dd($rekenings);
         
         foreach ($rekenings as $key => $value) {
             $rek = Rekening::select('rekenings.*', 'users.username', 'users.gems')
