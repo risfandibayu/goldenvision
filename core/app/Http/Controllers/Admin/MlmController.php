@@ -66,9 +66,6 @@ class MlmController extends Controller
         $notify[] = ['success', 'Plan Updated Successfully.'];
         return back()->withNotify($notify);
     }
-    public function repeatOrder(){
-        
-    }
 
 
 

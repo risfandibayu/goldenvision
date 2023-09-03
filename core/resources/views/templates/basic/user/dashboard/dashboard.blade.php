@@ -165,22 +165,24 @@
 
         <div class="col-lg-8 col-md-8 col-12 mb-30">
 
-            <div class="card-footer text-center mb-3">
-                <b>Akumulasi Komisi</b>
-                <p>Ketika Sudah Mencapai Rp. 10,000,000 Anda Wajib Melakukan Repeat Order Ke
-                    Produk Masterplan Lainnya. Saat ini Rp. {{ nb(countAllBonus()) }} ({{ $persen_bonus }}% dari target)
-                </p>
-                <div class="d-flex justify-content-center">
-                    <div class="animated-progress progress-blue">
-                        <span data-progress="{{ $persen_bonus }}"></span>
+            @if ($persen_bonus > 49)
+                <div class="card-footer text-center mb-3">
+                    <b>Akumulasi Komisi</b>
+                    <p>Ketika Sudah Mencapai Rp. 10,000,000 Anda Wajib Melakukan Repeat Order Ke
+                        Produk Masterplan Lainnya. Saat ini Rp. {{ nb(countAllBonus()) }} ({{ $persen_bonus }}% dari target)
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <div class="animated-progress progress-blue">
+                            <span data-progress="{{ $persen_bonus }}"></span>
+                        </div>
                     </div>
+                    @if ($persen_bonus >= 100)
+                        <a href="{{ url('user/plan') }}" class="btn btn--success btn-sm">
+                            <i class="las la-archive"></i>
+                            Repeat Order</a>
+                    @endif
                 </div>
-                @if ($persen_bonus >= 100)
-                    <a href="{{ url('user/plan') }}" class="btn btn--success btn-sm">
-                        <i class="las la-archive"></i>
-                        Repeat Order</a>
-                @endif
-            </div>
+            @endif
 
             @include($activeTemplate . 'user.dashboard.bonusReward')
 

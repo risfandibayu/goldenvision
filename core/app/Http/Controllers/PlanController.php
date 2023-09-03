@@ -29,12 +29,17 @@ class PlanController extends Controller
         return view($this->activeTemplate . '.user.plan', $data);
 
     }
+    public function repeatOrder(){
+        $data['page_title'] = "Reapeat Order";
+        $data['plans'] = Plan::whereStatus(1)->get();
+        return view($this->activeTemplate . '.user.plan_ro', $data);
+    }
 
     // function planStore(Request $request){
     //     brodev(Auth::user()->id, $request->qty);
     // }
     public function buyMpStore(Request $request){
-        // dd($request->all());
+
         $this->validate($request, [
             'qtyy' => 'required|integer|min:1',
         ]);
@@ -70,15 +75,19 @@ class PlanController extends Controller
             'trx' => getTrx(),
             'post_balance' => getAmount($user->balance),
         ]);
+        $notif = 'Purchased new MP quantity for '.$request->qtyy.' MP Successfully';
+       
+
         if(countAllBonus() >= 10000000){
             $ux = UserExtra::where('user_id',auth()->user()->id)->first();
-            $ux->last_ro = countAllBonus();
+            $ux->last_ro += countAllBonus();
             $ux->save();
+            $notif = 'Purchased new MP Repeat Order quantity for '.$request->qtyy.' MP Successfully';
+
         }
 
-        addToLog('Purchased ' . $plan->name . ' For '.$request->qty.' MP');
-
-        $notify[] = ['success', 'Purchased new MP quantity for '.$request->qtyy.' MP Successfully'];
+        $notify[] = ['success', $notif];
+        addToLog($notif);
         return redirect()->route('user.home')->withNotify($notify);
 
     }
@@ -92,7 +101,8 @@ class PlanController extends Controller
             'position' => 'required',
             'qty' => 'required',
         ]);
-        // dd($request->all());
+        // var_dump('no');
+        dd($request->all());
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
         $gnl = GeneralSetting::first();
         // dd(date('Y-m-d,H:i:s'));
@@ -168,91 +178,6 @@ class PlanController extends Controller
         $user->bro_qty      = $request->qty - 1;
         $user->save();
 
-
-            // $this->treeService->calculateUplineMemberBonus(
-            //     $user,
-            //     $ref_user,
-            //     TreePosition::from((int) $request->position)
-            // );
-
-            // $gold = Gold::where('user_id',Auth::user()->id)->first();
-            // $gold1 = Gold::where('user_id',Auth::user()->id)->where('prod_id',1)->first();
-            // $gold2 = Gold::where('user_id',Auth::user()->id)->where('prod_id',2)->first();
-            // $gold3 = Gold::where('user_id',Auth::user()->id)->where('prod_id',3)->first();
-            // $gold4 = Gold::where('user_id',Auth::user()->id)->where('prod_id',4)->first();
-
-            // if($gold){
-            //     if($gold1){
-            //         $gold1->qty += $g1 * $request->qty;
-            //         $gold1->save();
-            //     }else{
-            //         $newg = new Gold();
-            //         $newg->user_id = Auth::user()->id;
-            //         $newg->prod_id = 1;
-            //         $newg->qty = $g1 * $request->qty;
-            //         $newg->save();
-            //     }
-
-            //     if($gold2){
-            //         $gold2->qty += $g2 * $request->qty;
-            //         $gold2->save();
-            //     }else{
-            //         $newg = new Gold();
-            //         $newg->user_id = Auth::user()->id;
-            //         $newg->prod_id = 2;
-            //         $newg->qty = $g2 * $request->qty;
-            //         $newg->save();
-            //     }
-
-            //     if($gold3){
-            //         $gold3->qty += $g3 * $request->qty;
-            //         $gold3->save();
-            //     }else{
-            //         $newg = new Gold();
-            //         $newg->user_id = Auth::user()->id;
-            //         $newg->prod_id = 3;
-            //         $newg->qty = $g3 * $request->qty;
-            //         $newg->save();
-            //     }
-
-            //     if($gold4){
-            //         $gold4->qty += $g4 * $request->qty;
-            //         $gold4->save();
-            //     }else{
-            //         $newg = new Gold();
-            //         $newg->user_id = Auth::user()->id;
-            //         $newg->prod_id = 4;
-            //         $newg->qty = $g4 * $request->qty;
-            //         $newg->save();
-            //     }
-
-
-            // }else{
-            //     $newg = new Gold();
-            //     $newg->user_id = Auth::user()->id;
-            //     $newg->prod_id = 1;
-            //     $newg->qty = $g1 * $request->qty;
-            //     $newg->save();
-
-            //     $newg = new Gold();
-            //     $newg->user_id = Auth::user()->id;
-            //     $newg->prod_id = 2;
-            //     $newg->qty = $g2 * $request->qty;
-            //     $newg->save();
-
-            //     $newg = new Gold();
-            //     $newg->user_id = Auth::user()->id;
-            //     $newg->prod_id = 3;
-            //     $newg->qty = $g3 * $request->qty;
-            //     $newg->save();
-
-            //     $newg = new Gold();
-            //     $newg->user_id = Auth::user()->id;
-            //     $newg->prod_id = 4;
-            //     $newg->qty = $g4 * $request->qty;
-            //     $newg->save();
-            // }
-
         brodev(Auth::user()->id, $request->qty);
 
         $trx = $user->transactions()->create([
@@ -289,6 +214,9 @@ class PlanController extends Controller
         $notify[] = ['success', 'Purchased ' . $plan->name . ' Successfully'];
         return redirect()->route('user.home')->withNotify($notify);
 
+    }
+    public function planRoStore(Request $request){
+        
     }
 
 

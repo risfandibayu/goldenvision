@@ -636,6 +636,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             //F
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
+            Route::get('/plan/ro', 'PlanController@repeatOrder')->name('plan.ro');
             Route::get('/archivement',[ArchivementController::class,'index'])->name('archivement.view');
             Route::get('/tarik-emas',[ArchivementController::class,'tarikEmas'])->name('archivement.terikEmas');
             Route::post('/tarik-emas',[ArchivementController::class,'tarikEmasPost'])->name('terikEmas.post');
@@ -719,6 +720,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('report/Brodelivery/log', 'UserReportController@BroDeliveryLog')->name('report.BroDeliveryLog');
 
             Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
+            Route::post('/plan/ro', 'PlanController@planRoStore')->name('plan.purchase.ro');
             Route::post('/buymp', 'PlanController@buyMpStore')->name('plan.mppurchase');
             Route::get('/manage-user', 'UserController@user_boom')->name('user_boom');
             Route::get('/tree', 'PlanController@myTree')->name('my.tree');

@@ -2659,7 +2659,8 @@ function countAllBonus(){
     $binary_com =  auth()->user()->total_binary_com;
     $sharing_profit = Transaction::where('remark','porfit_sharing')->where('user_id',auth()->user()->id)->sum('amount');
     $last_ro = auth()->user()->userExtra->last_ro;
-    return ($binary_com + $sharing_profit) - $last_ro;
+    return  ($binary_com + $sharing_profit) - $last_ro;
+   
 }
 function oncreate(){
     $on_create = auth()->user()->created_at;
@@ -3305,7 +3306,7 @@ function deliverWeeklyGold($user_id){
     return 1;
 }
 function typeClaimGold($user){
-    if(check100Days($user->created_at)){
+    if(check100Gold($user->created_at,'daily')){
         return 'daily';
     }
     if(check100Week($user->created_at)){   

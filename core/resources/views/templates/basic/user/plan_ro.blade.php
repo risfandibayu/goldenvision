@@ -2,7 +2,6 @@
 
 @section('panel')
     <div class="row mb-none-30 d-flex justify-content-center">
-
         @foreach ($plans as $data)
             <div class="col-xl-4 col-md-6 mb-30">
                 <div class="card">
@@ -38,9 +37,6 @@
                             <a href="#confBuyModal{{ $data->id }}" data-toggle="modal"
                                 class="btn w-100 btn-outline--primary  mt-20 py-2 box--shadow1">@lang('Subscribe')</a>
                         @else
-                            <a data-toggle="modal"
-                                class="btn w-100 btn-outline--primary  mt-20 py-2 box--shadow1">@lang('Already
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Subscribe')</a>
                             <a href="#confBuyMP{{ $data->id }}" data-toggle="modal"
                                 class="btn  w-100 btn--primary  mt-20 py-2 box--shadow1">@lang('Buy MP')</a>
                         @endif
@@ -153,7 +149,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <h5 class="text-danger">@lang('When someone from your below tree subscribe this plan, You will get this
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Business Volume which will be used for matching bonus').
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Business Volume which will be used for matching bonus').
                                     </h5>
                                 </div>
                                 <div class="modal-footer">
@@ -249,7 +245,7 @@
                             <br>
                             <br>
                             <span class="text-success"> @lang('This is the reason you should choose a plan with bigger referral
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        commission').</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            commission').</span>
                         </h5>
                     </div>
                     <div class="modal-footer">
@@ -270,7 +266,7 @@
                     </div>
                     <div class="modal-body">
                         <h5 class=" text-danger">@lang('When someone from your below tree subscribe this plan, You will get this
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    amount as tree commission'). </h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            amount as tree commission'). </h5>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
