@@ -3418,12 +3418,23 @@ function withdrawGold(){
         'notif'             => $notif
     ];
 }
+function userGoldSum($type){
+    $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+        ->where('user_id', auth()->user()->id)
+        ->where('type', $type)
+        ->groupBy('date')
+        ->orderByDesc('date')
+        ->get();
+        
+    return $sql->count() * 0.005;
+}
 
 function userGold(){
+    
     $typeGold = typeClaimGold(auth()->user());
     $user = auth()->user();
-    $daily = $user->total_daily_golds;
-    $weekly = $user->total_weekly_golds;
+    $daily = userGoldSum('daily');
+    $weekly = userGoldSum('weekly');
     if($daily > 0.5){
         $daily = 0.5;
     }

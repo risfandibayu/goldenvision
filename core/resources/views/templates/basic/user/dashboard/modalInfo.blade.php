@@ -1,3 +1,11 @@
+<style>
+    .ModalImage {
+        background-image: url("{{ asset('assets/banner.jpeg') }}");
+        background-repeat: no-repeat;
+        width: 100%;
+        background-size: 100% 100%;
+    }
+</style>
 @if (auth()->user()->status)
     <!-- Modal -->
     <div class="modal" id="staticBackdrop" tabindex="-1" role="dialog">
@@ -9,8 +17,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
+                <div class="modal-body ModalImage">
+                    <img src="{{ asset('assets/banner.jpeg') }}" class="img-fluid" alt="Image">
+                    {{-- <div class="row">
                         <div class="col-md-12">
                             <div class="d-flex justify-content-center">
                                 <img src="{{ asset('assets/rew.png') }}" style="width: 300px" alt="">
@@ -49,7 +58,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
