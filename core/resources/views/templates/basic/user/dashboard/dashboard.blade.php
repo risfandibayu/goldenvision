@@ -85,7 +85,7 @@
 @endif
 @section('panel')
 
-    @include($activeTemplate . 'user.dashboard.modalInfo')
+    {{-- @include($activeTemplate . 'user.dashboard.modalInfo') --}}
 
 
     @include($activeTemplate . 'user.dashboard.dailyGold')
