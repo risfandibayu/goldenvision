@@ -234,11 +234,11 @@ class User extends Authenticatable
     {
         return fn ($builder) => $builder
             ->from('user_golds')
-            ->selectRaw('DATE(created_at) as date, sum(golds) as total_golds')
+            ->selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at, sum(golds) as total_golds')
             ->whereColumn('user_golds.user_id', 'users.id')
             ->where('type', $reward->value)
             ->groupBy('date')
-            ->orderBy('date', 'desc');
+            ->orderByDesc('date');
     }
     public static function userTree($id){
         $group = [];
