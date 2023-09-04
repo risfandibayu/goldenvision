@@ -241,7 +241,7 @@ class User extends Authenticatable
             ->where('type', $reward->value);
     }
     public static function goldUser($type){
-        $sql = $d_count = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at,sum(golds) as total_gold')
+        $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at,sum(golds) as total_gold')
             ->where('user_id', auth()->user()->id)
             ->where('type', $type)
             ->groupBy('date')
