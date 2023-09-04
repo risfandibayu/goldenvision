@@ -225,8 +225,10 @@ class User extends Authenticatable
     public function scopeWithGoldsTotal($builder)
     {
         $builder->addSelect([
-            'total_daily_golds' => $this->aggregateGoldsReward(UserGoldReward::Daily),
-            'total_weekly_golds' => $this->aggregateGoldsReward(UserGoldReward::Weekly)
+            // 'total_daily_golds' => $this->aggregateGoldsReward(UserGoldReward::Daily),
+            // 'total_weekly_golds' => $this->aggregateGoldsReward(UserGoldReward::Weekly)
+            'total_daily_golds' => $this->goldUser('daily'),
+            'total_weekly_golds' => $this->goldUser('weekly')
         ]);
     }
 
@@ -234,11 +236,18 @@ class User extends Authenticatable
     {
         return fn ($builder) => $builder
             ->from('user_golds')
-            ->selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at, sum(golds) as total_golds')
+            ->selectRaw('sum(golds)')
             ->whereColumn('user_golds.user_id', 'users.id')
-            ->where('type', $reward->value)
+            ->where('type', $reward->value);
+    }
+    public static function goldUser($type){
+        $sql = $d_count = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at,sum(golds) as total_gold')
+            ->where('user_id', auth()->user()->id)
+            ->where('type', $type)
             ->groupBy('date')
-            ->orderByDesc('date');
+            ->orderByDesc('date')
+            ->first();
+        return $sql->total_gold;
     }
     public static function userTree($id){
         $group = [];
