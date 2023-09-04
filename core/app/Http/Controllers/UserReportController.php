@@ -133,12 +133,22 @@ class UserReportController extends Controller
     {
         $user = Auth::user();
         $data['page_title'] = 'Claim Gold Log';
-        $count = UserGold::where(['user_id'=>$user->id,'type'=>'daily'])->count();
-        // $count = $total->count();
+        $count = UserGold::selectRaw('MAX(created_at) as created_at')
+            ->where(['user_id' => $user->id, 'type' => 'daily'])
+            ->groupBy('created_at')
+            ->orderByDesc('created_at')
+            ->get();
+
         if($count >=100){
             $count = 100;
         }
-        $log =  UserGold::where(['user_id'=>$user->id,'type'=>'daily'])->limit(5)->orderByDesc('id')->get();
+        $log = UserGold::selectRaw('MAX(created_at) as created_at')
+                ->where(['user_id' => $user->id, 'type' => 'daily'])
+                ->groupBy('created_at')
+                ->orderByDesc('created_at')
+                ->limit(5)
+                ->get();
+
         $logGold = [];
         $totalGold = userGold()['daily'];
         foreach ($log as $key => $value) {
@@ -151,9 +161,17 @@ class UserReportController extends Controller
             $totalGold -= 0.005;
         }
 
-        $logweek = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->limit(5)->orderByDesc('id')->get();
-        // dd($user->total_weekly_golds);
-        $count_w = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->count();
+        $logweek = UserGold::selectRaw('MAX(created_at) as created_at')
+            ->where(['user_id' => $user->id, 'type' => 'weekly'])
+            ->groupBy('created_at')
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get();
+        $count_w = UserGold::selectRaw('MAX(created_at) as created_at')
+            ->where(['user_id' => $user->id, 'type' => 'weekly'])
+            ->groupBy('created_at')
+            ->orderByDesc('created_at')
+            ->get();
         // $count = $total->count();
         if($count_w >=100){
             $count_w = 100;
