@@ -137,7 +137,7 @@ class UserReportController extends Controller
             ->where(['user_id' => $user->id, 'type' => 'daily'])
             ->groupBy('created_at')
             ->orderByDesc('created_at')
-            ->get();
+            ->count();
 
         if($count >=100){
             $count = 100;
@@ -171,7 +171,7 @@ class UserReportController extends Controller
             ->where(['user_id' => $user->id, 'type' => 'weekly'])
             ->groupBy('created_at')
             ->orderByDesc('created_at')
-            ->get();
+            ->count();
         // $count = $total->count();
         if($count_w >=100){
             $count_w = 100;
