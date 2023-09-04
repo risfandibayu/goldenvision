@@ -133,21 +133,23 @@ class UserReportController extends Controller
     {
         $user = Auth::user();
         $data['page_title'] = 'Claim Gold Log';
-        $count = UserGold::selectRaw('MAX(created_at) as created_at')
-            ->where(['user_id' => $user->id, 'type' => 'daily'])
-            ->groupBy('created_at')
-            ->orderByDesc('created_at')
+        $count = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS max_created_at')
+            ->where('user_id', $user->id)
+            ->where('type', 'daily')
+            ->groupBy('date')
+            ->orderByDesc('date')
             ->count();
 
         if($count >=100){
             $count = 100;
         }
-        $log = UserGold::selectRaw('MAX(created_at) as created_at')
-                ->where(['user_id' => $user->id, 'type' => 'daily'])
-                ->groupBy('created_at')
-                ->orderByDesc('created_at')
-                ->limit(5)
-                ->get();
+        $log = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS max_created_at')
+            ->where('user_id', $user->id)
+            ->where('type', 'daily')
+            ->groupBy('date')
+            ->orderByDesc('date')
+            ->limit(5)
+            ->get();
 
         $logGold = [];
         $totalGold = userGold()['daily'];
@@ -161,17 +163,21 @@ class UserReportController extends Controller
             $totalGold -= 0.005;
         }
 
-        $logweek = UserGold::selectRaw('MAX(created_at) as created_at')
-            ->where(['user_id' => $user->id, 'type' => 'weekly'])
-            ->groupBy('created_at')
-            ->orderByDesc('created_at')
+        $logweek = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS max_created_at')
+            ->where('user_id', $user->id)
+            ->where('type', 'weekly')
+            ->groupBy('date')
+            ->orderByDesc('date')
             ->limit(5)
             ->get();
-        $count_w = UserGold::selectRaw('MAX(created_at) as created_at')
-            ->where(['user_id' => $user->id, 'type' => 'weekly'])
-            ->groupBy('created_at')
-            ->orderByDesc('created_at')
+
+        $count_w = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS max_created_at')
+            ->where('user_id', $user->id)
+            ->where('type', 'weekly')
+            ->groupBy('date')
+            ->orderByDesc('date')
             ->count();
+
         // $count = $total->count();
         if($count_w >=100){
             $count_w = 100;
