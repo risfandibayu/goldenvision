@@ -133,17 +133,19 @@ class UserReportController extends Controller
     {
         $user = Auth::user();
         $data['page_title'] = 'Claim Gold Log';
-        $count = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS max_created_at')
+        $d_count = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
             ->where('user_id', $user->id)
             ->where('type', 'daily')
             ->groupBy('date')
             ->orderByDesc('date')
-            ->count();
+            ->get();
+        $count = $d_count->count();
+            
 
         if($count >=100){
             $count = 100;
         }
-        $log = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS max_created_at')
+        $log = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
             ->where('user_id', $user->id)
             ->where('type', 'daily')
             ->groupBy('date')
@@ -163,7 +165,7 @@ class UserReportController extends Controller
             $totalGold -= 0.005;
         }
 
-        $logweek = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS max_created_at')
+        $logweek = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
             ->where('user_id', $user->id)
             ->where('type', 'weekly')
             ->groupBy('date')
@@ -171,13 +173,14 @@ class UserReportController extends Controller
             ->limit(5)
             ->get();
 
-        $count_w = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS max_created_at')
+        $count_d = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
             ->where('user_id', $user->id)
             ->where('type', 'weekly')
             ->groupBy('date')
             ->orderByDesc('date')
-            ->count();
+            ->get();
 
+        $count_w = $count_d->count();
         // $count = $total->count();
         if($count_w >=100){
             $count_w = 100;
