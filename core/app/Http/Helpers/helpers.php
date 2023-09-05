@@ -3316,7 +3316,7 @@ function typeClaimGold($user){
 
 function checkClaimDailyWeekly($user){
     // return false;
-    if(!check100Gold($user->id,'daily')){
+    if(!check100Gold($user->id,'daily') && $user->wd_gold){
         return false;
     }else{
         $checkLastDaily = UserGold::where(['user_id' => $user->id, 'type' => 'daily'])->orderByDesc('id')->first();
