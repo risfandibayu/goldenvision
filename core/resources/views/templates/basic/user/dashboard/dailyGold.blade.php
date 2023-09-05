@@ -1,6 +1,6 @@
  <div class="row mb-4">
      <div class="col-lg-12">
-         @if (typeClaimGold(auht()->user()) == 'weekly' && !checkClaimDailyWeekly(auth()->user()))
+         @if (typeClaimGold(auth()->user()) == 'weekly' && !checkClaimDailyWeekly(auth()->user()))
              <div class="alert alert-warning alert-dismissible fade show p-3" role="alert">
                  <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Kamu tidak dapat lagi malakukan claim daily
                  gold karena sudah mencapai 100x claim atau sudah withdrawl daily gold
