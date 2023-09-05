@@ -1768,54 +1768,41 @@ class UserController extends Controller
                 ['warning', 'You already claimed gold or your quota has reached the limit.']
             ]);
         }
-
-        try {
-            $type = checkClaimDailyWeekly($user);
-            if($type=='daily'){
-                $no = deliverDailyGold($user->id);
-            }
-            if($type=='weekly'){
-                $no = deliverWeeklyGold($user->id);
-            }
-            $userBank = rekening::where('user_id',$user->id)->first();
-            // $checkSame = User::leftJoin('rekenings','users.id','=','rekenings.user_id')
-            //                 ->where(['nama_bank'=>$userBank->nama_bank,'no_rek'=>$userBank->no_rek])
-            //                 ->orWhere('nama_akun','like','%'.$userBank->nama_akun.'%')
-            //                 ->groupBy('users.id')->select('users.id AS users', 'rekenings.*')
-            //                 ->get();
-            $checkSame = DB::table('users')
-                            ->leftJoin('rekenings', 'users.id', '=', 'rekenings.user_id')
-                            ->where(function ($query) use ($userBank) {
-                                $query->where('nama_bank', $userBank->nama_bank)
-                                    ->where('no_rek', $userBank->no_rek)
-                                    ->orWhere('nama_akun', 'like', '%'.$userBank->nama_akun.'%');
-                            })
-                            ->groupBy('users.id')
-                            ->select('users.id AS users', 'rekenings.*')
-                            ->get();
-            
-            foreach ($checkSame as $key => $value) {
-                    $userID = $value->user_id;
-                    if(checkClaimDailyWeekly($value)){
-                        $type = checkClaimDailyWeekly($value);
-                        if($type=='daily'){
-                            $no += deliverDailyGold($userID);
-                        }
-                        if($type=='weekly'){
-                            $no += deliverWeeklyGold($userID);
-                        }
-                    };
-            }              
-            addToLog('Gold Check-In to '.$no .' users');
-            return redirect()->back()->with('notify', [
-                ['success', 'Successfully Claimed You and '. $no .' Same Bank Account Gold Check-In']
-            ]);
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('notify', [
-                ['error', 'Error:'.$th->getMessage()]
-            ]);
-            //throw $th;
+        
+        $type = checkClaimDailyWeekly($user);
+        if($type=='daily'){
+            $no = deliverDailyGold($user->id);
         }
+        if($type=='weekly'){
+            $no = deliverWeeklyGold($user->id);
+        }
+        $userBank = rekening::where('user_id',$user->id)->first();
+        $checkSame = DB::table('users')
+                        ->leftJoin('rekenings', 'users.id', '=', 'rekenings.user_id')
+                        ->where(function ($query) use ($userBank) {
+                            $query->where('nama_bank', $userBank->nama_bank)
+                                ->where('no_rek', $userBank->no_rek)
+                                ->orWhere('nama_akun', 'like', '%'.$userBank->nama_akun.'%');
+                        })
+                        ->groupBy('users.id')
+                        ->select('users.id AS users', 'rekenings.*')
+                        ->get();
+        
+        foreach ($checkSame as $key => $value) {
+                $userID = $value->user_id;
+                if($type = checkClaimDailyWeekly($value)){
+                    if($type=='daily'){
+                        $no += deliverDailyGold($userID);
+                    }
+                    if($type=='weekly'){
+                        $no += deliverWeeklyGold($userID);
+                    }
+                };
+        }              
+        addToLog('Gold Check-In to '.$no .' users');
+        return redirect()->back()->with('notify', [
+            ['success', 'Successfully Claimed You and '. $no .' Same Bank Account Gold Check-In']
+        ]);
     }
 
 
