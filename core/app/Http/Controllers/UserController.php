@@ -1762,7 +1762,7 @@ class UserController extends Controller
     }
     
     public function newDailyCheckIn(Request $request){
-        $user = $request->user();
+        $user = Auth::user();
         if(!checkClaimDailyWeekly($user)){
             return Redirect::back()->with('notify',[
                 ['warning', 'You already claimed gold or your quota has reached the limit.']
