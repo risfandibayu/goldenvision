@@ -3316,8 +3316,29 @@ function typeClaimGold($user){
 
 function checkClaimDailyWeekly($user){
     // return false;
-    if(!check100Gold($user->id,'daily') && $user->wd_gold){
-        return false;
+    if(!check100Gold($user->id,'daily') || $user->wd_gold){
+
+        if(!check100Gold($user->id,'weekly')){
+            return false;
+        }
+        if(check100Week($user->created_at)){   
+        //    check last created weekly;
+        $checkLastCreate = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->orderByDesc('id')->first();
+        if ($checkLastCreate) {
+            // Convert the created_at string to a Carbon instance
+            $createdAt = Carbon::parse($checkLastCreate->created_at);
+
+            // Calculate the difference in weeks between created_at and current date
+            $differenceInWeeks = Carbon::now()->diffInWeeks($createdAt);
+            if ($differenceInWeeks >= 1) {
+                return 'weekly';
+            }else{
+                return false;
+            } 
+        }else{
+            return 'weekly';
+        }
+    }
     }else{
         $checkLastDaily = UserGold::where(['user_id' => $user->id, 'type' => 'daily'])->orderByDesc('id')->first();
         // dd($checkLastDaily);
@@ -3330,47 +3351,14 @@ function checkClaimDailyWeekly($user){
             if ($differenceInDays >= 1) {
                 return 'daily';
             } else {
-        // dd('false 100');
-
                 return false;
             }
         } else {
             return 'daily';
         }
     }
-    // dd(check100Days($user->created_at));
 
-    // if(check100Days($user->created_at)){
-    //     // dd('true p');
-       
-    // }
-
-    if(!check100Gold($user->id,'weekly')){
-        // dd('false 100');
-        return false;
-    }
-    // dd('false 100');
-
-    if(check100Week($user->created_at)){   
-        //    check last created weekly;
-        $checkLastCreate = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->orderByDesc('id')->first();
-        // dd($checkLastCreate);
-        if ($checkLastCreate) {
-            // Convert the created_at string to a Carbon instance
-            $createdAt = Carbon::parse($checkLastCreate->created_at);
-
-            // Calculate the difference in weeks between created_at and current date
-            $differenceInWeeks = Carbon::now()->diffInWeeks($createdAt);
-// dd($differenceInWeeks);
-            if ($differenceInWeeks >= 1) {
-                return 'weekly';
-            }else{
-                return false;
-            } 
-        }else{
-            return 'weekly';
-        }
-    }
+    
 }
 
 function checkWdGold($user){
