@@ -3297,7 +3297,7 @@ function deliverWeeklyGold($user_id){
     ]);
 }
 function typeClaimGold($user){
-    if(check100Gold($user->created_at,'daily') && !Auth::user()->wd_gold){
+    if(check100Gold($user->created_at,'daily')['type'] && !Auth::user()->wd_gold){
         return 'daily';
     }
     if(check100Week($user->created_at)){   
@@ -3311,9 +3311,9 @@ function checkClaimDailyWeekly($users){
     if(!$user) {
         return false;
     }
-    if(!check100Gold($user->id,'daily') || $user->wd_gold){
+    if(!check100Gold($user->id,'daily')['type'] || $user->wd_gold){
 
-        if(!check100Gold($user->id,'weekly')){
+        if(!check100Gold($user->id,'weekly')['type']){
             return false;
         }
         if(check100Week($user->created_at)){   
@@ -3364,10 +3364,10 @@ function checkWdGold($user){
         return false;
     }
     // dd
-    if(!$user->wd_gold && !check100Gold($user->id,'daily')){
+    if(!$user->wd_gold && !check100Gold($user->id,'daily')['type']){
         return 'daily';
     }
-    if(!check100Gold($user->id,'weekly')){
+    if(!check100Gold($user->id,'weekly')['type']){
         return 'weekly';
     }
     return false;
