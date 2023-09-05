@@ -53,7 +53,7 @@
              </div>
              <div class="alert alert-warning alert-dismissible fade show p-3" role="alert">
                  <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Check-In and get your 0.005 Gram
-                 {{ typeClaimGold() }} gold
+                 {{ typeClaimGold(auth()->user()) }} gold
                  right
                  now.
                  &nbsp; <a href="#" class="alert-link" data-toggle="modal" data-target="#exampleModal">CHECK
