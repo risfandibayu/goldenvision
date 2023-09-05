@@ -207,7 +207,7 @@
                         </div>
                     </div>
                 @endif
-                @if (auth()->user()->new_ps || oncreate() > 90)
+                @if (auth()->user()->new_ps && oncreate() < 90)
                     <div class="card card-header-actions mb-3">
                         <div class="card-body">
                             <strong>Hi {{ auth()->user()->username }}.</strong>
