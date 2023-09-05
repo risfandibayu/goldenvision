@@ -18,7 +18,7 @@
                     </button>
                 </div>
                 <div class="modal-body ModalImage">
-                    <img src="{{ asset('assets/banner.jpeg') }}" class="img-fluid" alt="Image">
+                    <img src="{{ asset('assets/banner-update.jpeg') }}" class="img-fluid" alt="Image">
                     {{-- <div class="row">
                         <div class="col-md-12">
                             <div class="d-flex justify-content-center">
