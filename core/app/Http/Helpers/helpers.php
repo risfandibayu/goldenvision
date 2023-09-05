@@ -3259,20 +3259,13 @@ function check100Gold($user_id,$type){
 }
 
 function deliverDailyGold($user_id){
-    $user = User::find($user_id);
-    //check gold user;
-    $dailyCheck = check100Gold($user->id,'daily');
+    $dailyCheck = check100Gold($user_id,'daily');
     if(!$dailyCheck['type']){
         return false;
     }
-    //check umur account;
-    // $umur = check100Days($user->created_at);
-    // if(!$umur){
-    //     return false;
-    // }
     $day = $dailyCheck['day'];
     UserGold::create([
-        'user_id'   => $user->id,
+        'user_id'   => $user_id,
         'day'       => $day,
         'golds'     => 0.005,
         'grams'     => 0,
