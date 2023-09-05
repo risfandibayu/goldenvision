@@ -3319,9 +3319,9 @@ function checkClaimDailyWeekly($users){
         if(check100Week($user->created_at)){   
         //    check last created weekly;
         $checkLastCreate = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->orderByDesc('id')->first();
-        $created_at = date('Y-m-d', strtotime($checkLastCreate->created_at));
         
         if ($checkLastCreate) {
+            $created_at = date('Y-m-d', strtotime($checkLastCreate->created_at));
             // Convert the created_at string to a Carbon instance
             $createdAt = Carbon::parse($created_at);
 
@@ -3338,9 +3338,9 @@ function checkClaimDailyWeekly($users){
     }
     }else{
         $checkLastDaily = UserGold::where(['user_id' => $user->id, 'type' => 'daily'])->orderByDesc('id')->first();
-        $created_at = date('Y-m-d', strtotime($checkLastDaily->created_at));
         // dd($checkLastDaily);
         if ($checkLastDaily) {
+            $created_at = date('Y-m-d', strtotime($checkLastDaily->created_at));
             // Convert the created_at string to a Carbon instance
             $createdAt = Carbon::parse($created_at);
             // Calculate the difference in days between created_at and current date
