@@ -1,5 +1,11 @@
  <div class="row mb-4">
      <div class="col-lg-12">
+         @if (typeClaimGold() == 'weekly' && !checkClaimDailyWeekly(auth()->user()))
+             <div class="alert alert-warning alert-dismissible fade show p-3" role="alert">
+                 <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Kamu tidak dapat lagi malakukan claim daily
+                 gold karena sudah mencapai 100x claim atau sudah withdrawl daily gold
+             </div>
+         @endif
          @if (checkClaimDailyWeekly(auth()->user()))
              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                  <div class="modal-dialog">
@@ -46,7 +52,8 @@
                  </div>
              </div>
              <div class="alert alert-warning alert-dismissible fade show p-3" role="alert">
-                 <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Check-In and get your 0.005 Gram gold
+                 <strong>Hey {{ Auth::user()->fullname }}!</strong> &nbsp; Check-In and get your 0.005 Gram
+                 {{ typeClaimGold() }} gold
                  right
                  now.
                  &nbsp; <a href="#" class="alert-link" data-toggle="modal" data-target="#exampleModal">CHECK
