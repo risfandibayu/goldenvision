@@ -3272,7 +3272,6 @@ function deliverDailyGold($user_id){
         'type'      => 'daily',
         'week'      => 0
     ]);
-    return 1;
 }
 
 function deliverWeeklyGold($user_id){
@@ -3296,7 +3295,6 @@ function deliverWeeklyGold($user_id){
         'type'      => 'weekly',
         'week'      => 0
     ]);
-    return 1;
 }
 function typeClaimGold($user){
     if(check100Gold($user->created_at,'daily') && !Auth::user()->wd_gold){
