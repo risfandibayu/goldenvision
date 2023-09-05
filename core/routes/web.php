@@ -93,6 +93,8 @@ Route::get('test-ex',function(){
     return 'success';
 });
 Route::get('cron-gems',[CronController::class,'gems']);
+
+
 Route::get('mark-lf',function(){
     $ux = UserExtra::all();
     foreach ($ux as $key => $value) {

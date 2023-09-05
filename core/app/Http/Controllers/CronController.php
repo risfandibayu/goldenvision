@@ -928,51 +928,81 @@ class CronController extends Controller
         return 'Success ' .$s.' update, '.$e. 'error';
     }
     public function gems(){
-        $today = now();
-        $rekenings = rekening::select('nama_bank', 'nama_akun', 'no_rek')
-            ->selectRaw('COUNT(*) AS count_user')
-            ->join('users as u', 'rekenings.user_id', '=', 'u.id')
-            ->where('users.created_at', $today)
-            ->where('u.gems', 0)
-            ->groupBy('nama_bank', 'nama_akun', 'no_rek')
+        $today = Carbon::now();
+        // $today = '2023-09-01';
+        $rekenings = DB::table('users as u')
+            // ->select('u.id', 'u.username', 'r.nama_bank', 'r.nama_akun')
+            ->select('u.id', 'u.username', 'r.nama_bank', 'r.nama_akun', DB::raw('COUNT(*) AS count_user'))
+            ->join('rekenings as r', 'u.id', '=', 'r.user_id')
+            ->whereDate('u.created_at', $today)
+            ->groupBy('r.nama_bank', 'r.nama_akun')
             ->get();
-        
-        foreach ($rekenings as $key => $value) {
-            $rek = Rekening::select('rekenings.*', 'users.username', 'users.gems')
-                ->join('users', 'rekenings.user_id', '=', 'users.id')
-                ->where('nama_bank', $value->nama_bank)
-                ->where('nama_akun', $value->nama_akun)
-                ->where('rekenings.created_at', '>=', $startDate)
-                ->where('users.gems', 0)
-                ->get();
-            // if ($rek->count() < 28) {
-            //     $sl = $rek->slice(0, 21);
+            foreach ($rekenings as $key => $value) {
+                if($value->count_user >=7){
+                    $deliver = DB::table('users as u')
+                        ->select('u.id', 'u.username', 'r.nama_bank', 'r.nama_akun')
+                        ->join('rekenings as r', 'u.id', '=', 'r.user_id')
+                        ->whereDate('u.created_at', $today)
+                        ->where('nama_bank',$value->nama_bank)
+                        ->where('nama_akun',$value->nama_akun)
+                        ->get(7);
+                    foreach ($deliver as $keyi => $v) {
+                        $user = User::find($v->id);
+                        $user->update([
+                            'gems'  => 1,
+                            'gems_flag' => 1,
+                        ]);
+                    }
+                }
+                if($value->count_user < 7){
+                    $user1 = User::find($value->id);
+                    $user1->update([
+                        'gems'  => 1,
+                        'gems_flag' => 1,
+                    ]);
+                }
+                    
+            }
+        return 'success deliver gems';
+        // foreach ($rekenings as $key => $value) {
+        //     # code...
+        // }
+        // foreach ($rekenings as $key => $value) {
+        //     $rek = Rekening::select('rekenings.*', 'users.username', 'users.gems')
+        //         ->join('users', 'rekenings.user_id', '=', 'users.id')
+        //         ->where('nama_bank', $value->nama_bank)
+        //         ->where('nama_akun', $value->nama_akun)
+        //         ->where('rekenings.created_at', '>=', $startDate)
+        //         ->where('users.gems', 0)
+        //         ->get();
+        //     // if ($rek->count() < 28) {
+        //     //     $sl = $rek->slice(0, 21);
 
-            // }else if ($rek->count() < 21) {
-            //     $sl = $rek->slice(0, 14);
+        //     // }else if ($rek->count() < 21) {
+        //     //     $sl = $rek->slice(0, 14);
                 
-            // }else if($rek->count() < 14){
-            //      $sl = $rek->slice(0, 7);
-            // }
-            $count = $value->occurrence_count;
-            if($count == 21 || $count < 28){
-                $sl = $rek->slice(0, 21);
-            } else if ($count == 14 || $count< 21) {
-                $sl = $rek->slice(0, 14);
+        //     // }else if($rek->count() < 14){
+        //     //      $sl = $rek->slice(0, 7);
+        //     // }
+        //     $count = $value->occurrence_count;
+        //     if($count == 21 || $count < 28){
+        //         $sl = $rek->slice(0, 21);
+        //     } else if ($count == 14 || $count< 21) {
+        //         $sl = $rek->slice(0, 14);
                 
-            }else if($count == 7 || $count< 14){
-                 $sl = $rek->slice(0,7);
-            }
-            // dd($sl);
-            $ids = [];
-            foreach ($sl as $key => $value) {
-                $ids[] += $value->user_id;
-            }
-            DB::table('users')
-                ->whereIn('id', $ids)
-                ->update(['gems' => 1]);
-        }
-        return 'success';
+        //     }else if($count == 7 || $count< 14){
+        //          $sl = $rek->slice(0,7);
+        //     }
+        //     // dd($sl);
+        //     $ids = [];
+        //     foreach ($sl as $key => $value) {
+        //         $ids[] += $value->user_id;
+        //     }
+        //     DB::table('users')
+        //         ->whereIn('id', $ids)
+        //         ->update(['gems' => 1]);
+        // }
+        // return 'success';
     }
 
     public function new_ps(){
