@@ -1768,7 +1768,6 @@ class UserController extends Controller
                 ['warning', 'You already claimed gold or your quota has reached the limit.']
             ]);
         }
-
         $type = checkClaimDailyWeekly($user);
         if($type=='daily'){
            deliverDailyGold($user->id);

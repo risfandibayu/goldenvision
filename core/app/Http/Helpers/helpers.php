@@ -3307,7 +3307,10 @@ function typeClaimGold($user){
 
 function checkClaimDailyWeekly($users){
     // return false;
-    $user = User::find($users->id);
+    $user = User::where('id',$users->id)->first();
+    if(!$user) {
+        return false;
+    }
     if(!check100Gold($user->id,'daily') || $user->wd_gold){
 
         if(!check100Gold($user->id,'weekly')){
@@ -3349,8 +3352,6 @@ function checkClaimDailyWeekly($users){
             return 'daily';
         }
     }
-
-    
 }
 
 function checkWdGold($user){
