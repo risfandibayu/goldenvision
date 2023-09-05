@@ -957,7 +957,7 @@ class CronController extends Controller
                 if($value->count_user < 7){
                     $user1 = User::find($value->id);
                     $user1->update([
-                        'gems'  => 1,
+                        'gems_dlv'  => 1,
                         'gems_flag' => 1,
                     ]);
                 }
