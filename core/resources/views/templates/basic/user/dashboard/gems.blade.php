@@ -8,9 +8,9 @@
 
     .cardGems {
         /* Set width and height for the card */
-        width: 300px;
+        /* width: 300px; */
         /* Adjust the value as needed */
-        height: 200px;
+        height: 220px;
         /* Adjust the value as needed */
 
         /* Add some styling to make it look like a card */
@@ -42,21 +42,26 @@
                     </h2>
                 </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer text-center">
                 @if (auth()->user()->xgems)
                     <form action="{{ route('user.login.ayamku') }}" method="get" target="_blank">
-                        <input type="hidden" name="username" id="" value="{{ auth()->user()->username }}">
+                        <input type="hidden" name="username" id=""
+                            value="{{ auth()->user()->username == 'masterplan01' ? 'bozgems' : auth()->user()->username }}">
+                        <span>Klik tombol dibawah untuk login Game Ayamku</span>
                         <button class="btn btn-warning btn-block" type="submit">
                             <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
                     </form>
                     <br>
+
                     <input type="hidden" id="urlDemo" value="{{ demoUrl() }}">
-                    <button class="btn btn-warning btn-block btnCopy" type="button" onclick="copyCode()">
+                    <span>Klik tombol dibawah untuk Salin Link/URL dan Tempel kan link tersebut untuk menyebarkan
+                        game</span>
+                    <button class="btn btn-info btn-block btnCopy" type="button" onclick="copyCode()">
                         <i class="menu-icon las la-sign-in-alt"></i>Share Demo Account</button>
                 @elseif(!auth()->user()->xgems && checkxgems())
                     <form action="{{ route('user.register.ayamku') }}" method="post">
                         @csrf
-                        <button class="btn btn-warning btn-block" type="submit">
+                        <button class="btn btn-info btn-block" type="submit">
                             <i class="menu-icon las la-sign-in-alt"></i> Buat Akun & Convert Gems</button>
                     </form>
                 @endif

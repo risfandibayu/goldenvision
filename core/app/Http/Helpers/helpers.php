@@ -3218,7 +3218,7 @@ function sendWa($msg){
     return $res;
 }
 function demoUrl(){
-    return url('login-ayam') . '?username=' . auth()->user()->username . '_demo';
+    return url('login-ayam') . '?username=' .auth()->user()->username=='masterplan01'?'bozgems':auth()->user()->username . '.ai';
 }
 function check100Days($created_at){
     $differenceInDays = Carbon::now()->diffInDays($created_at);
