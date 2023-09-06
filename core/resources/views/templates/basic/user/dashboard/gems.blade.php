@@ -52,7 +52,7 @@
                             <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
                     </form>
                     <br>
-
+                    {{-- @dd(demoUrl()); --}}
                     <input type="hidden" id="urlDemo" value="{{ demoUrl() }}">
                     <span>Klik tombol dibawah untuk Salin Link/URL dan Tempel kan link tersebut untuk menyebarkan
                         game</span>
