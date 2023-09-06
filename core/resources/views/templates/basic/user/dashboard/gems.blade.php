@@ -57,7 +57,7 @@
                     <span>Klik tombol dibawah untuk Salin Link/URL dan Tempel kan link tersebut untuk menyebarkan
                         game</span>
                     <button class="btn btn-info btn-block btnCopy" type="button" onclick="copyCode()">
-                        <i class="menu-icon las la-sign-in-alt"></i>Share Demo Account</button>
+                        <i class="menu-icon las la-sign-in-alt"></i>Share XGEMS Ayamku</button>
                 @elseif(!auth()->user()->xgems && checkxgems())
                     <form action="{{ route('user.register.ayamku') }}" method="post">
                         @csrf
@@ -86,7 +86,7 @@
         function copyCode() {
             var text = $('#urlDemo').val();
             copyToClipboard(text);
-            alert('DEMO URL Copied.')
+            alert('XGEMS Ayamku URL Copied.')
         }
 
         function copyToClipboard(text) {
