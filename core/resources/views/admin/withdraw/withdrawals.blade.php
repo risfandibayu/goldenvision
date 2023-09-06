@@ -49,12 +49,13 @@
                                         <th scope="col">@lang('Username')</th>
                                     @endif
                                     <th scope="col">@lang('Method')</th>
-                                    <th scope="col">@lang('Amount')</th>
+                                    {{-- <th scope="col">@lang('Amount')</th>
                                     <th scope="col">@lang('Charge')</th>
                                     <th scope="col">@lang('After Charge')</th>
-                                    <th scope="col">@lang('Rate')</th>
+                                    <th scope="col">@lang('Rate')</th> --}}
                                     <th scope="col">@lang('Payable')</th>
-                                    @if (request()->routeIs('admin.withdraw.pending'))
+                                    @if (request()->routeIs('admin.withdraw.pending') || request()->routeIs('admin.withdraw.method'))
+                                        <th scope="col">@lang('Status')</th>
                                         <th scope="col">@lang('Action')</th>
                                     @elseif(request()->routeIs('admin.withdraw.log') ||
                                             request()->routeIs('admin.withdraw.search') ||
@@ -102,19 +103,31 @@
                                                     {{ __(@$withdraw->method->name) }}</a>
                                             @endif
                                         </td>
-                                        <td data-label="@lang('Amount')" class="budget font-weight-bold">
+                                        {{-- <td data-label="@lang('Amount')" class="budget font-weight-bold">
                                             {{ nb(getAmount($withdraw->amount)) }} {{ __($general->cur_text) }}</td>
                                         <td data-label="@lang('Charge')" class="budget text-danger">
                                             {{ nb(getAmount($withdraw->charge)) }} {{ __($general->cur_text) }}</td>
                                         <td data-label="@lang('After Charge')" class="budget">
                                             {{ nb(getAmount($withdraw->after_charge)) }} {{ __($general->cur_text) }}</td>
                                         <td data-label="@lang('Rate')" class="budget">{{ getAmount($withdraw->rate) }}
-                                            {{ __($withdraw->currency) }}</td>
+                                            {{ __($withdraw->currency) }}</td> --}}
 
                                         <td data-label="@lang('Payable')" class="budget font-weight-bold">
                                             {{ nb(getAmount($withdraw->final_amount)) }} {{ __($withdraw->currency) }}
                                         </td>
-                                        @if (request()->routeIs('admin.withdraw.pending'))
+                                        @if (request()->routeIs('admin.withdraw.pending') || request()->routeIs('admin.withdraw.method'))
+                                            <td data-label="@lang('Status')">
+                                                @if ($withdraw->status == 2)
+                                                    <span
+                                                        class="text--small badge font-weight-normal badge--warning">@lang('Pending')</span>
+                                                @elseif($withdraw->status == 1)
+                                                    <span
+                                                        class="text--small badge font-weight-normal badge--success">@lang('Approved')</span>
+                                                @elseif($withdraw->status == 3)
+                                                    <span
+                                                        class="text--small badge font-weight-normal badge--danger">@lang('Rejected')</span>
+                                                @endif
+                                            </td>
                                             <td data-label="@lang('Action')">
                                                 <a href="{{ route('admin.withdraw.details', $withdraw->id) }}"
                                                     class="icon-btn ml-1 "
