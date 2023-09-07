@@ -49,15 +49,21 @@
                             value="{{ auth()->user()->username == 'masterplan01' ? 'bozgems' : auth()->user()->username }}">
                         <span>Klik tombol dibawah untuk login Game Ayamku</span>
                         <button class="btn btn-warning btn-block" type="submit">
-                            <i class="menu-icon las la-sign-in-alt"></i> Login Ayamku</button>
+                            <i class="menu-icon las la-sign-in-alt"></i> Login Game Ayamku</button>
                     </form>
+                    <br>
+                    <span>Klik tombol untuk login Web Dashboard Ayamku</span>
+                    <a href="{{ 'https://xgems.masterplan.co.id/login' }}" class="btn btn-success btn-block"
+                        target="_blank">Login
+                        Dashboard
+                        Ayamku</a>
                     <br>
                     {{-- @dd(demoUrl()); --}}
                     <input type="hidden" id="urlDemo" value="{{ demoUrl() }}">
                     <span>Klik tombol dibawah untuk Salin Link/URL dan Tempel kan link tersebut untuk menyebarkan
                         game</span>
                     <button class="btn btn-info btn-block btnCopy" type="button" onclick="copyCode()">
-                        <i class="menu-icon las la-sign-in-alt"></i>Share XGEMS Ayamku</button>
+                        <i class="menu-icon las la-copy"></i>Share XGEMS Ayamku</button>
                 @elseif(!auth()->user()->xgems && checkxgems())
                     <form action="{{ route('user.register.ayamku') }}" method="post">
                         @csrf
