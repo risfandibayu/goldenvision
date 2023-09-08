@@ -11,6 +11,8 @@ use App\Models\Withdrawal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use function GuzzleHttp\Promise\all;
+
 class WithdrawalController extends Controller
 {
     public function pending()
@@ -116,25 +118,28 @@ class WithdrawalController extends Controller
     }
 
     public function dateSearch(Request $request,$scope){
+        // dd($request->all());
         $search = $request->date;
         if (!$search) {
             return back();
         }
-        $date = explode('-',$search);
+        // $date = explode('-',$search);
 
-        if(!(@strtotime($date[0]) && @strtotime($date[1]))){
-            $notify[]=['error','Please provide valid date'];
-            return back()->withNotify($notify);
-        }
+        // if(!(@strtotime($date[0]) && @strtotime($date[1]))){
+        //     $notify[]=['error','Please provide valid date'];
+        //     return back()->withNotify($notify);
+        // }
 
-        $start = @$date[0];
-        $end = @$date[1];
-        if ($start) {
-            $withdrawals = Withdrawal::where('status','!=',0)->where('created_at','>',Carbon::parse($start)->subDays(1))->where('created_at','<=',Carbon::parse($start)->addDays(1));
-        }
-        if($end){
-            $withdrawals = Withdrawal::where('status','!=',0)->where('created_at','>',Carbon::parse($start)->subDays(1))->where('created_at','<',Carbon::parse($end));
-        }
+        // $start = @$date[0];
+        // $end = @$date[1];
+        // if ($start) {
+        //     $withdrawals = Withdrawal::where('status','!=',0)->where('created_at','>',Carbon::parse($start)->subDays(1))->where('created_at','<=',Carbon::parse($start)->addDays(1));
+        // }
+        // if($end){
+        // }
+        $withdrawals = Withdrawal::where('status','!=',0)
+        ->whereDate('created_at', '=', $search);
+        // ->get();
         if ($request->method) {
             $method = WithdrawMethod::findOrFail($request->method);
             $withdrawals = $withdrawals->where('method_id',$method->id);

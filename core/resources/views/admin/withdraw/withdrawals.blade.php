@@ -204,10 +204,10 @@
             action="{{ route('admin.withdraw.dateSearch',$scope ??str_replace('admin.withdraw.','',request()->route()->getName())) }}"
             method="GET" class="form-inline float-sm-right bg--white mr-0 mr-xl-2 mr-lg-0">
             <div class="input-group has_append">
-                <input name="date" type="text" data-range="true" data-multiple-dates-separator=" - "
-                    data-language="en" class="datepicker-here bg--white text--black form-control"
-                    data-position='bottom right' placeholder="@lang('Min Date - Max date')" autocomplete="off"
-                    value="{{ @$dateSearch }}" readonly>
+                <input name="date" type="date" data-range="true" data-multiple-dates-separator=" - "
+                    data-language="en" class=" bg--white text--secondary form-control" data-position='bottom right'
+                    placeholder="@lang('date')" autocomplete="off" value="{{ @$dateSearch }}">
+                {{-- <input type="date" name="date" id="form-control"> --}}
                 <input type="hidden" name="method" value="{{ @$method->id }}">
                 <div class="input-group-append">
                     <button class="btn btn--primary" type="submit"><i class="fa fa-search"></i></button>
@@ -218,13 +218,17 @@
 @endpush
 @push('script')
     <script src="{{ asset('assets/admin/js/vendor/datepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/vendor/datepicker.en.js') }}"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"
+        integrity="sha512-RCgrAvvoLpP7KVgTkTctrUdv7C6t7Un3p1iaoPr1++3pybCyCsCZZN7QEHMZTcJTmcJ7jzexTO+eFpHk4OCFAg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+    {{-- <script src="{{ asset('assets/admin/js/vendor/datepicker.en.js') }}"></script> --}}
     <script>
         'use strict';
         (function($) {
-            if (!$('.datepicker-here').val()) {
-                $('.datepicker-here').datepicker();
-            }
+            // if (!$('.datepicker-here').val()) {
+            //     $('.datepicker-here').datepicker();
+            // }
+            $('.datepicker').datepicker();
         })(jQuery)
     </script>
 @endpush

@@ -965,8 +965,8 @@ class CronController extends Controller
                 $no+1;
             }
         $msg = "Cron Deliver Gems Daily Running " . PHP_EOL . "date : $today" . PHP_EOL  . "count : $no";
-                    $this->sendMessege($msg);
-        return 'success deliver gems';
+        $wa = $this->sendMessege($msg);
+        return $wa;
 
     }
 
