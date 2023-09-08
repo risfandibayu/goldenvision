@@ -693,7 +693,7 @@ class CronController extends Controller
                 }
                 $userex = UserExtra::where('user_id',$userID)->first();
                 if($userex){
-                    if($kiri >= 3 && $kanan >= 3){
+                    if($kiri == 3 && $kanan == 3){
                         $userex->update([
                             'is_gold'   => 1,
                             'right_lv'  => $kanan,
@@ -710,7 +710,9 @@ class CronController extends Controller
                         ]);
                         $true += 1;
                     }
-                    if($p_kiri >= 3 && $p_kanan >= 3){
+
+
+                    if($p_kiri == 3 && $p_kanan == 3){
                         $userex->update([
                             'is_gold'   => 1,
                             'right_lv'  => $kanan,
