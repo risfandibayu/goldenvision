@@ -175,7 +175,8 @@
 
 
 <div class="container text-center my-3">
-    <h5 class="font-weight-light font-weight-bold">User Claim Reward</h5>
+    <h5 class="font-weight-light font-weight-bold mb-3">User Claim Reward</h5>
+    <br>
     <div class="row mx-auto my-auto">
         <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
             <div class="carousel-inner w-100" role="listbox">
