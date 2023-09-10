@@ -39,7 +39,7 @@ class AdminController extends Controller
 
     public function dashboard(Request $request)
     {
-        // dd(sharingProfit());
+        // dd(totalWdGold());
         if ($request->has('date')) {
            $date = $request->input('date');
         }else{

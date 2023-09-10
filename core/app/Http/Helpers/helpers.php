@@ -2545,7 +2545,12 @@ function totalWdGold(){
     foreach($totalAmount as $t){
         $id[] += $t->user_id; 
     }
-    $user = User::where('firstname','!=','ptmmi')->where('firstname','!=','masterplan')->whereNotIn('id',$id)->get();
+    $user = User::join('user_extras','users.id','=','user_extras.user_id')
+        ->where('firstname','!=','ptmmi')
+        ->where('firstname','!=','masterplan')
+        ->where('user_extras.is_gold',1)
+        ->whereNotIn('users.id',$id)
+        ->get();
     $total = $user->count() /2;
     // dd($total);
     $totalAmount = $total * goldToday();

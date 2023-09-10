@@ -661,7 +661,11 @@ class CronController extends Controller
         }
     }
     public function isGold(){
-        $users = User::join('user_extras','users.id','=','user_extras.user_id')->where('is_gold',0)->get();
+        $users = User::join('user_extras','users.id','=','user_extras.user_id')
+            ->where('is_gold',0)
+            ->where('bonus_deliver', 0)
+            ->orWhereNull('bonus_deliver')
+            ->get();
         // dd($users);
         $record = 0;
         $true = 0;
