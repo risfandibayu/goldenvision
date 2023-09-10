@@ -3269,6 +3269,24 @@ function check100Gold($user_id,$type){
         return ['type'=>false,'day'=>$checkDaily->count()];
     }
 }
+function deliverDailyWeekly($user){
+    $type = checkClaimDailyWeekly($user);
+    if(!$type){
+        return 0;
+    }
+    $dailyCheck = check100Gold($user->id,$type);
+    $day = $dailyCheck['day'];
+    UserGold::create([
+        'user_id'   => $user->id,
+        'day'       => $type=='daily'?$day:0,
+        'golds'     => 0.005,
+        'grams'     => 0,
+        'type'      => $type,
+        'week'      => $type=='weekly'?$day:0,
+    ]);
+    return 1;
+}
+
 
 function deliverDailyGold($user_id){
     $dailyCheck = check100Gold($user_id,'daily');

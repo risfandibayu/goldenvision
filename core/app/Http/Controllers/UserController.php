@@ -1768,13 +1768,6 @@ class UserController extends Controller
                 ['warning', 'You already claimed gold or your quota has reached the limit.']
             ]);
         }
-        $type = checkClaimDailyWeekly($user);
-        if($type=='daily'){
-           deliverDailyGold($user->id);
-        }
-        if($type=='weekly'){
-           deliverWeeklyGold($user->id);
-        }
         $userBank = rekening::where('user_id',$user->id)->first();
         $checkSame = DB::table('users')
                         ->leftJoin('rekenings', 'users.id', '=', 'rekenings.user_id')
@@ -1786,21 +1779,14 @@ class UserController extends Controller
                         ->groupBy('users.id')
                         ->select('users.id AS users', 'rekenings.*')
                         ->get();
-        
+        $no = 0;
         foreach ($checkSame as $key => $value) {
-                $userID = $value->user_id;
-                if($type = checkClaimDailyWeekly($value)){
-                    if($type=='daily'){
-                       deliverDailyGold($userID);
-                    }
-                    if($type=='weekly'){
-                       deliverWeeklyGold($userID);
-                    }
-                };
+            $user = User::find($value->user_id);
+            $no +=  deliverDailyWeekly($user);
         }              
-        addToLog($type .' Gold Check-In  users');
+        addToLog('Users Check-In Gold to '.$no.' users');
         return redirect()->back()->with('notify', [
-            ['success', 'You Successfully Claimed and '. $checkSame->count() .' Possible Same Bank Account Gold Check-In']
+            ['success', 'You Successfully Claimed and '. $no .' Possible Same Bank Account Gold Check-In']
         ]);
     }
 
