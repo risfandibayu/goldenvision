@@ -2549,9 +2549,9 @@ function totalWdGold(){
         ->where('firstname','!=','ptmmi')
         ->where('firstname','!=','masterplan')
         ->where('user_extras.is_gold',1)
-        ->whereNotIn('users.id',$id)
+        // ->whereNotIn('users.id',$id)
         ->get();
-    $total = $user->count() /2;
+    $total = $user->count();
     // dd($total);
     $totalAmount = $total * goldToday();
     return $totalAmount;
