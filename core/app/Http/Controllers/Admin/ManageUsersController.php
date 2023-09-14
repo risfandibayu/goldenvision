@@ -941,7 +941,7 @@ class ManageUsersController extends Controller
 
         $users = User::query()
             ->select([
-                'id', 'username', 'firstname', 'lastname', 'email'
+                'id', 'username', 'firstname', 'lastname', 'email','wd_gold'
             ])
             ->when(
                 $request->search,
@@ -951,7 +951,14 @@ class ManageUsersController extends Controller
             )
             ->withGoldsTotal()
             ->withCount('dailyGolds')
+            ->limit(100)
             ->paginate(getPaginate());
+            // ->limit(50)
+            // ->get();
+        // $user = User::
+
+
+    // dd($users);
 
         return view(
             'admin.users.gold-reward',

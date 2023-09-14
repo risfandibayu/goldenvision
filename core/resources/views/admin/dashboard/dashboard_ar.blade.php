@@ -21,8 +21,6 @@
         </div>
 
     </div>
-
-    @include('admin.partials.matchingBonusModal')
 @endsection
 
 @push('breadcrumb-plugins')

@@ -3467,6 +3467,38 @@ function userGold(){
         'equal' => $equal
     ];
 }
+function userGoldSumID($userId,$type){
+      $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+        ->where('user_id', $userId)
+        ->where('type', $type)
+        ->groupBy('date')
+        ->orderByDesc('date')
+        ->get();
+        
+    return $sql->count() * 0.005;
+}
+function userGoldID($userID){
+    $user = User::find($userID);
+    $daily = userGoldSumID($userID,'daily');
+    $weekly = userGoldSumID($userID,'weekly');
+    if($daily > 0.5){
+        $daily = 0.5;
+    }
+    if($weekly > 0.5){
+        $weekly = 0.5;
+    }
+    if($user->wd_gold){
+        $daily=0;
+    }
+    $total = $daily + $weekly;
+    $equal = todayGold() * $total;
+    return [
+        'total' => $total,
+        'daily' => $daily,
+        'weekly'=> $weekly,
+        'equal' => $equal
+    ];
+}
 function tanggal($date){
     Carbon::setLocale('id'); // Mengatur bahasa ke bahasa Indonesia
 

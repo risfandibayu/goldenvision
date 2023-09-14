@@ -331,13 +331,12 @@
                             <span class="menu-title">@lang('Admin Reward')</span>
                         </a>
                     </li>
-                    <li class="sidebar-menu-item {{ menuActive('admin.invest.gdetail*') }}">
+                    {{-- <li class="sidebar-menu-item {{ menuActive('admin.invest.gdetail*') }}">
                         <a href="{{ route('admin.invest.gdetail') }}" class="nav-link ">
-                            {{-- <i class="las la-paper-plane"></i> --}}
                             <i class="menu-icon las la-coins"></i>
                             <span class="menu-title">@lang('User Golds')</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="sidebar-menu-item {{ menuActive('admin.users.reward.gold*') }}">
                         <a href="{{ route('admin.users.reward.gold') }}" class="nav-link ">
                             {{-- <i class="las la-paper-plane"></i> --}}

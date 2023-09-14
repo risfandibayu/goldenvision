@@ -240,15 +240,26 @@ class User extends Authenticatable
             ->whereColumn('user_golds.user_id', 'users.id')
             ->where('type', $reward->value);
     }
+
+
     public static function goldUser($type){
-        $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at,sum(golds) as total_gold')
-            ->where('user_id', auth()->user()->id)
-            ->where('type', $type)
-            ->groupBy('date')
-            ->orderByDesc('date')
-            ->first();
-        return $sql->total_gold;
+        // $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at,sum(golds) as total_gold')
+        //     // ->where('user_id', auth()->user()->id)
+        //     ->whereColumn('user_golds.user_id', 'users.id')
+        //     ->where('type', $type)
+        //     ->groupBy('date')
+        //     ->orderByDesc('date')
+        //     ->first();
+        $sql =  fn ($builder) => $builder
+            ->from('user_golds')
+            ->selectRaw('sum(golds)')
+            ->whereColumn('user_golds.user_id', 'users.id')
+            ->where('type', $type);
+            
+        return $sql;
     }
+
+
     public static function userTree($id){
         $group = [];
         $user = User::find($id);
