@@ -155,9 +155,9 @@ class UserController extends Controller
                 "status"=> 200,
                 "message"=> "Rekening User",
                 "data"=>[
-                    "nama_bank" => "BANK MANDIRI",
+                    "nama_bank" => "BANK BNI",
                     "nama_akun" => "Aris waluyo",
-                    "no_rek"    => 1390005339787,
+                    "no_rek"    => '0346027699',
                     "kota_cabang"=>"Purwokerto"
                 ]
         ]);

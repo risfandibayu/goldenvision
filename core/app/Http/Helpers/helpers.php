@@ -3179,7 +3179,7 @@ function tarikGems(){
     $deliver = $totgems + $bonus;
 
     if(auth()->user()->gems_dlv){
-        $deliver    = 350000 +(350000*0.42);
+        $deliver    = 350000 + (350000*0.42);
         $count      = 1;
     }else{
         $deliver    = $totgems + $bonus;
