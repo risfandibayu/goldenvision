@@ -67,6 +67,7 @@
                 @elseif(!auth()->user()->xgems && checkxgems())
                     <form action="{{ route('user.register.ayamku') }}" method="post">
                         @csrf
+
                         <button class="btn btn-info btn-block" type="submit">
                             <i class="menu-icon las la-sign-in-alt"></i> Buat Akun & Convert Gems</button>
                     </form>

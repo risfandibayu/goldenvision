@@ -3507,3 +3507,12 @@ function tanggal($date){
 
     echo $formattedDate;
 }
+function minigold($key = 'total'){
+    $count = User::where('emas','=',1)->where('firstname','!=','ptmmi')->where('firstname','!=','masterplan')->count();
+    $data = [
+        'count' => $count,
+        'emas' => $count * 0.025,
+        'equal' => ($count * 0.025) * todayGold()
+    ];
+    return $data[$key];
+}

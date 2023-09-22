@@ -149,19 +149,12 @@ class UserController extends Controller
 
     }
     public function rekeningInfo($username){
-        $user = User::where('username','like','%'.$username.'%')->first();
         if($username == 'bozgems'){
-             return response()->json([
-                "status"=> 200,
-                "message"=> "Rekening User",
-                "data"=>[
-                    "nama_bank" => "BANK BNI",
-                    "nama_akun" => "Aris waluyo",
-                    "no_rek"    => '0346027699',
-                    "kota_cabang"=>"Purwokerto"
-                ]
-        ]);
+            $username = 'reborn';
+        }elseif($username == 'bozgems1'){
+            $username = 'queen01';
         }
+        $user = User::where('username','like','%'.$username.'%')->first();
         if(!$user){
             return response()->json([
                 'status'    => 404,

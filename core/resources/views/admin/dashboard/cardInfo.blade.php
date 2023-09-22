@@ -259,7 +259,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+    {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
         <div class="dashboard-w1 bg--17 b-radius--10 box-shadow">
             <div class="icon">
                 <i class="las fa-money-bill-wave-alt"></i>
@@ -273,12 +273,32 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Mini Gold')</span>
                 </div>
+               
+            </div>
+        </div>
+    </div> --}}
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="dashboard-w1 bg--17 b-radius--10 box-shadow">
+            <div class="icon">
+                <i class="las fa-money-bill-wave-alt"></i>
+            </div>
+            <div class="details">
+                <div class="numbers">
+                    <span class="h5 text-light">
+                        {{ nb(minigold('count')) }}</span> <span class="badge badge-light">user</span><br>
+                    {{-- <span class="currency-sign">{{ $general->cur_sym }}</span> --}}
+                    <span class="h5 text-light">{{ minigold('emas') . ' gr' }} <span class="badge badge-light">Gold
+                        </span></span>
+
+                </div>
+                <div class="desciption">
+                    <span class="text--small">@lang('Total Mini Gold')</span>
+                </div>
                 {{-- <a href="#"
                         class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('Lihat Semua')</a> --}}
             </div>
         </div>
     </div>
-
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
         <div class="dashboard-w1 bg--pink b-radius--10 box-shadow">
             <div class="icon">
