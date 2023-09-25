@@ -3143,10 +3143,8 @@ function checkxgems(){
     $xgems = User::whereIn('id',$group)
             ->where('xgems',1)
             ->get();
-    if ($xgems->count() <=1) {
+    if(in_array($gems->count(), [7, 14, 21,28,35,42])) {
       return true;
-    }elseif (auth()->user()->username=="masterplan16") {
-       return true;
     }elseif (auth()->user()->gems_dlv) {
        return true;
     }else{
