@@ -1714,11 +1714,16 @@ class UserController extends Controller
         $user = Auth::user();
 
         $rek = rekening::where('user_id',$user->id)->first();
-        $rek->nama_bank = $request->bank_name;
-        $rek->nama_akun = $request->acc_name;
-        $rek->no_rek = $request->acc_number;
-        $rek->kota_cabang = $request->kota_cabang;
-        $rek->save();
+        $rek->update([
+            'nama_bank' => $request->bank_name,
+            'nama_akun' => $request->acc_name,
+            'no_rek' => $request->acc_number,
+            'kota_cabang' => $request->kota_cabang,
+        ]);
+        
+        $user->bank_up = 0;
+        $user->save();
+
         addToLog("Edit Bank Account");
         $notify[] = ['success', 'Bank Account Information, Success edited!!'];
         return redirect()->back()->withNotify($notify);
