@@ -3261,10 +3261,8 @@ function check100Gold($user_id,$type){
     if(!$checkDaily){
         return ['type'=>true,'day'=>1];
     }
-    if($checkDaily->count() <= 100){
+    if($checkDaily->count() < 100){
         return ['type'=>true,'day'=>$checkDaily->count() + 1];
-    }elseif($checkDaily->count() > 100){
-       return ['type'=>false,'day'=>$checkDaily->count()];
     }else{
         return ['type'=>false,'day'=>$checkDaily->count()];
     }
