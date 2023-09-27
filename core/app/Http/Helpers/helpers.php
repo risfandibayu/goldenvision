@@ -3267,6 +3267,24 @@ function check100Gold($user_id,$type){
         return ['type'=>false,'day'=>$checkDaily->count()];
     }
 }
+function check100GoldID($user_id,$type){
+    // dd(Auth::user());
+    $checkDaily = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+        ->where('user_id',$user_id)
+        ->where('type', $type)
+        ->groupBy('date')
+        ->orderByDesc('date')
+        ->get();
+    // $checkDaily = UserGold::select( DB::raw('COUNT(*) as days'),DB::raw('SUM(golds) as gold'))->where(['user_id'=>$user_id,'type'=>$type])->groupBy('user_id')->first();
+    if(!$checkDaily){
+        return ['type'=>true,'day'=>1];
+    }
+    if($checkDaily->count() < 100){
+        return ['type'=>true,'day'=>$checkDaily->count() + 1];
+    }else{
+        return ['type'=>false,'day'=>$checkDaily->count()];
+    }
+}
 function deliverDailyWeekly($user){
     $type = checkClaimDailyWeekly($user);
     if(!$type){

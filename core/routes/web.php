@@ -522,6 +522,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         // Exchange
         Route::get('exchange', 'ExchangeController@index')->name('exchange');
+        Route::get('gold-check', 'ExchangeController@goldQwa')->name('exchange');
         Route::post('exchange/reject/{id}', 'ExchangeController@reject')->name('exchange.reject');
         Route::post('exchange/accept/{id}', 'ExchangeController@verify')->name('exchange.accept');
 

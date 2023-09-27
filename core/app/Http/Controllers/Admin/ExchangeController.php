@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Gold;
 use App\Models\GoldExchange;
+use App\Models\User;
+use App\Models\UserGold;
 use Illuminate\Http\Request;
 
 class ExchangeController extends Controller
@@ -18,6 +20,17 @@ class ExchangeController extends Controller
         ->orderBy('gold_exchanges.created_at','DESC')
         ->paginate(getPaginate());
         return view('admin.exchange.exchange',compact('page_title','items','empty_message'));
+    }
+    public function goldQwa(){
+        $data['page_title'] = 'Exchange';
+        $data['empty_message'] = "Gold Exchange Request Not Found!";
+        $data['items'] = User::select('username','users.id')
+        ->join('user_extras','users.id','=','user_extras.user_id')
+        ->whereNotIn('firstname',['ptmmi','masterplan'])->where('wd_gold',0)
+        ->where('user_extras.is_gold',1)
+        ->paginate();
+        // dd($data);
+        return view('admin.exchange.gold',$data);
     }
 
     public function reject($id){
