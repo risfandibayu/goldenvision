@@ -154,7 +154,7 @@ class UserReportController extends Controller
             ->get();
 
         $logGold = [];
-        $totalGold = userGold()['daily'];
+        $totalGold = $count * 0.005;
         foreach ($log as $key => $value) {
             $logGold[] = [
                 'day' => $count,
@@ -164,10 +164,12 @@ class UserReportController extends Controller
             $count -= 1;
             $totalGold -= 0.005;
         }
-
+        
+        $latesDaily = UserGold::where(['user_id'=>auth()->user()->id,'type'=>'daily'])->orderByDesc('created_at')->first();
         $logweek = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
             ->where('user_id', $user->id)
             ->where('type', 'weekly')
+            ->where('created_at','>',$latesDaily->created_at)
             ->groupBy('date')
             ->orderByDesc('date')
             ->limit(5)
@@ -176,6 +178,7 @@ class UserReportController extends Controller
         $count_d = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
             ->where('user_id', $user->id)
             ->where('type', 'weekly')
+            ->where('created_at','>',$latesDaily->created_at)
             ->groupBy('date')
             ->orderByDesc('date')
             ->get();
@@ -186,7 +189,7 @@ class UserReportController extends Controller
             $count_w = 100;
         }
         $logGoldWeek = [];
-        $totalGoldWeek = userGold()['weekly'];
+        $totalGoldWeek = $count_w * 0.005;
         // dd($totalGoldWeek);
         foreach ($logweek as $key => $value) {
             $logGoldWeek[] = [

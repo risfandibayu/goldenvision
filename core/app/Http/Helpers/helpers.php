@@ -3358,30 +3358,34 @@ function checkClaimDailyWeekly($users){
         return false;
     }
     if(!check100Gold($user->id,'daily')['type'] || $user->wd_gold){
-
         if(!check100Gold($user->id,'weekly')['type']){
             return false;
         }
         if(check100Week($user->created_at)){   
-        //    check last created weekly;
-        $checkLastCreate = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])->orderByDesc('id')->first();
+            // dd('weekly100');
+            //    check last created weekly;
+            $latesDaily = UserGold::where(['user_id'=>auth()->user()->id,'type'=>'daily'])->orderByDesc('created_at')->first();
+            
+            $checkLastCreate = UserGold::where(['user_id'=>$user->id,'type'=>'weekly'])
+            ->where('created_at','>',$latesDaily->created_at)
+            ->orderByDesc('id')->first();
         
-        if ($checkLastCreate) {
-            $created_at = date('Y-m-d', strtotime($checkLastCreate->created_at));
-            // Convert the created_at string to a Carbon instance
-            $createdAt = Carbon::parse($created_at);
+            if ($checkLastCreate) {
+                $created_at = date('Y-m-d', strtotime($checkLastCreate->created_at));
+                // Convert the created_at string to a Carbon instance
+                $createdAt = Carbon::parse($created_at);
 
-            // Calculate the difference in weeks between created_at and current date
-            $differenceInWeeks = Carbon::now()->diffInWeeks($createdAt);
-            if ($differenceInWeeks >= 1) {
-                return 'weekly';
+                // Calculate the difference in weeks between created_at and current date
+                $differenceInWeeks = Carbon::now()->diffInWeeks($createdAt);
+                if ($differenceInWeeks >= 1) {
+                    return 'weekly';
+                }else{
+                    return false;
+                } 
             }else{
-                return false;
-            } 
-        }else{
-            return 'weekly';
+                return 'weekly';
+            }
         }
-    }
     }else{
         $checkLastDaily = UserGold::where(['user_id' => $user->id, 'type' => 'daily'])->orderByDesc('id')->first();
         // dd($checkLastDaily);
@@ -3449,12 +3453,24 @@ function withdrawGold(){
     ];
 }
 function userGoldSum($type){
-    $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+    if ($type == 'weekly') {
+        $latesDaily = UserGold::where(['user_id'=>auth()->user()->id,'type'=>'daily'])->orderByDesc('created_at')->first();
+        $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+        ->where('user_id', auth()->user()->id)
+        ->where('type', $type)
+        ->where('created_at','>',$latesDaily->created_at)
+        ->groupBy('date')
+        ->orderByDesc('date')
+        ->get();
+    }else{
+        $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
         ->where('user_id', auth()->user()->id)
         ->where('type', $type)
         ->groupBy('date')
         ->orderByDesc('date')
         ->get();
+    }
+    
         
     return $sql->count() * 0.005;
 }
