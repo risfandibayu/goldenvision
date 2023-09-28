@@ -166,7 +166,8 @@ class UserReportController extends Controller
         }
         
         $latesDaily = UserGold::where(['user_id'=>auth()->user()->id,'type'=>'daily'])->orderByDesc('created_at')->first();
-        $logweek = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+        if($latesDaily){
+            $logweek = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
             ->where('user_id', $user->id)
             ->where('type', 'weekly')
             ->where('created_at','>',$latesDaily->created_at)
@@ -175,13 +176,31 @@ class UserReportController extends Controller
             ->limit(5)
             ->get();
 
-        $count_d = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+            $count_d = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+                ->where('user_id', $user->id)
+                ->where('type', 'weekly')
+                ->where('created_at','>',$latesDaily->created_at)
+                ->groupBy('date')
+                ->orderByDesc('date')
+                ->get();
+        }else{
+            $logweek = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
             ->where('user_id', $user->id)
             ->where('type', 'weekly')
-            ->where('created_at','>',$latesDaily->created_at)
+            
             ->groupBy('date')
             ->orderByDesc('date')
+            ->limit(5)
             ->get();
+
+            $count_d = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+                ->where('user_id', $user->id)
+                ->where('type', 'weekly')
+              
+                ->groupBy('date')
+                ->orderByDesc('date')
+                ->get();
+        }
 
         $count_w = $count_d->count();
         // $count = $total->count();

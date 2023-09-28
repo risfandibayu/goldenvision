@@ -3455,13 +3455,22 @@ function withdrawGold(){
 function userGoldSum($type){
     if ($type == 'weekly') {
         $latesDaily = UserGold::where(['user_id'=>auth()->user()->id,'type'=>'daily'])->orderByDesc('created_at')->first();
-        $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
-        ->where('user_id', auth()->user()->id)
-        ->where('type', $type)
-        ->where('created_at','>',$latesDaily->created_at)
-        ->groupBy('date')
-        ->orderByDesc('date')
-        ->get();
+        if($latesDaily){
+            $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+                ->where('user_id', auth()->user()->id)
+                ->where('type', $type)
+                ->where('created_at','>',$latesDaily->created_at)
+                ->groupBy('date')
+                ->orderByDesc('date')
+                ->get();
+        }else{
+             $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
+            ->where('user_id', auth()->user()->id)
+            ->where('type', $type)
+            ->groupBy('date')
+            ->orderByDesc('date')
+            ->get();
+        }
     }else{
         $sql = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
         ->where('user_id', auth()->user()->id)
