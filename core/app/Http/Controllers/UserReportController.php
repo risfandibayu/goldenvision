@@ -12,6 +12,7 @@ use App\Models\Withdrawal;
 use App\Models\WithdrawMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserReportController extends Controller
 {
@@ -326,7 +327,9 @@ class UserReportController extends Controller
         $data['search'] = $search;
         $data['empty_message'] = "No Data Found!";
         return view($this->activeTemplate . 'user.pinLog', $data);
-
+    }
+    public function promoSeptLog(){
+       
     }
 
 }

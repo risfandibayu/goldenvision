@@ -1,11 +1,12 @@
 @if ($promo->count() >= 1 || $reward->count() >= 1)
+    {{-- @dd($active) --}}
     <div class="card card-header-actions">
         <div class="container text-center my-3">
             <div class="row mx-auto my-auto">
                 <div id="recipeCarousel1" class="carousel slide w-100" data-ride="carousel">
                     <div class="carousel-inner w-100" role="listbox">
                         @foreach ($promo as $i => $item)
-                            <div class="carousel-item @if ($item->id == 5) active @endif">
+                            <div class="carousel-item @if ($item->id == $active->id) active @endif">
                                 <div class="col-md-12">
                                     <div class="bonus">
                                         <div class="card-body bg--gradi-8 h5 ">
@@ -18,7 +19,7 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <b class="text-center"> Bonus Sepesial
-                                                        {{ $item->id == 4 ? ' Bulan Ini' : ' Sampai Bulan Juli' }}</b>
+                                                        {{ $item->mark != 0 ? 'Promo September Ceria ' : ' Bulan Ini' }}</b>
                                                     <br><br>
                                                     <h4 class="text-justify text-light">
                                                         Untuk mitra usaha yang telah memenuhi
@@ -29,14 +30,14 @@
                                                         akan
                                                         mendapatkan
                                                         kesempatan reward {{ $item['reward'] }}
-                                                        {{ $item['equal'] != 0 ? 'atau uang unai senilai Rp ' . nb($item['equal']) : '' }}
+                                                        {{ $item['equal'] != 0 ? 'atau uang tunai senilai Rp ' . nb($item['equal']) : '' }}
                                                         segera tingkatkan
                                                         penjualan anda dan raih kesuksesan bersama!!
                                                     </h4>
                                                     <br>
                                                     <b class="mt-5 text-center"> Total penjualan kamu saat ini
-                                                        {{ $p_kiri - 3 <= 0 ? 0 : $p_kiri - 3 }} :
-                                                        {{ $p_kanan - 3 <= 0 ? 0 : $p_kanan - 3 }}</b>
+                                                        {{ promoSept('left') - 3 <= 0 ? 0 : promoSept('left') - 3 }} :
+                                                        {{ promoSept('right') - 3 <= 0 ? 0 : promoSept('right') - 3 }}</b>
                                                 </div>
                                             </div>
                                         </div>
@@ -57,8 +58,15 @@
                                                         <input type="hidden" name="type"
                                                             value="{{ $item['id'] }}">
                                                         <div class="input-group">
-                                                            @if ($item['equal'] == 0)
-                                                                <button class="btn btn-primary btn-block">Claim
+                                                            @if ($item['equal'] == 0 && $item['mark'] == 0)
+                                                                <button type="submit"
+                                                                    class="btn btn-primary btn-block">Claim
+                                                                    Bonus</button>
+                                                            @elseif($item['mark'])
+                                                                <input type="hidden" name="mark"
+                                                                    value="{{ $item['mark'] }}">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary btn-block">Claim
                                                                     Bonus</button>
                                                             @else
                                                                 <input type="submit"

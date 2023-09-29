@@ -260,11 +260,29 @@ class BonusRewardController extends Controller
     public function userReport(){
         $page_title = 'User Emas';
         $empty_message = 'No User Rewards Found';
-        $table = UserExtra::userGold();
+        // $table = UserExtra::userGold();
 
-        $goldNow = DailyGold::orderByDesc('id')->first();
+        // $goldNow = DailyGold::orderByDesc('id')->first();
+        $table = DB::table('user_extras as x')
+            ->join('users as u', 'x.user_id', '=', 'u.id')
+            ->select(
+                'x.user_id',
+                'u.username',
+                DB::raw('COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.left")), 0) AS left_value'),
+                DB::raw('COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.right")), 0) AS right_value'),
+                'x.left AS left_now',
+                'x.right AS right_now',
+                DB::raw('x.left - COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.left")), 0) AS grow_left'),
+                DB::raw('x.right - COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.right")), 0) AS grow_right')
+            )
+            ->whereRaw('x.left - COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.left")), 0) > 0')
+            ->whereRaw('x.right - COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.right")), 0) > 0')
+            ->whereNotIn('u.firstname', ['masterplan', 'ptmmi'])
+            ->orderByDesc('grow_left')
+            ->orderByDesc('grow_right')
+            ->paginate();
         // dd($table);
-        return view('admin.bonus_reward.report_check', compact('page_title','table', 'empty_message','goldNow'));
+        return view('admin.bonus_reward.report_check', compact('page_title','table', 'empty_message'));
     }
 
     public function memberGrow(){

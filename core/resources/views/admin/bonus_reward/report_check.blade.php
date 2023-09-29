@@ -12,23 +12,35 @@
                                     <th scope="col">@lang('NO')</th>
                                     {{-- <th scope="col">@lang('Code')</th> --}}
                                     <th scope="col">@lang('Username')</th>
-                                    <th scope="col">@lang('Gram Emas Check In 100 hari ')</th>
-                                    <th scope="col">@lang('Equal Rupiah')</th>
+                                    <th scope="col">@lang('Pertumbuhan Kanan')</th>
+                                    <th scope="col">@lang('Pertumbuhan Kiri')</th>
+                                    <th scope="col">@lang('Deliver Reward')</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($table as $key)
+                                @forelse($table as $i => $key)
                                     <tr>
 
-                                        <td data-label="@lang('No')">{{ $key['no'] }}</td>
+                                        <td data-label="@lang('No')">{{ $i + 1 }}</td>
                                         <td data-label="@lang('user')">
-                                            {{ $key['username'] }}
+                                            {{ $key->username }}
                                         </td>
                                         <td data-label="@lang('user')">
-                                            {{ $key['gold'] }}
+                                            {{ $key->grow_left }}
                                         </td>
                                         <td data-label="@lang('user')">
-                                            {{ nb($key['harga']) }}
+                                            {{ $key->grow_right }}
+                                        </td>
+                                        <td data-label="@lang('user')">
+                                            @if ($key->grow_left > 23 && $key->grow_right > 23)
+                                                <button class="btn btn-success">Deliver HP</button>
+                                            @endif
+                                            @if ($key->grow_left > 75 && $key->grow_right > 75)
+                                                <button class="btn btn-success">Deliver Trip</button>
+                                            @endif
+                                            @if ($key->grow_left > 350 && $key->grow_right > 350)
+                                                <button class="btn btn-success">Deliver Mobil</button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
@@ -43,7 +55,7 @@
                     </div>
                 </div>
                 <div class="card-footer py-4">
-                    {{-- {{ $table->links('admin.partials.paginate') }} --}}
+                    {{ $table->links('admin.partials.paginate') }}
                 </div>
             </div>
         </div>

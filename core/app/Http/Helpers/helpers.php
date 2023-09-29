@@ -3557,3 +3557,40 @@ function minigold($key = 'total'){
     ];
     return $data[$key];
 }
+function promoSept($key=1){
+    $result = DB::table('user_extras as x')
+        ->join('users as u', 'x.user_id', '=', 'u.id')
+        ->select(
+            'x.user_id',
+            'u.username',
+            DB::raw('COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.left")), 0) AS left_value'),
+            DB::raw('COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.right")), 0) AS right_value'),
+            'x.left AS left_now',
+            'x.right AS right_now',
+            DB::raw('x.left - COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.left")), 0) AS grow_left'),
+            DB::raw('x.right - COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.right")), 0) AS grow_right'),
+            DB::raw('COALESCE(JSON_UNQUOTE(JSON_EXTRACT(mark_lf, "$.date")), u.created_at) AS date')
+        )
+        ->where('u.id', auth()->id())
+        ->orderByDesc('grow_left')
+        ->orderByDesc('grow_right')
+        ->first();
+    $givenDate = Carbon::parse($result->date);
+    $currentDate = Carbon::now();
+    
+    $diff =  $currentDate->diffInDays($givenDate);
+    if($diff < 30){
+        $mark = 1;
+    }elseif($diff >= 60 && $diff < 90){
+        $mark = 2;
+    }else{
+        $mark = 3;
+    }
+    $return = [
+        'left'  => nb($result->grow_left),
+        'right' => nb($result->grow_right),
+        'date'  => $result->date,
+        'mark'  => $mark
+    ];
+    return $return[$key];
+}

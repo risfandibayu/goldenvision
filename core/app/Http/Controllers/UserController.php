@@ -85,7 +85,7 @@ class UserController extends Controller
 
     public function home()
     {
-        // dd(typeClaimGold(auth()->user()));
+        // dd(promoSept('mark'));
         // dd(Auth::user()->wd_gold);
         // dd(checkWdGold(auth()->user()));
         
@@ -111,16 +111,15 @@ class UserController extends Controller
         $gold = DailyGold::orderByDesc('id')->first();  
         $goldRange = $gold->per_gram - ($gold->per_gram*8/100); //gold per gram today - 8%
 
-        $userGold = auth()->user()->total_golds;
-
-        $float = floatval(str_replace(',', '.', nbk(auth()->user()->total_golds)));
         // dd($goldRange * $float);
         $data['goldBonus']          = $goldRange;
-        $data['reward']             = BonusReward::where(['type'=>'alltime','status'=>1])->get();
         $data['goldToday']          = DailyGold::orderByDesc('id')->first();
         $data['p_kiri']             = auth()->user()->userExtra->left;
         $data['p_kanan']            = auth()->user()->userExtra->right;
-        $data['promo']              = BonusReward::where(['status'=>1,'type'=>'monthly'])->get();
+        $data['reward']             = BonusReward::where(['type'=>'alltime','status'=>1])->get();
+        $data['promo']              = BonusReward::where(['type'=>'monthly','status'=>1])->where('mark',promoSept('mark'))->get();
+        $data['active'] = BonusReward::where('status',1)->where('mark',promoSept('mark'))->first();
+        // dd($data);
         // dd($data['promo']);
         $ux = UserExtra::where('user_id',auth()->user()->id)->first();
         if(!$ux){
@@ -2145,6 +2144,8 @@ class UserController extends Controller
     }
 
     public function claimBonusReward(Request $request){
+        // dd($request->all());
+        
         $reward = BonusReward::find($request->type);
         if(isset($request->claim) && $request->claim == $reward->reward){
             $claim = 'reward';
@@ -2163,12 +2164,22 @@ class UserController extends Controller
             $notify[] = ['error', 'Bonus Not Found'];
             return back()->withNotify($notify);
         }
-        $req_kiri = $user->userExtra->p_left - 3; //30
-        $req_kanan = $user->userExtra->p_right - 3; //0
-        if($req_kiri < $reward->kiri || $req_kanan < $reward->kanan){
-            $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
-            return back()->withNotify($notify);
+        if(isset($request->mark)){
+            $req_kiri = promoSept('left'); //30
+            $req_kanan = promoSept('right'); //0
+            if($req_kiri < $reward->kiri || $req_kanan < $reward->kanan){
+                $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
+                return back()->withNotify($notify);
+            }
+        }else{
+            $req_kiri = $user->userExtra->p_left - 3; //30
+            $req_kanan = $user->userExtra->p_right - 3; //0
+            if($req_kiri < $reward->kiri || $req_kanan < $reward->kanan){
+                $notify[] = ['error', "Can't Claim Reward!, beyond requirements"];
+                return back()->withNotify($notify);
+            }
         }
+        
         if($req_kiri >= $reward->kiri && $req_kanan >= $reward->kanan){
             $onClaim = [
                 'left'      => $req_kiri,
