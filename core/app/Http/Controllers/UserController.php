@@ -25,6 +25,7 @@ use App\Models\rekening;
 use App\Models\ureward;
 use App\Models\UserExtra;
 use App\Models\UserGold;
+use App\Models\UserPin;
 use App\Models\WeeklyGold;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -355,6 +356,30 @@ class UserController extends Controller
         $totalWd  = withdrawGold()['total_wd']; //emas_user * harga_emas_minus_fee - (harga //emas_user * harga_emas_minus_fee *)
         DB::beginTransaction();
         try {
+            if($type == 'pin'){
+               
+
+                $pin = new UserPin();
+
+                $pin->user_id   = $user->id;
+                $pin->pin       = 2;
+                $pin->pin_by    = null;
+                $pin->type      = "+";
+                $pin->start_pin = $user->pin;
+                $pin->end_pin   = $user->pin + $request->pin;
+                $pin->ket       = 'Withdraw DailyGold to 2 PIN Reapeat Order';
+                $pin->save();
+                
+                
+                $user->wd_gold = 1;
+                $user->pin += 2;
+                $user->save();
+                 DB::commit();
+                addToLog('Withdraw DailyGold to 2 PIN Reapeat Order');
+
+                $notify[] = ['success','Success Withdraw DailyGold to 2 PIN Reapeat Order'];
+                return redirect()->back()->withNotify($notify);
+            }
             $transaction = new Transaction();
             $transaction->user_id = $user->id;
             $transaction->amount = $totalWd;

@@ -48,7 +48,7 @@
                         <input type="hidden" name="username" id=""
                             value="{{ auth()->user()->username == 'masterplan01' ? 'bozgems' : auth()->user()->username }}">
                         <span>Klik tombol dibawah untuk login Game Ayamku</span>
-                        <button class="btn btn-warning btn-block" type="submit">
+                        <button class="btn btn-primary btn-block" type="submit">
                             <i class="menu-icon las la-sign-in-alt"></i> Login Game Ayamku</button>
                     </form>
                     <br>
