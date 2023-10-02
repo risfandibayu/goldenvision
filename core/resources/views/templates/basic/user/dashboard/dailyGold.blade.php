@@ -80,7 +80,7 @@
 
     </div>
 </div>
-{{-- modal transfer 2 pin --}}
+{{-- modal transfer 1 pin --}}
 <div class="modal fade" id="modalWdPin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
 
@@ -99,7 +99,7 @@
                     </div>
                     <div class="text-center">
                         Tarik Emas sedang dilakukan integrasi terhadap Payment Gateway, silahkan menunggu atau Konversi
-                        menjadi Repeat Order Produk (2 PIN).
+                        menjadi Repeat Order Produk (1 PIN).
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -108,7 +108,7 @@
 
 
                     <input type="hidden" name="type" id="" value="pin">
-                    <button type="submit" class="btn btn-primary btn-block">Konversi (2 PIN)</button>
+                    <button type="submit" class="btn btn-primary btn-block">Konversi (1 PIN)</button>
 
                 </div>
             </form>
