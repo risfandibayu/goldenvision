@@ -143,7 +143,7 @@ class UserReportController extends Controller
         $count = $d_count->count();
             
 
-        if($count >=100){
+        if($count >=100 || $user->wd_gold){
             $count = 100;
         }
         $log = UserGold::selectRaw('DATE(created_at) AS date, MAX(created_at) AS created_at')
