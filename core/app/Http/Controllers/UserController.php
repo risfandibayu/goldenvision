@@ -359,25 +359,25 @@ class UserController extends Controller
             if($type == 'pin'){
                
 
-                $pin = new UserPin();
+                // $pin = new UserPin();
 
-                $pin->user_id   = $user->id;
-                $pin->pin       = 1;
-                $pin->pin_by    = null;
-                $pin->type      = "+";
-                $pin->start_pin = $user->pin;
-                $pin->end_pin   = $user->pin + $request->pin;
-                $pin->ket       = 'Withdraw DailyGold to 1 PIN Reapeat Order';
-                $pin->save();
+                // $pin->user_id   = $user->id;
+                // $pin->pin       = 1;
+                // $pin->pin_by    = null;
+                // $pin->type      = "+";
+                // $pin->start_pin = $user->pin;
+                // $pin->end_pin   = $user->pin + $request->pin;
+                // $pin->ket       = 'Withdraw DailyGold to 1 PIN Reapeat Order';
+                // $pin->save();
                 
-                
+                $user->product += 2;
                 $user->wd_gold = 1;
-                $user->pin += 1;
+                // $user->pin += 1;
                 $user->save();
-                 DB::commit();
-                addToLog('Withdraw DailyGold to 1 PIN Reapeat Order');
+                DB::commit();
+                addToLog('Withdraw DailyGold to 2 Product Reapeat Order');
 
-                $notify[] = ['success','Success Withdraw DailyGold to 1 PIN Reapeat Order'];
+                $notify[] = ['success','Success Withdraw DailyGold to 2 Product Reapeat Order'];
                 return redirect()->back()->withNotify($notify);
             }
             $transaction = new Transaction();

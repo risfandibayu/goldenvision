@@ -99,7 +99,7 @@
                     </div>
                     <div class="text-center">
                         Tarik Emas sedang dilakukan integrasi terhadap Payment Gateway, silahkan menunggu atau Konversi
-                        menjadi Repeat Order Produk (1 PIN).
+                        menjadi Repeat Order Produk (2 Produk).
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -108,7 +108,7 @@
 
 
                     <input type="hidden" name="type" id="" value="pin">
-                    <button type="submit" class="btn btn-primary btn-block">Konversi (1 PIN)</button>
+                    <button type="submit" class="btn btn-primary btn-block">Konversi (2 Produk)</button>
 
                 </div>
             </form>
