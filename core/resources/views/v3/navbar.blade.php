@@ -19,6 +19,8 @@
                           <li><a href="#home">Home</a></li>
                           <li><a href="#product">Product</a></li>
                           <li><a href="#contact">Contact</a></li>
+                          <li><a href="#bonus">Bonus Cycle Nasional</a></li>
+                          <li><a href="#contact">Contact</a></li>
                           {{-- <hr>
                           <li><a href="#">Login</a></li> --}}
                           <li><a href="{{ url('/login') }}" class="text-primary btn btn-light btn-block">Sign

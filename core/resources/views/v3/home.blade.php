@@ -10,35 +10,12 @@
     <!-- Common section -->
 
     <!-- Common section -->
-    {{-- <section class="commonSection homeContact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-md-5">
-                    <div class="contactArea">
-                        <h3>Our manager will contact you to clear the details.</h3>
-                        <p>We are here to help you when you need your financial support, then we are help you.</p>
-                        <p>We are here to help you when you need your financial support, then we are help you.</p>
-                        <a href="#" class="common_btn">Call Us Now</a>
-                    </div>
-                </div>
-                <div class="col-lg-7 col-md-7">
-                    <div class="contactThumb">
-                        <img src="images/home/1.png" alt="" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-    <!-- Common section -->
-
-    {{-- <!-- Common section -->
     <section class="commonSection applicatioProces">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="sec_title">Fast and very easy<br> application process here</h2>
-                    <p class="sec_desc">We are here to help you when you need your financial<br> support, then we are
-                        help you.</p>
+                    <h2 class="sec_title">Proses Yang Cepat dan<br> Sangat Mudah</h2>
+                    {{-- <p class="sec_desc">Kami membantu anda <br> </p> --}}
                 </div>
             </div>
             <div class="row">
@@ -49,15 +26,16 @@
                                 <div class="bg_number">
                                     <h1>01</h1>
                                 </div>
-                                <h4>Apply Bank Loan</h4>
-                                <p>We are provide best services and finaancial solution for you.</p>
+                                <h4>Belanja <br> Rp 700.000</h4>
+                                {{-- <p>We are provide best services and finaancial solution for you.</p> --}}
                             </div>
                             <div class="back">
                                 <div class="bg_number">
                                     <h1>01</h1>
                                 </div>
-                                <h4>Apply Bank Loan</h4>
-                                <p>We are provide best services and finaancial solution for you.</p>
+                                {{-- <h4>Apply Bank Loan</h4> --}}
+                                <h4>Belanja <br> Rp 700.000</h4>
+                                {{-- <p>We are provide best services and finaancial solution for you.</p> --}}
                             </div>
                         </div>
                     </div>
@@ -69,15 +47,18 @@
                                 <div class="bg_number">
                                     <h1>02</h1>
                                 </div>
-                                <h4>Approved Bank Loan</h4>
-                                <p>We are provide best services and finaancial solution for you.</p>
+                                {{-- <h4>Approved Bank Loan</h4> --}}
+                                <h4>Bayar <br> Rp 500.000</h4>
+                                {{-- <p>We are provide best services and finaancial solution for you.</p> --}}
                             </div>
                             <div class="back">
                                 <div class="bg_number">
                                     <h1>02</h1>
                                 </div>
-                                <h4>Approved Bank Loan</h4>
-                                <p>We are provide best services and finaancial solution for you.</p>
+                                <h4>Bayar <br> Rp 500.000</h4>
+
+                                {{-- <h4>Approved Bank Loan</h4> --}}
+                                {{-- <p>We are provide best services and finaancial solution for you.</p> --}}
                             </div>
                         </div>
                     </div>
@@ -89,15 +70,15 @@
                                 <div class="bg_number">
                                     <h1>03</h1>
                                 </div>
-                                <h4>Review Your Loan</h4>
-                                <p>We are provide best services and finaancial solution for you.</p>
+                                <h4>Kamu Dapat <br> 2 Produk</h4>
+                                {{-- <p>We are provide best services and finaancial solution for you.</p> --}}
                             </div>
                             <div class="back">
                                 <div class="bg_number">
                                     <h1>03</h1>
                                 </div>
-                                <h4>Review Your Loan</h4>
-                                <p>We are provide best services and finaancial solution for you.</p>
+                                <h4>Kamu Dapat <br> 2 Produk</h4>
+                                {{-- <p>We are provide best services and finaancial solution for you.</p> --}}
                             </div>
                         </div>
                     </div>
@@ -108,7 +89,7 @@
     <!-- Common section -->
 
     <!-- Common section -->
-    <section class="commonSection applyAmoutSec">
+    {{-- <section class="commonSection applyAmoutSec">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -130,55 +111,51 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Common section -->
-
     <!-- Common section -->
-    <section class="commonSection">
+    <section class="commonSection" id="bonus">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="sec_title">Expert team members</h2>
-                    <p class="sec_desc">We are here to help you when you need your financial<br> support, then we are
-                        help you.</p>
+                    <h2 class="sec_title">Bonus Sycle Nasional</h2>
+                    <p class="sec_desc">Bonus Cycle Nasional (Rp 625.000) Dibayar Setiap Tanggal 1 (Berulang)</p>
                 </div>
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-lg-3 col-md-6">
                     <div class="singleTeam text-center">
-                        <img src="images/team/1.png" alt="">
-                        <h4>Roxanne Bryant</h4>
-                        <p>Managing Director</p>
+                        <img src="{{ getImage('assets/images/user/profile/' . $cyle->user->image, null, true) }}"
+                            alt="{{ $cyle->user->username }} Profile"
+                            style="border: 5px solid#0b60b048; background-color: #0b60b048; border-radius: 15px">
+                        <h4>{{ $cyle->user->username }}</h4>
+                        <p>{{ $cyle->user->no_bro }}</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="singleTeam text-center">
-                        <img src="images/team/2.png" alt="">
-                        <h4>Dominic Jefferson</h4>
-                        <p>Head of Marketing</p>
+            </div>
+            <div class="row mt-5">
+                @for ($i = 1; $i <= 4; $i++)
+                    @php
+                        $image = $downline[$i] != null ? $downline[$i]->image : 'image.jpg';
+                    @endphp
+                    <div class="col-lg-3 col-md-6">
+                        <div class="singleTeam text-center">
+                            <img src="{{ getImage('assets/images/user/profile/' . $image, null, true) }}" alt=""
+                                style="border-radius: 15px;float: left; width:  100px;height: 100px;object-fit: cover; 
+                                {{ $downline[$i] == null ? 'border: 5px solid #9595965b; background-color: #9595965b' : 'border: 5px solid #0b60b048; background-color: #0b60b048' }}
+                                ">
+                            <h4>{{ $downline[$i] != null ? $downline[$i]->username : '#' . $i . ' Investor' }}</h4>
+                            <p>{{ $downline[$i] != null ? $downline[$i]->no_bro : 'Slot Kosong' }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="singleTeam text-center">
-                        <img src="images/team/3.png" alt="">
-                        <h4>Mercedes Baldwin</h4>
-                        <p>General Manager</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="singleTeam text-center">
-                        <img src="images/team/4.png" alt="">
-                        <h4>Gertrude Keller</h4>
-                        <p>Commercial Manager</p>
-                    </div>
-                </div>
+                @endfor
             </div>
         </div>
     </section>
     <!-- Common section -->
 
     <!-- Common section -->
-    <section class="commonSection custome_sec_2">
+    {{-- <section class="commonSection custome_sec_2">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -241,8 +218,8 @@
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Common section --> --}}
+    </section> --}}
+    <!-- Common section -->
 
     <!-- footer section -->
     @include('v3.contact')

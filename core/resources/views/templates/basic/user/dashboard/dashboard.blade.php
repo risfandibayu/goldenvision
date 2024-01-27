@@ -85,10 +85,10 @@
 @endif
 @section('panel')
 
-    @include($activeTemplate . 'user.dashboard.modalInfo')
+    {{-- @include($activeTemplate . 'user.dashboard.modalInfo') --}}
 
 
-    @include($activeTemplate . 'user.dashboard.dailyGold')
+    {{-- @include($activeTemplate . 'user.dashboard.dailyGold') --}}
 
     <div class="row">
         @if (Auth::user()->is_kyc == 0)
@@ -207,7 +207,7 @@
                         </div>
                     </div>
                 @endif
-                @if (auth()->user()->new_ps && oncreate() < 90)
+                {{-- @if (auth()->user()->new_ps && oncreate() < 90)
                     <div class="card card-header-actions mb-3">
                         <div class="card-body">
                             <strong>Hi {{ auth()->user()->username }}.</strong>
@@ -227,10 +227,10 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                @endif --}}
 
-                @include($activeTemplate . 'user.dashboard.gems')
-                @include($activeTemplate . 'user.dashboard.tarikEmas')
+                {{-- @include($activeTemplate . 'user.dashboard.gems') --}}
+                {{-- @include($activeTemplate . 'user.dashboard.tarikEmas') --}}
 
                 <div class="card card-header-actions mt-3">
                     <div class="card-header" style="font-weight: 600;">

@@ -6,6 +6,7 @@ use App\Http\Controllers\ArchivementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CronController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SponsorRegisterController;
 use App\Http\Controllers\UserController;
 use App\Models\rekening;
@@ -28,9 +29,7 @@ Route::get('/wa-me', function(){
 Route::get('getfile',[UserController::class,'fileDownload']);
 
 // Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
-Route::get('/',function(){
-    return view('v3.home');
-})->name('home');
+Route::get('/',[LandingController::class,'index'])->name('home');
 
 Route::get('/build',function(){
     return view('v3.build');
@@ -640,6 +639,8 @@ Route::name('user.')->prefix('user')->group(function () {
             //F
             Route::get('/plan', 'PlanController@planIndex')->name('plan.index');
             Route::get('/plan/ro', 'PlanController@repeatOrder')->name('plan.ro');
+            Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
+            Route::post('/plan/ro', 'PlanController@planRoStore')->name('plan.purchase.ro');
             Route::get('/archivement',[ArchivementController::class,'index'])->name('archivement.view');
             Route::get('/tarik-emas',[ArchivementController::class,'tarikEmas'])->name('archivement.terikEmas');
             Route::post('/tarik-emas',[ArchivementController::class,'tarikEmasPost'])->name('terikEmas.post');
@@ -722,8 +723,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('report/delivery/log', 'UserReportController@deliveryLog')->name('report.deliveryLog');
             Route::get('report/Brodelivery/log', 'UserReportController@BroDeliveryLog')->name('report.BroDeliveryLog');
 
-            Route::post('/plan', 'PlanController@planStore')->name('plan.purchase');
-            Route::post('/plan/ro', 'PlanController@planRoStore')->name('plan.purchase.ro');
+          
             Route::post('/buymp', 'PlanController@buyMpStore')->name('plan.mppurchase');
             Route::get('/manage-user', 'UserController@user_boom')->name('user_boom');
             Route::get('/tree', 'PlanController@myTree')->name('my.tree');

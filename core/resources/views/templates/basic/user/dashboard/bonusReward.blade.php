@@ -181,51 +181,52 @@
 @endif
 
 
-
-<div class="container text-center my-3">
-    <h5 class="font-weight-light font-weight-bold mb-2">User Claim Reward</h5>
-    <div class="row mx-auto my-auto">
-        <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
-            <div class="carousel-inner w-100" role="listbox">
-                @foreach ($ure as $item => $value)
-                    <div class="carousel-item @if ($item == 0) active @endif">
-                        <div class="col-md-4">
-                            <div class="card card-body d-flex justify-content-center" style="min-height: 20rem;">
-                                <div style="width:100%; text-align:center">
-                                    {{-- <img src="https://mirror-api-playground.appspot.com/links/filoli-spring-fling.jpg"
+@if ($ure->count() > 0)
+    <div class="container text-center my-3">
+        <h5 class="font-weight-light font-weight-bold mb-2">User Claim Reward</h5>
+        <div class="row mx-auto my-auto">
+            <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                <div class="carousel-inner w-100" role="listbox">
+                    @foreach ($ure as $item => $value)
+                        <div class="carousel-item @if ($item == 0) active @endif">
+                            <div class="col-md-4">
+                                <div class="card card-body d-flex justify-content-center" style="min-height: 20rem;">
+                                    <div style="width:100%; text-align:center">
+                                        {{-- <img src="https://mirror-api-playground.appspot.com/links/filoli-spring-fling.jpg"
                                                     style="width:50%; height:50%;"> --}}
-                                    <img class="img-fluid imgUser"
-                                        src="{{ getImage('assets/images/user/profile/' . $value->user->image, null, true) }}">
-                                </div>
+                                        <img class="img-fluid imgUser"
+                                            src="{{ getImage('assets/images/user/profile/' . $value->user->image, null, true) }}">
+                                    </div>
 
-                                <h5 class="card-title mt-2 mb-n1">
-                                    {{-- @if ($value->user->firstname)
+                                    <h5 class="card-title mt-2 mb-n1">
+                                        {{-- @if ($value->user->firstname)
                                                     {{ ucwords($value->user->firstname . ' ' . $value->user->lastname) }}
                                                 @else
                                                    
                                                 @endif --}}
-                                    {{ $value->user->no_bro }}
-                                </h5>
-                                {{-- <span class="text-sencondary">{{ $value->user->username }}</span> --}}
-                                <p class="card-text">{{ $value->reward->reward }} </p>
-                                <p class="card-text">{!! $value->details()['is_gold']
-                                    ? '<span class="badge rounded-pill badge-warning">Gold</span>'
-                                    : '<span class="badge rounded-pill badge-secondary">Silver</span>' !!}</p>
+                                        {{ $value->user->no_bro }}
+                                    </h5>
+                                    {{-- <span class="text-sencondary">{{ $value->user->username }}</span> --}}
+                                    <p class="card-text">{{ $value->reward->reward }} </p>
+                                    <p class="card-text">{!! $value->details()['is_gold']
+                                        ? '<span class="badge rounded-pill badge-warning">Gold</span>'
+                                        : '<span class="badge rounded-pill badge-secondary">Silver</span>' !!}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
+                <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle"
+                        aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
+                        aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle"
-                    aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
-                    aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
-</div>
+@endif

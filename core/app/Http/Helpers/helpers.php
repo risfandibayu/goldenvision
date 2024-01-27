@@ -1223,8 +1223,8 @@ function referralCommission2($user_id, $details)
         $plan = Plan::find($refer->plan_id);
         if ($plan) {
             $uex = UserExtra::where('user_id',$refer->id)->first();
-            if ($uex->left > 3 && $uex->right > 3 || $uex->is_gold == 1) {
-                # code...
+            // if ($uex->left > 3 && $uex->right > 3 || $uex->is_gold == 1) {
+            if ($uex->is_gold == 1) {
                 $amount = 20000;
             }else{
                 $amount = 15000;
@@ -1422,6 +1422,11 @@ function showSingleUserinTree($resp)
 {
     $res = '';
     $user = $resp['user'];
+    if(auth()->user()->userExtra->is_gold){
+        $disable = '';
+    }else{
+        $disable = 'disabled';
+    }
     $uplines = $resp['upline'];
     if($uplines){
         $upline = $uplines->no_bro;
@@ -1429,7 +1434,6 @@ function showSingleUserinTree($resp)
     }else{
         $upline = '';
         $uname = '';
-
     }
     $pos = $resp['pos'];
     // dd($user);
@@ -1444,6 +1448,7 @@ function showSingleUserinTree($resp)
         //     $planName = $user->plan->name;
         // }
         if($user->userExtra->is_gold){
+           
             $userType = "paid-user";
             $stShow = "Paid";
             $planName = '';
@@ -1455,6 +1460,7 @@ function showSingleUserinTree($resp)
             $planName = '';
             $test = $user->userExtra->is_gold;
             $bg = 'bg-pink';
+          
 
         }
 
@@ -1529,7 +1535,7 @@ function showSingleUserinTree($resp)
             $img = getImage('assets/images/', null, true);
             $addList = 'noUser';
         }
-        $res .= '<div class="user '.$addList.' " data-upline="'.$upline.'" data-pos="'.$pos.'" data-up="'.$uname.'" type="button">';
+        $res .= '<div class="user '.$addList.' " data-upline="'.$upline.'" data-pos="'.$pos.' data-up="'.$uname.'" type="button">';
         // $res .= '<div class="user btnUser" type="button">';
         $res .= '<img src="'.$img.'" alt="*"  class="no-user imgUser'.$pos.$upline.'">';
 
@@ -1771,8 +1777,10 @@ function showSingleUserinTree2Update($user,$id)
         // }
         if($user->userExtra->is_gold){
             $bg = 'bg-gold';
+            $disable = '';
         }else{
             $bg = 'bg-pink';
+            $disable = 'disabled';
         }
 
         if ($user->id == $id) {
@@ -1823,7 +1831,6 @@ function showSingleUserinTree2Update($user,$id)
         }
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"$userType $bg\">";
         $res .= "<p class=\"user-name\" style=\"font-size: 12px;font-weight: bold;\" style=\"$fs\"> $user->username</p>";
-        // $res .= "<p class=\"user-name mt-n3\" style=\"font-size: 15px\" style=\"$fs\"> $user->username</p>";
         if(Auth::user()->pos_id == $user->id){
 
         }elseif(Auth::user()->id == $user->id){
@@ -1833,10 +1840,6 @@ function showSingleUserinTree2Update($user,$id)
             }
         }elseif($user->id == $id){
             $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm selectedParent\" style=\"background-color:#fb00e5;color:black;\" onclick='f1(\"$user->id\")' data-parent=\"$user->id\" data-bro\"$user->no_bro\">Selected Parent</a> </p>";
-        }
-        else{
-            // $res .= "<p class=\"user-name\" ><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" onclick='f1(\"$user->id\")'>Explore Tree</a> </p>";
-            
         }
 
     } else {
@@ -2241,15 +2244,10 @@ function generateUniqueNoBro()
     {
         do {
             $now = Carbon::now();
-            // $prefix = substr($now->year, -2) . $now->format('m');
-            // $last = user::latest('no_bro')->first();
-            // $lastNoBro = (int) substr($last?->no_bro ?: 0, -4);
-            // $incr = str_pad($lastNoBro + 1, 4, '0', STR_PAD_LEFT);
-            // $code = $prefix . $incr;
             $year = $now->format('y');
             $month = $now->month;
             $last = rand(1000, 9999);
-            $code = 'M2929'.$year.$month.$last;
+            $code = 'BRO-MP'.$year.$month.$last;
         } while (user::where("no_bro", "=", $code)->first());
         return $code;
     }
@@ -3043,6 +3041,9 @@ function emas25(){
     //joinkan dengan users yg emas = 1
     $user = Auth::user();
     $rek= rekening::where('user_id',$user->id)->first();
+    if (!$rek) {
+       return false;
+    }
     // $sameuser = rekening::selectRaw('COUNT(*) AS result')
     //                 ->join('users','rekenings.user_id','=','users.id')
     //                 ->where(['rekenings.nama_bank'=>$rek->nama_bank,'rekenings.nama_akun'=>$rek->nama_akun,'rekenings.no_rek'=>$rek->no_rek,'users.emas'=>1])
@@ -3593,4 +3594,51 @@ function promoSept($key=1){
         'mark'  => $mark
     ];
     return $return[$key];
+}
+
+function updateCycleNasional($newRegisterUserID){
+    $active = UserExtra::with('user')->where('n_cyle',0)->orderBy('id','asc')->first();
+    $no1 = $active->national_1;
+    $no2 = $active->national_2;
+    $no3 = $active->national_3;
+    $no4 = $active->national_4;
+
+    if($no1 == null){
+        $active->national_1 = $newRegisterUserID;
+        $active->save();
+        return $active;
+    }else if($no2 == null){
+        $active->national_2 = $newRegisterUserID;
+        $active->save();
+        return $active;
+    }else if($no3 == null){
+        $active->national_3 = $newRegisterUserID;
+        $active->save();
+        return $active;
+    }elseif($no4 == null) {
+        $active->national_4 = $newRegisterUserID;
+        $active->n_cyle = true;
+        $active->save();
+        return $active;
+    }else{
+        return $active;
+    }
+}
+
+function sendCommision($userID, $amount, $details,$remark)
+{
+    $user  = User::find($userID);
+    if($user){
+        $user->balance  += $amount;
+        $user->save();
+        $user->transactions()->create([
+                'amount' => $amount,
+                'charge' => 0,
+                'trx_type' => '+',
+                'details' => $details,
+                'remark' => $remark,
+                'trx' => getTrx(),
+                'post_balance' => getAmount($user->balance),
+        ]);
+    }
 }

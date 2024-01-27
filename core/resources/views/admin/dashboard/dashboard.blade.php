@@ -122,13 +122,13 @@
                                         <td data-label="@lang('User')">
                                             <div class="user">
                                                 <div class="thumb"><img
-                                                        src="{{ getImage('assets/images/user/profile/' . $user->user->image, null, true) }}"
+                                                        src="{{ getImage('assets/images/user/profile/', null, true) }}"
                                                         alt="@lang('image')"></div>
                                                 <span class="name">{{ $user->fullname }}</span>
                                             </div>
                                         </td>
                                         <td data-label="@lang('Username')"><a
-                                                href="{{ route('admin.users.detail', $user->id) }}">{{ $user->user->username }}</a>
+                                                href="{{ route('admin.users.detail', $user->id) }}">{{ $user->user->username ?? '' }}</a>
                                         </td>
                                         <td data-label="@lang('Email')" class="text-left">{{ $user->subject }} <br>
                                             <span style="color: #999">{{ $user->created_at->diffForHumans() }}</span>

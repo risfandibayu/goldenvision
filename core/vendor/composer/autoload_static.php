@@ -42,6 +42,7 @@ class ComposerStaticInit3745021df70172f78897f89825d8c4e6
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '13906c19e3d8fcd1341b24ed4d51cf72' => __DIR__ . '/..' . '/razorpay/razorpay/Deprecated.php',
         '48a6375642125665354baf6b7954ed7f' => __DIR__ . '/../..' . '/app/Http/Helpers/helpers.php',
+        '05fc70a6b51e848b494783cd7a0b8308' => __DIR__ . '/../..' . '/app/Http/Helpers/newhelpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -757,6 +758,7 @@ class ComposerStaticInit3745021df70172f78897f89825d8c4e6
         'App\\Http\\Controllers\\Gateway\\stripe_js\\ProcessController' => __DIR__ . '/../..' . '/app/Http/Controllers/Gateway/stripe_js/ProcessController.php',
         'App\\Http\\Controllers\\Gateway\\stripe_v3\\ProcessController' => __DIR__ . '/../..' . '/app/Http/Controllers/Gateway/stripe_v3/ProcessController.php',
         'App\\Http\\Controllers\\Gateway\\voguepay\\ProcessController' => __DIR__ . '/../..' . '/app/Http/Controllers/Gateway/voguepay/ProcessController.php',
+        'App\\Http\\Controllers\\LandingController' => __DIR__ . '/../..' . '/app/Http/Controllers/LandingController.php',
         'App\\Http\\Controllers\\PlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/PlanController.php',
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
         'App\\Http\\Controllers\\RekeningController' => __DIR__ . '/../..' . '/app/Http/Controllers/RekeningController.php',
@@ -784,6 +786,7 @@ class ComposerStaticInit3745021df70172f78897f89825d8c4e6
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Middleware\\checkRO' => __DIR__ . '/../..' . '/app/Http/Middleware/checkRO.php',
         'App\\Lib\\GoogleAuthenticator' => __DIR__ . '/../..' . '/app/Lib/GoogleAuthenticator.php',
         'App\\Mail\\SmtpMail' => __DIR__ . '/../..' . '/app/Mail/SmtpMail.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
@@ -812,6 +815,7 @@ class ComposerStaticInit3745021df70172f78897f89825d8c4e6
         'App\\Models\\Plan' => __DIR__ . '/../..' . '/app/Models/Plan.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
         'App\\Models\\Question' => __DIR__ . '/../..' . '/app/Models/Question.php',
+        'App\\Models\\SilverCheck' => __DIR__ . '/../..' . '/app/Models/SilverCheck.php',
         'App\\Models\\SmsTemplate' => __DIR__ . '/../..' . '/app/Models/SmsTemplate.php',
         'App\\Models\\Subscriber' => __DIR__ . '/../..' . '/app/Models/Subscriber.php',
         'App\\Models\\SupportAttachment' => __DIR__ . '/../..' . '/app/Models/SupportAttachment.php',

@@ -41,4 +41,5 @@ return array(
     'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     '13906c19e3d8fcd1341b24ed4d51cf72' => $vendorDir . '/razorpay/razorpay/Deprecated.php',
     '48a6375642125665354baf6b7954ed7f' => $baseDir . '/app/Http/Helpers/helpers.php',
+    '05fc70a6b51e848b494783cd7a0b8308' => $baseDir . '/app/Http/Helpers/newhelpers.php',
 );

@@ -112,6 +112,8 @@ class SponsorRegisterController extends Controller
                 return redirect()->route('user.my.tree')->withNotify($notify);
 
             }
+            updateCycleNasional($user->id);
+            
             DB::commit();
             
             $sponsor = User::where('no_bro',$request->sponsor)->first();
@@ -123,7 +125,6 @@ class SponsorRegisterController extends Controller
             ]);
 
             addToLog('Created User '.$user->username.' & Purchased Plan');
-
             $notify[] = ['success', 'Created User '.$user->username.' & Purchased Plan Successfully'];
             return redirect(session()->get('SponsorSet')['url'])->withNotify($notify);
         } catch (\Throwable $th) {

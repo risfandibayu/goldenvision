@@ -27,10 +27,18 @@
                                 <li>
                                     <i
                                         class="fas @if (getAmount($data->tree_com) != 0) fa-check bg--success @else fa-times bg--danger @endif "></i>
+                                    <span>@lang('Referal Commission'): {{ $general->cur_sym }} {{ nb(getAmount($data->ref_com)) }}
+                                    </span>
+                                    {{-- <span class="icon" data-toggle="modal" data-target="#treeComInfoModal"><i
+                                            class="fas fa-question-circle"></i></span> --}}
+                                </li>
+                                <li>
+                                    <i
+                                        class="fas @if (getAmount($data->tree_com) != 0) fa-check bg--success @else fa-times bg--danger @endif "></i>
                                     <span>@lang('Tree Commission'): {{ $general->cur_sym }} {{ nb(getAmount($data->tree_com)) }}
                                     </span>
-                                    <span class="icon" data-toggle="modal" data-target="#treeComInfoModal"><i
-                                            class="fas fa-question-circle"></i></span>
+                                    {{-- <span class="icon" data-toggle="modal" data-target="#treeComInfoModal"><i
+                                            class="fas fa-question-circle"></i></span> --}}
                                 </li>
                             </ul>
                         </div>
@@ -40,7 +48,7 @@
                         @else
                             <a data-toggle="modal"
                                 class="btn w-100 btn-outline--primary  mt-20 py-2 box--shadow1">@lang('Already
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Subscribe')</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Subscribe')</a>
                             <a href="#confBuyMP{{ $data->id }}" data-toggle="modal"
                                 class="btn  w-100 btn--primary  mt-20 py-2 box--shadow1">@lang('Buy MP')</a>
                         @endif
@@ -62,21 +70,44 @@
                                     {{-- </div> --}}
                                     @csrf
                                     <div class="modal-body row">
-                                        <h5 class="text-center col-12">{{ getAmount($data->price) }}
-                                            {{ $general->cur_text }} / MP
-                                            <br>
-                                            or
-                                            <br>
+                                        <h5 class="text-center col-12">
                                             <span class="text-success"> Use Your {{ auth()->user()->pin }} PIN to
                                                 buy</span>
                                         </h5>
                                         <input type="hidden" name="prices" value="{{ getAmount($data->price) }}">
                                         <input type="hidden" name="plan_id" value="{{ $data->id }}">
                                         <div class="form-group col-6">
+                                            <label for="ref_name" class="form--label-2">@lang('Package')</label>
+                                            <select name="package" id="gold"
+                                                class="package form-control form--control-2">
+                                                <option selected disabled>optional</option>
+                                                <option value="1">1 ID</option>
+                                                <option value="5">5 ID <span class="text-warning">(Qualified 1
+                                                        ID)</span></option>
+                                                <option value="25">25 ID <span class="text-warning">(Qualified 5
+                                                        ID)</span></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="">total</label>
+                                            <input class="form-control" type="number" name="total"
+                                                value="{{ getAmount($data->price) }}" placeholder="total" disabled>
+                                        </div>
+                                        <div class="form-group col-6">
                                             <label for="">QTY</label>
                                             <input class="form-control" type="number" name="qty" id="qty"
                                                 min="1" value="" placeholder="MP qty" required>
                                         </div>
+
+                                        {{-- <div class="col-6">
+                                            <label for="ref_name"
+                                                class="form--label-2">@lang('Referral MP Number (Upline)')<small>(Optional)</small></label>
+                                            <input type="text" name="referral"
+                                                class="referral form-control form--control-2" value="{{ old('referral') }}"
+                                                id="up_name" placeholder="@lang('Enter Upline MP Number')">
+                                        </div> --}}
+
+
                                         <div class="col-6">
                                             <label for="ref_name" class="form--label-2">@lang('Referral MP Number (Sponsor)')</label>
                                             <input type="text" name="sponsor"
@@ -84,28 +115,8 @@
                                                 value="{{ app('request')->input('sponsor') ?? old('sponsor') }}"
                                                 id="ref_name" placeholder="@lang('Enter Sponsor MP Number')*" required>
                                         </div>
-                                        <div class="col-6">
-                                            <label for="ref_name"
-                                                class="form--label-2">@lang('Referral MP Number (Upline)')<small>(Optional)</small></label>
-                                            <input type="text" name="referral"
-                                                class="referral form-control form--control-2" value="{{ old('referral') }}"
-                                                id="up_name" placeholder="@lang('Enter Upline MP Number')">
-                                        </div>
 
-                                        <div class="form-group col-6">
-                                            <label for="">total</label>
-                                            <input class="form-control" type="number" name="total"
-                                                value="{{ getAmount($data->price) }}" placeholder="total" disabled>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="ref_name" class="form--label-2">@lang('Package')</label>
-                                            <select name="package" id="gold"
-                                                class="package form-control form--control-2">
-                                                <option>--optional</option>
-                                                <option value="1">Gold</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-6">
+                                        {{-- <div class="col-6">
                                             <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
                                             <select name="position" class="position form-control form--control-2"
                                                 id="position" required
@@ -124,7 +135,7 @@
                                                     @endif
                                                 </span>
                                             </span>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn--danger" data-dismiss="modal"><i
@@ -153,7 +164,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <h5 class="text-danger">@lang('When someone from your below tree subscribe this plan, You will get this
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Business Volume which will be used for matching bonus').
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Business Volume which will be used for matching bonus').
                                     </h5>
                                 </div>
                                 <div class="modal-footer">
@@ -215,23 +226,6 @@
                 </div>
         @endforeach
 
-        {{-- <div class="col-xl-4 col-md-6 mb-30">
-        <div class="card">
-            <div class="card-body pt-5 pb-5 ">
-                <div class="pricing-table text-center mb-4">
-                    <h2 class="package-name mb-20 text-"><strong>Buy MP</strong></h2>
-                    <span
-                        class="price text--dark font-weight-bold d-block">12312</span>
-                    <p>/ MP</p>
-                    <hr>
-                </div>
-
-                <a href="#confBuyMP" data-toggle="modal" class="btn  w-100 btn-outline--primary  mt-20 py-2 box--shadow1">@lang('Buy')</a>
-            </div>
-
-        </div><!-- card end -->
-    </div> --}}
-
 
 
         <div class="modal fade" id="refComInfoModal">
@@ -249,7 +243,7 @@
                             <br>
                             <br>
                             <span class="text-success"> @lang('This is the reason you should choose a plan with bigger referral
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        commission').</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    commission').</span>
                         </h5>
                     </div>
                     <div class="modal-footer">
@@ -270,7 +264,7 @@
                     </div>
                     <div class="modal-body">
                         <h5 class=" text-danger">@lang('When someone from your below tree subscribe this plan, You will get this
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    amount as tree commission'). </h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            amount as tree commission'). </h5>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
@@ -304,8 +298,7 @@
                     $('#position').val(oldPosition);
                 }
                 $('.package').on('change', function() {
-                    const pack = 7;
-                    const harga = 350000;
+                    const pack = $(this).val();
                     $('input[name=qty]').val(pack);
                     $('input[name=total]').val(pack * $('input[name=prices]').val());
                     console.log(pack * harga);
