@@ -95,6 +95,10 @@ class PlanController extends Controller
 
     function planStore(Request $request)
     {
+        if($request->package > 25){
+            $notify[] = ['error', 'For now, you can only create max 25 user'];
+            return redirect()->intended('/user/profile-setting')->withNotify($notify);
+        }
         $checkloop  = $request->package > 1  ? true:false;
         
         if ($checkloop) {
