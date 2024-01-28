@@ -240,7 +240,7 @@
                         <h2 style="font-weight: 700;color: black;">{{ Auth::user()->no_bro }}</h2>
                     </div>
                 </div>
-                <div class="card card-header-actions mt-3">
+                {{-- <div class="card card-header-actions mt-3">
                     <div class="card-header bg-grand-gold d-flex justify-content-center" style="font-weight: 600;">
                         Gold Rates
                     </div>
@@ -257,7 +257,7 @@
                         </div>
                         <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
                     </div>
-                </div>
+                </div> --}}
             </div>
         @endif
     </div>
