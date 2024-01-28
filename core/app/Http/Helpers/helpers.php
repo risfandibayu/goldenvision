@@ -1225,9 +1225,9 @@ function referralCommission2($user_id, $details)
             $uex = UserExtra::where('user_id',$refer->id)->first();
             // if ($uex->left > 3 && $uex->right > 3 || $uex->is_gold == 1) {
             if ($uex->is_gold == 1) {
-                $amount = 20000;
+                $amount = $plan->ref_com;
             }else{
-                $amount = 15000;
+                $amount = $plan->ref_com;
             }
 
             $refer->balance += $amount;
