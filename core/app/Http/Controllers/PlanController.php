@@ -138,7 +138,7 @@ class PlanController extends Controller
         //         return back()->withNotify($notify);
         //     }
         // }
-        $oldPlan = $user->plan_id;
+        $pplan = $user->plan_id;
         $sponsor = User::where('no_bro', $request->sponsor)->first();
         if (!$sponsor) {
             $notify[] = ['error', 'Invalid Sponsor MP Number.'];
@@ -230,9 +230,9 @@ class PlanController extends Controller
             $user->is_gold = 1;
             $user->save();
         }
-        if ($oldPlan == 0) {
+        // if ($pplan != 0) {
             updatePaidCount2($user->id);
-        }
+        // }
         
         $notify[] = ['success', 'Purchased ' . $plan->name . 'and Registered New  '.$registeredUser.' Account Successfully'];
         return redirect()->route('user.home')->withNotify($notify);
