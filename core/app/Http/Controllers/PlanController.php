@@ -35,10 +35,6 @@ class PlanController extends Controller
         $data['plans'] = Plan::whereStatus(1)->get();
         return view($this->activeTemplate . '.user.plan_ro', $data);
     }
-
-    // function planStore(Request $request){
-    //     brodev(Auth::user()->id, $request->qty);
-    // }
     public function buyMpStore(Request $request){
 
         $this->validate($request, [
@@ -101,17 +97,22 @@ class PlanController extends Controller
         }
         $checkloop  = $request->package > 1  ? true:false;
         
-        if ($checkloop) {
-            $checkBankAcc = rekening::where('user_id',auth()->user()->id)->first();
-            if(!$checkBankAcc){
-                $notify[] = ['error', 'Please Field your bank acc before subscibe more than 1 account'];
-                return redirect()->intended('/user/profile-setting')->withNotify($notify);
-            }
-        }
+        $checkBankAcc = rekening::where('user_id',auth()->user()->id)->first();
+        // if ($checkloop) {
+        //     if(!$checkBankAcc){
+        //         $notify[] = ['error', 'Please Field your bank acc before subscibe more than 1 account'];
+        //         return redirect()->intended('/user/profile-setting')->withNotify($notify);
+        //     }
+        // }
         $this->validate($request, [
             'plan_id' => 'required|integer', 
             'qty' => 'required',
         ]);
+        $sponsor = User::where('username',$request->sponsor)->first();
+        if(!$sponsor){
+            $notify[] = ['error', 'Username not found'];
+            return redirect()->back()->withNotify($notify);
+        }
         $request['position'] = $request->position ?? 2;
 
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
@@ -119,35 +120,11 @@ class PlanController extends Controller
         $brolimit = user::where('plan_id','!=',0)->count();
 
         $user = Auth::user();
-        $ref_user = User::where('no_bro', $request->sponsor)->first();
-        // if ($ref_user == null && $request->referral) {
-        //     $notify[] = ['error', 'Invalid Upline MP Number.'];
-        //     return back()->withNotify($notify);
-        // }
-        // if ($ref_user) {
-        //     # code...
-        //     $cek_pos = User::where('pos_id', $ref_user->id)->where('position',$request->position)->first();
-    
-        //     if(!treeFilter($ref_user->id,$ref_user->id)){
-        //         $notify[] = ['error', 'Refferal and Upline BRO number not in the same tree.'];
-        //         return back()->withNotify($notify);
-        //     }
-            
-        //     if ($cek_pos) {
-        //         $notify[] = ['error', 'Node you input is already filled.'];
-        //         return back()->withNotify($notify);
-        //     }
-        // }
-        $pplan = $user->plan_id;
-        $sponsor = User::where('no_bro', $request->sponsor)->first();
+        $ref_user = $sponsor;
         if (!$sponsor) {
             $notify[] = ['error', 'Invalid Sponsor MP Number.'];
             return back()->withNotify($notify);
         }
-        // if($ref_user->no_bro == $user->no_bro){
-        //     $notify[] = ['error', 'Invalid Input MP Number. You can`t input your own MP number'];
-        //     return back()->withNotify($notify);
-        // }
 
         $activePin = Auth::user()->pin;
         if ($activePin < $request->qty) {
@@ -164,8 +141,10 @@ class PlanController extends Controller
             return redirect()->route('user.home')->withNotify($notify);
         }
 
+
         $registeredUser = $request->package;
         $position = 2;
+
 
         for ($i=1; $i < $registeredUser; $i++) { 
             if($i <= 4){
@@ -203,10 +182,10 @@ class PlanController extends Controller
             $emailNewUser = $firstUpline->email;
             $phoneNewUser = $firstUpline->mobile;
             $pinNewUser = 1;
-            $newBankName = $checkBankAcc->nama_bank;
-            $newBankAcc = $checkBankAcc->nama_akun;
-            $newBankNo = $checkBankAcc->no_rek;
-            $newBankCity = $checkBankAcc->kota_cabang;
+            $newBankName = $checkBankAcc->nama_bank??null;
+            $newBankAcc = $checkBankAcc->nama_akun??null;
+            $newBankNo = $checkBankAcc->no_rek??null;
+            $newBankCity = $checkBankAcc->kota_cabang??null;
 
             $nextUser = fnRegisterUser(
                 $sponsor,
@@ -230,9 +209,6 @@ class PlanController extends Controller
             $user->is_gold = 1;
             $user->save();
         }
-        // if ($pplan != 0) {
-            updatePaidCount2($user->id);
-        // }
         
         $notify[] = ['success', 'Purchased ' . $plan->name . 'and Registered New  '.$registeredUser.' Account Successfully'];
         return redirect()->route('user.home')->withNotify($notify);
@@ -263,7 +239,7 @@ class PlanController extends Controller
             'ket'       => 'Sponsor Subscibe and Create '.$request->package.'New User'
         ]);
 
-        $oldPlan = $user->plan_id;
+      
         brodev(Auth::user()->id, $request->qty);
 
         $trx = $user->transactions()->create([
@@ -283,13 +259,13 @@ class PlanController extends Controller
             'trx' => $trx->trx,
             'post_balance' => getAmount($user->balance),
         ]);
-        if ($oldPlan == 0) {
-            updatePaidCount2($user->id);
-        }
+
             
         $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
 
         referralCommission2($user->id, $details);
+        
+        updatePaidCount2($user->id);
 
         updateCycleNasional($user->id);
 
