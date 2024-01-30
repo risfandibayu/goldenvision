@@ -98,16 +98,21 @@ class PlanController extends Controller
         $checkloop  = $request->package > 1  ? true:false;
         
         $checkBankAcc = rekening::where('user_id',auth()->user()->id)->first();
-        if ($checkloop) {
-            if(!$checkBankAcc){
-                $notify[] = ['error', 'Please Field your bank acc before subscibe more than 1 account'];
-                return redirect()->intended('/user/profile-setting')->withNotify($notify);
-            }
-        }
+        // if ($checkloop) {
+        //     if(!$checkBankAcc){
+        //         $notify[] = ['error', 'Please Field your bank acc before subscibe more than 1 account'];
+        //         return redirect()->intended('/user/profile-setting')->withNotify($notify);
+        //     }
+        // }
         $this->validate($request, [
             'plan_id' => 'required|integer', 
             'qty' => 'required',
         ]);
+        $sponsor = User::where('username',$request->sponsor)->first();
+        if(!$sponsor){
+            $notify[] = ['error', 'Username not found'];
+            return redirect()->back()->withNotify($notify);
+        }
         $request['position'] = $request->position ?? 2;
 
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
@@ -115,9 +120,7 @@ class PlanController extends Controller
         $brolimit = user::where('plan_id','!=',0)->count();
 
         $user = Auth::user();
-        $ref_user = User::where('no_bro', $request->sponsor)->first();
-        $oldPlan = $user->plan_id;
-        $sponsor = User::where('no_bro', $request->sponsor)->first();
+        $ref_user = $sponsor;
         if (!$sponsor) {
             $notify[] = ['error', 'Invalid Sponsor MP Number.'];
             return back()->withNotify($notify);
