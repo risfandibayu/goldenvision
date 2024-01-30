@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 
-function fnRegisterUser($sponsor,$broUpline,$position,$firstname,$lastname,$username,$email,$phone,$pin,$bank_name,$kota_cabang,$acc_name,$acc_number){
+function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$username,$email,$phone,$pin,$bank_name=null,$kota_cabang=null,$acc_name=null,$acc_number=null){
     
     $ref_user = User::where('no_bro', $broUpline)->first();
     
     
-    $pos = getPosition($ref_user->id, 2);
+    $pos = getPosition($ref_user->id, $position);
 
     $data = [
         'pos'       => $pos,
@@ -65,11 +65,10 @@ function fnPlanStore(array $data,$user)
     $user->position         = $data['pos']['position'];
     $user->position_by_ref  = 2;
     $user->plan_id          = $plan->id;
-    $user->pin              -= 1;
     $user->total_invest     += ($plan->price * 1);
-    $user->bro_qty          = 0;
     $user->save();
-
+    
+    $oldPlan = $user->plan_id;
     brodev($user->id, 1);
 
     $user->transactions()->create([
@@ -89,6 +88,7 @@ function fnPlanStore(array $data,$user)
         'trx' => getTrx(),
         'post_balance' => getAmount($user->balance),
     ]);
+    updatePaidCount2($user->id);
 
     $userSponsor = User::find($user->id);
     $details = $userSponsor->username. ' Subscribed to ' . $plan->name . ' plan.';
@@ -119,14 +119,16 @@ function fnCreateNewUser(array $data)
     UserExtra::create([
         'user_id' => $user->id
     ]);
-    $rek = new rekening();  
-    $rek->user_id = $user->id;
-    $rek->nama_bank = $data['bank_name'];
-    $rek->nama_akun = $data['acc_name'];
-    $rek->no_rek = $data['acc_number'];
-    $rek->kota_cabang = $data['kota_cabang'];
-    $rek->save();
-
+    if($data['bank_name'] !== null){
+        $rek = new rekening();  
+        $rek->user_id = $user->id;
+        $rek->nama_bank = $data['bank_name'];
+        $rek->nama_akun = $data['acc_name'];
+        $rek->no_rek = $data['acc_number'];
+        $rek->kota_cabang = $data['kota_cabang'];
+        $rek->save();
+    }
+    
     $adminNotification = new AdminNotification();
     $adminNotification->user_id = $user->id;
     $adminNotification->title = 'New member registered By Sponsor: '.$data['sponsor']->username;

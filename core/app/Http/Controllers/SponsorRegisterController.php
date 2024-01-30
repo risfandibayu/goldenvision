@@ -36,21 +36,20 @@ class SponsorRegisterController extends Controller
             'url'       => $request->back
         ];
         $request->session()->put('SponsorSet', $data);
-        return response()->json(['sts'=>200,'url'=>route('user.sponsor.regist')]);
+        return response()->json(['sts'=>200,'url'=>route('user.sponsor.regist'),'data'=>$data]);
     }
 
     public function index(){
         // dd(session()->get('SponsorSet')['url']);
-        // dd($request->sesion()->get('SponsorSet'));
+        // dd(session()->get('SponsorSet')['upline']);
         $data['page_title'] = "Register By Sponsor";
         $data['user'] = Auth::user();
         $data['bank'] = bank::all();
-        $data['upline'] = User::where('no_bro',session()->get('SponsorSet')['upline'])->first();
+        $data['upline'] = User::where('no_bro',session()->get('SponsorSet')['upline'])->orWhere('id',session()->get('SponsorSet')['upline'])->first();
         return view($this->activeTemplate . 'user.registerSponsor', $data);
     }
     
     public function registerUser(Request $request){
-        // dd($request->all());
         $validate = Validator::make($request->all(),[
             'sponsor'   => 'required',
             'upline'    => 'required',
@@ -59,91 +58,186 @@ class SponsorRegisterController extends Controller
             'email'     => 'required|email',
             'phone'     => 'required',
             'pin'       => 'required|numeric|min:1',
-            'bank_name' => 'required',
-            'kota_cabang' => 'required',
-            'acc_name' => 'required',
-            'acc_number' => 'required',
+            // 'bank_name' => 'required',
+            // 'kota_cabang' => 'required',
+            // 'acc_name' => 'required',
+            // 'acc_number' => 'required',
         ]);
+       
         if ($validate->fails()) {
             // dd('error validasi');
            return redirect()->back()->withInput($request->all())->withErrors($validate);
         }
+            
+
+        if (auth()->user()->pin +1 < $request->pin) {
+            $notify[] = ['error','Not enough pin to send'];
+            return redirect()->back()->withNotify($notify);
+        }
         DB::beginTransaction();
         try {
-            $user = $this->create($request->all());  //register user
-            // create rekening
-            $cekbank = rekening::where('nama_bank',$request->bank_name)
-                            ->where('nama_akun','like','%'.$request->acc_name.'%')
-                            ->where('no_rek','like','%'.$request->acc_number.'%')
-                            ->first();
-            if($cekbank){
-                $rek = new rekening();  
-                $rek->user_id = $user->id;
-                $rek->nama_bank = $cekbank->bank_name??$request->bank_name;
-                $rek->nama_akun = $cekbank->acc_name??$request->acc_name;
-                $rek->no_rek = $cekbank->acc_number??$request->acc_number;
-                $rek->kota_cabang = $cekbank->kota_cabang??$request->kota_cabang;
-                $rek->save();
-            }else{
-                $rek = new rekening();  
-                $rek->user_id = $user->id;
-                $rek->nama_bank = $request->bank_name;
-                $rek->nama_akun = $request->acc_name;
-                $rek->no_rek = $request->acc_number;
-                $rek->kota_cabang = $request->kota_cabang;
-                $rek->save();
-            }
-            $pin = $this->addPin($request->pin,$user->id); //send pin to user
+          
+        $newUser = $this->create($request->all());  //register user
+        // create rekening
+        $cekbank = rekening::where('nama_bank',$request->bank_name)
+                        ->where('nama_akun','like','%'.$request->acc_name.'%')
+                        ->where('no_rek','like','%'.$request->acc_number.'%')
+                        ->first();
+        // if($cekbank){
+        //     $rek = new rekening();  
+        //     $rek->user_id = $user->id;
+        //     $rek->nama_bank = $cekbank->bank_name??$request->bank_name;
+        //     $rek->nama_akun = $cekbank->acc_name??$request->acc_name;
+        //     $rek->no_rek = $cekbank->acc_number??$request->acc_number;
+        //     $rek->kota_cabang = $cekbank->kota_cabang??$request->kota_cabang;
+        //     $rek->save();
+        // }else{
+        //     $rek = new rekening();  
+        //     $rek->user_id = $user->id;
+        //     $rek->nama_bank = $request->bank_name;
+        //     $rek->nama_akun = $request->acc_name;
+        //     $rek->no_rek = $request->acc_number;
+        //     $rek->kota_cabang = $request->kota_cabang;
+        //     $rek->save();
+        // }
+        // $pin = $this->addPin($request->pin,$user->id); //send pin to user
 
-            if($pin['error']){
-                $notify[] = ['error',$pin['msg']];
-                return redirect()->route('user.my.tree')->withNotify($notify);
-            }
-            $buyPlan = $this->planStore([
-                'plan_id'   => 1,
-                'upline'    => $request->upline,
-                'sponsor'   => $request->sponsor,
-                'pin'       => $request->pin,
-                'position'  => $request->position,
-                'user_id'   => $user->id
-            ]);
-            if($buyPlan['error']){
-                $notify[] = ['error',$buyPlan['msg']];
-                return redirect()->route('user.my.tree')->withNotify($notify);
-
-            }
-            updateCycleNasional($user->id);
-            
-            DB::commit();
-            
-            $sponsor = User::where('no_bro',$request->sponsor)->first();
-            sendEmail2($user->id,'sponsor_register',[
-                'email' => $user->email,
-                'sponsor'  => $sponsor->username,
-                'user' => $user->username,
-                'url' => url('/login?username='.$user->username.'&password='.$user->username),
-            ]);
-
-            addToLog('Created User '.$user->username.' & Purchased Plan');
-            $notify[] = ['success', 'Created User '.$user->username.' & Purchased Plan Successfully'];
-            return redirect(session()->get('SponsorSet')['url'])->withNotify($notify);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            $notify[] = ['error', 'Created User Failed: '.$th->getMessage()];
-            return redirect()->route('user.my.tree')->withNotify($notify);
-        }
+        // if($pin['error']){
+        //     $notify[] = ['error',$pin['msg']];
+        //     return redirect()->route('user.my.tree')->withNotify($notify);
+        // }
         
+        $sponsor = User::find(auth()->user()->id);
+        
+        UserPin::create([
+            'user_id' => $sponsor->id,
+            'pin'     => $request->pin,
+            'pin_by'  => '',
+            'type'      => "-",
+            'start_pin' => auth()->user()->pin,
+            'end_pin'   => auth()->user()->pin - $request->pin,
+            'ket'       => 'Sponsor Create '. $request->pin.' User and Subsibed each'
+        ]);
+        $sponsor->pin -=  $request->pin;
+        $sponsor->save();
+
+        $buyPlan = $this->planStore([
+            'plan_id'   => 1,
+            'upline'    => $request->upline,
+            'sponsor'   => $request->sponsor,
+            'pin'       => $request->pin,
+            'position'  => $request->position,
+            'user_id'   => $newUser->id,
+        ]);
+
+        if($buyPlan['error']){
+            $notify[] = ['error',$buyPlan['msg']];
+            return redirect()->back()->withNotify($notify);
+
+        }
+
+
+
+        updateCycleNasional($newUser->id);
+        
+        $checkloop = $request->pin > 1  ? true:false;
+
+        if(!$checkloop){
+            addToLog('Created '.$request->pin.' User & Purchased Plan');
+            $notify[] = ['success', 'Created User & Purchased Plan Successfully'];
+            return redirect(session()->get('SponsorSet')['url'])->withNotify($notify);
+        }else{
+            $registeredUser = $request->pin;
+            $firstUpline = $newUser;
+            $position = 2;
+            for ($i=1; $i < $registeredUser; $i++) { 
+                if($i <= 4){
+                    $sponsor = $firstUpline;
+                    $mark = 1;
+                    // 02: 2,3,4,5
+                }
+                if ($i >= 5 && $i <= 8) {
+                    $sponsor = User::where('username',$newUser->username  . 2)->first();
+                    $mark = 2;
+                    // 03: 6,7,8,9
+                }
+                if ($i >= 9  && $i <= 12) {
+                    $mark = 3;
+                    $sponsor = User::where('username',$newUser->username  . 3)->first();
+                    // 04: 10,11,12,13,14
+                }
+                if ($i >= 13 && $i <= 16) {
+                    $mark =4;
+                    $sponsor = User::where('username',$newUser->username  . 4)->first();
+                    // 05: 15,16,17,18,19
+                }
+                if ($i >= 17 && $i<= 20) {
+                    $mark = 5;
+                    $sponsor = User::where('username',$newUser->username  . 5)->first();
+                    // 06: 20,21,22,13,24
+                }
+                if ($i >= 21 && $i<= 24) {
+                    $sponsor = User::where('username',$newUser->username  . 6)->first();
+                }
+                $firstUpline = User::find($firstUpline->id);
+                $bro_upline = $firstUpline->no_bro;
+                $firstnameNewUser = $firstUpline->firstname;
+                $lastnameNewUser = $firstUpline->lastname;
+                $usernameNewUser = $firstUpline->username . $i+1;
+                $emailNewUser = $firstUpline->email;
+                $phoneNewUser = $firstUpline->mobile;
+                $pinNewUser = 1;
+                $newBankName = $cekbank->nama_bank??null;
+                $newBankAcc = $cekbank->nama_akun??null;
+                $newBankNo = $cekbank->no_rek??null;
+                $newBankCity = $cekbank->kota_cabang??null;
+
+                $nextUser = fnRegisterUser(
+                    $sponsor,
+                    $bro_upline,
+                    $position,
+                    $firstnameNewUser,
+                    $lastnameNewUser,
+                    $usernameNewUser,
+                    $emailNewUser,
+                    $phoneNewUser,
+                    $pinNewUser,
+                    $newBankName,
+                    $newBankCity,
+                    $newBankAcc,
+                    $newBankNo
+                );
+                if($nextUser){
+                    $bro_upline = $nextUser->no_bro;
+
+                    $user = UserExtra::where('user_id',$sponsor->id)->first();
+                    $user->is_gold = 1;
+                    $user->save();
+                }
+            }
+        }
+        DB::commit();
+        
+        // DB::commit();
+        addToLog('Created '.$request->pin.' User & Purchased Plan');
+        $notify[] = ['success', 'Success Created '.$request->pin.' User & Purchased Plan Each'];
+        return redirect(session()->get('SponsorSet')['url'])->withNotify($notify);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    
     }
     protected function create(array $data)
     {
+        $defaulUser = Auth::user();
         $gnl = GeneralSetting::first();
         $user = User::create([
-            'firstname' => isset($data['firstname']) ? $data['firstname'] : null,
-            'lastname'  => isset($data['lastname']) ? $data['lastname'] : null,
-            'email'    => strtolower(trim($data['email'])),
-            'password'  => Hash::make(strtolower(trim($data['username']))),
+            'firstname' => $defaulUser->firstname??null,
+            'lastname'  => $defaulUser->lastname?? null,
+            'email'    => $defaulUser->email ??null,
+            'password'  => $defaulUser->password?? Hash::make(strtolower(trim($data['username']))),
             'username'  => strtolower(trim($data['username'])),
-            'mobile'    => 62 . $data['phone'],
+            'mobile'    => $defaulUser->mobile??'',
             'address'   => [
                 'address' => '',
                 'state' => '',
@@ -164,39 +258,9 @@ class SponsorRegisterController extends Controller
         ]);
         $adminNotification = new AdminNotification();
         $adminNotification->user_id = $user->id;
-        $adminNotification->title = 'New member registered By Sponsor: '.Auth::user()->username;
+        $adminNotification->title = 'New member registered By Sponsor: '. Auth::user()->username;
         $adminNotification->click_url = route('admin.users.detail', $user->id);
         $adminNotification->save();
-
-        //Login Log Create
-        $ip = $_SERVER["REMOTE_ADDR"];
-        $exist = UserLogin::where('user_ip', $ip)->first();
-        $userLogin = new UserLogin();
-
-        //Check exist or not
-        if ($exist) {
-            $userLogin->longitude =  $exist->longitude;
-            $userLogin->latitude =  $exist->latitude;
-            $userLogin->location =  $exist->location;
-            $userLogin->country_code = $exist->country_code;
-            $userLogin->country =  $exist->country;
-        } else {
-            $info = json_decode(json_encode(getIpInfo()), true);
-            $userLogin->longitude =  @implode(',', $info['long']);
-            $userLogin->latitude =  @implode(',', $info['lat']);
-            $userLogin->location =  @implode(',', $info['city']) . (" - " . @implode(',', $info['area']) . "- ") . @implode(',', $info['country']) . (" - " . @implode(',', $info['code']) . " ");
-            $userLogin->country_code = @implode(',', $info['code']);
-            $userLogin->country =  @implode(',', $info['country']);
-        }
-
-        $userAgent = osBrowser();
-        $userLogin->user_id = $user->id;
-        $userLogin->user_ip =  $ip;
-
-        $userLogin->browser = @$userAgent['browser'];
-        $userLogin->os = @$userAgent['os_platform'];
-        $userLogin->save();
-      
 
         return $user;
     }
@@ -283,33 +347,17 @@ class SponsorRegisterController extends Controller
         if($ref_user->no_bro == $user->no_bro){
             return ['error'=>true, 'msg'=> 'Invalid Input MP Number. You can`t input your own MP number'];
         }
-        if($data['pin'] > $user->pin){
-            return ['error'=>true, 'msg'=> 'User Doesn Have Enough Pin'];
-        }
-
         $oldPlan = $user->plan_id;
 
         $pos = getPosition($ref_user->id, $data['position']);
         try {
-            $upin = UserPin::create([
-                'user_id' => $user->id,
-                'pin'     => $data['pin'],
-                'pin_by'  => $user->id,
-                'type'      => '-',
-                'start_pin' => $user->pin,
-                'end_pin'   => $user->pin - $data['pin'],
-                'ket'       => 'Purchased ' . $plan->name . ' For '.$data['pin'].' MP',
-            ]);
-
             $user->no_bro           = generateUniqueNoBro();
             $user->ref_id           = $sponsor->id; // ref id = sponsor
             $user->pos_id           = $ref_user->id; //pos id = upline
             $user->position         = $data['position'];
             $user->position_by_ref  = $ref_user->position;
             $user->plan_id          = $plan->id;
-            $user->pin              -= $data['pin'];
             $user->total_invest     += ($plan->price * $data['pin']);
-            $user->bro_qty          = $data['pin'] - 1;
             $user->save();
 
             brodev($data['user_id'], $data['pin']);
@@ -322,27 +370,12 @@ class SponsorRegisterController extends Controller
                 'trx' => getTrx(),
                 'post_balance' => getAmount($user->balance),
             ]);
-
-            // dd($user);
-
-            sendEmail2($user->id, 'plan_purchased', [
-                'plan' => $plan->name. ' For '.$data['pin'].' MP',
-                'amount' => getAmount($plan->price * $data['pin']),
-                'currency' => $gnl->cur_text,
-                'trx' => getTrx(),
-                'post_balance' => getAmount($user->balance),
-            ]);
-            if ($oldPlan == 0) {
-                updatePaidCount2($user->id);
-            }
+           
+            updatePaidCount2($user->id);
+           
             $userSponsor = User::find($data['user_id']);
             $details = $userSponsor->username. ' Subscribed to ' . $plan->name . ' plan.';
 
-            // updateBV($user->id, $plan->bv, $details);
-
-            // if ($plan->tree_com > 0) {
-            //     treeComission($user->id, $plan->tree_com, $details);
-            // }
             addToLog('Purchased ' . $plan->name . ' For '.$data['pin'].' MP as Sponsor');
 
             referralCommission2($user->id, $details);

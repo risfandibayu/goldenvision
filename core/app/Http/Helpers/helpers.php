@@ -1430,8 +1430,10 @@ function showSingleUserinTree($resp)
     $uplines = $resp['upline'];
     if($uplines){
         $upline = $uplines->no_bro;
+        $bro =   $uplines->no_bro;
         $uname = $uplines->username;
     }else{
+        $bro = '';
         $upline = '';
         $uname = '';
     }
@@ -1529,15 +1531,23 @@ function showSingleUserinTree($resp)
 
     } else {
          if($upline){
-            $img = getImage('assets/images/rm.png', null, true);
-            $addList = 'btnUser';
+             
+             if ($upline == auth()->user()->no_bro && auth()->user()->userExtra->is_gold) {
+                $img = getImage('assets/images/add1.png', null, true);
+                # code...
+                $addList = 'btnUser';
+            }else{
+                $img = getImage('assets/images/', null, true);
+
+                $addList = 'noUser';
+            }
         }else{
             $img = getImage('assets/images/', null, true);
             $addList = 'noUser';
         }
-        $res .= '<div class="user '.$addList.' " data-upline="'.$upline.'" data-pos="'.$pos.' data-up="'.$uname.'" type="button">';
+        $res .= '<div class="user '.$addList.' " data-upline="'.$bro.'" data-pos="'.$pos.'" data-up="'.$uname.'" type="button">';
         // $res .= '<div class="user btnUser" type="button">';
-        $res .= '<img src="'.$img.'" alt="*"  class="no-user imgUser'.$pos.$upline.'">';
+        $res .= '<img src="'.$img.'" alt="*"  class="no-user imgUser'.$pos.$bro.'">';
 
 
     }
@@ -1652,8 +1662,9 @@ function showSingleUserNoLine($resp)
 
     } else {
         if($upline){
-            $img = getImage('assets/images/rm.png', null, true);
-            $addList = 'btnUser';
+              $img = getImage('assets/images/', null, true);
+            // $img = getImage('assets/images/rm.png', null, true);
+            $addList = 'noUser';
         }else{
             $img = getImage('assets/images/', null, true);
             $addList = 'noUser';
@@ -1743,8 +1754,8 @@ function showSingleUserinTree2($user,$id)
         }
 
     } else {
-        $img = getImage('assets/images/user/profile/', null, true);
 
+        $img = getImage('assets/images/user/profile/', null, true);
         $res .= "<div class=\"user\" >";
         $res .= "<img src=\"$img\" alt=\"*\"  class=\"no-user\">";
         $res .= "<p class=\"user-name\">MP</p>";
