@@ -242,7 +242,8 @@ class PlanController extends Controller
             $pos = getPosition($ref_user->id, $request->position);
             $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
             if($wait){
-               sleep(10);
+                dd($wait);
+                sleep(rand(3,6));
                 $pos = getPosition($ref_user->id, $request->position);
             }
             $user->no_bro           = generateUniqueNoBro();
