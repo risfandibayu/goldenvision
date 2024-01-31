@@ -114,7 +114,8 @@ class PlanController extends Controller
             $sponsor = User::where('username',$request->sponsor)->where('no_bro','!=',null)->first();
             $user = Auth::user();
             if (!$sponsor) {
-                $notify[] = ['error', 'Invalid Sponsor username'];
+                $notify[] = ['error', 'Check Username or Sponsor Subcribe Status'];
+                $notify[] = ['error', 'Invalid Sponsor'];
                 return back()->withNotify($notify);
             }
             if($sponsor->id  ==  $user->id){
