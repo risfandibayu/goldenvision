@@ -223,6 +223,6 @@ function fnWaitingList($user_id,$pos_id,$position){
     }
 
 }
-function fnDelWaitList(array $userID){
-    WaitList::whereIn('user_id',$userID)->delete();
+function fnDelWaitList($userID){
+    WaitList::where('user_id',$userID)->delete();
 }

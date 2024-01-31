@@ -229,7 +229,7 @@ class PlanController extends Controller
                 $user->save();
             }
 
-            fnDelWaitList($waitlistUserID);
+            fnDelWaitList(Auth::user()->id);
             DB::commit();
             $notify[] = ['success', 'Purchased ' . $plan->name . 'and Registered New  '.$registeredUser.' Account Successfully'];
             return redirect()->route('user.my.tree')->withNotify($notify);
@@ -305,6 +305,7 @@ class PlanController extends Controller
             return $user;
         } catch (\Throwable $th) {
             return false;
+            dd('placement',$th->getMessage());
         }
     }
 
