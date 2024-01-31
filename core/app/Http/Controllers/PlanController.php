@@ -21,6 +21,7 @@ class PlanController extends Controller
 {
     public function __construct(public TreeService $treeService)
     {
+        $data =  'lorem';
         $this->activeTemplate = activeTemplate();
     }
 
