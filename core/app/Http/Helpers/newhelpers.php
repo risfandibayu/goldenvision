@@ -125,11 +125,11 @@ function fnCreateNewUser(array $data)
         $newusername = $data['username'];
         $checkUsername = User::where('username',$newusername)->first();
         if($checkUsername){
-            $newusername = $data['username'].'_copy';
+            $newusername = $data['username'].'A';
             $checkUsername = User::where('username',$newusername)->first();
             
             if($checkUsername){
-                $newusername = $data['username'].'_dupli';
+                $newusername = $data['username'].'B';
             }
         }
         $user = User::create([
