@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserExtra;
 use App\Models\UserLogin;
 use App\Models\UserPin;
+use App\Models\WaitList;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,9 @@ function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$us
     
     $ref_user = User::where('no_bro', $broUpline)->first();
     try {
+
         $pos = getPosition($ref_user->id, $position);
+      
         if($pos == false){
             return false;
         }
@@ -39,13 +42,15 @@ function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$us
         ];
         
         $user = fnCreateNewUser($data);  //register user
-        if(!$user){
-            dd($user,'false_user');
-            return false;
-
+        $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
+        if($wait){
+            sleep(5);
+           $pos = getPosition($ref_user->id, $position);
+           $data['pos'] = $pos;
         }
 
         $plan = fnPlanStore($data,$user);
+        fnDelWaitList($user->id,$pos['pos_id'],$pos['position']);
         if(!$plan){
             // dd($plan,'false_plan');
 
@@ -77,7 +82,7 @@ function fnPlanStore(array $data,$user)
         $user->no_bro           = generateUniqueNoBro();
         $user->ref_id           = $data['sponsor']->id; 
         $user->pos_id           = $data['pos']['pos_id']; //pos id = upline
-        $user->position         = $data['pos']['position'];
+        $user->position         = 2;
         $user->position_by_ref  = 2;
         $user->plan_id          = $plan->id;
         $user->total_invest     += ($plan->price * 1);
@@ -204,4 +209,23 @@ function fnAddPin($pin,$user_id,$sponsor){
     
     $user->pin += $pin;
     $user->save();
+}
+
+
+function fnWaitingList($user_id,$pos_id,$position){
+    $waitList = WaitList::where(['pos_id'=>$pos_id,'position'=>$position])->first();
+    if(!$waitList){
+        WaitList::create(['user_id'=>$user_id,'pos_id'=>$pos_id,'position'=>$position]);
+        return false;
+    }else{
+        return true;
+    }
+
+}
+function fnDelWaitList($user_id,$pos_id,$position){
+    $waitListSelft = WaitList::where(['user_id'=>$user_id,'pos_id'=>$pos_id,'position'=>$position])->first();
+    if($waitListSelft){
+       $waitListSelft->delete();
+        return false;
+    }
 }

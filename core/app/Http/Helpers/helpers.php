@@ -877,7 +877,7 @@ function mlmPositions()
 function getPosition($parentid, $position)
 {
     $childid = getTreeChildId($parentid, $position);
-
+   
     if ($childid != "-1") {
         $id = $childid;
     } else {

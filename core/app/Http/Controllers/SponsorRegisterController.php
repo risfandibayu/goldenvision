@@ -369,6 +369,11 @@ class SponsorRegisterController extends Controller
         $oldPlan = $user->plan_id;
 
         $pos = getPosition($ref_user->id, $data['position']);
+        $wait = fnWaitingList($user->id,$ref_user->id,$pos['position']);
+        if($wait){
+            sleep(5);
+            $pos = getPosition($ref_user->id, $data['position']);
+        }
         try {
             $user->no_bro           = generateUniqueNoBro();
             $user->ref_id           = $sponsor->id; // ref id = sponsor
@@ -389,9 +394,9 @@ class SponsorRegisterController extends Controller
                 'trx' => getTrx(),
                 'post_balance' => getAmount($user->balance),
             ]);
-           
+            fnDelWaitList($user->id,$ref_user->id,$pos['position']);
+            
             updatePaidCount2($user->id);
-           
             $userSponsor = User::find($data['user_id']);
             $details = $userSponsor->username. ' Subscribed to ' . $plan->name . ' plan.';
 

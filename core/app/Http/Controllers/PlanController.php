@@ -240,6 +240,11 @@ class PlanController extends Controller
         try {
             
             $pos = getPosition($ref_user->id, $request->position);
+            $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
+            if($wait){
+                sleep(5);
+                $pos = getPosition($ref_user->id, $request->position);
+            }
             $user->no_bro           = generateUniqueNoBro();
             $user->ref_id           = $sponsor->id; // ref id = sponsor
             $user->pos_id           = $pos['pos_id']; //pos id = upline
@@ -281,6 +286,7 @@ class PlanController extends Controller
                 'post_balance' => getAmount($user->balance),
             ]);
 
+            fnDelWaitList($user->id,$pos['pos_id'],$pos['position']);
                 
             $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
 
