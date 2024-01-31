@@ -1533,7 +1533,7 @@ function showSingleUserinTree($resp)
          if($upline){
              
              if ($upline == auth()->user()->no_bro && auth()->user()->userExtra->is_gold) {
-                $img = getImage('assets/images/add1.png', null, true);
+                $img = getImage('assets/images/add2.jpg', null, true);
                 # code...
                 $addList = 'btnUser';
             }else{

@@ -95,6 +95,10 @@ class PlanController extends Controller
             $notify[] = ['error', 'For now, you can only create max 25 user'];
             return redirect()->intended('/user/profile-setting')->withNotify($notify);
         }
+         if($request->package >= 26){
+            $notify[] = ['error', 'For now, you can only create max 25 user'];
+            return redirect()->intended('/user/profile-setting')->withNotify($notify);
+        }
         $checkloop  = $request->package > 1  ? true:false;
         
         $checkBankAcc = rekening::where('user_id',auth()->user()->id)->first();
@@ -109,22 +113,25 @@ class PlanController extends Controller
             'qty' => 'required',
         ]);
         $sponsor = User::where('username',$request->sponsor)->first();
-        if(!$sponsor){
-            $notify[] = ['error', 'Username not found'];
-            return redirect()->back()->withNotify($notify);
+        $user = Auth::user();
+        if (!$sponsor) {
+            $notify[] = ['error', 'Invalid Sponsor username'];
+            return back()->withNotify($notify);
         }
+        if($sponsor->id  ==  $user->id){
+            $notify[] = ['error', 'Invalid Sponsor, you cant not reffer yourselft'];
+            return back()->withNotify($notify);
+        }
+
         $request['position'] = $request->position ?? 2;
 
         $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
         $gnl = GeneralSetting::first();
         $brolimit = user::where('plan_id','!=',0)->count();
 
-        $user = Auth::user();
+      
         $ref_user = $sponsor;
-        if (!$sponsor) {
-            $notify[] = ['error', 'Invalid Sponsor MP Number.'];
-            return back()->withNotify($notify);
-        }
+       
 
         $activePin = Auth::user()->pin;
         if ($activePin < $request->qty) {
