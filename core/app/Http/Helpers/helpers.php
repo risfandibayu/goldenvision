@@ -1030,6 +1030,41 @@ function updatePaidCount2($id)
     }
 
 }
+
+function getRefId($id)
+{
+    $user = User::find($id);
+    if ($user) {
+        return $user->ref_id;
+    } else {
+        return 0;
+    }
+}
+
+function countingQ($id)
+{
+    $fromUser = User::find($id);
+    $count = 0; 
+    while ($id != "" || $id != "0") {
+        if (isUserExists($id)) {
+            $posid = getRefId($id);
+                if ($posid == "0") {
+                    break;
+                }
+                $user = user::where('id',$id)->first();
+                $posUser = UserExtra::find($posid);
+                if ($posUser->is_gold == 1){
+                    $count++;
+                }
+                $id = $posid;
+        } else {
+            break;
+        }
+    }
+
+    return $count;
+}
+
 function updatePaidCount3($id, $count)
 {
     while ($id != "" || $id != "0") {

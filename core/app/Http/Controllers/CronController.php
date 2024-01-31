@@ -156,6 +156,191 @@ class CronController extends Controller
     //         return '---';
     //     }
     // }
+    public function monoleg(){
+        $gnl = GeneralSetting::first();
+        // $gnl->last_cron = Carbon::now()->toDateTimeString();
+		// $gnl->save();
+        $userx = UserExtra::where('is_gold','=',1)->get();
+
+        // dd($userx);
+        $cron = array();
+        foreach ($userx as $uex) {
+            $user = $uex->user_id;
+            $strong = $uex->paid_left > $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+            $strong_text = $uex->paid_left > $uex->paid_right ? 'kiri' : 'kanan';
+            // $pair = intval($strong);
+            $count = countingQ($user);
+            if ($count > 0) {
+                if ($strong == 100 && empty($uex->strong_leg)) {
+                    $bonus = $strong*5000;
+
+                    $payment = User::find($uex->user_id);
+                    $payment->balance += $bonus;
+                    $payment->save();
+
+                    $trx = new Transaction();
+                    $trx->user_id = $payment->id;
+                    $trx->amount = $bonus;
+                    $trx->charge = 0;
+                    $trx->trx_type = '+';
+                    $trx->post_balance = $payment->balance;
+                    $trx->remark = 'monoleg_commission';
+                    $trx->trx = getTrx();
+                    $trx->details = 'Paid Monoleg Commission First 100 feet : ' . $bonus . ' ' . $gnl->cur_text;
+                    $trx->save();
+
+                    if($strong_text == 'kiri'){
+                        $uex->strong_leg = $strong_text;
+                        $uex->monoleg_left = $strong;
+                        $uex->save();
+                    }else{
+                        $uex->strong_leg = $strong_text;
+                        $uex->monoleg_right = $strong;
+                        $uex->save();
+                    }
+
+                    $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
+                }
+
+                if ($strong_text == 'kiri') {
+                    if ($strong - $uex->monoleg_left == 100 && $strong <= 15000) {
+                        $bonus = (($strong*10000)/countingQ($user));
+
+                        $payment = User::find($uex->user_id);
+                        $payment->balance += $bonus;
+                        $payment->save();
+
+                        $trx = new Transaction();
+                        $trx->user_id = $payment->id;
+                        $trx->amount = $bonus;
+                        $trx->charge = 0;
+                        $trx->trx_type = '+';
+                        $trx->post_balance = $payment->balance;
+                        $trx->remark = 'monoleg_commission';
+                        $trx->trx = getTrx();
+                        $trx->details = 'Paid Monoleg Commission '.$strong.' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                        $trx->save();
+
+                        $uex->strong_leg = $strong_text;
+                        $uex->monoleg_left = $strong;
+                        $uex->save();
+
+                        $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
+                    }
+
+                    if ($strong - $uex->monoleg_left == 100 && $strong >= 15000) {
+                        $bonus = (($strong*15000)/countingQ($user));
+
+                        $payment = User::find($uex->user_id);
+                        $payment->balance += $bonus;
+                        $payment->save();
+
+                        $trx = new Transaction();
+                        $trx->user_id = $payment->id;
+                        $trx->amount = $bonus;
+                        $trx->charge = 0;
+                        $trx->trx_type = '+';
+                        $trx->post_balance = $payment->balance;
+                        $trx->remark = 'monoleg_commission';
+                        $trx->trx = getTrx();
+                        $trx->details = 'Paid Monoleg Commission '.$strong.' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                        $trx->save();
+
+                        $uex->strong_leg = $strong_text;
+                        $uex->monoleg_left = $strong;
+                        $uex->save();
+
+                        $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
+                    }
+
+
+                }else{
+                    if ($strong - $uex->monoleg_right == 100 && $strong <= 15000) {
+                        $bonus = (($strong*10000)/countingQ($user));
+
+                        $payment = User::find($uex->user_id);
+                        $payment->balance += $bonus;
+                        $payment->save();
+
+                        $trx = new Transaction();
+                        $trx->user_id = $payment->id;
+                        $trx->amount = $bonus;
+                        $trx->charge = 0;
+                        $trx->trx_type = '+';
+                        $trx->post_balance = $payment->balance;
+                        $trx->remark = 'monoleg_commission';
+                        $trx->trx = getTrx();
+                        $trx->details = 'Paid Monoleg Commission '.$strong.' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                        $trx->save();
+
+                        $uex->strong_leg = $strong_text;
+                        $uex->monoleg_right = $strong;
+                        $uex->save();
+
+                        $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
+
+                    }
+
+                    if ($strong - $uex->monoleg_right == 100 && $strong >= 15000) {
+                        $bonus = (($strong*15000)/countingQ($user));
+
+                        $payment = User::find($uex->user_id);
+                        $payment->balance += $bonus;
+                        $payment->save();
+
+                        $trx = new Transaction();
+                        $trx->user_id = $payment->id;
+                        $trx->amount = $bonus;
+                        $trx->charge = 0;
+                        $trx->trx_type = '+';
+                        $trx->post_balance = $payment->balance;
+                        $trx->remark = 'monoleg_commission';
+                        $trx->trx = getTrx();
+                        $trx->details = 'Paid Monoleg Commission '.$strong.' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                        $trx->save();
+
+                        $uex->strong_leg = $strong_text;
+                        $uex->monoleg_right = $strong;
+                        $uex->save();
+
+                        $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
+
+                    }
+                }
+
+                if ($uex->paid_left >= 100 && $uex->paid_right >= 100 && $uex->monoleg_pair != 1) {
+                    # code...
+                    $bonus = ((100*15000)/countingQ($user));
+
+                    $payment = User::find($uex->user_id);
+                    $payment->balance += $bonus;
+                    $payment->save();
+
+                    $trx = new Transaction();
+                    $trx->user_id = $payment->id;
+                    $trx->amount = $bonus;
+                    $trx->charge = 0;
+                    $trx->trx_type = '+';
+                    $trx->post_balance = $payment->balance;
+                    $trx->remark = 'monoleg_commission';
+                    $trx->trx = getTrx();
+                    $trx->details = 'Paid Monoleg Commission 100 Feet More On The Left And Right : ' . $bonus . ' ' . $gnl->cur_text;
+                    $trx->save();
+
+                    $uex->monoleg_pair = 1;
+                    $uex->save();
+
+                    $cron[] = $user.'/'.$count.'/'.$strong.'/pair';
+
+                }
+
+
+            }
+        }
+
+        return $cron;
+    }
+
     public function cron()
     {
         $gnl = GeneralSetting::first();
