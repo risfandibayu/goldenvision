@@ -111,7 +111,7 @@ class PlanController extends Controller
         DB::beginTransaction();
         try {
            
-            $sponsor = User::where('username',$request->sponsor)->first();
+            $sponsor = User::where('username',$request->sponsor)->where('no_bro','!=',null)->first();
             $user = Auth::user();
             if (!$sponsor) {
                 $notify[] = ['error', 'Invalid Sponsor username'];
