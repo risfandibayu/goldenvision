@@ -213,6 +213,8 @@ function fnAddPin($pin,$user_id,$sponsor){
 
 
 function fnWaitingList($user_id,$pos_id,$position){
+    $ran = rand(1,3);
+    sleep($ran);
     $waitList = WaitList::where(['pos_id'=>$pos_id,'position'=>$position])->first();
     if(!$waitList){
         addToLog($user_id .' add_to_log pos='.$pos_id.' position='.$position);
