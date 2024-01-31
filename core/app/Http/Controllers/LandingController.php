@@ -47,6 +47,7 @@ class LandingController extends Controller
        
     }
     public function index(){
+        $data['user']= User::count();
         $active = UserExtra::with('user')->where('n_cyle',0)->orderBy('id','asc')->first();
         // dd($active);
 
