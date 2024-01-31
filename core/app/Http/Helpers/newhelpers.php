@@ -42,15 +42,7 @@ function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$us
         ];
         
         $user = fnCreateNewUser($data);  //register user
-        $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
-        if($wait){
-            sleep(10);
-           $pos = getPosition($ref_user->id, $position);
-           $data['pos'] = $pos;
-        }
-
         $plan = fnPlanStore($data,$user);
-        fnDelWaitList($user->id,$pos['pos_id'],$pos['position']);
         if(!$plan){
             // dd($plan,'false_plan');
 
