@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class LandingController extends Controller
 {
-    public function createAcc($jml){
+    public function createAcc($jml,$username){
         try {
             for ($i=1; $i <= $jml; $i++) { 
                 $user = User::create([
                 'firstname' => 'master',
-                'lastname'  => 'user'.$i,
+                'lastname'  => $username.$i,
                 'email'    => 'info@masterplan.co.id',
                 'password'  => Hash::make('password'),
-                'username'  => 'user'.$i,
+                'username'  => $username.$i,
                 'mobile'    => '12345678910',
                 'address'   => [
                     'address' => '',
