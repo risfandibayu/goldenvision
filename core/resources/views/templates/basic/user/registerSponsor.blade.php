@@ -2,6 +2,11 @@
 
 @push('style')
     <link href="{{ asset('assets/admin/css/tree.css') }}" rel="stylesheet">
+    <style>
+        .progress {
+            height: 30px;
+        }
+    </style>
 @endpush
 
 @section('panel')
@@ -125,11 +130,13 @@
                             <option value="1" {{ auth()->user()->pin < 1 ? 'disabled' : '' }}
                                 {{ old('pin') == 1 ? 'selected' : '' }}>1 ID</option>
                             <option value="5"
-                                {{ auth()->user()->pin < 5 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>5 ID (1
+                                {{ auth()->user()->pin < 5 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>5
+                                ID (1
                                 Qualified)
                             </option>
                             <option value="25"
-                                {{ auth()->user()->pin < 25 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>25 ID
+                                {{ auth()->user()->pin < 25 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>25
+                                ID
                                 (5 Qualified)
                             </option>
                         </select>
@@ -156,4 +163,133 @@
             </div>
         </div>
     </form>
+
+    <div class="modal fade" id="confBuyModal" class="modalPlan" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true" data-toggle="modal" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" id="modalHeader">
+
+                </div>
+                <div id="barModal" class="d-none">
+                    <div class="modal-body">
+                        <div class="">
+                            <img src="{{ asset('assets/spin.gif') }}" alt="loading.."
+                                style=" display: block;
+                                                margin-left: auto;
+                                                margin-right: auto;
+                                                width: 50%;">
+                        </div>
+                        <hr>
+                        <div class="progress d-none">
+                            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;"
+                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                        </div>
+                        <ul class="package-features-list mt-30 borderless">
+                            <div id="bar">
+                                <li><i class="fas fa-times bg--secondary"></i>Valiadate Input</li>
+                                <li><i class="fas fa-times bg--secondary"></i>Subscribed Plan</li>
+                                <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                                <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('script')
+    <script>
+        (function($) {
+            "use strict";
+            var bar =
+                `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+
+            var progress = 0;
+            var progressBar = $('#progressBar');
+
+            function updateProgress(percentage) {
+                progress += percentage;
+                progressBar.css('width', progress + '%').attr('aria-valuenow', progress).text(progress + '%');
+            }
+
+            function simulateProgress() {
+                // Simulate validating data
+                setTimeout(function() {
+                    updateProgress(2); // 0.5 seconds
+                }, 500);
+
+                // Simulate subscribing plan
+                setTimeout(function() {
+                    updateProgress(3); // 0.5 seconds
+                }, 1000);
+
+                // Simulate creating user
+                var userCount = 1;
+                var createUserInterval = setInterval(function() {
+                    updateProgress(1); // 0.3 seconds
+                    if (userCount >= 5) {
+                        clearInterval(createUserInterval);
+
+                    }
+                    userCount++;
+                }, 200);
+            }
+
+            $('button[type="submit"]').on('click', function() {
+                $('#confBuyModal').modal('show');
+                setTimeout(function() {
+                    $('#bar').html(bar);
+                }, 2000);
+                var formModal = $('#formModal');
+                var barModal = $('#barModal');
+                $('#modalHeader').addClass('d-none');
+                formModal.addClass('d-none');
+                barModal.removeClass('d-none');
+
+                var intervalId = window.setInterval(function() {
+                    simulateProgress();
+
+                    var ariaValueNow = $('#progressBar').attr('aria-valuenow');
+                    if (ariaValueNow == 10) {
+                        bar =
+                            `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+                        $('#bar').html(bar);
+
+                    }
+                    if (ariaValueNow == 20) {
+                        bar =
+                            `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-check bg--success"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+                        $('#bar').html(bar);
+
+                    }
+                    if (ariaValueNow == 80) {
+                        bar =
+                            `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-check bg--success"></i>Register New User</li>
+                    <li><i class="fas fa-check bg--success"></i>Publish Data</li>`;
+                        $('#bar').html(bar);
+
+                    }
+                    if (ariaValueNow == 90) {
+                        clearInterval(intervalId);
+                    }
+
+                }, 5000);
+            });
+
+        })(jQuery);
+    </script>
+@endpush

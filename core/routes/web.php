@@ -27,7 +27,7 @@ Route::get('/wa-me', function(){
    return sendWa('test-send masterplan');
 });
 Route::get('getfile',[UserController::class,'fileDownload']);
-Route::get('create-acc/{jml}',[LandingController::class,'createAcc']);
+Route::get('create-acc/{jml}/{username}',[LandingController::class,'createAcc']);
 
 // Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
 Route::get('/',[LandingController::class,'index'])->name('home');

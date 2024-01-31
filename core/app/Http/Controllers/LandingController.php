@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class LandingController extends Controller
 {
-    public function createAcc($jml){
+    public function createAcc($jml,$username){
         try {
             for ($i=1; $i <= $jml; $i++) { 
                 $user = User::create([
                 'firstname' => 'master',
-                'lastname'  => 'master00'.$i,
+                'lastname'  => $username.$i,
                 'email'    => 'info@masterplan.co.id',
                 'password'  => Hash::make('password'),
-                'username'  => 'master00'.$i,
+                'username'  => $username.$i,
                 'mobile'    => '12345678910',
                 'address'   => [
                     'address' => '',
@@ -47,6 +47,7 @@ class LandingController extends Controller
        
     }
     public function index(){
+        $data['user']= User::count();
         $active = UserExtra::with('user')->where('n_cyle',0)->orderBy('id','asc')->first();
         // dd($active);
 

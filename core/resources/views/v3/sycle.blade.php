@@ -33,7 +33,7 @@
                     <ul class="list-group col-md-12">
                         @for ($i = 1; $i <= 4; $i++)
                             <li class="list-group-item {{ $c1[$i] != null ? 'active' : '' }}" aria-current="true">
-                                {{ $c1[$i] != null ? $c1[$i]->username : '#' . $i . ' Investor' }} <br>
+                                {{ $c1[$i] != null ? $c1[$i]->username : '#' . $i . ' Member' }} <br>
                                 {{ $c1[$i] != null ? $c1[$i]->no_bro : 'Slot Kosong' }}
                             </li>
                         @endfor
@@ -54,7 +54,7 @@
                     <ul class="list-group col-md-12">
                         @for ($i = 1; $i <= 4; $i++)
                             <li class="list-group-item {{ $c2[$i] != null ? 'active' : '' }}" aria-current="true">
-                                {{ $c2[$i] != null ? $c2[$i]->username : '#' . $i . ' Investor' }} <br>
+                                {{ $c2[$i] != null ? $c2[$i]->username : '#' . $i . ' Member' }} <br>
                                 {{ $c2[$i] != null ? $c2[$i]->no_bro : 'Slot Kosong' }}
                             </li>
                         @endfor
@@ -75,7 +75,7 @@
                     <ul class="list-group col-md-12">
                         @for ($i = 1; $i <= 4; $i++)
                             <li class="list-group-item {{ $c3[$i] != null ? 'active' : '' }}" aria-current="true">
-                                {{ $c3[$i] != null ? $c3[$i]->username : '#' . $i . ' Investor' }} <br>
+                                {{ $c3[$i] != null ? $c3[$i]->username : '#' . $i . ' Member' }} <br>
                                 {{ $c3[$i] != null ? $c3[$i]->no_bro : 'Slot Kosong' }}
                             </li>
                         @endfor
@@ -96,7 +96,7 @@
                     <ul class="list-group col-md-12">
                         @for ($i = 1; $i <= 4; $i++)
                             <li class="list-group-item {{ $c4[$i] != null ? 'active' : '' }}" aria-current="true">
-                                {{ $c4[$i] != null ? $c4[$i]->username : '#' . $i . ' Investor' }} <br>
+                                {{ $c4[$i] != null ? $c4[$i]->username : '#' . $i . ' Member' }} <br>
                                 {{ $c4[$i] != null ? $c4[$i]->no_bro : 'Slot Kosong' }}
                             </li>
                         @endfor
@@ -115,7 +115,7 @@
                             style="border-radius: 15px;float: left; width:  100px;height: 100px;object-fit: cover; 
                                 {{ $downline[$i] == null ? 'border: 5px solid #9595965b; background-color: #9595965b' : 'border: 5px solid #0b60b048; background-color: #0b60b048' }}
                                 ">
-                        <h4>{{ $downline[$i] != null ? $downline[$i]->username : '#' . $i . ' Investor' }}</h4>
+                        <h4>{{ $downline[$i] != null ? $downline[$i]->username : '#' . $i . ' Member' }}</h4>
                         <p>{{ $downline[$i] != null ? $downline[$i]->no_bro : 'Slot Kosong' }}</p>
                     </div>
                 </div>
