@@ -1065,6 +1065,15 @@ function countingQ($id)
     return $count;
 }
 
+function userRefaDay($id){
+    $ref = Transaction::where('remark', 'referral_commission')
+    ->whereDate('created_at', now()->toDateString())
+    ->where('user_id', $id)
+    ->count();
+
+    return $ref;
+}
+
 function updatePaidCount3($id, $count)
 {
     while ($id != "" || $id != "0") {
