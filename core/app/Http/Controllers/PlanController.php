@@ -248,6 +248,7 @@ class PlanController extends Controller
             $pos = getPosition($ref_user->id, $request->position);
             $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
             if($wait){
+                return false;
                 sleep(rand(3,6));
                 $pos = getPosition($ref_user->id, $request->position);
             }

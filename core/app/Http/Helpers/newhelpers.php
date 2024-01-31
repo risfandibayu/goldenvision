@@ -207,11 +207,11 @@ function fnAddPin($pin,$user_id,$sponsor){
 function fnWaitingList($user_id,$pos_id,$position){
     sleep(rand(1,5));
     $waitList = WaitList::where(['pos_id'=>$pos_id,'position'=>$position])->first();
-    if(!$waitList){
+    if($waitList){
+        return true;
+    }else{
         WaitList::create(['user_id'=>$user_id,'pos_id'=>$pos_id,'position'=>$position]);
         return false;
-    }else{
-        return true;
     }
 
 }
