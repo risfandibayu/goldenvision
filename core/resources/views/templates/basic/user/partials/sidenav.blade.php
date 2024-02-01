@@ -52,16 +52,16 @@
                         </ul>
                     </div>
                 </li> --}}
-
-                <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('user.my*', 2) }} my-2">
-                        <i class="menu-icon las la-code-branch"
-                            style="-webkit-transform: rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);"></i>
-                        <span class="menu-title">@lang('My Network')</span>
-                    </a>
-                    <div class="sidebar-submenu {{ menuActive('user.my*', 2) }} ">
-                        <ul>
-                            {{-- <li class="sidebar-menu-item  ">
+                @if (auth()->user()->no_bro != null)
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('user.my*', 2) }} my-2">
+                            <i class="menu-icon las la-code-branch"
+                                style="-webkit-transform: rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);"></i>
+                            <span class="menu-title">@lang('My Network')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('user.my*', 2) }} ">
+                            <ul>
+                                {{-- <li class="sidebar-menu-item  ">
                                 <a href="#" class="nav-link ">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Cycle Happiness')</span>
@@ -79,23 +79,26 @@
                                     <span class="menu-title">@lang('Power line')</span>
                                 </a>
                             </li> --}}
-                            <li class="sidebar-menu-item {{ menuActive('user.my.tree') }} ">
-                                <a href="{{ route('user.my.tree') }}" class="nav-link">
-                                    <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Geneology Tree')</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-menu-item {{ menuActive('user.my.referral') }} ">
-                                <a href="{{ route('user.my.referral') }}" class="nav-link">
-                                    <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Referals Tree')</span>
-                                </a>
-                            </li>
+                                <li class="sidebar-menu-item {{ menuActive('user.my.tree') }} ">
+                                    <a href="{{ route('user.my.tree') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Geneology Tree')</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-menu-item {{ menuActive('user.my.referral') }} ">
+                                    <a href="{{ route('user.my.referral') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Referals Tree')</span>
+                                    </a>
+                                </li>
 
 
-                        </ul>
-                    </div>
-                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+
+
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('user.pins*', 2) }} my-2">
                         <i class="menu-icon la la-product-hunt"></i>
