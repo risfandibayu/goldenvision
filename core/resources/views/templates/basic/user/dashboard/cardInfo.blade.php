@@ -35,7 +35,7 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">Selemat Datang, {{ auth()->user()->username }}</span>
+                    <span class="amount">Selamat Datang, {{ auth()->user()->username }}</span>
                 </div>
                 <div class="desciption">
                     <span class="text--small">Account Status: <i class="fas fa-check"></i> Active</span>
@@ -43,8 +43,9 @@
             </div>
             <br>
             <div class="input-group">
-                <input type="text" aria-label="First name" class="form-control is-invalid" value="POWER LINE"
-                    readonly>
+                <input type="text" aria-label="First name"
+                    class="form-control {{ auth()->user()->userExtra->is_gold ? 'is-valid' : 'is-invalid' }}"
+                    value="POWER LINE" readonly>
                 <input type="text" aria-label="Last name"
                     class="form-control {{ auth()->user()->no_bro != null ? 'is-valid' : 'is-invalid' }}" value="BINARY"
                     readonly>
