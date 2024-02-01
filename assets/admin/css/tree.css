@@ -3,7 +3,7 @@
     padding: 15px;
 }
 .bg-pink{
- background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(106,105,105,1) 100%);
+ background: radial-gradient(circle, rgba(255,255,255,1) 34%, rgba(106,105,105,1) 100%);
 
 }
 .bg-silver{
@@ -331,7 +331,7 @@
     border: 5px solid #6895D2;
 }
 .free-user {
-    border: 5px solid #F0EDCF;
+    border: 5px solid #C0C0C0;
 }
 .gold-user {
     border: 5px solid #6895D2;
