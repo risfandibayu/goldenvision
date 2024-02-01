@@ -92,6 +92,7 @@ class PlanController extends Controller
 
     function planStore(Request $request)
     {
+        
         if($request->package >= 26){
             $notify[] = ['error', 'For now, you can only create max 25 user'];
             return redirect()->intended('/user/profile-setting')->withNotify($notify);
@@ -108,6 +109,7 @@ class PlanController extends Controller
         //         return redirect()->intended('/user/profile-setting')->withNotify($notify);
         //     }
         // }
+        $waitlistUserID = [];
         DB::beginTransaction();
         try {
            
@@ -144,6 +146,7 @@ class PlanController extends Controller
                 $notify[] = ['error', 'Invalid On First Placement, Rollback'];
                 return redirect()->back()->withNotify($notify);
             }
+            $waitlistUserID[] =  $user->id;
 
             $checkloop  = $request->package > 1  ? true:false;
             if (!$checkloop) {
@@ -156,6 +159,7 @@ class PlanController extends Controller
             $registeredUser = $request->package;
             $position = 2;
 
+          
 
             for ($i=1; $i < $registeredUser; $i++) { 
                 if($i <= 4){
@@ -217,13 +221,15 @@ class PlanController extends Controller
                     $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
                     return redirect()->back()->withNotify($notify);
                 }
-            
+                $waitlistUserID[] =  $nextUser->id;
                 $bro_upline = $nextUser->no_bro;
 
                 $user = UserExtra::where('user_id',$sponsor->id)->first();
                 $user->is_gold = 1;
                 $user->save();
             }
+
+            fnDelWaitList(Auth::user()->id);
             DB::commit();
             $notify[] = ['success', 'Purchased ' . $plan->name . 'and Registered New  '.$registeredUser.' Account Successfully'];
             return redirect()->route('user.my.tree')->withNotify($notify);
@@ -242,7 +248,8 @@ class PlanController extends Controller
             $pos = getPosition($ref_user->id, $request->position);
             $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
             if($wait){
-               sleep(10);
+                return false;
+                sleep(rand(3,6));
                 $pos = getPosition($ref_user->id, $request->position);
             }
             $user->no_bro           = generateUniqueNoBro();
@@ -286,7 +293,7 @@ class PlanController extends Controller
                 'post_balance' => getAmount($user->balance),
             ]);
 
-            fnDelWaitList($user->id,$pos['pos_id'],$pos['position']);
+            
                 
             $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
 
@@ -299,6 +306,7 @@ class PlanController extends Controller
             return $user;
         } catch (\Throwable $th) {
             return false;
+            dd('placement',$th->getMessage());
         }
     }
 

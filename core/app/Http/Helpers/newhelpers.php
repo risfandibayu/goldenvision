@@ -42,15 +42,7 @@ function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$us
         ];
         
         $user = fnCreateNewUser($data);  //register user
-        $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
-        if($wait){
-            sleep(10);
-           $pos = getPosition($ref_user->id, $position);
-           $data['pos'] = $pos;
-        }
-
         $plan = fnPlanStore($data,$user);
-        fnDelWaitList($user->id,$pos['pos_id'],$pos['position']);
         if(!$plan){
             // dd($plan,'false_plan');
 
@@ -213,23 +205,16 @@ function fnAddPin($pin,$user_id,$sponsor){
 
 
 function fnWaitingList($user_id,$pos_id,$position){
-    $ran = rand(1,3);
-    sleep($ran);
+    sleep(rand(1,5));
     $waitList = WaitList::where(['pos_id'=>$pos_id,'position'=>$position])->first();
-    if(!$waitList){
-        addToLog($user_id .' add_to_log pos='.$pos_id.' position='.$position);
+    if($waitList){
+        return true;
+    }else{
         WaitList::create(['user_id'=>$user_id,'pos_id'=>$pos_id,'position'=>$position]);
         return false;
-    }else{
-        return true;
     }
 
 }
-function fnDelWaitList($user_id,$pos_id,$position){
-    $waitListSelft = WaitList::where(['user_id'=>$user_id,'pos_id'=>$pos_id,'position'=>$position])->first();
-      addToLog($user_id .' delete_to_log pos='.$pos_id.' position='.$position);
-    if($waitListSelft){
-       $waitListSelft->delete();
-        return false;
-    }
+function fnDelWaitList($userID){
+    WaitList::where('user_id',$userID)->delete();
 }
