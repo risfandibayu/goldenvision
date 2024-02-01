@@ -160,7 +160,7 @@ class PlanController extends Controller
             $registeredUser = $request->qty;
             $position = 2;
 
-            $firstUsername =  $firstUpline->username;
+            $firstUsername =  auth()->user()->username;
 
             for ($i=1; $i < $registeredUser; $i++) { 
                 $mark = false;
@@ -171,6 +171,7 @@ class PlanController extends Controller
                 }
                 if ($i >= 5 && $i <= 8) {
                     $sponsor = User::where('username',$firstUsername . 2)->first();
+                 
                     $mark = true;
                     // 03: 6,7,8,9
                 }
@@ -224,14 +225,12 @@ class PlanController extends Controller
                     $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
                     return redirect()->back()->withNotify($notify);
                 }
+              
+                $bro_upline = $nextUser->no_bro;
                
-                
-                if($mark){
-                    $bro_upline = $nextUser->no_bro;
-                    $user = UserExtra::where('user_id',$sponsor->id)->first();
-                    $user->is_gold = 1;
-                    $user->save();
-                }
+                $user = UserExtra::where('user_id',$sponsor->id)->first();
+                $user->is_gold = 1;
+                $user->save();
 
                
             }

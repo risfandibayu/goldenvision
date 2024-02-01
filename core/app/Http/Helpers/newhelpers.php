@@ -122,11 +122,11 @@ function fnCreateNewUser(array $data)
         $newusername = $data['username'];
         $checkUsername = User::where('username',$newusername)->first();
         if($checkUsername){
-            $newusername = 'A'.strtolower(trim($data['username']));
+            $newusername = strtolower(trim($data['username'])). 1;
             $checkUsername = User::where('username',$newusername)->first();
             
             if($checkUsername){
-                $newusername =  'B'.strtolower(trim($data['username']));
+                $newusername =  strtolower(trim($data['username'])). 11;
             }
         }
         $user = User::create([
