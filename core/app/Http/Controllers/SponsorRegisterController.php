@@ -151,7 +151,7 @@ class SponsorRegisterController extends Controller
             $checkloop = $request->pin > 1  ? true:false;
 
             if(!$checkloop){
-                singleQualified($sponsor->id,$newUser->id);
+                fnsingleQualified($sponsor->id,$newUser->id);
                 DB::commit();
                 addToLog('Created '.$request->pin.' User & Purchased Plan');
                 $notify[] = ['success', 'Created User & Purchased Plan Successfully'];
