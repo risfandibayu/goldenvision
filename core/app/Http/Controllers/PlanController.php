@@ -225,9 +225,9 @@ class PlanController extends Controller
                     return redirect()->back()->withNotify($notify);
                 }
                
-                $bro_upline = $nextUser->no_bro;
-
+                
                 if($mark){
+                    $bro_upline = $nextUser->no_bro;
                     $user = UserExtra::where('user_id',$sponsor->id)->first();
                     $user->is_gold = 1;
                     $user->save();
