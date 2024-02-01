@@ -3,7 +3,8 @@
     padding: 15px;
 }
 .bg-pink{
- background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,246,0,1) 80%);
+ background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(106,105,105,1) 100%);
+
 }
 .bg-silver{
     background: linear-gradient(#8b8a8b, #fff);
