@@ -245,7 +245,7 @@ function fnSingleQualified($sponsorID,$userID){
     $user4 = User::find($user3->pos_id);
     
     if($user4->pos_id == 0 || $user4->ref_id != $sponsorID){
-        addToLog('backlog u4 pos= '.$user3->pos_id.' || '.$user4->ref_id.' != '. $sponsorID);
+        addToLog('backlog u4 pos= '.$user3->pos_id.' || '.$user3->ref_id.' != '. $sponsorID);
 
         return false;
     }

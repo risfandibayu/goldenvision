@@ -151,6 +151,8 @@ class PlanController extends Controller
 
             if (!$checkloop) {
                 fnSingleQualified($sponsor->id,$firstUpline->id);
+                fnDelWaitList(Auth::user()->id);
+                
                 DB::commit();
                 $notify[] = ['success', 'Successfully Purchased Plan'];
                 return redirect()->route('user.my.tree')->withNotify($notify);
