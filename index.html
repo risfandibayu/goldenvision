@@ -94,7 +94,13 @@
 	<script src="vendor/countdowntime/moment-timezone-with-data.min.js"></script>
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 	<script>
-		 const endTime = new Date("February 2, 2024 14:00:00").getTime();
+		now();
+		function now(){
+			const now = new Date();
+			console.log(now);
+		}
+
+		const endTime = new Date("February 2, 2024 14:00:00").getTime();
 
 		// Update the countdown every second
 		let x = setInterval(function() {
