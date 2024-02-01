@@ -172,7 +172,7 @@ class CronController extends Controller
             $count = countingQ($user);
             if ($count > 0) {
                 if ($strong >= 100 && empty($uex->strong_leg)) {
-                    $bonus = 100*5000;
+                    $bonus = (100*5000)/countingQ($user);
 
                     $payment = User::find($uex->user_id);
                     $payment->balance += $bonus;
