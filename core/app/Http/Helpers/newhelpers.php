@@ -228,14 +228,16 @@ function fnSingleQualified($sponsorID,$userID){
     $user2 = User::find($checkFirst->pos_id);
    
     if($user2->pos_id == 0 || $user2->ref_id != $sponsorID){
-        addToLog('backlog  u2');
+        addToLog('backlog u4 pos= '.$user2->pos_id.' || '.$user2->ref_id.' != '. $sponsorID);
+
         return false;
     }
 
     $user3 = User::find($user2->pos_id);
    
     if($user3->pos_id == 0 || $user3->ref_id != $sponsorID){
-        addToLog('backlog  u3');
+        addToLog('backlog u4 pos= '.$user3->pos_id.' || '.$user3->ref_id.' != '. $sponsorID);
+
 
         return false;
     }
@@ -243,7 +245,7 @@ function fnSingleQualified($sponsorID,$userID){
     $user4 = User::find($user3->pos_id);
     
     if($user4->pos_id == 0 || $user4->ref_id != $sponsorID){
-        addToLog('backlog  u4');
+        addToLog('backlog u4 pos= '.$user3->pos_id.' || '.$user4->ref_id.' != '. $sponsorID);
 
         return false;
     }
@@ -251,7 +253,7 @@ function fnSingleQualified($sponsorID,$userID){
     $QualiUser = User::find($user4->pos_id);
 
     if($QualiUser->id != $sponsorID){
-        addToLog('backlog  Qu');
+        addToLog('backlog Quali= '.$QualiUser->id.' != '.$sponsorID);
 
         return false;
     }
