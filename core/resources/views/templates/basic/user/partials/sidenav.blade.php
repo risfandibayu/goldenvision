@@ -16,73 +16,84 @@
                         <span class="menu-title">@lang('Dashboard')</span>
                     </a>
                 </li>
-                <li class="sidebar-menu-item {{ menuActive('user.archivement.view') }}">
-                    <a href="{{ route('user.archivement.view') }}" class="nav-link">
-                        <i class="menu-icon las la-star"></i>
-                        <span class="menu-title">@lang('Achievement')</span>
-                    </a>
-                </li>
-                {{-- @php
-                    $survey_notice = getContent('notice.content', true);
-                    $get_survey = App\Models\Survey::where('status', 1)
-                                ->whereHas('questions')
-                                ->whereHas('category', function($query){
-                                    $query->where('status', 1);
-                                })
-                                ->count();
-                @endphp
-
-                @if ($survey_notice || $get_survey)
-                    <li class="sidebar-menu-item {{menuActive('user.survey*')}}">
-                        <a href="{{route('user.survey')}}" class="nav-link ">
-                            <i class="lar la-question-circle menu-icon"></i>
-                            <span class="menu-title">@lang('Start Survey')</span>
-                        </a>
-                    </li>
-                @endif --}}
-
                 <li class="sidebar-menu-item {{ menuActive('user.plan.index') }}">
                     <a href="{{ route('user.plan.index') }}" class="nav-link ">
-                        <i class="menu-icon las la-lightbulb"></i>
-                        <span class="menu-title">@lang('Plan')</span>
+                        <i class="menu-icon las la-archive"></i>
+                        <span class="menu-title">@lang('Order Plan')</span>
                     </a>
                 </li>
-                @if (auth()->user()->is_stockiest == 1)
-                    {{-- <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
-                        <a href="#" class="nav-link ">
-                            <i class="menu-icon las la-archive"></i>
-                            <span class="menu-title">@lang('Product')</span>
-                        </a>
-                    </li> --}}
-                    <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
-                        <a href="{{ route('user.product.index') }}" class="nav-link ">
-                            <i class="menu-icon las la-archive"></i>
-                            <span class="menu-title">@lang('Product')</span>
-                        </a>
-                    </li>
-                @endif
-                @if (auth()->user()->bro_qty + 1 > 1)
-                    <li class="sidebar-menu-item {{ menuActive('user.user_boom') }}">
-                        <a href="{{ route('user.user_boom') }}" class="nav-link ">
-                            <i class="menu-icon las la-users-cog"></i>
-                            <span class="menu-title">@lang('Manage User')</span>
-                        </a>
-                    </li>
-                @endif
-                <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
-                    <a href="{{ route('user.my.tree') }}" class="nav-link">
-                        <i class="menu-icon las la-tree"></i>
-                        <span class="menu-title">@lang('My Tree')</span>
+
+                {{-- <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class=" my-2">
+                        <i class="menu-icon  las la-tag"></i>
+                        <span class="menu-title">@lang('Product')</span>
                     </a>
+                    <div class="sidebar-submenu  ">
+                        <ul>
+
+                            <li class="sidebar-menu-item  ">
+                                <a href="#" class="nav-link ">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Reedem Product')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item  ">
+                                <a href="#" class="nav-link ">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Invoice')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item  ">
+                                <a href="#" class="nav-link ">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Tracking Product')</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> --}}
+
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('user.my*', 2) }} my-2">
+                        <i class="menu-icon las la-code-branch"
+                            style="-webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);"></i>
+                        <span class="menu-title">@lang('My Network')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('user.my*', 2) }} ">
+                        <ul>
+                            {{-- <li class="sidebar-menu-item  ">
+                                <a href="#" class="nav-link ">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Cycle Happiness')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item ">
+                                <a href="#" class="nav-link ">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Geneology Tree')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item ">
+                                <a href="#" class="nav-link ">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Power line')</span>
+                                </a>
+                            </li> --}}
+                            <li class="sidebar-menu-item {{ menuActive('user.my.tree') }} ">
+                                <a href="{{ route('user.my.tree') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Referral Tree')</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
                 </li>
-                @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null || auth()->user()->no_bro !== '')
-                    <li class="sidebar-menu-item {{ menuActive('user.ref.tree') }}">
-                        <a href="{{ route('user.ref.tree') }}" class="nav-link">
-                            <i class="menu-icon las la-tree"></i>
-                            <span class="menu-title">@lang('Referals Tree')</span>
-                        </a>
-                    </li>
-                @endif
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('user.pins*', 2) }} my-2">
                         <i class="menu-icon las la-exchange-alt"></i>
@@ -105,6 +116,73 @@
                         </ul>
                     </div>
                 </li>
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.archivement.view') }}">
+                    <a href="{{ route('user.archivement.view') }}" class="nav-link">
+                        <i class="menu-icon las la-star"></i>
+                        <span class="menu-title">@lang('Achievement')</span>
+                    </a>
+                </li> --}}
+                {{-- @php
+                    $survey_notice = getContent('notice.content', true);
+                    $get_survey = App\Models\Survey::where('status', 1)
+                                ->whereHas('questions')
+                                ->whereHas('category', function($query){
+                                    $query->where('status', 1);
+                                })
+                                ->count();
+                @endphp
+
+                @if ($survey_notice || $get_survey)
+                    <li class="sidebar-menu-item {{menuActive('user.survey*')}}">
+                        <a href="{{route('user.survey')}}" class="nav-link ">
+                            <i class="lar la-question-circle menu-icon"></i>
+                            <span class="menu-title">@lang('Start Survey')</span>
+                        </a>
+                    </li>
+                @endif --}}
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.plan.index') }}">
+                    <a href="{{ route('user.plan.index') }}" class="nav-link ">
+                        <i class="menu-icon las la-lightbulb"></i>
+                        <span class="menu-title">@lang('Plan')</span>
+                    </a>
+                </li> --}}
+                {{-- @if (auth()->user()->is_stockiest == 1)
+                    <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
+                        <a href="#" class="nav-link ">
+                            <i class="menu-icon las la-archive"></i>
+                            <span class="menu-title">@lang('Product')</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item {{ menuActive('user.product.index') }}">
+                        <a href="{{ route('user.product.index') }}" class="nav-link ">
+                            <i class="menu-icon las la-archive"></i>
+                            <span class="menu-title">@lang('Product')</span>
+                        </a>
+                    </li>
+                @endif
+                @if (auth()->user()->bro_qty + 1 > 1)
+                    <li class="sidebar-menu-item {{ menuActive('user.user_boom') }}">
+                        <a href="{{ route('user.user_boom') }}" class="nav-link ">
+                            <i class="menu-icon las la-users-cog"></i>
+                            <span class="menu-title">@lang('Manage User')</span>
+                        </a>
+                    </li>
+                @endif
+                <li class="sidebar-menu-item {{ menuActive('user.my.tree') }}">
+                    <a href="{{ route('user.my.tree') }}" class="nav-link">
+                        <i class="menu-icon las la-tree"></i>
+                        <span class="menu-title">@lang('My Tree')</span>
+                    </a>
+                </li> --}}
+                {{-- @if (auth()->user()->no_bro != 0 || auth()->user()->no_bro !== null || auth()->user()->no_bro !== '')
+                    <li class="sidebar-menu-item {{ menuActive('user.ref.tree') }}">
+                        <a href="{{ route('user.ref.tree') }}" class="nav-link">
+                            <i class="menu-icon las la-tree"></i>
+                            <span class="menu-title">@lang('Referals Tree')</span>
+                        </a>
+                    </li>
+                @endif --}}
+
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.bv.log') }}">
                     <a href="{{ route('user.bv.log') }}" class="nav-link">
                         <i class="menu-icon las la-sitemap"></i>
@@ -127,13 +205,13 @@
                     </li>
                 @endif --}}
 
-                <li class="sidebar-menu-item {{ menuActive('user.reward') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('user.reward') }}">
                     <a href="{{ route('user.reward') }}" class="nav-link">
-                        {{-- <i class="menu-icon las la-tree"></i> --}}
+                       
                         <i class="menu-icon las la-scroll"></i>
                         <span class="menu-title">@lang('Bonus Reward')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- <li class="sidebar-menu-item {{ menuActive('user.gold.invest') }}">
                         <a href="{{ route('user.gold.invest') }}" class="nav-link">
@@ -159,7 +237,7 @@
                 @endif
                 <li class="sidebar-menu-item {{ menuActive('user.withdraw') }}">
                     <a href="{{ route('user.withdraw') }}" class="nav-link">
-                        <i class="menu-icon las la-cloud-download-alt"></i>
+                        <i class="menu-icon las la-wallet"></i>
                         <span class="menu-title">@lang('Withdraw Now')</span>
                     </a>
                 </li>
@@ -171,7 +249,7 @@
                 </li> --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('user.report*', 3) }} my-2">
-                        <i class="menu-icon las la-exchange-alt"></i>
+                        <i class="menu-icon las la-clipboard"></i>
                         <span class="menu-title">@lang('Reports') / @lang('Logs')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('user.report*', 2) }} ">
@@ -196,12 +274,12 @@
                                 </a>
                             </li>
 
-                            <li class="sidebar-menu-item {{ menuActive('user.report.invest') }}">
+                            {{-- <li class="sidebar-menu-item {{ menuActive('user.report.invest') }}">
                                 <a href="{{ route('user.report.invest') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Invest Log')</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             {{-- <li class="sidebar-menu-item {{ menuActive('user.report.exchangeLog') }}">
                                 <a href="{{ route('user.report.exchangeLog') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>

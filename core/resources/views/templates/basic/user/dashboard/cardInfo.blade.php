@@ -28,6 +28,27 @@
                 class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div> --}}
+    {{-- <div class="col-xl-6 col-lg-6 col-sm-12 mb-30 text-center">
+        <div class="dashboard-w1 h-100 w-100 bg--success b-radius--10 box-shadow">
+            <div class="icon">
+                <i class="las la-wallet"></i>
+            </div>
+            <div class="details">
+                <div class="numbers">
+                    <span class="amount">{{ nb(getAmount(auth()->user()->balance)) }}</span>
+                    <span class="currency-sign">{{ $general->cur_text }}</span>
+                </div>
+                <div class="desciption">
+                    <span class="text--small">@lang('Current Balance')</span>
+                </div>
+            </div>
+            <br>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary btn-block">Left</button>
+                <button type="button" class="btn btn-secondary btn-block">Middle</button>
+            </div>
+        </div>
+    </div> --}}
 
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 h-100 w-100 bg--success b-radius--10 box-shadow">
