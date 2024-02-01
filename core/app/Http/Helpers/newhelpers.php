@@ -213,8 +213,44 @@ function fnWaitingList($user_id,$pos_id,$position){
         WaitList::create(['user_id'=>$user_id,'pos_id'=>$pos_id,'position'=>$position]);
         return false;
     }
-
 }
 function fnDelWaitList($userID){
     WaitList::where('user_id',$userID)->delete();
+}
+function fnSingleQualified($sponsorID,$userID){
+    $sponsor = User::where('ref_id',$sponsorID)->get();
+//    dd($sponsor->count());
+    
+    if($sponsor->count() <= 3){
+        return false;
+    }
+    $checkFirst = User::find($userID);
+
+    $user2 = User::find($checkFirst->pos_id);
+   
+    if($user2->pos_id == 0 || $user2->ref_id != $sponsorID){
+        return false;
+    }
+
+    $user3 = User::find($user2->pos_id);
+   
+    if($user3->pos_id == 0 || $user3->ref_id != $sponsorID){
+
+        return false;
+    }
+
+    $user4 = User::find($user3->pos_id);
+    
+    if($user4->pos_id == 0 || $user4->ref_id != $sponsorID){
+        return false;
+    }
+
+    $QualiUser = User::find($user4->pos_id);
+
+    if($QualiUser->id != $sponsorID){
+        return false;
+    }
+    $ex = UserExtra::where('user_id',$QualiUser->id)->update(['is_gold'=>1]);
+    return true;
+
 }

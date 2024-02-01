@@ -3,13 +3,13 @@
     padding: 15px;
 }
 .bg-pink{
-    background: linear-gradient(#f100f1, #fff);
+ background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,246,0,1) 80%);
 }
 .bg-silver{
     background: linear-gradient(#8b8a8b, #fff);
 }
 .bg-gold{
-    background: linear-gradient(#dfb300, #fff);
+   background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(9,9,121,1) 66%);
 }
 
 
@@ -327,13 +327,13 @@
     z-index: 2;
 }
 .paid-user {
-    border: 5px solid #FFD700;
+    border: 5px solid #6895D2;
 }
 .free-user {
-    border: 5px solid #C0C0C0;
+    border: 5px solid #F0EDCF;
 }
 .gold-user {
-    border: 5px solid #FFD700;
+    border: 5px solid #6895D2;
 }
 .silver-user {
     border: 5px solid #C0C0C0;

@@ -82,7 +82,13 @@
                             <li class="sidebar-menu-item {{ menuActive('user.my.tree') }} ">
                                 <a href="{{ route('user.my.tree') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Referral Tree')</span>
+                                    <span class="menu-title">@lang('Geneology Tree')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item {{ menuActive('user.my.referral') }} ">
+                                <a href="{{ route('user.my.referral') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Referals Tree')</span>
                                 </a>
                             </li>
 

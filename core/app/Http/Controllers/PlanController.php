@@ -92,8 +92,8 @@ class PlanController extends Controller
 
     function planStore(Request $request)
     {
-        
-        if($request->package >= 26){
+ 
+        if($request->qty >= 26){
             $notify[] = ['error', 'For now, you can only create max 25 user'];
             return redirect()->intended('/user/profile-setting')->withNotify($notify);
         }
@@ -101,7 +101,7 @@ class PlanController extends Controller
             'plan_id' => 'required|integer', 
             'qty' => 'required',
         ]);
-        $checkloop  = $request->package > 1  ? true:false;
+        $checkloop  = $request->qty > 1  ? true:false;
         $checkBankAcc = rekening::where('user_id',auth()->user()->id)->first();
         // if ($checkloop) {
         //     if(!$checkBankAcc){
@@ -142,21 +142,22 @@ class PlanController extends Controller
             }
 
             $firstUpline = $this->placementFirstAccount($user,$request,$ref_user,$plan,$sponsor);
+            
             if($firstUpline == false){
                 $notify[] = ['error', 'Invalid On First Placement, Rollback'];
                 return redirect()->back()->withNotify($notify);
             }
             $waitlistUserID[] =  $user->id;
 
-            $checkloop  = $request->package > 1  ? true:false;
             if (!$checkloop) {
+                fnSingleQualified($sponsor->id,$firstUpline->id);
                 DB::commit();
                 $notify[] = ['success', 'Successfully Purchased Plan'];
-                return redirect()->back()->withNotify($notify);
+                return redirect()->route('user.my.tree')->withNotify($notify);
             }
 
 
-            $registeredUser = $request->package;
+            $registeredUser = $request->qty;
             $position = 2;
 
           
