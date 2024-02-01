@@ -56,11 +56,7 @@
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('user.my*', 2) }} my-2">
                         <i class="menu-icon las la-code-branch"
-                            style="-webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    transform: rotate(180deg);"></i>
+                            style="-webkit-transform: rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);"></i>
                         <span class="menu-title">@lang('My Network')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('user.my*', 2) }} ">
@@ -96,7 +92,7 @@
                 </li>
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('user.pins*', 2) }} my-2">
-                        <i class="menu-icon las la-exchange-alt"></i>
+                        <i class="menu-icon la la-product-hunt"></i>
                         <span class="menu-title">@lang('User PINs')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('user.pins*', 2) }} ">

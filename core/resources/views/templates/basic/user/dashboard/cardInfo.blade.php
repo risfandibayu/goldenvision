@@ -28,27 +28,27 @@
                 class="btn btn-sm btn-block text--small bg--white text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div> --}}
-    {{-- <div class="col-xl-6 col-lg-6 col-sm-12 mb-30 text-center">
-        <div class="dashboard-w1 h-100 w-100 bg--success b-radius--10 box-shadow">
+    <div class="col-xl-6 col-lg-6 col-sm-12 mb-30 text-center">
+        <div class="dashboard-w1 h-100 w-100 bg--15 b-radius--10 box-shadow">
             <div class="icon">
-                <i class="las la-wallet"></i>
+                <i class="la la-github"></i>
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{ nb(getAmount(auth()->user()->balance)) }}</span>
-                    <span class="currency-sign">{{ $general->cur_text }}</span>
+                    <span class="amount">Selemat Datang, {{ auth()->user()->username }}</span>
                 </div>
                 <div class="desciption">
-                    <span class="text--small">@lang('Current Balance')</span>
+                    <span class="text--small">Account Status: <i class="fas fa-check"></i> Active</span>
                 </div>
             </div>
             <br>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary btn-block">Left</button>
-                <button type="button" class="btn btn-secondary btn-block">Middle</button>
+            <div class="input-group">
+                <input type="text" aria-label="First name" class="form-control is-invalid" value="POWER LINE"
+                    readonly>
+                <input type="text" aria-label="Last name" class="form-control is-valid" value="BINARY" readonly>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 h-100 w-100 bg--success b-radius--10 box-shadow">
@@ -74,7 +74,8 @@
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 h-100 w-100 bg--primary b-radius--10 box-shadow">
             <div class="icon">
-                <i class="las la-cloud-upload-alt "></i>
+                <i class="la la-product-hunt"></i>
+
             </div>
             <div class="details">
                 <div class="numbers">
