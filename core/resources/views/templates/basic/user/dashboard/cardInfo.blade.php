@@ -45,7 +45,9 @@
             <div class="input-group">
                 <input type="text" aria-label="First name" class="form-control is-invalid" value="POWER LINE"
                     readonly>
-                <input type="text" aria-label="Last name" class="form-control is-valid" value="BINARY" readonly>
+                <input type="text" aria-label="Last name"
+                    class="form-control {{ auth()->user()->no_bro != null ? 'is-valid' : 'is-invalid' }}" value="BINARY"
+                    readonly>
             </div>
         </div>
     </div>
