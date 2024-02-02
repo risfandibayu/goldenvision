@@ -14,7 +14,7 @@ class LandingController extends Controller
             for ($i=1; $i <= $jml; $i++) { 
                 $user = User::create([
                 'firstname' => 'master',
-                'lastname'  => $username.$i,
+                'lastname'  => $username  .'1'. $i,
                 'email'    => 'acc@masterplan.co.id',
                 'password'  => Hash::make('password'),
                 'username'  => $username.$i,
@@ -26,9 +26,9 @@ class LandingController extends Controller
                     'country' => 'Indonesia',
                     'city' => ''
                 ],
-                'no_bro'    => 'BRO-001' .$i,
-                'ref_id'    => $i - 1,
-                'pos_id'    => $i - 1,
+                'no_bro'    => 'BRO-001' .'1'.$i,
+                'ref_id'    => '1'. $i - 1,
+                'pos_id'    => '1'. $i - 1,
                 'position'  => 2,
                 'position_by_ref'=>2,
                 'plan_id'   => 1,
