@@ -39,13 +39,13 @@ class ManageUsersController extends Controller
     {
         $page_title = 'Manage Users';
         $empty_message = 'No user found';
-        $users = User::latest()->paginate(getPaginate());
+        $users = User::where('comp',0)->latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
     public function allInUsers(){
         $page_title = 'All Users';
         $empty_message = 'No user found';
-        $users = User::where('no_bro',0)->latest()->paginate(getPaginate());
+        $users = User::where('no_bro',0)->where('comp',0)->latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
 
@@ -59,37 +59,37 @@ class ManageUsersController extends Controller
                 // return Excel::download(new ExportUser, 'users.xlsx');
                 // dd('s');
                 if ($request->page == "Manage Active Users") {
-                $q = User::query()->active()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                $q = User::where('comp',0)->query()->active()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
                 return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
                 }
 
                 if ($request->page == "Banned Users") {
-                $q = User::query()->banned()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                $q = User::where('comp',0)->query()->banned()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
                 return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
                 }
 
                 if ($request->page == "Verified Data Users") {
-                $q = User::query()->where('is_kyc','2')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                $q = User::where('comp',0)->query()->where('is_kyc','2')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
                 return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
                 }
 
                 if ($request->page == "Waiting For Verification Data Users") {
-                $q = User::query()->where('is_kyc','1')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                $q = User::where('comp',0)->query()->where('is_kyc','1')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
                 return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
                 }
 
                 if ($request->page == "Email Unverified Users") {
-                $q = User::query()->emailUnverified()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                $q = User::where('comp',0)->query()->emailUnverified()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
                 return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
                 }
 
                 if ($request->page == "Email Verified Users") {
-                $q = User::query()->emailVerified()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                $q = User::where('comp',0)->query()->emailVerified()->latest()->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
                 return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
                 }
 
                 if ($request->page == "Rejected Data Users") {
-                $q = User::query()->where('is_kyc','3')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
+                $q = User::where('comp',0)->query()->where('is_kyc','3')->select(db::raw("CONCAT(firstname, ' ',lastname ) AS nama"),'username','no_bro','email');
                 return Excel::download(new ExptUserQueryPage($q), 'users.xlsx');
                 }
 
@@ -106,7 +106,7 @@ class ManageUsersController extends Controller
     {
         $page_title = 'Manage Active Users';
         $empty_message = 'No active user found';
-        $users = User::active()->latest()->paginate(getPaginate());
+        $users = User::where('comp',0)->where('status',1)->latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
 
@@ -114,28 +114,28 @@ class ManageUsersController extends Controller
     {
         $page_title = 'Banned Users';
         $empty_message = 'No banned user found';
-        $users = User::banned()->latest()->paginate(getPaginate());
+        $users = User::where('comp',0)->banned()->latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
     public function rejectDataUsers()
     {
         $page_title = 'Rejected Data Users';
         $empty_message = 'No rejected user found';
-        $users = User::where('is_kyc','3')->paginate(getPaginate());
+        $users = User::where('comp',0)->where('is_kyc','3')->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
     public function verifiedDataUsers()
     {
         $page_title = 'Verified Data Users';
         $empty_message = 'No Verified user found';
-        $users = User::where('is_kyc','2')->paginate(getPaginate());
+        $users = User::where('comp',0)->where('is_kyc','2')->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
     public function verificationDataUsers()
     {
         $page_title = 'Waiting For Verification Data Users';
         $empty_message = 'No Data user found';
-        $users = User::where('is_kyc','1')->paginate(getPaginate());
+        $users = User::where('comp',0)->where('is_kyc','1')->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
 
@@ -143,14 +143,14 @@ class ManageUsersController extends Controller
     {
         $page_title = 'Email Unverified Users';
         $empty_message = 'No email unverified user found';
-        $users = User::emailUnverified()->latest()->paginate(getPaginate());
+        $users = User::where('comp',0)->emailUnverified()->latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
     public function emailVerifiedUsers()
     {
         $page_title = 'Email Verified Users';
         $empty_message = 'No email verified user found';
-        $users = User::emailVerified()->latest()->paginate(getPaginate());
+        $users = User::where('comp',0)->emailVerified()->latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
 
@@ -175,7 +175,7 @@ class ManageUsersController extends Controller
     public function search(Request $request, $scope)
     {
         $search = $request->search;
-        $users = User::where(function ($user) use ($search) {
+        $users = User::where('comp',0)->where(function ($user) use ($search) {
             $user->where('username', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%")
                 ->orWhere('no_bro', 'like', "%$search%")
@@ -212,8 +212,8 @@ class ManageUsersController extends Controller
     public function detail($id)
     {
         $page_title         = 'User Detail';
-        $user               = User::where('id', $id)->with('userExtra')->first();
-        $ref_id             = User::find($user->ref_id);
+        $user               = User::where('comp',0)->where('id', $id)->with('userExtra')->first();
+        $ref_id             = User::where('comp',0)->find($user->ref_id);
         $bank = bank::all();
         $totalDeposit       = Deposit::where('user_id',$user->id)->where('status',1)->sum('amount');
         $totalWithdraw      = Withdrawal::where('user_id',$user->id)->where('status',1)->sum('amount');
@@ -228,7 +228,7 @@ class ManageUsersController extends Controller
             'totalWithdraw','totalTransaction',  'totalBvCut','emas','bank','provinsi'));
     }
     public function BalanceLog($id){
-        $user = User::find($id);
+        $user = User::where('comp',0)->find($id);
         $data['page_title'] = 'Transaction Log';
         $data['transactions'] = $user->transactions()->latest()->paginate(getPaginate());
         $data['search'] = '';
@@ -237,7 +237,7 @@ class ManageUsersController extends Controller
     }
     public function detailFind(Request $request){
         // dd($request->all());
-        $user = User::where('username','=',$request->search)->first();
+        $user = User::where('comp',0)->where('username','=',$request->search)->first();
         if($user){
             return redirect()->route('admin.users.detail',$user->id);
         }else{
@@ -247,7 +247,7 @@ class ManageUsersController extends Controller
     }
 
     public function goldDetail($id){
-        $user = user::where('id',$id)->first();
+        $user = user::where('comp',0)->where('id',$id)->first();
         $page_title         = 'Gold Invest Detail : '.$user->username;
         $empty_message = 'Gold Invest Not found.';
         $gold  = Gold::where('user_id',$id)->where('golds.qty','!=',0)->where('golds.status','=','0')->join('products','products.id','=','golds.prod_id')->select('products.*','golds.qty',db::raw('SUM(products.price * golds.qty) as total_rp'),db::raw('sum(products.weight * golds.qty ) as total_wg'))->groupBy('golds.prod_id')
@@ -260,7 +260,7 @@ class ManageUsersController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->all());
-        $user = User::findOrFail($id);
+        $user = User::where('comp',0)->findOrFail($id);
         $request->validate([
             'firstname' => 'required|max:60',
             'lastname' => 'required|max:60',

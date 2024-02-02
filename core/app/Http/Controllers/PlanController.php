@@ -15,11 +15,13 @@ use App\Services\Tree\Enums\TreePosition;
 use App\Services\Tree\TreeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PlanController extends Controller
 {
     public function __construct(public TreeService $treeService)
     {
+        $data =  'lorem';
         $this->activeTemplate = activeTemplate();
     }
 
@@ -28,17 +30,12 @@ class PlanController extends Controller
         $data['page_title'] = "Plans";
         $data['plans'] = Plan::whereStatus(1)->get();
         return view($this->activeTemplate . '.user.plan', $data);
-
     }
     public function repeatOrder(){
         $data['page_title'] = "Reapeat Order";
         $data['plans'] = Plan::whereStatus(1)->get();
         return view($this->activeTemplate . '.user.plan_ro', $data);
     }
-
-    // function planStore(Request $request){
-    //     brodev(Auth::user()->id, $request->qty);
-    // }
     public function buyMpStore(Request $request){
 
         $this->validate($request, [
@@ -95,205 +92,230 @@ class PlanController extends Controller
 
     function planStore(Request $request)
     {
-        if($request->package >= 26){
+ 
+        if($request->qty >= 26){
             $notify[] = ['error', 'For now, you can only create max 25 user'];
             return redirect()->intended('/user/profile-setting')->withNotify($notify);
-        }
-        $checkloop  = $request->package > 1  ? true:false;
-        
-        if ($checkloop) {
-            $checkBankAcc = rekening::where('user_id',auth()->user()->id)->first();
-            if(!$checkBankAcc){
-                $notify[] = ['error', 'Please Field your bank acc before subscibe more than 1 account'];
-                return redirect()->intended('/user/profile-setting')->withNotify($notify);
-            }
         }
         $this->validate($request, [
             'plan_id' => 'required|integer', 
             'qty' => 'required',
         ]);
-        $request['position'] = $request->position ?? 2;
-
-        $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
-        $gnl = GeneralSetting::first();
-        $brolimit = user::where('plan_id','!=',0)->count();
-
-        $user = Auth::user();
-        $ref_user = User::where('no_bro', $request->sponsor)->first();
-        // if ($ref_user == null && $request->referral) {
-        //     $notify[] = ['error', 'Invalid Upline MP Number.'];
-        //     return back()->withNotify($notify);
-        // }
-        // if ($ref_user) {
-        //     # code...
-        //     $cek_pos = User::where('pos_id', $ref_user->id)->where('position',$request->position)->first();
-    
-        //     if(!treeFilter($ref_user->id,$ref_user->id)){
-        //         $notify[] = ['error', 'Refferal and Upline BRO number not in the same tree.'];
-        //         return back()->withNotify($notify);
-        //     }
-            
-        //     if ($cek_pos) {
-        //         $notify[] = ['error', 'Node you input is already filled.'];
-        //         return back()->withNotify($notify);
+        $checkloop  = $request->qty > 1  ? true:false;
+        $checkBankAcc = rekening::where('user_id',auth()->user()->id)->first();
+        // if ($checkloop) {
+        //     if(!$checkBankAcc){
+        //         $notify[] = ['error', 'Please Field your bank acc before subscibe more than 1 account'];
+        //         return redirect()->intended('/user/profile-setting')->withNotify($notify);
         //     }
         // }
-        $oldPlan = $user->plan_id;
-        $sponsor = User::where('no_bro', $request->sponsor)->first();
-        if (!$sponsor) {
-            $notify[] = ['error', 'Invalid Sponsor MP Number.'];
-            return back()->withNotify($notify);
-        }
-        // if($ref_user->no_bro == $user->no_bro){
-        //     $notify[] = ['error', 'Invalid Input MP Number. You can`t input your own MP number'];
-        //     return back()->withNotify($notify);
-        // }
-
-        $activePin = Auth::user()->pin;
-        if ($activePin < $request->qty) {
-            $notify[] = ['error', 'Insufficient Balance, Not Enough PIN to Buy'];
-            return back()->withNotify($notify);
-        }
-
-        $firstUpline = $this->placementFirstAccount($user,$request,$ref_user,$plan,$sponsor);
-        
-
-        $checkloop  = $request->package > 1  ? true:false;
-        if (!$checkloop) {
-            $notify[] = ['success', 'Purchased ' . $plan->name . ' Successfully'];
-            return redirect()->route('user.home')->withNotify($notify);
-        }
-
-        $registeredUser = $request->package;
-        $position = 2;
-
-        for ($i=1; $i < $registeredUser; $i++) { 
-            if($i <= 4){
-                $sponsor = $firstUpline;
-                $mark = 1;
-                // 02: 2,3,4,5
-            }
-            if ($i >= 5 && $i <= 8) {
-                $sponsor = User::where('username',Auth::user()->username  . 2)->first();
-                $mark = 2;
-                // 03: 6,7,8,9
-            }
-            if ($i >= 9  && $i <= 12) {
-                $mark = 3;
-                $sponsor = User::where('username',Auth::user()->username  . 3)->first();
-                // 04: 10,11,12,13,14
-            }
-            if ($i >= 13 && $i <= 16) {
-                $mark =4;
-                $sponsor = User::where('username',Auth::user()->username  . 4)->first();
-                // 05: 15,16,17,18,19
-            }
-            if ($i >= 17 && $i<= 20) {
-                $mark = 5;
-                $sponsor = User::where('username',Auth::user()->username  . 5)->first();
-                // 06: 20,21,22,13,24
-            }
-            if ($i >= 21 && $i<= 24) {
-                $sponsor = User::where('username',Auth::user()->username  . 6)->first();
-            }
-            $bro_upline = $firstUpline->no_bro;
-            $firstnameNewUser = $firstUpline->firstname;
-            $lastnameNewUser = $firstUpline->lastname;
-            $usernameNewUser = $firstUpline->username . $i+1;
-            $emailNewUser = $firstUpline->email;
-            $phoneNewUser = $firstUpline->mobile;
-            $pinNewUser = 1;
-            $newBankName = $checkBankAcc->nama_bank;
-            $newBankAcc = $checkBankAcc->nama_akun;
-            $newBankNo = $checkBankAcc->no_rek;
-            $newBankCity = $checkBankAcc->kota_cabang;
-
-            $nextUser = fnRegisterUser(
-                $sponsor,
-                $bro_upline,
-                $position,
-                $firstnameNewUser,
-                $lastnameNewUser,
-                $usernameNewUser,
-                $emailNewUser,
-                $phoneNewUser,
-                $pinNewUser,
-                $newBankName,
-                $newBankCity,
-                $newBankAcc,
-                $newBankNo
-            );
+        $waitlistUserID = [];
+        DB::beginTransaction();
+        try {
            
-            $bro_upline = $nextUser->no_bro;
+            $sponsor = User::where('username',$request->sponsor)->where('no_bro','!=',null)->first();
+            $user = Auth::user();
+            if (!$sponsor) {
+                $notify[] = ['error', 'Check Username or Sponsor Subcribe Status'];
+                $notify[] = ['error', 'Invalid Sponsor'];
+                return back()->withNotify($notify);
+            }
+            if($sponsor->id  ==  $user->id){
+                $notify[] = ['error', 'Invalid Sponsor, you cant not reffer your self'];
+                return back()->withNotify($notify);
+            }
 
-            $user = UserExtra::where('user_id',$sponsor->id)->first();
-            $user->is_gold = 1;
-            $user->save();
-        }
-        if ($oldPlan == 0) {
-            updatePaidCount2($user->id);
-        }
+            $request['position'] = $request->position ?? 2;
+
+            $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
+            $gnl = GeneralSetting::first();
+            $brolimit = user::where('plan_id','!=',0)->count();
+
         
-        $notify[] = ['success', 'Purchased ' . $plan->name . 'and Registered New  '.$registeredUser.' Account Successfully'];
-        return redirect()->route('user.home')->withNotify($notify);
+            $ref_user = $sponsor;
+        
 
+            $activePin = Auth::user()->pin;
+            if ($activePin < $request->qty) {
+                $notify[] = ['error', 'Insufficient Balance, Not Enough PIN to Buy'];
+                return back()->withNotify($notify);
+            }
+
+            $firstUpline = $this->placementFirstAccount($user,$request,$ref_user,$plan,$sponsor);
+            
+            if($firstUpline == false){
+                $notify[] = ['error', 'Invalid On First Placement, Rollback'];
+                return redirect()->back()->withNotify($notify);
+            }
+            $waitlistUserID[] =  $user->id;
+
+            if (!$checkloop) {
+                fnSingleQualified($sponsor->id,$firstUpline->id);
+                fnDelWaitList(Auth::user()->id);
+                
+                DB::commit();
+                $notify[] = ['success', 'Successfully Purchased Plan'];
+                return redirect()->route('user.my.tree')->withNotify($notify);
+            }
+
+
+            $registeredUser = $request->qty;
+            $position = 2;
+
+            $firstUsername =  auth()->user()->username;
+
+            for ($i=1; $i < $registeredUser; $i++) { 
+                $mark = false;
+                if($i <= 4){
+                    $sponsor = $firstUpline;
+                    $mark = true;
+                    // 02: 2,3,4,5
+                }
+                if ($i >= 5 && $i <= 8) {
+                    $sponsor = User::where('username',$firstUsername .'_'. 2)->first();
+                 
+                    $mark = true;
+                    // 03: 6,7,8,9
+                }
+                if ($i >= 9  && $i <= 12) {
+                    $mark = true;
+                    $sponsor = User::where('username',$firstUsername .'_'. 3)->first();
+                    // 04: 10,11,12,13,14
+                }
+                if ($i >= 13 && $i <= 16) {
+                    $mark = true;
+                    $sponsor = User::where('username',$firstUsername .'_'. 4)->first();
+                    // 05: 15,16,17,18,19
+                }
+                if ($i >= 17 && $i<= 20) {
+                    $mark = true;
+                    $sponsor = User::where('username',$firstUsername .'_'. 5)->first();
+                    // 06: 20,21,22,13,24
+                }
+                if ($i >= 21 && $i<= 24) {
+                    $sponsor = User::where('username',$firstUsername .'_'. 6)->first();
+                    $mark = true;
+                }
+                $bro_upline = $firstUpline->no_bro;
+                $firstnameNewUser = $firstUpline->firstname;
+                $lastnameNewUser = $firstUpline->lastname;
+                $usernameNewUser = $firstUpline->username .'_'. $i+1;
+                $emailNewUser = $firstUpline->email;
+                $phoneNewUser = $firstUpline->mobile;
+                $pinNewUser = 1;
+                $newBankName = $checkBankAcc->nama_bank??null;
+                $newBankAcc = $checkBankAcc->nama_akun??null;
+                $newBankNo = $checkBankAcc->no_rek??null;
+                $newBankCity = $checkBankAcc->kota_cabang??null;
+
+                $nextUser = fnRegisterUser(
+                    $sponsor,
+                    $bro_upline,
+                    $position,
+                    $firstnameNewUser,
+                    $lastnameNewUser,
+                    $usernameNewUser,
+                    $emailNewUser,
+                    $phoneNewUser,
+                    $pinNewUser,
+                    $newBankName,
+                    $newBankCity,
+                    $newBankAcc,
+                    $newBankNo
+                );
+                if(!$nextUser){
+                    $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
+                    return redirect()->back()->withNotify($notify);
+                }
+              
+                $bro_upline = $nextUser->no_bro;
+               
+                $user = UserExtra::where('user_id',$sponsor->id)->first();
+                $user->is_gold = 1;
+                $user->save();
+
+               
+            }
+
+            fnDelWaitList(Auth::user()->id);
+            DB::commit();
+            $notify[] = ['success', 'Purchased ' . $plan->name . 'and Registered New  '.$registeredUser.' Account Successfully'];
+            return redirect()->route('user.my.tree')->withNotify($notify);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $notify[] = ['error', 'Invalid on Placement, Rollback!'];
+            $notify[] = ['error', $th->getMessage()];
+            return redirect()->back()->withNotify($notify);
+        }
     }
     function placementFirstAccount($user,$request,$ref_user,$plan,$sponsor)
     {
         $gnl = GeneralSetting::first();
-
-        $pos = getPosition($ref_user->id, $request->position);
-        $user->no_bro           = generateUniqueNoBro();
-        $user->ref_id           = $sponsor->id; // ref id = sponsor
-        $user->pos_id           = $pos['pos_id']; //pos id = upline
-        $user->position         = $pos['position'];
-        $user->position_by_ref  = $ref_user->position;
-        $user->plan_id          = $plan->id;
-        $user->pin              -= $request->package;
-        $user->total_invest     += ($plan->price * 1);
-        $user->save();
-
-        $spin = UserPin::create([
-            'user_id' => $user->id,
-            'pin'     => $request->package,
-            'pin_by'  => $user->id,
-            'type'      => "-",
-            'start_pin' => $user->pin,
-            'end_pin'   => $sponsor->pin -( $request->package-1),
-            'ket'       => 'Sponsor Subscibe and Create '.$request->package.'New User'
-        ]);
-
-        $oldPlan = $user->plan_id;
-        brodev(Auth::user()->id, $request->qty);
-
-        $trx = $user->transactions()->create([
-            'amount' => $plan->price * $request->qty,
-            'trx_type' => '-',
-            'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' MP',
-            'remark' => 'purchased_plan',
-            'trx' => getTrx(),
-            'post_balance' => getAmount($user->balance),
-        ]);
-        addToLog('Purchased ' . $plan->name . ' For '.$request->qty.' MP');
-
-        sendEmail2($user->id, 'plan_purchased', [
-            'plan' => $plan->name. ' For '.$request->qty.' MP',
-            'amount' => getAmount($plan->price * $request->qty),
-            'currency' => $gnl->cur_text,
-            'trx' => $trx->trx,
-            'post_balance' => getAmount($user->balance),
-        ]);
-        if ($oldPlan == 0) {
-            updatePaidCount2($user->id);
-        }
+        try {
             
-        $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
+            $pos = getPosition($ref_user->id, $request->position);
+            $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
+            if($wait){
+                return false;
+                sleep(rand(3,6));
+                $pos = getPosition($ref_user->id, $request->position);
+            }
+            $user->no_bro           = generateUniqueNoBro();
+            $user->ref_id           = $sponsor->id; // ref id = sponsor
+            $user->pos_id           = $pos['pos_id']; //pos id = upline
+            $user->position         = $pos['position'];
+            $user->position_by_ref  = $ref_user->position;
+            $user->plan_id          = $plan->id;
+            $user->pin              -= $request->package;
+            $user->total_invest     += ($plan->price * 1);
+            $user->save();
 
-        referralCommission2($user->id, $details);
+            $spin = UserPin::create([
+                'user_id' => $user->id,
+                'pin'     => $request->package,
+                'pin_by'  => $user->id,
+                'type'      => "-",
+                'start_pin' => $user->pin,
+                'end_pin'   => $user->pin - ($request->package-1),
+                'ket'       => 'Sponsor Subscibe and Create '.$request->package.'New User'
+            ]);
 
-        updateCycleNasional($user->id);
+        
+            brodev(Auth::user()->id, $request->qty);
 
-        return $user;
+            $trx = $user->transactions()->create([
+                'amount' => $plan->price * $request->qty,
+                'trx_type' => '-',
+                'details' => 'Purchased ' . $plan->name . ' For '.$request->qty.' MP',
+                'remark' => 'purchased_plan',
+                'trx' => getTrx(),
+                'post_balance' => getAmount($user->balance),
+            ]);
+            addToLog('Purchased ' . $plan->name . ' For '.$request->qty.' MP');
+
+            sendEmail2($user->id, 'plan_purchased', [
+                'plan' => $plan->name. ' For '.$request->qty.' MP',
+                'amount' => getAmount($plan->price * $request->qty),
+                'currency' => $gnl->cur_text,
+                'trx' => $trx->trx,
+                'post_balance' => getAmount($user->balance),
+            ]);
+
+            
+                
+            $details = Auth::user()->username . ' Subscribed to ' . $plan->name . ' plan.';
+
+            referralCommission2($user->id, $details);
+            
+            updatePaidCount2($user->id);
+
+            updateCycleNasional($user->id);
+
+            return $user;
+        } catch (\Throwable $th) {
+            return false;
+            dd('placement',$th->getMessage());
+        }
     }
 
 

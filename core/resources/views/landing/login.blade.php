@@ -15,13 +15,19 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-lg-7 col-xl-5">
+
                         <div
                             class="section py-4 py-md-5 px-3 px-sm-4 px-lg-5 over-hide border-4 section-shadow-blue bg-white section-background-24 background-img-top form">
                             <form class="section" method="post" action="{{ route('user.login') }}" class="form">
                                 @csrf
 
                                 <h4 class="mb-4 text-sm-center">
-                                    Sign in.
+                                    <img src="{{ asset('assets/images/favicon-new.png') }}" alt=""
+                                        style="max-width: 300px;-webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);">
+                                    <br>
+                                    <br>
+                                    Sign in
                                 </h4>
 
                                 <div class="form-group">

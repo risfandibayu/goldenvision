@@ -2,6 +2,11 @@
 
 @push('style')
     <link href="{{ asset('assets/admin/css/tree.css') }}" rel="stylesheet">
+    <style>
+        .progress {
+            height: 30px;
+        }
+    </style>
 @endpush
 
 @section('panel')
@@ -37,6 +42,9 @@
     <form action="{{ route('user.sponsorRegist.post') }}" method="POST">
         @csrf
         <div class="card">
+            <div class="card-header">
+                <h3>Upliners</h3>
+            </div>
             <div class="card-footer">
                 <div class="form-group row">
                     <label for="sponsor" class="col-sm-2 col-form-label">Sponsor</label>
@@ -69,16 +77,59 @@
                         </select>
                     </div>
                 </div>
+                <div class="for-group row">
+                    <label for="phone" class="col-sm-2 col-form-label">Registered User
+                        <br>
+                        <span class="text-sm  {{ auth()->user()->pin < 1 ? 'text-danger' : 'text-primary' }}">
+                            {{ auth()->user()->pin < 1 ? 'You Have No PIN' : 'You Have ' . auth()->user()->pin . ' PIN' }}
+                        </span>
+                    </label>
+                    <div class="col-sm-10">
+                        <select name="pin" id=""
+                            class="form-control {{ $errors->has('pin') ? 'is-invalid' : '' }}">
+                            <option>{{ auth()->user()->pin < 1 ? 'You Have No Pin' : 'Select' }}</option>
+                            <option value="1" {{ auth()->user()->pin < 1 ? 'disabled' : '' }}
+                                {{ old('pin') == 1 ? 'selected' : '' }}>1 ID</option>
+                            <option value="5"
+                                {{ auth()->user()->pin < 5 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>5
+                                ID (1
+                                Qualified)
+                            </option>
+                            <option value="25"
+                                {{ auth()->user()->pin < 25 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>25
+                                ID
+                                (5 Qualified)
+                            </option>
+                        </select>
+                        @error('pin')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <hr>
+                </div>
             </div>
         </div>
         <div class="card mt-4">
+            <div class="card-header">
+                <h3>Registered New Users</h3>
+            </div>
             <div class="card-body">
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                            name="email" value="{{ old('email') }}" placeholder="email">
+                            name="email" value="{{ $user->email }}" placeholder="email" readonly>
                         @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-sm-2 col-form-label">Phone No</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+                            value="{{ $user->mobile }}" name="phone" placeholder="phone" readonly>
+                        @error('phone')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -92,104 +143,115 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group row">
-                    <label for="phone" class="col-sm-2 col-form-label">Phone No</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                            value="{{ old('phone') }}" name="phone" placeholder="phone">
-                        @error('phone')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <hr>
-                <div class="form-group row">
-                    <label for="phone" class="col-sm-2 col-form-label">Transfer Pin
-                        <br>
-                        <span class="text-sm text-secondary">You Have {{ auth()->user()->pin }} PIN</span>
-                    </label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control {{ $errors->has('pin') ? 'is-invalid' : '' }}"
-                            value="{{ old('pin') }}" name="pin" placeholder="pin">
-                        @error('pin')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+
+
+                    <div class="row justify-content-center">
+
+                        <div class="form-group col-md-5 mr-2">
+                            <label>@lang('First Name')</label>
+                            <input type="text" class="form-control {{ $errors->has('firstname') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('First Name')" name="firstname" autocomplete="off"
+                                value="{{ old('firstname') }}">
+                            @error('firstname')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label>@lang('Last Name')</label>
+                            <input type="text" class="form-control {{ $errors->has('lastname') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('Last Name')" name="lastname" autocomplete="off"
+                                value="{{ old('lastname') }}">
+                            @error('lastname')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-10 mt-3">
+                            <label>@lang('Email')</label>
+                            <input type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                placeholder="Email" name="email" value="{{ old('email') }}" autocomplete="off">
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mt-3 col-md-10">
+                            <label>@lang('Username')</label>
+                            <input type="text" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('Username')" autocomplete="off" value="{{ old('username') }}"
+                                name="username">
+                            @error('username')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mt-3 col-md-10">
+                            <label>@lang('Phone Number')</label>
+                            <div class="row m-0">
+                                <div class="col-3 m-0 p-0">
+                                    <select class="form-control" name="country_code">
+
+                                        @include('partials.country_code')
+                                    </select>
+                                </div>
+                                <div class="col-9 m-0 p-0">
+                                    <input type="text"
+                                        class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}"
+                                        placeholder="@lang('Phone Number')" autocomplete="off" name="mobile"
+                                        value="{{ old('mobile') }}">
+                                    @error('mobile')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3 col-md-5 mr-2">
+                            <label>@lang('Password')</label>
+                            <input type="password"
+                                class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('Password')" autocomplete="off" name="password">
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mt-3 col-md-5">
+                            <label>@lang('Confirm Password')</label>
+                            <input type="password"
+                                class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('Confirm Password')" autocomplete="off" name="password_confirmation">
+                            @error('password_confirmation')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="col-lg-12">
+                            @include($activeTemplate . 'partials.custom-captcha')
+                        </div>
+                        @if ($general->agree_policy)
+                            <div class="form-group mt-3 col-md-10">
+                                <input type="checkbox" id="checkbox-1" name="agree">
+                                <label class="checkbox mb-0 font-weight-500 size-15" for="checkbox-1">
+                                    I accept the <a href="#" class="link link-dark-primary"
+                                        data-hover="Terms and Conditions">Terms and
+                                        Conditions</a> and <a href="#" class="link link-dark-primary"
+                                        data-hover="Privacy Policy">Privacy Policy</a>
+                                </label>
+                                <br />
+                                @error('agree')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        @endif
+                    </div> {{-- end div row --}}
+
                 </div>
             </div>
-
-            <hr>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group ">
-                            <label class="form-control-label font-weight-bold">@lang('Bank Name') <span
-                                    class="text-danger">*</span></label>
-                            {{-- <input class="form-control form-control-lg" type="text" name="firstname"
-                                    value="{{auth()->user()->firstname}}" required> --}}
-                            <select name="bank_name" id="bank_name"
-                                class="form-control form-control select2 {{ $errors->has('bank_name') ? 'is-invalid' : '' }}">
-                                <option value="" hidden>-- Pilih Bank --</option>
-                                @foreach ($bank as $item)
-                                    <option value="{{ $item->nama_bank }}"
-                                        {{ $item->nama_bank == old('bank_name') ? 'selected' : '' }}>
-                                        {{ $item->nama_bank }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('bank_name')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-control-label  font-weight-bold">@lang('Bank Branch City')
-                                <small>(Optional)</small></label>
-                            <input class="form-control form-control {{ $errors->has('kota_cabang') ? 'is-invalid' : '' }}"
-                                type="text" name="kota_cabang" value="{{ old('kota_cabang') }}"
-                                placeholder="Bank KCP Jakarta">
-                            @error('kota_cabang')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-control-label  font-weight-bold">@lang('Account Name') <span
-                                    class="text-danger">*</span></label>
-                            <input class="form-control form-control {{ $errors->has('acc_name') ? 'is-invalid' : '' }}"
-                                type="text" name="acc_name" value="{{ old('acc_name') }}"
-                                placeholder="Account Name">
-                            @error('acc_name')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-
-                        <div class="form-group">
-                            <label class="form-control-label  font-weight-bold">@lang('Account Number') <span
-                                    class="text-danger">*</span></label>
-                            <input class="form-control form-control {{ $errors->has('acc_number') ? 'is-invalid' : '' }}"
-                                type="text" placeholder="Account Number" name="acc_number"
-                                value="{{ old('acc_number') }}">
-                            @error('acc_number')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="card-footer text-center">
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-success btn-lg btn-block"><i class="fa fa-save"></i>
+                        <button type="submit" class="btn btn-success btn-lg btn-block"
+                            {{ auth()->user()->pin < 1 ? 'disabled' : '' }}><i class="fa fa-save"></i>
                             Submit</button>
                     </div>
                     <div class="col-md-6">
@@ -200,4 +262,133 @@
             </div>
         </div>
     </form>
+
+    <div class="modal fade" id="confBuyModal" class="modalPlan" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true" data-toggle="modal" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" id="modalHeader">
+
+                </div>
+                <div id="barModal" class="d-none">
+                    <div class="modal-body">
+                        <div class="">
+                            <img src="{{ asset('assets/spin.gif') }}" alt="loading.."
+                                style=" display: block;
+                                                margin-left: auto;
+                                                margin-right: auto;
+                                                width: 50%;">
+                        </div>
+                        <hr>
+                        <div class="progress d-none">
+                            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;"
+                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                        </div>
+                        <ul class="package-features-list mt-30 borderless">
+                            <div id="bar">
+                                <li><i class="fas fa-times bg--secondary"></i>Valiadate Input</li>
+                                <li><i class="fas fa-times bg--secondary"></i>Subscribed Plan</li>
+                                <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                                <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('script')
+    <script>
+        (function($) {
+            "use strict";
+            var bar =
+                `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+
+            var progress = 0;
+            var progressBar = $('#progressBar');
+
+            function updateProgress(percentage) {
+                progress += percentage;
+                progressBar.css('width', progress + '%').attr('aria-valuenow', progress).text(progress + '%');
+            }
+
+            function simulateProgress() {
+                // Simulate validating data
+                setTimeout(function() {
+                    updateProgress(2); // 0.5 seconds
+                }, 500);
+
+                // Simulate subscribing plan
+                setTimeout(function() {
+                    updateProgress(3); // 0.5 seconds
+                }, 1000);
+
+                // Simulate creating user
+                var userCount = 1;
+                var createUserInterval = setInterval(function() {
+                    updateProgress(1); // 0.3 seconds
+                    if (userCount >= 5) {
+                        clearInterval(createUserInterval);
+
+                    }
+                    userCount++;
+                }, 200);
+            }
+
+            $('button[type="submit"]').on('click', function() {
+                $('#confBuyModal').modal('show');
+                setTimeout(function() {
+                    $('#bar').html(bar);
+                }, 2000);
+                var formModal = $('#formModal');
+                var barModal = $('#barModal');
+                $('#modalHeader').addClass('d-none');
+                formModal.addClass('d-none');
+                barModal.removeClass('d-none');
+
+                var intervalId = window.setInterval(function() {
+                    simulateProgress();
+
+                    var ariaValueNow = $('#progressBar').attr('aria-valuenow');
+                    if (ariaValueNow == 10) {
+                        bar =
+                            `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+                        $('#bar').html(bar);
+
+                    }
+                    if (ariaValueNow == 20) {
+                        bar =
+                            `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-check bg--success"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+                        $('#bar').html(bar);
+
+                    }
+                    if (ariaValueNow == 80) {
+                        bar =
+                            `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-check bg--success"></i>Register New User</li>
+                    <li><i class="fas fa-check bg--success"></i>Publish Data</li>`;
+                        $('#bar').html(bar);
+
+                    }
+                    if (ariaValueNow == 90) {
+                        clearInterval(intervalId);
+                    }
+
+                }, 5000);
+            });
+
+        })(jQuery);
+    </script>
+@endpush

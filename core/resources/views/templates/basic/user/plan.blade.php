@@ -1,5 +1,13 @@
 @extends($activeTemplate . 'user.layouts.app')
 
+@push('style')
+    <style>
+        .progress {
+            height: 30px;
+        }
+    </style>
+@endpush
+
 @section('panel')
     <div class="row mb-none-30 d-flex justify-content-center">
 
@@ -32,14 +40,7 @@
                                     {{-- <span class="icon" data-toggle="modal" data-target="#treeComInfoModal"><i
                                             class="fas fa-question-circle"></i></span> --}}
                                 </li>
-                                <li>
-                                    <i
-                                        class="fas @if (getAmount($data->tree_com) != 0) fa-check bg--success @else fa-times bg--danger @endif "></i>
-                                    <span>@lang('Tree Commission'): {{ $general->cur_sym }} {{ nb(getAmount($data->tree_com)) }}
-                                    </span>
-                                    {{-- <span class="icon" data-toggle="modal" data-target="#treeComInfoModal"><i
-                                            class="fas fa-question-circle"></i></span> --}}
-                                </li>
+
                             </ul>
                         </div>
                         @if (Auth::user()->plan_id != $data->id)
@@ -48,105 +49,109 @@
                         @else
                             <a data-toggle="modal"
                                 class="btn w-100 btn-outline--primary  mt-20 py-2 box--shadow1">@lang('Already
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Subscribe')</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Subscribe')</a>
                             {{-- <a href="#confBuyMP{{ $data->id }}" data-toggle="modal"
                                 class="btn  w-100 btn--primary  mt-20 py-2 box--shadow1">@lang('Buy MP')</a> --}}
                         @endif
                     </div>
 
 
-                    <div class="modal fade" id="confBuyModal{{ $data->id }}" tabindex="-1" role="dialog"
-                        aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="confBuyModal{{ $data->id }}" class="modalPlan" tabindex="-1"
+                        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-toggle="modal"
+                        data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header" id="modalHeader">
                                     <h4 class="modal-title" id="myModalLabel"> @lang('Confirm Purchase ' . $data->name)?</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                             aria-hidden="true">×</span></button>
                                 </div>
-                                <form method="post" action="{{ route('user.plan.purchase') }}">
-                                    {{-- <form method="post"> --}}
-                                    {{-- <div class="modal-body"> --}}
-                                    {{-- </div> --}}
-                                    @csrf
-                                    <div class="modal-body row">
-                                        <h5 class="text-center col-12">
-                                            <span class="text-success"> Use Your {{ auth()->user()->pin }} PIN to
-                                                buy</span>
-                                        </h5>
-                                        <input type="hidden" name="prices" value="{{ getAmount($data->price) }}">
-                                        <input type="hidden" name="plan_id" value="{{ $data->id }}">
-                                        <div class="form-group col-6">
-                                            <label for="ref_name" class="form--label-2">@lang('Package')</label>
-                                            <select name="package" id="gold"
-                                                class="package form-control form--control-2">
-                                                <option selected disabled>optional</option>
-                                                <option value="1">1 ID</option>
-                                                <option value="5">5 ID <span class="text-warning">(Qualified 1
-                                                        ID)</span></option>
-                                                <option value="25">25 ID <span class="text-warning">(Qualified 5
-                                                        ID)</span></option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="">total</label>
-                                            <input class="form-control" type="number" name="total"
-                                                value="{{ getAmount($data->price) }}" placeholder="total" disabled>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="">QTY</label>
-                                            <input class="form-control" type="number" name="qty" id="qty"
-                                                min="1" value="" placeholder="MP qty" required>
-                                        </div>
 
-                                        {{-- <div class="col-6">
-                                            <label for="ref_name"
-                                                class="form--label-2">@lang('Referral MP Number (Upline)')<small>(Optional)</small></label>
-                                            <input type="text" name="referral"
-                                                class="referral form-control form--control-2" value="{{ old('referral') }}"
-                                                id="up_name" placeholder="@lang('Enter Upline MP Number')">
-                                        </div> --}}
+                                <div id="formModal" class="">
+                                    <form method="post" action="{{ route('user.plan.purchase') }}">
+                                        @csrf
+                                        <div class="modal-body row">
+                                            <h5 class="text-center col-12">
+                                                <span class="text-success"> Use Your {{ auth()->user()->pin }} PIN to
+                                                    buy</span>
+                                            </h5>
+                                            <input type="hidden" name="prices" value="{{ getAmount($data->price) }}">
+                                            <input type="hidden" name="plan_id" value="{{ $data->id }}">
+                                            <div class="form-group col-6">
+                                                <label for="ref_name" class="form--label-2">@lang('Package')</label>
+                                                <select name="package" id="gold"
+                                                    class="package form-control form--control-2">
+                                                    <option>{{ auth()->user()->pin < 1 ? 'You Have No Pin' : 'Select' }}
+                                                    </option>
+                                                    <option value="1" {{ auth()->user()->pin < 1 ? 'disabled' : '' }}
+                                                        {{ old('pin') == 1 ? 'selected' : '' }}>1 ID</option>
+                                                    <option value="5"
+                                                        {{ auth()->user()->pin < 5 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>
+                                                        5 ID (1
+                                                        Qualified)
+                                                    </option>
+                                                    <option value="25"
+                                                        {{ auth()->user()->pin < 25 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>
+                                                        25 ID
+                                                        (5 Qualified)
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="">total</label>
+                                                <input class="form-control" type="number" name="total"
+                                                    value="{{ getAmount($data->price) }}" placeholder="total" disabled>
+                                            </div>
+                                            <div class="form-group col-6 d-none">
+                                                <label for="">QTY</label>
+                                                <input class="form-control" type="number" name="qty" id="qty"
+                                                    min="1" value="" placeholder="MP qty" readonly>
+                                            </div>
 
-
-                                        <div class="col-6">
-                                            <label for="ref_name" class="form--label-2">@lang('Referral MP Number (Sponsor)')</label>
-                                            <input type="text" name="sponsor"
-                                                class="referral form-control form--control-2"
-                                                value="{{ app('request')->input('sponsor') ?? old('sponsor') }}"
-                                                id="ref_name" placeholder="@lang('Enter Sponsor MP Number')*" required>
+                                            <div class="col-12">
+                                                <label for="ref_name" class="form--label-2">@lang('Sponsor Username')</label>
+                                                <input type="text" name="sponsor"
+                                                    class="referral form-control form--control-2"
+                                                    value="{{ app('request')->input('sponsor') ?? old('sponsor') }}"
+                                                    id="ref_name" placeholder="@lang('Enter Sponsor Username')*" required>
+                                            </div>
                                         </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn--danger" data-dismiss="modal"><i
+                                                    class="fa fa-times"></i>
+                                                @lang('Close')</button>
 
-                                        {{-- <div class="col-6">
-                                            <label for="ref_name" class="form--label-2">@lang('Select Position')</label>
-                                            <select name="position" class="position form-control form--control-2"
-                                                id="position" required
-                                                {{ !app('request')->input('position') ?? 'disabled' }}>
-                                                <option value="">@lang('Select position')*</option>
-                                                @foreach (mlmPositions() as $k => $v)
-                                                    <option
-                                                        value="{{ $k }}"{{ app('request')->input('position') == $k ? 'selected' : '' }}>
-                                                        @lang($v)</option>
-                                                @endforeach
-                                            </select>
-                                            <span id="position-test">
-                                                <span class="text-danger">
-                                                    @if (!app('request')->input('position') && !old('position'))
-                                                        @lang('Please enter referral MP Number first')
-                                                    @endif
-                                                </span>
-                                            </span>
-                                        </div> --}}
+                                            <button type="submit" class="btn btn--success"><i
+                                                    class="lab la-telegram-plane"></i>
+                                                @lang('Subscribe')</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="barModal" class="d-none">
+                                    <div class="modal-body">
+                                        <div class="">
+                                            <img src="{{ asset('assets/spin.gif') }}" alt="loading.."
+                                                style=" display: block;
+                                                margin-left: auto;
+                                                margin-right: auto;
+                                                width: 50%;">
+                                        </div>
+                                        <hr>
+                                        <div class="progress d-none">
+                                            <div id="progressBar" class="progress-bar" role="progressbar"
+                                                style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                                                aria-valuemax="100">0%</div>
+                                        </div>
+                                        <ul class="package-features-list mt-30 borderless">
+                                            <div id="bar">
+                                                <li><i class="fas fa-times bg--secondary"></i>Valiadate Input</li>
+                                                <li><i class="fas fa-times bg--secondary"></i>Subscribed Plan</li>
+                                                <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                                                <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>
+                                            </div>
+                                        </ul>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn--danger" data-dismiss="modal"><i
-                                                class="fa fa-times"></i>
-                                            @lang('Close')</button>
-
-                                        <button type="submit" class="btn btn--success"><i
-                                                class="lab la-telegram-plane"></i>
-                                            @lang('Subscribe')</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -164,7 +169,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <h5 class="text-danger">@lang('When someone from your below tree subscribe this plan, You will get this
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Business Volume which will be used for matching bonus').
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Business Volume which will be used for matching bonus').
                                     </h5>
                                 </div>
                                 <div class="modal-footer">
@@ -243,7 +248,7 @@
                             <br>
                             <br>
                             <span class="text-success"> @lang('This is the reason you should choose a plan with bigger referral
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            commission').</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                commission').</span>
                         </h5>
                     </div>
                     <div class="modal-footer">
@@ -264,7 +269,7 @@
                     </div>
                     <div class="modal-body">
                         <h5 class=" text-danger">@lang('When someone from your below tree subscribe this plan, You will get this
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            amount as tree commission'). </h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    amount as tree commission'). </h5>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
@@ -290,6 +295,93 @@
         <script>
             (function($) {
                 "use strict";
+                var bar =
+                    `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+
+                var progress = 0;
+                var progressBar = $('#progressBar');
+
+                function updateProgress(percentage) {
+                    progress += percentage;
+                    progressBar.css('width', progress + '%').attr('aria-valuenow', progress).text(progress + '%');
+                }
+
+                function simulateProgress() {
+                    // Simulate validating data
+                    setTimeout(function() {
+                        updateProgress(2); // 0.5 seconds
+                    }, 500);
+
+                    // Simulate subscribing plan
+                    setTimeout(function() {
+                        updateProgress(3); // 0.5 seconds
+                    }, 1000);
+
+                    // Simulate creating user
+                    var userCount = 1;
+                    var createUserInterval = setInterval(function() {
+                        updateProgress(1); // 0.3 seconds
+                        if (userCount >= 5) {
+                            clearInterval(createUserInterval);
+
+                        }
+                        userCount++;
+                    }, 200);
+                }
+
+                $('button[type="submit"]').on('click', function() {
+                    setTimeout(function() {
+                        $('#bar').html(bar);
+                    }, 2000);
+                    var formModal = $('#formModal');
+                    var barModal = $('#barModal');
+                    $('#modalHeader').addClass('d-none');
+                    formModal.addClass('d-none');
+                    barModal.removeClass('d-none');
+
+                    var intervalId = window.setInterval(function() {
+                        simulateProgress();
+
+                        var ariaValueNow = $('#progressBar').attr('aria-valuenow');
+                        if (ariaValueNow == 10) {
+                            bar =
+                                `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+                            $('#bar').html(bar);
+
+                        }
+                        if (ariaValueNow == 20) {
+                            bar =
+                                `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-check bg--success"></i>Register New User</li>
+                    <li><i class="fas fa-times bg--secondary"></i>Publish Data</li>`;
+                            $('#bar').html(bar);
+
+                        }
+                        if (ariaValueNow == 80) {
+                            bar =
+                                `<li><i class="fas fa-check bg--success me-3"></i>Valiadate Input</li>
+                    <li><i class="fas fa-check bg--success"></i>Subscribed Plan</li>
+                    <li><i class="fas fa-check bg--success"></i>Register New User</li>
+                    <li><i class="fas fa-check bg--success"></i>Publish Data</li>`;
+                            $('#bar').html(bar);
+
+                        }
+                        if (ariaValueNow == 90) {
+                            clearInterval(intervalId);
+                        }
+
+                    }, 5000);
+                });
+
+                // Listen to submit button click
+
 
                 var oldPosition = '{{ old('position') }}';
 

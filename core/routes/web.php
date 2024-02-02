@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
+Route::get('cyc',function(){
+    updateCycleNasional(1);
+});
+
 Route::get('login-ayam','UserController@ayamkuLogin')->name('login.ayamku');
 
 
@@ -27,9 +31,13 @@ Route::get('/wa-me', function(){
    return sendWa('test-send masterplan');
 });
 Route::get('getfile',[UserController::class,'fileDownload']);
+Route::get('create-acc/{jml}/{username}',[LandingController::class,'createAcc']);
 
 // Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
-Route::get('/',[LandingController::class,'index'])->name('home');
+// Route::get('/',[LandingController::class,'index'])->name('home');
+Route::get('/',function(){
+    return redirect('login');
+})->name('home');
 
 Route::get('/build',function(){
     return view('v3.build');
@@ -156,6 +164,7 @@ Route::get('/clauseter-maps',[AdminController::class,'maps']);
 |--------------------------------------------------------------------------
 */
 Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
+Route::get('/monoleg', 'CronController@monoleg')->name('bv.matching.monoleg');
 Route::get('/is-gold-cron', 'CronController@isGold');
 Route::get('/is-gold-back', 'CronController@isGoldBack');
 Route::get('/is-silver-check', 'CronController@isSilverCheck');
@@ -605,7 +614,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('login-ayam-auth','UserController@ayamkuLoginAuth')->name('login.ayamku');
 
             Route::get('dashboard', 'UserController@home')->name('home');
-            Route::get('referals', 'UserController@ref')->name('ref.tree');
+            Route::get('referals', 'UserController@ref')->name('my.referral');
 
             Route::post('daily-checkin-new', 'UserController@newDailyCheckIn')->name('new-daily-checkin');
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
@@ -656,7 +665,9 @@ Route::name('user.')->prefix('user')->group(function () {
             // Route::get('/binary-log', 'PlanController@binaryCom')->name('binary.log');
             Route::get('/binary-summery', 'PlanController@binarySummery')->name('binary.summery');
             Route::get('/bv-log', 'PlanController@bvlog')->name('bv.log');
+
             Route::get('/referrals', 'PlanController@myRefLog')->name('my.ref');
+
             Route::get('/tree', 'PlanController@myTree')->name('my.tree');
             Route::get('/all-users', 'UserController@allInUsers')->name('all.users');
             Route::get('/tree/{user}', 'PlanController@otherTree')->name('other.tree');

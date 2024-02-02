@@ -49,29 +49,27 @@ class AdminController extends Controller
         // dd(adminLeaderSellPin('2023-03-18 13:31:45'));
         $page_title = 'Dashboard';
         // User Info
-        $widget['total_users'] = User::count();
-        $widget['verified_users'] = User::where('status', 1)->count();
-        $widget['email_verified_users'] = User::where('ev', 1)->count();
-        $widget['sms_verified_users'] = User::where('sv', 1)->count();
+        $widget['total_users'] = User::where('comp',0)->count();
+        $widget['verified_users'] = User::where('comp',0)->where('status', 1)->count();
+        $widget['email_verified_users'] = User::where('comp',0)->where('ev', 1)->count();
+        $widget['sms_verified_users'] = User::where('comp',0)->where('sv', 1)->count();
 
-        $widget['banned_users'] = User::where('status', 0)->count();
-        $widget['emailUnverified'] = User::emailUnverified()->count();
-        $widget['smsUnverified'] = User::smsUnverified()->count();
+        $widget['banned_users'] = User::where('comp',0)->where('status', 0)->count();
+        $widget['emailUnverified'] = User::where('comp',0)->emailUnverified()->count();
+        $widget['smsUnverified'] = User::where('comp',0)->smsUnverified()->count();
 
         $widget['gold_silver'] = countGold();
-        $widget['r_hp'] = rewardHp();
-        // dd($widget);
-        $widget['users_balance'] = User::sum('balance');
+        $widget['users_balance'] = User::where('comp',0)->sum('balance');
         $widget['totalWdGold'] = totalWdGold();
         $widget['totalMpProd'] = totalMpProd();
         $widget['totalColagenProd'] = totalColagenProd();
         $widget['totalPurchasedPlan'] = sumPurchasedPlan(); //sum semua purched plan dari amount transaksi;
         $widget['totalReferalsCommision'] = sumRefComm();
-        $widget['users_invest'] = User::sum('total_invest');
+        $widget['users_invest'] = User::where('comp',0)->sum('total_invest');
         $widget['last7days_invest'] = Transaction::whereDate('created_at', '>=', Carbon::now()->subDays(6))->where('remark', 'purchased_plan')->sum('amount');
-        $widget['total_binary_com'] = User::sum('total_binary_com');
-        $widget['total_ref_com'] = User::sum('total_ref_com');
-        $widget['total_bro_joined'] = User::where('plan_id','!=',0)->count();
+        $widget['total_binary_com'] = User::where('comp',0)->sum('total_binary_com');
+        $widget['total_ref_com'] = User::where('comp',0)->sum('total_ref_com');
+        $widget['total_bro_joined'] = User::where('comp',0)->where('plan_id','!=',0)->count();
         $widget['admin_leader_pin'] = adminLeaderSellPin($date);
 // dd($widget);
 

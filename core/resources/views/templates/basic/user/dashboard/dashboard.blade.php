@@ -190,7 +190,7 @@
         </div>
 
 
-        @if (Auth::user()->plan_id != 0)
+        @if (false)
             <div class="col-lg-4 col-md-4 col-12 mb-30">
                 @if ($title)
                     <div class="mb-3 d-flex justify-content-center shing">

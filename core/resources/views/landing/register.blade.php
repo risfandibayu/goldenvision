@@ -25,6 +25,11 @@
                                 @csrf
 
                                 <h4 class="mb-4 text-sm-center">
+                                    <img src="{{ asset('assets/images/favicon-new.png') }}" alt=""
+                                        style="max-width: 300px;-webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);">
+                                    <br>
+                                    <br>
                                     Register now.
                                 </h4>
                                 <div class="row justify-content-center">

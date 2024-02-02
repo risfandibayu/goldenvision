@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class test extends Model
+class WaitList extends Model
 {
     use HasFactory;
-    protected $table = 'test';
+    protected $table = 'wait_list';
     protected $guarded = ['id'];
-    public $timestamps = false;
 }
