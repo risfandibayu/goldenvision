@@ -334,6 +334,7 @@ class CronController extends Controller
 
     public function cron()
     {
+        return true;
         $gnl = GeneralSetting::first();
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
