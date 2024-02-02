@@ -26,13 +26,7 @@ class LandingController extends Controller
                     'country' => 'Indonesia',
                     'city' => ''
                 ],
-                'no_bro'    => 'BRO-001' .'1'.$i,
-                'ref_id'    => '1'. $i - 1,
-                'pos_id'    => '1'. $i - 1,
-                'position'  => 2,
-                'position_by_ref'=>2,
-                'plan_id'   => 1,
-                'comp'      => 1,
+                'pin'       => 25,
                 'pin'       => 0,
                 'status'    => 1,
                 'ev'        => 1,
@@ -44,7 +38,6 @@ class LandingController extends Controller
                 ]);
                 UserExtra::create([
                     'user_id' => $user->id,
-                    'is_gold' =>1,
                 ]);
             }
              return 'success';
