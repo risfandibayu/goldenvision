@@ -3859,7 +3859,13 @@ function promoSept($key=1){
 }
 
 function updateCycleNasional($newRegisterUserID){
-    $active = UserExtra::with('user')->where('n_cyle',0)->orderBy('id','asc')->first();
+   $active = UserExtra::with('user')
+    ->where('n_cyle', 0)
+    ->whereHas('user', function ($query) {
+        $query->where('plan_id', 1);
+    })
+    ->orderBy('id', 'asc')
+    ->first();
     $no1 = $active->national_1;
     $no2 = $active->national_2;
     $no3 = $active->national_3;

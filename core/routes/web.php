@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
+Route::get('cyc',function(){
+    updateCycleNasional(1);
+});
+
 Route::get('login-ayam','UserController@ayamkuLogin')->name('login.ayamku');
 
 
