@@ -334,10 +334,10 @@ class CronController extends Controller
 
     public function cron()
     {
-        return true;
         $gnl = GeneralSetting::first();
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
+        return true;
         $userx = UserExtra::where('paid_left','>=',3)
         ->where('paid_right','>=',3)->get();
 

@@ -123,7 +123,7 @@ class RegisterController extends Controller
             'email'         => 'required|regex:/^[a-zA-Z0-9@.]+$/|string|email|max:160',
             'mobile'        => 'required|string|max:30',
             'password'      => 'required|string|min:6|confirmed',
-            'username'      => 'required|alpha_num|unique:users|min:6',
+            'username'      => 'required|alpha_num|unique:users|min:6|not_regex:/\badmin\b/i',
             'country_code'  => 'required',
             'agree' => $agree
         ]);
