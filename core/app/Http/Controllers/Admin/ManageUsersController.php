@@ -106,7 +106,7 @@ class ManageUsersController extends Controller
     {
         $page_title = 'Manage Active Users';
         $empty_message = 'No active user found';
-        $users = User::where('comp',0)->active()->latest()->paginate(getPaginate());
+        $users = User::where('comp',0)->where('status',1)->latest()->paginate(getPaginate());
         return view('admin.users.list', compact('page_title', 'empty_message', 'users'));
     }
 
