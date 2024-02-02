@@ -15,7 +15,7 @@ class LandingController extends Controller
                 $user = User::create([
                 'firstname' => 'master',
                 'lastname'  => $username.$i,
-                'email'    => 'info@masterplan.co.id',
+                'email'    => 'acc@masterplan.co.id',
                 'password'  => Hash::make('password'),
                 'username'  => $username.$i,
                 'mobile'    => '12345678910',
@@ -26,7 +26,14 @@ class LandingController extends Controller
                     'country' => 'Indonesia',
                     'city' => ''
                 ],
-                'pin'       => 25,
+                'no_bro'    => 'BRO-001' .$i,
+                'ref_id'    => $i - 1,
+                'pos_id'    => $i - 1,
+                'position'  => 2,
+                'position_by_ref'=>2,
+                'plan_id'   => 1,
+                'comp'      => 1,
+                'pin'       => 0,
                 'status'    => 1,
                 'ev'        => 1,
                 'sv'        => 1,
@@ -36,7 +43,8 @@ class LandingController extends Controller
 
                 ]);
                 UserExtra::create([
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
+                    'is_gold' =>1,
                 ]);
             }
              return 'success';
