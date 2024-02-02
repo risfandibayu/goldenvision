@@ -2983,7 +2983,7 @@ function chekWeeklyClaim($userId){
     }
 }
 function countGold(){
-    $gold= UserExtra::where('is_gold',1)->where('comp',0)->count('id');
+    $gold= UserExtra::join('users','user_extras.user_id','=','users.id')->where('is_gold',1)->where('users.comp',0)->count('id');
     $silver = UserExtra::join('users','user_extras.user_id','=','users.id')->where('user_extras.is_gold',0)->where('users.no_bro','!=','')->where('users.comp',0)->count('users.id');
     return [
         'gold' => $gold,
