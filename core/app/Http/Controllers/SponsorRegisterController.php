@@ -51,23 +51,26 @@ class SponsorRegisterController extends Controller
     }
     
     public function registerUser(Request $request){
-        sleep(30);
-        $notify[] = ['success', 'Invalid On First Placement, Rollback'];
-            return redirect()->back()->withNotify($notify);
+        $general = GeneralSetting::first();
+        $agree = 'nullable';
+        if ($general->agree_policy) {
+            $agree = 'required';
+        }
         $validate = Validator::make($request->all(),[
             'sponsor'   => 'required',
             'upline'    => 'required',
             'position'  => 'required',
-            'username'  => 'required|alpha_num|unique:users|min:6',
-            'email'     => 'required|email',
-            'phone'     => 'required',
             'pin'       => 'required|numeric|min:1',
-            // 'bank_name' => 'required',
-            // 'kota_cabang' => 'required',
-            // 'acc_name' => 'required',
-            // 'acc_number' => 'required',
+            'firstname'     => 'sometimes|required|string|max:60',
+            'lastname'      => 'sometimes|required|string|max:60',
+            'email'         => 'required|regex:/^[a-zA-Z0-9@.]+$/|string|email|max:160',
+            'mobile'        => 'required|string|max:30',
+            'password'      => 'required|string|min:6|confirmed',
+            'username'      => 'required|alpha_num|unique:users|min:6',
+            'country_code'  => 'required',
+            'agree' => $agree
         ]);
-       
+      
         if ($validate->fails()) {
             // dd('error validasi');
            return redirect()->back()->withInput($request->all())->withErrors($validate);
@@ -114,7 +117,7 @@ class SponsorRegisterController extends Controller
             $newUser = $this->placementFirstAccount($request->all());  //register user
             if($newUser == false){
                 $notify[] = ['success', 'Invalid On First Placement, Rollback'];
-                return redirect()->route('user.home')->withNotify($notify);
+                return redirect()->route('user.home')->withNotify($notify)->withInput($request->all());
             }
             $sponsor = User::find(auth()->user()->id);
             
@@ -130,6 +133,7 @@ class SponsorRegisterController extends Controller
             $sponsor->pin -=  $request->pin;
             $sponsor->save();
 
+            
             $buyPlan = $this->planStore([
                 'plan_id'   => 1,
                 'upline'    => $request->upline,
@@ -138,19 +142,16 @@ class SponsorRegisterController extends Controller
                 'position'  => $request->position,
                 'user_id'   => $newUser->id,
             ]);
-
-            if($buyPlan['error']){
-                $notify[] = ['error',$buyPlan['msg']];
+            if(!$buyPlan){
+                $notify[] = ['success', 'Invalid On Subscibe Plan, Rollback'];
                 return redirect()->back()->withNotify($notify);
             }
-
-
-
             updateCycleNasional($newUser->id);
             
             $checkloop = $request->pin > 1  ? true:false;
 
             if(!$checkloop){
+                fnsingleQualified($sponsor->id,$newUser->id);
                 DB::commit();
                 addToLog('Created '.$request->pin.' User & Purchased Plan');
                 $notify[] = ['success', 'Created User & Purchased Plan Successfully'];
@@ -221,7 +222,7 @@ class SponsorRegisterController extends Controller
                         return redirect()->back()->withNotify($notify);
                     }
                     
-                    $bro_upline = $nextUser['data']->no_bro;
+                    $bro_upline = $nextUser->no_bro;
 
                     $user = UserExtra::where('user_id',$sponsor->id)->first();
                     $user->is_gold = 1;
@@ -234,6 +235,7 @@ class SponsorRegisterController extends Controller
             return redirect(session()->get('SponsorSet')['url'])->withNotify($notify);
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th->getMessage());
             $notify[] = ['error', 'Error on Placement, Rollback!'];
             return redirect()->back()->withNotify($notify);
         }
@@ -242,16 +244,15 @@ class SponsorRegisterController extends Controller
 
     function placementFirstAccount(array $data)
     {
-        $defaulUser = Auth::user();
-        $gnl = GeneralSetting::first();
+       
         try {
             $user = User::create([
-                'firstname' => $defaulUser->firstname??null,
-                'lastname'  => $defaulUser->lastname?? null,
-                'email'    => $defaulUser->email ??null,
-                'password'  => $defaulUser->password?? Hash::make(strtolower(trim($data['username']))),
-                'username'  => strtolower(trim($data['username'])),
-                'mobile'    => $defaulUser->mobile??'',
+                'firstname' => $data['firstname']??null,
+                'lastname'  => $data['lastname']?? null,
+                'email'    =>  $data['email'] ??null,
+                'password'  => Hash::make($data['password']),
+                'username'  => $data['username'],
+                'mobile'    => $data['mobile']??'',
                 'address'   => [
                     'address' => '',
                     'state' => '',
@@ -278,6 +279,7 @@ class SponsorRegisterController extends Controller
 
             return $user;
        } catch (\Throwable $th) {
+            dd($th->getMessage());
             return false;
        }
 
@@ -403,7 +405,7 @@ class SponsorRegisterController extends Controller
             addToLog('Purchased ' . $plan->name . ' For '.$data['pin'].' MP as Sponsor');
 
             referralCommission2($user->id, $details);
-            return true;
+            return $trx;
         } catch (\Throwable $th) {
             return false;
         }

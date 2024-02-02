@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
+Route::get('cyc',function(){
+    updateCycleNasional(1);
+});
+
 Route::get('login-ayam','UserController@ayamkuLogin')->name('login.ayamku');
 
 
@@ -607,7 +611,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('login-ayam-auth','UserController@ayamkuLoginAuth')->name('login.ayamku');
 
             Route::get('dashboard', 'UserController@home')->name('home');
-            Route::get('referals', 'UserController@ref')->name('ref.tree');
+            Route::get('referals', 'UserController@ref')->name('my.referral');
 
             Route::post('daily-checkin-new', 'UserController@newDailyCheckIn')->name('new-daily-checkin');
             Route::post('daily-checkin', 'UserController@dailyCheckIn')->name('daily-checkin');
@@ -658,7 +662,9 @@ Route::name('user.')->prefix('user')->group(function () {
             // Route::get('/binary-log', 'PlanController@binaryCom')->name('binary.log');
             Route::get('/binary-summery', 'PlanController@binarySummery')->name('binary.summery');
             Route::get('/bv-log', 'PlanController@bvlog')->name('bv.log');
+
             Route::get('/referrals', 'PlanController@myRefLog')->name('my.ref');
+
             Route::get('/tree', 'PlanController@myTree')->name('my.tree');
             Route::get('/all-users', 'UserController@allInUsers')->name('all.users');
             Route::get('/tree/{user}', 'PlanController@otherTree')->name('other.tree');

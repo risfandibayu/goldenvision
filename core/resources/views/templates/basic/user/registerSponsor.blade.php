@@ -77,6 +77,36 @@
                         </select>
                     </div>
                 </div>
+                <div class="for-group row">
+                    <label for="phone" class="col-sm-2 col-form-label">Registered User
+                        <br>
+                        <span class="text-sm  {{ auth()->user()->pin < 1 ? 'text-danger' : 'text-primary' }}">
+                            {{ auth()->user()->pin < 1 ? 'You Have No PIN' : 'You Have ' . auth()->user()->pin . ' PIN' }}
+                        </span>
+                    </label>
+                    <div class="col-sm-10">
+                        <select name="pin" id=""
+                            class="form-control {{ $errors->has('pin') ? 'is-invalid' : '' }}">
+                            <option>{{ auth()->user()->pin < 1 ? 'You Have No Pin' : 'Select' }}</option>
+                            <option value="1" {{ auth()->user()->pin < 1 ? 'disabled' : '' }}
+                                {{ old('pin') == 1 ? 'selected' : '' }}>1 ID</option>
+                            <option value="5"
+                                {{ auth()->user()->pin < 5 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>5
+                                ID (1
+                                Qualified)
+                            </option>
+                            <option value="25"
+                                {{ auth()->user()->pin < 25 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>25
+                                ID
+                                (5 Qualified)
+                            </option>
+                        </select>
+                        @error('pin')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <hr>
+                </div>
             </div>
         </div>
         <div class="card mt-4">
@@ -84,7 +114,7 @@
                 <h3>Registered New Users</h3>
             </div>
             <div class="card-body">
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
@@ -113,39 +143,108 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
-
-                <hr>
-
+                </div> --}}
                 <div class="form-group row">
-                    <label for="phone" class="col-sm-2 col-form-label">Registered User
-                        <br>
-                        <span class="text-sm  {{ auth()->user()->pin < 1 ? 'text-danger' : 'text-primary' }}">
-                            {{ auth()->user()->pin < 1 ? 'You Have No PIN' : 'You Have ' . auth()->user()->pin . ' PIN' }}
-                        </span>
-                    </label>
-                    <div class="col-sm-10">
-                        <select name="pin" id="" class="form-control">
-                            <option>{{ auth()->user()->pin < 1 ? 'You Have No Pin' : 'Select' }}</option>
-                            <option value="1" {{ auth()->user()->pin < 1 ? 'disabled' : '' }}
-                                {{ old('pin') == 1 ? 'selected' : '' }}>1 ID</option>
-                            <option value="5"
-                                {{ auth()->user()->pin < 5 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>5
-                                ID (1
-                                Qualified)
-                            </option>
-                            <option value="25"
-                                {{ auth()->user()->pin < 25 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>25
-                                ID
-                                (5 Qualified)
-                            </option>
-                        </select>
-                        {{-- <input type="number" class="form-control {{ $errors->has('pin') ? 'is-invalid' : '' }}"
-                            value="{{ old('pin') }}" name="pin" placeholder="pin"> --}}
-                        @error('pin')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+
+
+                    <div class="row justify-content-center">
+
+                        <div class="form-group col-md-5 mr-2">
+                            <label>@lang('First Name')</label>
+                            <input type="text" class="form-control {{ $errors->has('firstname') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('First Name')" name="firstname" autocomplete="off"
+                                value="{{ old('firstname') }}">
+                            @error('firstname')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label>@lang('Last Name')</label>
+                            <input type="text" class="form-control {{ $errors->has('lastname') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('Last Name')" name="lastname" autocomplete="off"
+                                value="{{ old('lastname') }}">
+                            @error('lastname')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-10 mt-3">
+                            <label>@lang('Email')</label>
+                            <input type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                placeholder="Email" name="email" value="{{ old('email') }}" autocomplete="off">
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mt-3 col-md-10">
+                            <label>@lang('Username')</label>
+                            <input type="text" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('Username')" autocomplete="off" value="{{ old('username') }}"
+                                name="username">
+                            @error('username')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mt-3 col-md-10">
+                            <label>@lang('Phone Number')</label>
+                            <div class="row m-0">
+                                <div class="col-3 m-0 p-0">
+                                    <select class="form-control" name="country_code">
+
+                                        @include('partials.country_code')
+                                    </select>
+                                </div>
+                                <div class="col-9 m-0 p-0">
+                                    <input type="text"
+                                        class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}"
+                                        placeholder="@lang('Phone Number')" autocomplete="off" name="mobile"
+                                        value="{{ old('mobile') }}">
+                                    @error('mobile')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3 col-md-5 mr-2">
+                            <label>@lang('Password')</label>
+                            <input type="password"
+                                class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('Password')" autocomplete="off" name="password">
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mt-3 col-md-5">
+                            <label>@lang('Confirm Password')</label>
+                            <input type="password"
+                                class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
+                                placeholder="@lang('Confirm Password')" autocomplete="off" name="password_confirmation">
+                            @error('password_confirmation')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="col-lg-12">
+                            @include($activeTemplate . 'partials.custom-captcha')
+                        </div>
+                        @if ($general->agree_policy)
+                            <div class="form-group mt-3 col-md-10">
+                                <input type="checkbox" id="checkbox-1" name="agree">
+                                <label class="checkbox mb-0 font-weight-500 size-15" for="checkbox-1">
+                                    I accept the <a href="#" class="link link-dark-primary"
+                                        data-hover="Terms and Conditions">Terms and
+                                        Conditions</a> and <a href="#" class="link link-dark-primary"
+                                        data-hover="Privacy Policy">Privacy Policy</a>
+                                </label>
+                                <br />
+                                @error('agree')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        @endif
+                    </div> {{-- end div row --}}
+
                 </div>
             </div>
             <div class="card-footer text-center">

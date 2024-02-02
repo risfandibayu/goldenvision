@@ -5,15 +5,7 @@
 
         <div class="col-lg-12">
             <div class="card b-radius--10 ">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    @foreach ($referrals as $key => $referral)
-                        <li class="nav-item">
-                            <a class="nav-link @if ($key == 1) active @endif" id="{{ $key }}-tab"
-                                data-toggle="tab" href="#tab-{{ $key }}" role="tab" aria-controls="home"
-                                aria-selected="true">Level {{ $key }}</a>
-                        </li>
-                    @endforeach
-                </ul>
+
                 <div class="tab-content" id="myTabContent">
                     @foreach ($referrals as $key => $referral)
                         <div class="tab-pane fade @if ($key == 1) show active @endif"

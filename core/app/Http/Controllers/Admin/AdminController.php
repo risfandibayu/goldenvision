@@ -49,7 +49,7 @@ class AdminController extends Controller
         // dd(adminLeaderSellPin('2023-03-18 13:31:45'));
         $page_title = 'Dashboard';
         // User Info
-        $widget['total_users'] = User::count();
+        $widget['total_users'] = User::where('comp',0)->count();
         $widget['verified_users'] = User::where('status', 1)->count();
         $widget['email_verified_users'] = User::where('ev', 1)->count();
         $widget['sms_verified_users'] = User::where('sv', 1)->count();

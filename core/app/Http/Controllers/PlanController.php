@@ -92,8 +92,8 @@ class PlanController extends Controller
 
     function planStore(Request $request)
     {
-        
-        if($request->package >= 26){
+ 
+        if($request->qty >= 26){
             $notify[] = ['error', 'For now, you can only create max 25 user'];
             return redirect()->intended('/user/profile-setting')->withNotify($notify);
         }
@@ -101,7 +101,7 @@ class PlanController extends Controller
             'plan_id' => 'required|integer', 
             'qty' => 'required',
         ]);
-        $checkloop  = $request->package > 1  ? true:false;
+        $checkloop  = $request->qty > 1  ? true:false;
         $checkBankAcc = rekening::where('user_id',auth()->user()->id)->first();
         // if ($checkloop) {
         //     if(!$checkBankAcc){
@@ -142,58 +142,64 @@ class PlanController extends Controller
             }
 
             $firstUpline = $this->placementFirstAccount($user,$request,$ref_user,$plan,$sponsor);
+            
             if($firstUpline == false){
                 $notify[] = ['error', 'Invalid On First Placement, Rollback'];
                 return redirect()->back()->withNotify($notify);
             }
             $waitlistUserID[] =  $user->id;
 
-            $checkloop  = $request->package > 1  ? true:false;
             if (!$checkloop) {
+                fnSingleQualified($sponsor->id,$firstUpline->id);
+                fnDelWaitList(Auth::user()->id);
+                
                 DB::commit();
                 $notify[] = ['success', 'Successfully Purchased Plan'];
-                return redirect()->back()->withNotify($notify);
+                return redirect()->route('user.my.tree')->withNotify($notify);
             }
 
 
-            $registeredUser = $request->package;
+            $registeredUser = $request->qty;
             $position = 2;
 
-          
+            $firstUsername =  auth()->user()->username;
 
             for ($i=1; $i < $registeredUser; $i++) { 
+                $mark = false;
                 if($i <= 4){
                     $sponsor = $firstUpline;
-                    $mark = 1;
+                    $mark = true;
                     // 02: 2,3,4,5
                 }
                 if ($i >= 5 && $i <= 8) {
-                    $sponsor = User::where('username',Auth::user()->username  . 2)->first();
-                    $mark = 2;
+                    $sponsor = User::where('username',$firstUsername .'_'. 2)->first();
+                 
+                    $mark = true;
                     // 03: 6,7,8,9
                 }
                 if ($i >= 9  && $i <= 12) {
-                    $mark = 3;
-                    $sponsor = User::where('username',Auth::user()->username  . 3)->first();
+                    $mark = true;
+                    $sponsor = User::where('username',$firstUsername .'_'. 3)->first();
                     // 04: 10,11,12,13,14
                 }
                 if ($i >= 13 && $i <= 16) {
-                    $mark =4;
-                    $sponsor = User::where('username',Auth::user()->username  . 4)->first();
+                    $mark = true;
+                    $sponsor = User::where('username',$firstUsername .'_'. 4)->first();
                     // 05: 15,16,17,18,19
                 }
                 if ($i >= 17 && $i<= 20) {
-                    $mark = 5;
-                    $sponsor = User::where('username',Auth::user()->username  . 5)->first();
+                    $mark = true;
+                    $sponsor = User::where('username',$firstUsername .'_'. 5)->first();
                     // 06: 20,21,22,13,24
                 }
                 if ($i >= 21 && $i<= 24) {
-                    $sponsor = User::where('username',Auth::user()->username  . 6)->first();
+                    $sponsor = User::where('username',$firstUsername .'_'. 6)->first();
+                    $mark = true;
                 }
                 $bro_upline = $firstUpline->no_bro;
                 $firstnameNewUser = $firstUpline->firstname;
                 $lastnameNewUser = $firstUpline->lastname;
-                $usernameNewUser = $firstUpline->username . $i+1;
+                $usernameNewUser = $firstUpline->username .'_'. $i+1;
                 $emailNewUser = $firstUpline->email;
                 $phoneNewUser = $firstUpline->mobile;
                 $pinNewUser = 1;
@@ -221,12 +227,14 @@ class PlanController extends Controller
                     $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
                     return redirect()->back()->withNotify($notify);
                 }
-                $waitlistUserID[] =  $nextUser->id;
+              
                 $bro_upline = $nextUser->no_bro;
-
+               
                 $user = UserExtra::where('user_id',$sponsor->id)->first();
                 $user->is_gold = 1;
                 $user->save();
+
+               
             }
 
             fnDelWaitList(Auth::user()->id);
