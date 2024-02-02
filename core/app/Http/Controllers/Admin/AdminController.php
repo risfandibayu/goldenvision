@@ -50,13 +50,13 @@ class AdminController extends Controller
         $page_title = 'Dashboard';
         // User Info
         $widget['total_users'] = User::where('comp',0)->count();
-        $widget['verified_users'] = User::where('status', 1)->count();
-        $widget['email_verified_users'] = User::where('ev', 1)->count();
-        $widget['sms_verified_users'] = User::where('sv', 1)->count();
+        $widget['verified_users'] = User::where('comp',0)->where('status', 1)->count();
+        $widget['email_verified_users'] = User::where('comp',0)->where('ev', 1)->count();
+        $widget['sms_verified_users'] = User::where('comp',0)->where('sv', 1)->count();
 
-        $widget['banned_users'] = User::where('status', 0)->count();
-        $widget['emailUnverified'] = User::emailUnverified()->count();
-        $widget['smsUnverified'] = User::smsUnverified()->count();
+        $widget['banned_users'] = User::where('comp',0)->where('status', 0)->count();
+        $widget['emailUnverified'] = User::where('comp',0)->emailUnverified()->count();
+        $widget['smsUnverified'] = User::where('comp',0)->smsUnverified()->count();
 
         $widget['gold_silver'] = countGold();
         $widget['r_hp'] = rewardHp();
