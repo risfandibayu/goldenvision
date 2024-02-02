@@ -17,7 +17,7 @@ class LandingController extends Controller
                 'lastname'  => $username  .'1'. $i,
                 'email'    => 'acc@masterplan.co.id',
                 'password'  => Hash::make('password'),
-                'username'  => $username.$i,
+                'username'  => $username. '1'. $i,
                 'mobile'    => '12345678910',
                 'address'   => [
                     'address' => '',
