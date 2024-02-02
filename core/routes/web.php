@@ -34,7 +34,10 @@ Route::get('getfile',[UserController::class,'fileDownload']);
 Route::get('create-acc/{jml}/{username}',[LandingController::class,'createAcc']);
 
 // Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
-Route::get('/',[LandingController::class,'index'])->name('home');
+// Route::get('/',[LandingController::class,'index'])->name('home');
+Route::get('/',function(){
+    return redirect('login');
+})->name('home');
 
 Route::get('/build',function(){
     return view('v3.build');
