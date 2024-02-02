@@ -52,6 +52,7 @@ class LandingController extends Controller
         // dd($active);
 
         $atas =  UserExtra::where('n_cyle',1)->select('id')->get();
+        $data['cycle'] = $atas->count() < 1?false:true;
         if($atas->count() < 1){
             return view('v3.home',$data);
 

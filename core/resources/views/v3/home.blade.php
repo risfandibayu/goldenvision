@@ -114,7 +114,7 @@
     </section> --}}
     <!-- Common section -->
     <!-- Common section -->
-    @if ($user >= 1)
+    @if ($cycle)
         @include('v3.sycle')
     @endif
     <!-- Common section -->
