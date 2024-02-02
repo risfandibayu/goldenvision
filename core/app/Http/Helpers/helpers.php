@@ -1062,7 +1062,81 @@ function countingQ($id)
         }
     }
 
-    return $count;
+    return $count == 0 ? 1 : 1;
+}
+
+function monolegBonus($id,$bonus, $strong_text,$strong)
+{
+    $fromUser = User::find($id);
+    $count = 0; 
+    $gnl = GeneralSetting::first();
+    $user = UserExtra::find($id);
+
+    $payment = User::find($id);
+    $payment->balance += $bonus;
+    $payment->save();
+
+    $trx = new Transaction();
+    $trx->user_id = $payment->id;
+    $trx->amount = $bonus;
+    $trx->charge = 0;
+    $trx->trx_type = '+';
+    $trx->post_balance = $payment->balance;
+    $trx->remark = 'monoleg_commission';
+    $trx->trx = getTrx();
+    $trx->details = 'Paid Monoleg Commission ' . $bonus . ' ' . $gnl->cur_text;
+    $trx->save();  
+
+    if($strong_text == 'kiri'){
+        $user->strong_leg = $strong_text;
+        $user->monoleg_left = $strong;
+        $user->save();
+    }else{
+        $user->strong_leg = $strong_text;
+        $user->monoleg_right = $strong;
+        $user->save();
+    }
+
+    while ($id != "" || $id != "0") {
+        if (isUserExists($id)) {
+            $posid = getRefId($id);
+                if ($posid == "0") {
+                    break;
+                }
+                $users = user::where('id',$id)->first();
+                $posUser = UserExtra::find($posid);
+                if ($posUser->is_gold == 1){
+                    $payment = User::find($posid);
+                    $payment->balance += $bonus;
+                    $payment->save();
+
+                    $trx = new Transaction();
+                    $trx->user_id = $payment->id;
+                    $trx->amount = $bonus;
+                    $trx->charge = 0;
+                    $trx->trx_type = '+';
+                    $trx->post_balance = $payment->balance;
+                    $trx->remark = 'monoleg_commission';
+                    $trx->trx = getTrx();
+                    $trx->details = 'Paid Monoleg Commission ' . $bonus . ' ' . $gnl->cur_text;
+                    $trx->save();  
+
+                    if($strong_text == 'kiri'){
+                        $posUser->strong_leg = $strong_text;
+                        $posUser->monoleg_left = $strong;
+                        $posUser->save();
+                    }else{
+                        $posUser->strong_leg = $strong_text;
+                        $posUser->monoleg_right = $strong;
+                        $posUser->save();
+                    }
+
+                }
+                $id = $posid;
+        } else {
+            break;
+        }
+    }
 }
 
 function userRefaDay($id){
