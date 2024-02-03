@@ -48,6 +48,7 @@ class CronController extends Controller
             // checkStartDayPair;
             if(Date('H') == "00"){
                 $ux->limit = 0;
+                $ux->last_flush_out = null;
                 $ux->save();
             }
             
@@ -68,22 +69,7 @@ class CronController extends Controller
             
             $payout = $this->setPayout($pairID,20);
 
-           
-
-            if ($payout['flashout'] != 0 || $ux->last_flush_out != null) {
-
-                $payment = User::find($ux->user_id);
-                $ux->last_flush_out = Carbon::now()->toDateTimeString();
-                //if flashout left right counting as paid;
-                $ux->paid_left -= $growLeft;
-                $ux->paid_right -= $growRight;
-                $ux->save();
-                 $cron[] = $payment.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/flashout';
-
-                continue;
-            }
-            
-            if($payout['pay'] != 0){
+            if($payout['pay'] != 0 && $ux->last_flush_out == null){
 
                 $pairID = $growLeft < $growRight ? $growLeft : $growRight;
 
@@ -115,6 +101,21 @@ class CronController extends Controller
                 $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pairID * 2 . ' MP.';
                 $trx->save();
             }
+
+            if ($payout['flashout'] != 0 || $ux->last_flush_out != null) {
+
+                $payment = User::find($ux->user_id);
+                $ux->last_flush_out = Carbon::now()->toDateTimeString();
+                //if flashout left right counting as paid;
+                $ux->paid_left -= $growLeft;
+                $ux->paid_right -= $growRight;
+                $ux->save();
+                 $cron[] = $payment.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/flashout';
+
+                continue;
+            }
+            
+
           
            
             
