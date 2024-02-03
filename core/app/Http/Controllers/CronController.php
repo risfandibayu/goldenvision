@@ -327,7 +327,6 @@ class CronController extends Controller
         $gnl = GeneralSetting::first();
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
-        return true;
         $userx = UserExtra::where('paid_left','>=',1)
         ->where('paid_right','>=',1)->get();
 
