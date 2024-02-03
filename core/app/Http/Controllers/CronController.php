@@ -52,14 +52,6 @@ class CronController extends Controller
                 $ux->save();
             }
             
-            $grow = MemberGrow::where('user_id',$ux->user_id)->first();
-           
-            if(!$grow){
-                $grow = New MemberGrow();
-                $grow->left = $ux->left;
-                $grow->right = $ux->right;
-                $grow->save();             
-            }
             
             $growLeft = $ux->paid_left; //25
             $growRight = $ux->paid_right; //24
@@ -100,6 +92,10 @@ class CronController extends Controller
                 $trx->trx = getTrx();
                 $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pairID * 2 . ' MP.';
                 $trx->save();
+
+                $cron[] = $payment.'/'.$pairID.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/bonus='.$bonus;
+
+                break;
             }
 
             if ($payout['flashout'] != 0 || $ux->last_flush_out != null) {
@@ -110,16 +106,15 @@ class CronController extends Controller
                 $ux->paid_left -= $growLeft;
                 $ux->paid_right -= $growRight;
                 $ux->save();
-                 $cron[] = $payment.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/flashout';
+                $cron[] = $payment.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/flashout';
 
-                continue;
+                break;
             }
             
 
           
            
             
-            $cron[] = $payment.'/'.$pairID.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/bonus='.$bonus;
         }
         return $cron;
     }
@@ -408,14 +403,14 @@ class CronController extends Controller
                         if($uex->level_binary != 0 && $pairs != $uex->level_binary){
                             // $pair = intval($weak) - $uex->level_binary;
                             if ($pair > $uex->level_binary) {
-                                if ($pair - $uex->level_binary >= 30) {
+                                if ($pair - $uex->level_binary >= 20) {
                                     # code...
-                                    $pair = 30;
+                                    $pair = 20;
                                     $bonus = intval(($pair) * ($user_plan->tree_com * 2));
                                 }else{
 
-                                    if ($pair >= 30) {
-                                        $pair = 30;
+                                    if ($pair >= 20) {
+                                        $pair = 20;
                                         $bonus = intval(($pair - $uex->level_binary) * ($user_plan->tree_com * 2));
                                     }else{
                                         $bonus = intval(($pair - $uex->level_binary) * ($user_plan->tree_com * 2));
@@ -423,17 +418,17 @@ class CronController extends Controller
                                 }
 
                             }else{
-                                if ($pair >= 30) {
-                                    $pair = 30;
+                                if ($pair >= 20) {
+                                    $pair = 20;
                                     $bonus = intval(($uex->level_binary - $pair ) * ($user_plan->tree_com * 2));
                                 }else{
                                     $bonus = intval(($uex->level_binary - $pair ) * ($user_plan->tree_com * 2));
                                 }
                             }
                         }else{
-                            if ($pair >= 30) {
+                            if ($pair >= 20) {
                                 # code...
-                                $pair = 30;
+                                $pair = 20;
                                 $bonus = intval($pair * ($user_plan->tree_com * 2));
                             }else{
                                 $bonus = intval($pair * ($user_plan->tree_com * 2));
@@ -442,8 +437,8 @@ class CronController extends Controller
 
                         $pair2[] = $pair == $uex->level_binary;
 
-                        if ($pair >= 30) {
-                            $pair = 30;
+                        if ($pair >= 20) {
+                            $pair = 20;
                         }
 
                         // if($uex->level_binary != 0 && $pairs != $uex->level_binary){
@@ -462,7 +457,7 @@ class CronController extends Controller
 
 
                         if ($pair == $uex->level_binary) {
-                            // if ($uex->level_binary == 30) {
+                            // if ($uex->level_binary == 20) {
                             //     $payment = User::find($uex->user_id);
                             //     $payment->balance += $bonus;
                             //     $payment->save();
@@ -508,7 +503,7 @@ class CronController extends Controller
                             $trx->remark = 'binary_commission';
                             $trx->trx = getTrx();
 
-                            if ($pair >= 30) {
+                            if ($pair >= 20) {
                                 
                                     if ($uex->last_flush_out) {
                                         if (Carbon::parse($uex->last_flush_out)->format('Y-m-d') != Carbon::now()->toDateString()) {
@@ -539,8 +534,8 @@ class CronController extends Controller
                                                     
                                                     $uex->paid_left -= $weak;
                                                     $uex->paid_right -= $weak;
-                                                    // $uex->paid_left -= 30;
-                                                    // $uex->paid_right -= 30;
+                                                    // $uex->paid_left -= 20;
+                                                    // $uex->paid_right -= 20;
                                                     $uex->level_binary = 0;
                                                     
                                                     // $uex->last_flush_out = Carbon::now()->toDateTimeString();
@@ -560,8 +555,8 @@ class CronController extends Controller
     
                                                         $trx->save();
                                                     
-                                                        $uex->paid_left -= 30;
-                                                        $uex->paid_right -= 30;
+                                                        $uex->paid_left -= 20;
+                                                        $uex->paid_right -= 20;
                                                         $uex->level_binary = 0;
                                                         // $uex->last_flush_out = Carbon::now()->toDateTimeString();
                                                         $uex->limit += ($pair-$uex->level_binary);
@@ -583,8 +578,8 @@ class CronController extends Controller
 
                                                     $trx->save();
                                                 
-                                                    $uex->paid_left -= 30;
-                                                    $uex->paid_right -= 30;
+                                                    $uex->paid_left -= 20;
+                                                    $uex->paid_right -= 20;
                                                     $uex->level_binary = 0;
                                                     // $uex->last_flush_out = Carbon::now()->toDateTimeString();
                                                     $uex->limit += ($pair-$uex->level_binary);
@@ -615,7 +610,7 @@ class CronController extends Controller
                                                     //         'trx' =>  $trx->trx,
                                                     // ]);
                                                 
-                                                // if ($pair >= 30) {
+                                                // if ($pair >= 20) {
                                                 $payment->save();
 
                                                 if($uex->level_binary == 0){
@@ -625,8 +620,8 @@ class CronController extends Controller
                                                 }
                                                 $trx->save();
                                                 
-                                                $uex->paid_left -= 30;
-                                                $uex->paid_right -= 30;
+                                                $uex->paid_left -= 20;
+                                                $uex->paid_right -= 20;
                                                 $uex->level_binary = 0;
                                                 $uex->limit += ($pair-$uex->level_binary);
                                                 $uex->last_getcomm = Carbon::now()->toDateTimeString();
@@ -657,7 +652,7 @@ class CronController extends Controller
                                                 //         'trx' =>  $trx->trx,
                                                 // ]);
                                             
-                                            // if ($pair >= 30) {
+                                            // if ($pair >= 20) {
                                             
 
                                                 if($uex->level_binary == 0){
@@ -672,8 +667,8 @@ class CronController extends Controller
                                                 // }
                                                         $trx->save();
                                                         
-                                                        // $uex->paid_left -= 30;
-                                                        // $uex->paid_right -= 30;
+                                                        // $uex->paid_left -= 20;
+                                                        // $uex->paid_right -= 20;
                                                         $uex->paid_left -= $weak;
                                                         $uex->paid_right -= $weak;
                                                         $uex->level_binary = 0;
@@ -693,8 +688,8 @@ class CronController extends Controller
     
                                                             $trx->save();
                                                         
-                                                            $uex->paid_left -= 30;
-                                                            $uex->paid_right -= 30;
+                                                            $uex->paid_left -= 20;
+                                                            $uex->paid_right -= 20;
                                                             $uex->level_binary = 0;
                                                             $uex->limit += ($pair-$uex->level_binary);
                                                             // $uex->last_flush_out = Carbon::now()->toDateTimeString();
@@ -714,8 +709,8 @@ class CronController extends Controller
 
                                                         $trx->save();
                                                     
-                                                        $uex->paid_left -= 30;
-                                                        $uex->paid_right -= 30;
+                                                        $uex->paid_left -= 20;
+                                                        $uex->paid_right -= 20;
                                                         $uex->level_binary = 0;
                                                         $uex->limit += ($pair-$uex->level_binary);
                                                         $uex->last_getcomm = Carbon::now()->toDateTimeString();
@@ -775,7 +770,7 @@ class CronController extends Controller
         // dd($dd);
 
     }
-    // public function cron30MP()
+    // public function cron20MP()
     // {
     //     $gnl = GeneralSetting::first();
     //     $gnl->last_cron = Carbon::now()->toDateTimeString();
