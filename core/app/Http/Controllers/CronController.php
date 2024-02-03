@@ -33,7 +33,7 @@ class CronController extends Controller
         return ['status'=>'success','data'=>$wk];
     }
 
-    public function cron(){
+    public function cronNew(){
         $gnl = GeneralSetting::first();
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
@@ -321,7 +321,7 @@ class CronController extends Controller
         return $cron;
     }
 
-    public function cronOld()
+    public function cron()
     {
         
         $gnl = GeneralSetting::first();
