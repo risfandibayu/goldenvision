@@ -60,13 +60,18 @@ class CronController extends Controller
                 $grow->save();             
             }
             
-            $growLeft = $ux->paid_left;
-            $growRight = $ux->paid_right;
+            $growLeft = $ux->paid_left; //25
+            $growRight = $ux->paid_right; //24
             
-            $pairID = $growLeft < $growRight ? $growLeft : $growRight;
+            $pairID = $growLeft < $growRight ? $growLeft : $growRight; //24
 
+            
+            $payout = $this->setPayout($pairID,20);
 
-            if ($ux->limit + $pairID > 20) {
+           
+
+            if ($payout['flashout'] != 0 || $ux->last_flush_out != null) {
+
                 $payment = User::find($ux->user_id);
                 $ux->last_flush_out = Carbon::now()->toDateTimeString();
                 //if flashout left right counting as paid;
@@ -75,43 +80,59 @@ class CronController extends Controller
                 $ux->save();
                  $cron[] = $payment.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/flashout';
 
-                break;
+                continue;
+            }
+            
+            if($payout['pay'] != 0){
+
+                $pairID = $growLeft < $growRight ? $growLeft : $growRight;
+
+                $ux->paid_left -= $pairID;
+                $ux->paid_right -= $pairID;
+                $ux->level_binary = 0;
+                $ux->limit += $pairID;
+                $ux->last_getcomm = Carbon::now()->toDateTimeString();
+                $ux->save();
+
+                $gnl->last_paid = Carbon::now()->toDateTimeString();
+                $gnl->save();
+
+
+                $bonus = intval(($pairID) * ($user_plan->tree_com * 2));
+                $payment = User::find($ux->user_id);
+                $payment->balance += $bonus;
+                $payment->total_binary_com += $bonus;
+                $payment->save();
+
+                $trx = new Transaction();
+                $trx->user_id = $payment->id;
+                $trx->amount = $bonus;
+                $trx->charge = 0;
+                $trx->trx_type = '+';
+                $trx->post_balance = $payment->balance;
+                $trx->remark = 'binary_commission';
+                $trx->trx = getTrx();
+                $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pairID * 2 . ' MP.';
+                $trx->save();
             }
           
-            $pairID = $growLeft < $growRight ? $growLeft : $growRight;
-
-            $ux->paid_left -= $pairID;
-            $ux->paid_right -= $pairID;
-            $ux->level_binary = 0;
-            $ux->limit += $pairID;
-            $ux->last_getcomm = Carbon::now()->toDateTimeString();
-            $ux->save();
-
-            $gnl->last_paid = Carbon::now()->toDateTimeString();
-            $gnl->save();
-
-
-            $bonus = intval(($pairID) * ($user_plan->tree_com * 2));
-            $payment = User::find($ux->user_id);
-            $payment->balance += $bonus;
-            $payment->total_binary_com += $bonus;
-            $payment->save();
-
-            $trx = new Transaction();
-            $trx->user_id = $payment->id;
-            $trx->amount = $bonus;
-            $trx->charge = 0;
-            $trx->trx_type = '+';
-            $trx->post_balance = $payment->balance;
-            $trx->remark = 'binary_commission';
-            $trx->trx = getTrx();
-            $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pairID * 2 . ' MP.';
-            $trx->save();
+           
             
             $cron[] = $payment.'/'.$pairID.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/bonus='.$bonus;
         }
         return $cron;
     }
+    function setPayout($pay, $maxPay) {
+        if ($pay > $maxPay) {
+            $flashout = $pay - $maxPay;
+            $pay = $maxPay;
+        } else {
+            $flashout = 0;
+        }
+        
+        return array('pay' => $pay, 'flashout' => $flashout);
+    }
+
 
 
     public function memberGrow(){
