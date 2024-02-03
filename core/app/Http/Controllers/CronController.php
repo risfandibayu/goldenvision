@@ -19,6 +19,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use PhpParser\Node\Expr\New_;
 use Weidner\Goutte\GoutteFacade;
 
 class CronController extends Controller
@@ -31,6 +32,88 @@ class CronController extends Controller
             ]);
         return ['status'=>'success','data'=>$wk];
     }
+
+    public function cron(){
+        $gnl = GeneralSetting::first();
+        $gnl->last_cron = Carbon::now()->toDateTimeString();
+		$gnl->save();
+        $userx = UserExtra::where('paid_left','>=',1)->where('paid_left','>=',1)->get();
+        $cron = [];
+        foreach($userx as $ux){
+    
+            $user_plan = user::where('users.id',$ux->user_id)
+                    ->join('plans','plans.id','=','users.plan_id')
+                    ->where('users.plan_id','!=',0)->first(); 
+
+            // checkStartDayPair;
+            if(Date('H') == "00"){
+                $ux->limit = 0;
+                $ux->save();
+            }
+            
+            $grow = MemberGrow::where('user_id',$ux->user_id)->first();
+           
+            if(!$grow){
+                $grow = New MemberGrow();
+                $grow->left = $ux->left;
+                $grow->right = $ux->right;
+                $grow->save();             
+            }
+            
+            $growLeft = $ux->paid_left;
+            $growRight = $ux->paid_right;
+            
+            $pairID = $growLeft < $growRight ? $growLeft : $growRight;
+
+
+            if ($ux->limit + $pairID > 20) {
+                $payment = User::find($ux->user_id);
+                $ux->last_flush_out = Carbon::now()->toDateTimeString();
+                //if flashout left right counting as paid;
+                $ux->paid_left -= $growLeft;
+                $ux->paid_right -= $growRight;
+                $ux->save();
+                 $cron[] = $payment.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/flashout';
+
+                break;
+            }
+          
+            $pairID = $growLeft < $growRight ? $growLeft : $growRight;
+
+            $ux->paid_left -= $pairID;
+            $ux->paid_right -= $pairID;
+            $ux->level_binary = 0;
+            $ux->limit += $pairID;
+            $ux->last_getcomm = Carbon::now()->toDateTimeString();
+            $ux->save();
+
+            $gnl->last_paid = Carbon::now()->toDateTimeString();
+            $gnl->save();
+
+
+            $bonus = intval(($pairID) * ($user_plan->tree_com * 2));
+            $payment = User::find($ux->user_id);
+            $payment->balance += $bonus;
+            $payment->total_binary_com += $bonus;
+            $payment->save();
+
+            $trx = new Transaction();
+            $trx->user_id = $payment->id;
+            $trx->amount = $bonus;
+            $trx->charge = 0;
+            $trx->trx_type = '+';
+            $trx->post_balance = $payment->balance;
+            $trx->remark = 'binary_commission';
+            $trx->trx = getTrx();
+            $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pairID * 2 . ' MP.';
+            $trx->save();
+            
+            $cron[] = $payment.'/'.$pairID.'/'.Carbon::parse($ux->last_flush_out)->format('Y-m-d').'/bonus='.$bonus;
+        }
+        return $cron;
+    }
+
+
     public function memberGrow(){
         $user = User::where('sharing_profit',1)->get();
         foreach ($user as $key => $value) {
@@ -45,117 +128,6 @@ class CronController extends Controller
         }
         return 'success';
     }
-    // public function cron()
-    // {
-    //     $gnl = GeneralSetting::first();
-    //     $gnl->last_cron = Carbon::now()->toDateTimeString();
-	// 	$gnl->save();
-
-    //     if ($gnl->matching_bonus_time == 'daily') {
-    //         $day = Date('H');
-    //         if (strtolower($day) != $gnl->matching_when) {
-    //             return '1';
-    //         }
-    //     }
-
-    //     if ($gnl->matching_bonus_time == 'weekly') {
-    //         $day = Date('D');
-    //         if (strtolower($day) != $gnl->matching_when) {
-    //             return '2';
-    //         }
-    //     }
-
-    //     if ($gnl->matching_bonus_time == 'monthly') {
-    //         $day = Date('d');
-    //         if (strtolower($day) != $gnl->matching_when) {
-    //             return '3';
-    //         }
-    //     }
-
-    //     if (Carbon::now()->toDateString() == Carbon::parse($gnl->last_paid)->toDateString()) {
-    //         /////// bv done for today '------'
-    //         ///////////////////LETS PAY THE BONUS
-
-    //         $gnl->last_paid = Carbon::now()->toDateString();
-    //         $gnl->save();
-
-    //         $eligibleUsers = UserExtra::where('bv_left', '>=', $gnl->total_bv)->where('bv_right', '>=', $gnl->total_bv)->get();
-
-    //         foreach ($eligibleUsers as $uex) {
-                // $user = $uex->user;
-    //             $weak = $uex->bv_left < $uex->bv_right ? $uex->bv_left : $uex->bv_right;
-    //             $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
-
-    //             $pair = intval($weaker / $gnl->total_bv);
-
-    //             $bonus = $pair * $gnl->bv_price;
-
-    //             // add balance to User
-
-    //             $payment = User::find($uex->user_id);
-    //             $payment->balance += $bonus;
-    //             $payment->save();
-
-    //             $trx = new Transaction();
-    //             $trx->user_id = $payment->id;
-    //             $trx->amount = $bonus;
-    //             $trx->charge = 0;
-    //             $trx->trx_type = '+';
-    //             $trx->post_balance = $payment->balance;
-    //             $trx->remark = 'binary_commission';
-    //             $trx->trx = getTrx();
-    //             $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * $gnl->total_bv . ' BV.';
-    //             $trx->save();
-
-                // notify($user, 'matching_bonus', [
-                //     'amount' => $bonus,
-                //     'currency' => $gnl->cur_text,
-                //     'paid_bv' => $pair * $gnl->total_bv,
-                //     'post_balance' => $payment->balance,
-                //     'trx' =>  $trx->trx,
-                // ]);
-
-    //             $paidbv = $pair * $gnl->total_bv;
-    //             if ($gnl->cary_flash == 0) {
-    //                 $bv['setl'] = $uex->bv_left - $paidbv;
-    //                 $bv['setr'] = $uex->bv_right - $paidbv;
-    //                 $bv['paid'] = $paidbv;
-    //                 $bv['lostl'] = 0;
-    //                 $bv['lostr'] = 0;
-    //             }
-    //             if ($gnl->cary_flash == 1) {
-    //                 $bv['setl'] = $uex->bv_left - $weak;
-    //                 $bv['setr'] = $uex->bv_right - $weak;
-    //                 $bv['paid'] = $paidbv;
-    //                 $bv['lostl'] = $weak - $paidbv;
-    //                 $bv['lostr'] = $weak - $paidbv;
-    //             }
-    //             if ($gnl->cary_flash == 2) {
-    //                 $bv['setl'] = 0;
-    //                 $bv['setr'] = 0;
-    //                 $bv['paid'] = $paidbv;
-    //                 $bv['lostl'] = $uex->bv_left - $paidbv;
-    //                 $bv['lostr'] = $uex->bv_right - $paidbv;
-    //             }
-    //             $uex->bv_left = $bv['setl'];
-    //             $uex->bv_right = $bv['setr'];
-    //             $uex->save();
-
-
-    //             if ($bv['paid'] != 0) {
-    //                 createBVLog($user->id, 1, $bv['paid'], 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $paidbv . ' BV.');
-    //                 createBVLog($user->id, 2, $bv['paid'], 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $paidbv . ' BV.');
-    //             }
-    //             if ($bv['lostl'] != 0) {
-    //                 createBVLog($user->id, 1, $bv['lostl'], 'Flush ' . $bv['lostl'] . ' BV after Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $paidbv . ' BV.');
-    //             }
-    //             if ($bv['lostr'] != 0) {
-    //                 createBVLog($user->id, 2, $bv['lostr'], 'Flush ' . $bv['lostr'] . ' BV after Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $paidbv . ' BV.');
-    //             }
-    //         }
-    //         return '---';
-    //     }
-    // }
     public function monoleg(){
         $gnl = GeneralSetting::first();
         // $gnl->last_cron = Carbon::now()->toDateTimeString();
@@ -332,22 +304,24 @@ class CronController extends Controller
         return $cron;
     }
 
-    public function cron()
+    public function cronOld()
     {
+        
         $gnl = GeneralSetting::first();
         $gnl->last_cron = Carbon::now()->toDateTimeString();
 		$gnl->save();
         return true;
-        $userx = UserExtra::where('paid_left','>=',3)
-        ->where('paid_right','>=',3)->get();
+        $userx = UserExtra::where('paid_left','>=',1)
+        ->where('paid_right','>=',1)->get();
 
         // dd($userx);
         $cron = array();
         foreach ($userx as $uex) {
                         $user = $uex->user_id;
                         $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+                        
                         $weaks = $uex->left < $uex->right ? $uex->left : $uex->right;
-                        // $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
+                      
                         $user_plan = user::where('users.id',$user)
                         ->join('plans','plans.id','=','users.plan_id')
                         ->where('users.plan_id','!=',0)->first(); 
@@ -363,7 +337,7 @@ class CronController extends Controller
                             # code...
                             continue;
                         }
-                        if ($weaks >= 30 || $uex->bonus_deliver == 1) {
+                        if ($weaks >= 20) {
                             # code...
                             // continue;
                             $pairs = intval($weak);

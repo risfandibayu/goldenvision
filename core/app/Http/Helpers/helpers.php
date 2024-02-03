@@ -1653,7 +1653,7 @@ function showSingleUserinTree($resp)
     } else {
          if($upline){
              
-             if ($upline == auth()->user()->no_bro && auth()->user()->userExtra->is_gold) {
+             if ($upline == auth()->user()->no_bro && auth()->user()->userExtra->is_gold || $pos == 2) {
                 $img = getImage('assets/images/add2.jpg', null, true);
                 # code...
                 $addList = 'btnUser';
@@ -1782,14 +1782,15 @@ function showSingleUserNoLine($resp)
         // $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\" style=\"position: absolute; z-index:-1;\">Explore Tree</a></p>";
 
     } else {
-        if($upline){
-              $img = getImage('assets/images/', null, true);
-            // $img = getImage('assets/images/rm.png', null, true);
-            $addList = 'noUser';
-        }else{
-            $img = getImage('assets/images/', null, true);
-            $addList = 'noUser';
-        }
+            if ($uname != '' &&  $pos == 2) {
+                $img = getImage('assets/images/add2.jpg', null, true);
+                # code...
+                $addList = 'btnUser';
+            }else{
+                $img = getImage('assets/images/', null, true);
+
+                $addList = 'noUser';
+            }
         $res .= '<div class="user '.$addList.' " data-upline="'.$upline.'" data-pos="'.$pos.'" data-up="'.$uname.'" type="button">';
         // $res .= '<div class="user btnUser" type="button">';
         $res .= '<img src="'.$img.'" alt="*"  class="no-user imgUser'.$pos.$upline.'">';

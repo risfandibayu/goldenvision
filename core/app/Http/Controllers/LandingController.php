@@ -14,10 +14,10 @@ class LandingController extends Controller
             for ($i=1; $i <= $jml; $i++) { 
                 $user = User::create([
                 'firstname' => 'master',
-                'lastname'  => $username  .'1'. $i,
+                'lastname'  => $username  . $i,
                 'email'    => 'acc@masterplan.co.id',
                 'password'  => Hash::make('password'),
-                'username'  => $username. '1'. $i,
+                'username'  => $username. $i,
                 'mobile'    => '12345678910',
                 'address'   => [
                     'address' => '',
@@ -27,7 +27,6 @@ class LandingController extends Controller
                     'city' => ''
                 ],
                 'pin'       => 25,
-                'pin'       => 0,
                 'status'    => 1,
                 'ev'        => 1,
                 'sv'        => 1,
