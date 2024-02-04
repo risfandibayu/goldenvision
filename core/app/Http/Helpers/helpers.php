@@ -1041,7 +1041,7 @@ function getRefId($id)
     }
 }
 
-function monolegSaving($id, $amount)
+function monolegSaving($id, $amount, $username)
 {
     $fromUser = User::find($id);
     $gnl = GeneralSetting::first();
@@ -1053,7 +1053,7 @@ function monolegSaving($id, $amount)
                 break;
             }
 
-            $username = User::where('id',$id)->first();
+            // $username = User::where('id',$id)->first();
             $posUser = User::find($posid);
             $posUserExtra = UserExtra::find($posid);
             if ($posUserExtra->is_gold == 1) {
@@ -1072,7 +1072,7 @@ function monolegSaving($id, $amount)
                 $trx->post_balance = $payment->balance;
                 $trx->remark = 'monoleg_commission_downline';
                 $trx->trx = getTrx();
-                $trx->details = 'Paid Monoleg Commission from downline '.$username->username.' : ' . $amount . ' ' . $gnl->cur_text;
+                $trx->details = 'Paid Monoleg Commission from downline '.$username.' : ' . $amount . ' ' . $gnl->cur_text;
                 $trx->save();  
 
             }

@@ -310,6 +310,8 @@ class CronController extends Controller
             // $users = user::where('ref_id',$user)->where('position',2)->first();
             $posid = getRefId($user);
             $posUser = UserExtra::where('user_id',$posid)->first();
+            $username = User::where('id',$user)->first();
+
 
             $count = countingQ($user);
             if ($count > 0) {
@@ -353,7 +355,7 @@ class CronController extends Controller
                                 $uex->save();
                             }
 
-                            monolegSaving($uex->user_id,$bonus);
+                            monolegSaving($uex->user_id,$bonus,$username->username);
 
                             $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/first';
                         }
@@ -400,7 +402,7 @@ class CronController extends Controller
                                 $uex->monoleg_left = $strong;
                                 $uex->save();
 
-                                monolegSaving($uex->user_id,$bonus);
+                                monolegSaving($uex->user_id,$bonus,$username->username);
 
 
                                 $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/second';
@@ -447,7 +449,7 @@ class CronController extends Controller
                                 $uex->monoleg_right = $strong;
                                 $uex->save();
 
-                                monolegSaving($uex->user_id,$bonus);
+                                monolegSaving($uex->user_id,$bonus,$username->username);
 
                                 // $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/third';
                                 $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/third';
