@@ -1041,28 +1041,142 @@ function getRefId($id)
     }
 }
 
+function monolegSaving($id, $amount)
+{
+    $fromUser = User::find($id);
+
+    while ($id != "" || $id != "0") {
+        if (isUserExists($id)) {
+            $posid = getRefId($id);
+            if ($posid == "0") {
+                break;
+            }
+
+            $posUser = User::find($posid);
+            $posUserExtra = UserExtra::find($posid);
+            if ($posUserExtra->is_gold == 1) {
+
+                $posUserExtra->monoleg_downline += $amount;
+                $posUserExtra->save();
+
+            }
+            $id = $posid;
+        } else {
+            break;
+        }
+    }
+
+}
+
 function countingQ($id)
 {
     $fromUser = User::find($id);
-    $count = 0; 
+    $count = 1; 
+    if ($id == 1) {
+        return 1;
+    }else{
+
+        while ($id != "" || $id != "0") {
+            if (isUserExists($id)) {
+                $posid = getRefId($id);
+                    if ($posid == "0") {
+                        break;
+                    }
+                    $user = user::where('id',$id)->first();
+                    $posUser = UserExtra::find($posid);
+                    if ($posUser->is_gold == 1){
+                        $count++;
+                    }
+                    $id = $posid;
+            } else {
+                break;
+            }
+        }
+
+        return $count;
+    }
+
+}
+
+function bonusMonolegDownline($id)
+{
+    $fromUser = User::find($id);
+    $bonus = 0; 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
             $posid = getRefId($id);
                 if ($posid == "0") {
                     break;
                 }
-                $user = user::where('id',$id)->first();
-                $posUser = UserExtra::find($posid);
-                if ($posUser->is_gold == 1){
-                    $count++;
+                // $user = user::where('id',$id)->first();
+                $uex = UserExtra::where('user_id',$posid)->first();
+                // $posUser = UserExtra::find($posid);
+                if ($uex->is_gold == 1){
+                    // $count++;\
+
+                    $user = $uex->user_id;
+                    $strong = $uex->paid_left > $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+                    $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+                    $strong_text = $uex->paid_left > $uex->paid_right ? 'kiri' : 'kanan';
+                    // $pair = intval($strong);
+                    $count = countingQ($user);
+                    if ($count > 0) {
+                        if ($strong > 0) {
+                            if(empty($uex->strong_leg)){
+                                if ($strong > 4) {
+                                    if ($strong > 0 && $strong <= 100) {
+                                        $bonus = ($strong*5000)/countingQ($user);
+                                    }
+                                }
+
+                            }else{
+                                if ($strong_text == 'kiri') {
+                                    if (($strong - $uex->monoleg_left) > 0) {
+                                        if ($strong > 0 && $strong <= 100) {
+                                            $bonus = (($strong - $uex->monoleg_left)*5000)/countingQ($user);
+                                        }elseif ($strong > 100 && $strong <= 15000){
+                                            if ($strong > 100 && $weak > 100){
+                                                $bonus = (($strong - $uex->monoleg_left)*15000)/countingQ($user);
+                                            }else{
+                                                $bonus = (($strong - $uex->monoleg_left)*10000)/countingQ($user);
+                                            }
+                                        }elseif ($strong > 15000 ){
+                                            $bonus = (($strong - $uex->monoleg_left)*20000)/countingQ($user);
+                                        }
+                                        
+                                    }
+                                }else{
+                                    if (($strong - $uex->monoleg_right) > 0) {
+                                        if ($strong > 0 && $strong < 100) {
+                                            $bonus = (($strong - $uex->monoleg_right)*5000)/countingQ($user);
+                                        }elseif ($strong > 100 && $strong <= 15000){
+                                            if ($strong > 100 && $weak > 100){
+                                                $bonus = (($strong - $uex->monoleg_right)*15000)/countingQ($user);
+                                            }else{
+                                                $bonus = (($strong - $uex->monoleg_right)*10000)/countingQ($user);
+                                            }
+                                        }elseif ($strong > 15000 ){
+                                            $bonus = (($strong - $uex->monoleg_right)*20000)/countingQ($user);
+                                        }
+
+                                    }
+
+                                }
+                            }
+                        }
+
+
+                    }
+
+
+
                 }
                 $id = $posid;
         } else {
             break;
         }
     }
-
-    return $count == 0 ? 1 : 1;
+    return $bonus;    
 }
 
 function monolegBonus($id,$bonus, $strong_text,$strong)

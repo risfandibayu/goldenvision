@@ -165,6 +165,7 @@ Route::get('/clauseter-maps',[AdminController::class,'maps']);
 */
 Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
 Route::get('/monoleg', 'CronController@monoleg')->name('bv.matching.monoleg');
+Route::get('/monoleg_saving', 'CronController@monolegSaving')->name('bv.matching.monoleg_saving');
 Route::get('/is-gold-cron', 'CronController@isGold');
 Route::get('/is-gold-back', 'CronController@isGoldBack');
 Route::get('/is-silver-check', 'CronController@isSilverCheck');
