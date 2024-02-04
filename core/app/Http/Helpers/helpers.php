@@ -1399,7 +1399,8 @@ function monolegTree($id, $pin)
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
-            $refid = getRefId($id);
+            // $refid = getRefId($id);
+            $refid = getPositionId($id);
             if ($refid == "0") {
                 break;
             }
