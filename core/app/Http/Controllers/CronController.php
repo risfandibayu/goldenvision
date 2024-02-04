@@ -145,6 +145,154 @@ class CronController extends Controller
         }
         return 'success';
     }
+    // public function cron()
+    // {
+    //     $gnl = GeneralSetting::first();
+    //     $gnl->last_cron = Carbon::now()->toDateTimeString();
+	// 	$gnl->save();
+
+    //     if ($gnl->matching_bonus_time == 'daily') {
+    //         $day = Date('H');
+    //         if (strtolower($day) != $gnl->matching_when) {
+    //             return '1';
+    //         }
+    //     }
+
+    //     if ($gnl->matching_bonus_time == 'weekly') {
+    //         $day = Date('D');
+    //         if (strtolower($day) != $gnl->matching_when) {
+    //             return '2';
+    //         }
+    //     }
+
+    //     if ($gnl->matching_bonus_time == 'monthly') {
+    //         $day = Date('d');
+    //         if (strtolower($day) != $gnl->matching_when) {
+    //             return '3';
+    //         }
+    //     }
+
+    //     if (Carbon::now()->toDateString() == Carbon::parse($gnl->last_paid)->toDateString()) {
+    //         /////// bv done for today '------'
+    //         ///////////////////LETS PAY THE BONUS
+
+    //         $gnl->last_paid = Carbon::now()->toDateString();
+    //         $gnl->save();
+
+    //         $eligibleUsers = UserExtra::where('bv_left', '>=', $gnl->total_bv)->where('bv_right', '>=', $gnl->total_bv)->get();
+
+    //         foreach ($eligibleUsers as $uex) {
+                // $user = $uex->user;
+    //             $weak = $uex->bv_left < $uex->bv_right ? $uex->bv_left : $uex->bv_right;
+    //             $weaker = $weak < $gnl->max_bv ? $weak : $gnl->max_bv;
+
+    //             $pair = intval($weaker / $gnl->total_bv);
+
+    //             $bonus = $pair * $gnl->bv_price;
+
+    //             // add balance to User
+
+    //             $payment = User::find($uex->user_id);
+    //             $payment->balance += $bonus;
+    //             $payment->save();
+
+    //             $trx = new Transaction();
+    //             $trx->user_id = $payment->id;
+    //             $trx->amount = $bonus;
+    //             $trx->charge = 0;
+    //             $trx->trx_type = '+';
+    //             $trx->post_balance = $payment->balance;
+    //             $trx->remark = 'binary_commission';
+    //             $trx->trx = getTrx();
+    //             $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * $gnl->total_bv . ' BV.';
+    //             $trx->save();
+
+                // notify($user, 'matching_bonus', [
+                //     'amount' => $bonus,
+                //     'currency' => $gnl->cur_text,
+                //     'paid_bv' => $pair * $gnl->total_bv,
+                //     'post_balance' => $payment->balance,
+                //     'trx' =>  $trx->trx,
+                // ]);
+
+    //             $paidbv = $pair * $gnl->total_bv;
+    //             if ($gnl->cary_flash == 0) {
+    //                 $bv['setl'] = $uex->bv_left - $paidbv;
+    //                 $bv['setr'] = $uex->bv_right - $paidbv;
+    //                 $bv['paid'] = $paidbv;
+    //                 $bv['lostl'] = 0;
+    //                 $bv['lostr'] = 0;
+    //             }
+    //             if ($gnl->cary_flash == 1) {
+    //                 $bv['setl'] = $uex->bv_left - $weak;
+    //                 $bv['setr'] = $uex->bv_right - $weak;
+    //                 $bv['paid'] = $paidbv;
+    //                 $bv['lostl'] = $weak - $paidbv;
+    //                 $bv['lostr'] = $weak - $paidbv;
+    //             }
+    //             if ($gnl->cary_flash == 2) {
+    //                 $bv['setl'] = 0;
+    //                 $bv['setr'] = 0;
+    //                 $bv['paid'] = $paidbv;
+    //                 $bv['lostl'] = $uex->bv_left - $paidbv;
+    //                 $bv['lostr'] = $uex->bv_right - $paidbv;
+    //             }
+    //             $uex->bv_left = $bv['setl'];
+    //             $uex->bv_right = $bv['setr'];
+    //             $uex->save();
+
+
+    //             if ($bv['paid'] != 0) {
+    //                 createBVLog($user->id, 1, $bv['paid'], 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $paidbv . ' BV.');
+    //                 createBVLog($user->id, 2, $bv['paid'], 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $paidbv . ' BV.');
+    //             }
+    //             if ($bv['lostl'] != 0) {
+    //                 createBVLog($user->id, 1, $bv['lostl'], 'Flush ' . $bv['lostl'] . ' BV after Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $paidbv . ' BV.');
+    //             }
+    //             if ($bv['lostr'] != 0) {
+    //                 createBVLog($user->id, 2, $bv['lostr'], 'Flush ' . $bv['lostr'] . ' BV after Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $paidbv . ' BV.');
+    //             }
+    //         }
+    //         return '---';
+    //     }
+    // }
+
+    public function monolegSaving(){
+        $gnl = GeneralSetting::first();
+        // $gnl->last_cron = Carbon::now()->toDateTimeString();
+		// $gnl->save();
+        $userx = UserExtra::where('is_gold','=',1)->where('monoleg_downline','!=',0)->get();
+
+        // dd($userx);
+        $cron = array();
+        foreach ($userx as $uex) {
+            $bonus = $uex->monoleg_downline;
+
+            $payment = User::find($uex->user_id);
+            $payment->balance += $bonus;
+            $payment->save();
+
+            $trx = new Transaction();
+            $trx->user_id = $payment->id;
+            $trx->amount = $bonus;
+            $trx->charge = 0;
+            $trx->trx_type = '+';
+            $trx->post_balance = $payment->balance;
+            $trx->remark = 'monoleg_commission_downline';
+            $trx->trx = getTrx();
+            $trx->details = 'Paid Monoleg Commission from downline : ' . $bonus . ' ' . $gnl->cur_text;
+            $trx->save();            
+            
+            $uex->monoleg_downline = 0;
+            $uex->save();
+
+            $cron[] = $uex->user_id.'/'.$bonus;
+        }
+
+        return $cron;
+    }
+
+
     public function monoleg(){
         $gnl = GeneralSetting::first();
         // $gnl->last_cron = Carbon::now()->toDateTimeString();
@@ -159,54 +307,68 @@ class CronController extends Controller
             $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
             $strong_text = $uex->paid_left > $uex->paid_right ? 'kiri' : 'kanan';
             // $pair = intval($strong);
+            // $users = user::where('ref_id',$user)->where('position',2)->first();
+            $posid = getRefId($user);
+            $posUser = UserExtra::where('user_id',$posid)->first();
+
             $count = countingQ($user);
             if ($count > 0) {
                 if ($strong > 0) {
                     if(empty($uex->strong_leg)){
-                        if ($strong > 0 && $strong <= 100) {
-                            $bonus = ($strong*5000)/countingQ($user);
+                        if ($strong > 4) {
+                            if ($strong > 0 && $strong <= 100) {
+                                $bonus = ($strong*5000)/countingQ($user) ;
+                            }
+
+                            $flushOut = '';
+                            if (($strong - $uex->monoleg_left) - userRefaDay($uex->user_id) == 0 ) {
+                                $flushOut = '(Flush Out)';
+                                $bonus = 2500000;
+                            }
+                            
+                            $payment = User::find($uex->user_id);
+                            $payment->balance += $bonus;
+                            $payment->save();
+
+                            $trx = new Transaction();
+                            $trx->user_id = $payment->id;
+                            $trx->amount = $bonus;
+                            $trx->charge = 0;
+                            $trx->trx_type = '+';
+                            $trx->post_balance = $payment->balance;
+                            $trx->remark = 'monoleg_commission';
+                            $trx->trx = getTrx();
+                            $trx->details = 'Paid Monoleg Commission First '. $strong .' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                            $trx->save();
+
+                            if($strong_text == 'kiri'){
+                                $uex->strong_leg = $strong_text;
+                                $uex->monoleg_left = $strong;
+                                $uex->save();
+                            }else{
+                                $uex->strong_leg = $strong_text;
+                                $uex->monoleg_right = $strong;
+                                $uex->save();
+                            }
+
+                            monolegSaving($uex->user_id,$bonus);
+
+                            $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/first';
                         }
-                        
-                        $payment = User::find($uex->user_id);
-                        $payment->balance += $bonus;
-                        $payment->save();
-
-                        $trx = new Transaction();
-                        $trx->user_id = $payment->id;
-                        $trx->amount = $bonus;
-                        $trx->charge = 0;
-                        $trx->trx_type = '+';
-                        $trx->post_balance = $payment->balance;
-                        $trx->remark = 'monoleg_commission';
-                        $trx->trx = getTrx();
-                        $trx->details = 'Paid Monoleg Commission First '. $strong .' feet : ' . $bonus . ' ' . $gnl->cur_text;
-                        $trx->save();
-
-                        if($strong_text == 'kiri'){
-                            $uex->strong_leg = $strong_text;
-                            $uex->monoleg_left = $strong;
-                            $uex->save();
-                        }else{
-                            $uex->strong_leg = $strong_text;
-                            $uex->monoleg_right = $strong;
-                            $uex->save();
-                        }
-
-                        $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
 
                     }else{
                         if ($strong_text == 'kiri') {
                             if (($strong - $uex->monoleg_left) > 0) {
                                 if ($strong > 0 && $strong <= 100) {
-                                    $bonus = (($strong - $uex->monoleg_left)*5000)/countingQ($user);
+                                    $bonus = (($strong - $uex->monoleg_left)*5000)/countingQ($user) ;
                                 }elseif ($strong > 100 && $strong <= 15000){
                                     if ($strong > 100 && $weak > 100){
-                                        $bonus = (($strong - $uex->monoleg_left)*15000)/countingQ($user);
+                                        $bonus = (($strong - $uex->monoleg_left)*15000)/countingQ($user) ;
                                     }else{
-                                        $bonus = (($strong - $uex->monoleg_left)*10000)/countingQ($user);
+                                        $bonus = (($strong - $uex->monoleg_left)*10000)/countingQ($user) ;
                                     }
                                 }elseif ($strong > 15000 ){
-                                    $bonus = (($strong - $uex->monoleg_left)*20000)/countingQ($user);
+                                    $bonus = (($strong - $uex->monoleg_left)*20000)/countingQ($user) ;
                                 }
 
 
@@ -235,20 +397,24 @@ class CronController extends Controller
                                 $uex->monoleg_left = $strong;
                                 $uex->save();
 
-                                $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
+                                monolegSaving($uex->user_id,$bonus);
+
+
+                                $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/second';
+                                // $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/second';
                             }
                         }else{
                             if (($strong - $uex->monoleg_right) > 0) {
-                                if ($strong > 0 && $strong <= 100) {
-                                    $bonus = (($strong - $uex->monoleg_right)*5000)/countingQ($user);
+                                if ($strong > 0 && $strong < 100) {
+                                    $bonus = (($strong - $uex->monoleg_right)*5000)/countingQ($user) ;
                                 }elseif ($strong > 100 && $strong <= 15000){
                                     if ($strong > 100 && $weak > 100){
-                                        $bonus = (($strong - $uex->monoleg_right)*15000)/countingQ($user);
+                                        $bonus = (($strong - $uex->monoleg_right)*15000)/countingQ($user) ;
                                     }else{
-                                        $bonus = (($strong - $uex->monoleg_right)*10000)/countingQ($user);
+                                        $bonus = (($strong - $uex->monoleg_right)*10000)/countingQ($user) ;
                                     }
                                 }elseif ($strong > 15000 ){
-                                    $bonus = (($strong - $uex->monoleg_right)*20000)/countingQ($user);
+                                    $bonus = (($strong - $uex->monoleg_right)*20000)/countingQ($user) ;
                                 }
 
                                 $flushOut = '';
@@ -276,7 +442,11 @@ class CronController extends Controller
                                 $uex->monoleg_right = $strong;
                                 $uex->save();
 
-                                $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
+                                monolegSaving($uex->user_id,$bonus);
+
+                                // $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/third';
+                                $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/third';
+
 
                             }
 
