@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\NewCronController;
 use App\Http\Controllers\SponsorRegisterController;
 use App\Http\Controllers\UserController;
 use App\Models\rekening;
@@ -163,7 +164,7 @@ Route::get('/clauseter-maps',[AdminController::class,'maps']);
 | Web Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/cron', 'CronController@cron')->name('bv.matching.cron');
+Route::get('/cron', NewCronController::class,'bonusPasangan')->name('bv.matching.cron');
 Route::get('/monoleg', 'CronController@monoleg')->name('bv.matching.monoleg');
 Route::get('/monoleg_saving', 'CronController@monolegSaving')->name('bv.matching.monoleg_saving');
 Route::get('/is-gold-cron', 'CronController@isGold');
