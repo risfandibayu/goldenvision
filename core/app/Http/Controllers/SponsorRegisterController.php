@@ -151,6 +151,7 @@ class SponsorRegisterController extends Controller
 
             if(!$checkloop){
                 fnsingleQualified($sponsor->id,$newUser->id);
+                monolegTree(auth()->user()->id, 1);
                 DB::commit();
                 addToLog('Created '.$request->pin.' User & Purchased Plan');
                 $notify[] = ['success', 'Created User & Purchased Plan Successfully'];
