@@ -1408,17 +1408,21 @@ function monolegTree($id, $pin)
             $strong = $uex->paid_left > $uex->paid_right ? $uex->paid_left : $uex->paid_right;
             $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
 
-            if ($strong > 0 && $strong < 100) {
-                $bonus = (($pin)*5000)/countingQ($user) ;
-            }elseif ($strong > 100 && $strong <= 15000){
-                if ($strong > 100 && $weak > 100){
-                    $bonus = (($pin)*15000)/countingQ($user) ;
-                }else{
-                    $bonus = (($pin)*10000)/countingQ($user) ;
+            if (isset($strong)){
+                if ($strong > 0 && $strong < 100) {
+                    $bonus = (($pin)*5000)/countingQ($user) ;
+                }elseif ($strong > 100 && $strong <= 15000){
+                    if ($strong > 100 && $weak > 100){
+                        $bonus = (($pin)*15000)/countingQ($user) ;
+                    }else{
+                        $bonus = (($pin)*10000)/countingQ($user) ;
+                    }
+                }elseif ($strong > 15000 ){
+                    $bonus = (($pin)*20000)/countingQ($user) ;
                 }
-            }elseif ($strong > 15000 ){
-                $bonus = (($pin)*20000)/countingQ($user) ;
-            }                                                        
+            }else{
+                $bonus = (($pin)*5000)/countingQ($user) ;
+            }                                                  
 
             $posUser = User::find($refid);
             $posUserExtra = UserExtra::where('user_id',$refid)->first();

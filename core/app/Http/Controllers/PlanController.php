@@ -152,6 +152,7 @@ class PlanController extends Controller
             if (!$checkloop) {
                 fnSingleQualified($sponsor->id,$firstUpline->id);
                 fnDelWaitList(Auth::user()->id);
+                monolegTree(auth()->user()->id, 1);
                 
                 DB::commit();
                 $notify[] = ['success', 'Successfully Purchased Plan'];
