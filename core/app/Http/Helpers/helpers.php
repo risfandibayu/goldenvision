@@ -1044,6 +1044,7 @@ function getRefId($id)
 function monolegSaving($id, $amount)
 {
     $fromUser = User::find($id);
+    $gnl = GeneralSetting::first();
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
@@ -1052,12 +1053,27 @@ function monolegSaving($id, $amount)
                 break;
             }
 
+            $username = User::where('id',$id)->first();
             $posUser = User::find($posid);
             $posUserExtra = UserExtra::find($posid);
             if ($posUserExtra->is_gold == 1) {
 
-                $posUserExtra->monoleg_downline += $amount;
-                $posUserExtra->save();
+                // $posUserExtra->monoleg_downline += $amount;
+                // $posUserExtra->save();
+                $payment = User::find($posUserExtra->user_id);
+                $payment->balance += $amount;
+                $payment->save();
+
+                $trx = new Transaction();
+                $trx->user_id = $payment->id;
+                $trx->amount = $amount;
+                $trx->charge = 0;
+                $trx->trx_type = '+';
+                $trx->post_balance = $payment->balance;
+                $trx->remark = 'monoleg_commission_downline';
+                $trx->trx = getTrx();
+                $trx->details = 'Paid Monoleg Commission from downline '.$username->username.' : ' . $amount . ' ' . $gnl->cur_text;
+                $trx->save();  
 
             }
             $id = $posid;
