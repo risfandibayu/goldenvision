@@ -533,8 +533,8 @@ class CronController extends Controller
                             $pairs = intval($weak);
                             $pair = intval($weak);
                         }else{
-                            $pairs = intval($weak)-3;
-                            $pair = intval($weak)-3;
+                            $pairs = intval($weak);
+                            $pair = intval($weak);
 
                         }
 
@@ -697,7 +697,7 @@ class CronController extends Controller
                                             if($uex->level_binary == 0){
                                                 if (Carbon::parse($uex->updated_at)->format('Y-m-d') != Carbon::now()->toDateString()) {
                                                     $payment->save();
-                                                    $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' MP.';
+                                                    $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . $pair * 2 . ' Pairs.';
                                                 // }else{
                                                 //     $trx->details = 'Paid Flush Out ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 6 . ' MP.';
                                                 // }
@@ -724,7 +724,7 @@ class CronController extends Controller
                                                 }else{
                                                 
                                                         $payment->save();
-                                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' MP.';
+                                                        $trx->details = 'Paid ' . $bonus . ' ' . $gnl->cur_text . ' For ' . ($pair-$uex->level_binary) * 2 . ' Pairs.';
     
                                                         $trx->save();
                                                     
