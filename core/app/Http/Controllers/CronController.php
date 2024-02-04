@@ -298,7 +298,6 @@ class CronController extends Controller
         // $gnl->last_cron = Carbon::now()->toDateTimeString();
 		// $gnl->save();
         $userx = UserExtra::where('is_gold','=',1)->get();
-
         // dd($userx);
         $cron = array();
         foreach ($userx as $uex) {
@@ -315,7 +314,6 @@ class CronController extends Controller
 
             $count = countingQ($user);
             if ($count > 0) {
-                if ($strong > 0) {
                     if(empty($uex->strong_leg)){
                         if ($strong > 4) {
                             if ($strong > 0 && $strong <= 100) {
@@ -355,7 +353,7 @@ class CronController extends Controller
                                 $uex->save();
                             }
 
-                            monolegSaving($uex->user_id,$bonus,$username->username);
+                            monolegSaving($uex->user_id,$bonus,$username->username,'first');
 
                             $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/first';
                         }
@@ -383,27 +381,26 @@ class CronController extends Controller
                                     }
                                 }
                             
-                                $payment = User::find($uex->user_id);
-                                $payment->balance += $bonus;
-                                $payment->save();
+                                // $payment = User::find($uex->user_id);
+                                // $payment->balance += $bonus;
+                                // $payment->save();
 
-                                $trx = new Transaction();
-                                $trx->user_id = $payment->id;
-                                $trx->amount = $bonus;
-                                $trx->charge = 0;
-                                $trx->trx_type = '+';
-                                $trx->post_balance = $payment->balance;
-                                $trx->remark = 'monoleg_commission';
-                                $trx->trx = getTrx();
-                                $trx->details = $flushOut.' Paid Monoleg Commission '.($strong - $uex->monoleg_left).' feet : ' . $bonus . ' ' . $gnl->cur_text;
-                                $trx->save();
+                                // $trx = new Transaction();
+                                // $trx->user_id = $payment->id;
+                                // $trx->amount = $bonus;
+                                // $trx->charge = 0;
+                                // $trx->trx_type = '+';
+                                // $trx->post_balance = $payment->balance;
+                                // $trx->remark = 'monoleg_commission';
+                                // $trx->trx = getTrx();
+                                // $trx->details = $flushOut.' Paid Monoleg Commission '.($strong - $uex->monoleg_left).' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                                // $trx->save();
 
                                 $uex->strong_leg = $strong_text;
                                 $uex->monoleg_left = $strong;
                                 $uex->save();
 
-                                monolegSaving($uex->user_id,$bonus,$username->username);
-
+                                // monolegSaving($uex->user_id,$bonus,$username->username,'kiri');
 
                                 $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/second';
                                 // $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/second';
@@ -430,26 +427,26 @@ class CronController extends Controller
                                     }
                                 }
 
-                                $payment = User::find($uex->user_id);
-                                $payment->balance += $bonus;
-                                $payment->save();
+                                // $payment = User::find($uex->user_id);
+                                // $payment->balance += $bonus;
+                                // $payment->save();
 
-                                $trx = new Transaction();
-                                $trx->user_id = $payment->id;
-                                $trx->amount = $bonus;
-                                $trx->charge = 0;
-                                $trx->trx_type = '+';
-                                $trx->post_balance = $payment->balance;
-                                $trx->remark = 'monoleg_commission';
-                                $trx->trx = getTrx();
-                                $trx->details = $flushOut.' Paid Monoleg Commission '.($strong - $uex->monoleg_right).' feet : ' . $bonus . ' ' . $gnl->cur_text;
-                                $trx->save();
+                                // $trx = new Transaction();
+                                // $trx->user_id = $payment->id;
+                                // $trx->amount = $bonus;
+                                // $trx->charge = 0;
+                                // $trx->trx_type = '+';
+                                // $trx->post_balance = $payment->balance;
+                                // $trx->remark = 'monoleg_commission';
+                                // $trx->trx = getTrx();
+                                // $trx->details = $flushOut.' Paid Monoleg Commission '.($strong - $uex->monoleg_right).' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                                // $trx->save();
 
                                 $uex->strong_leg = $strong_text;
                                 $uex->monoleg_right = $strong;
                                 $uex->save();
 
-                                monolegSaving($uex->user_id,$bonus,$username->username);
+                                // monolegSaving($uex->user_id,$bonus,$username->username,'kanan');
 
                                 // $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/third';
                                 $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text.'/'.$bonus.'/third';
@@ -459,7 +456,7 @@ class CronController extends Controller
 
                         }
                     }
-                }
+                
 
                     // $cron[] = $user.'/'.$count.'/'.$strong.'/'.$strong_text;
                 

@@ -1041,10 +1041,11 @@ function getRefId($id)
     }
 }
 
-function monolegSaving($id, $amount, $username)
+function monolegSaving($id, $amount, $username, $type)
 {
     $fromUser = User::find($id);
     $gnl = GeneralSetting::first();
+    
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
@@ -1056,6 +1057,8 @@ function monolegSaving($id, $amount, $username)
             // $username = User::where('id',$id)->first();
             $posUser = User::find($posid);
             $posUserExtra = UserExtra::find($posid);
+            $strong = $posUserExtra->paid_left > $posUserExtra->paid_right ? $posUserExtra->paid_left : $posUserExtra->paid_right;
+            // $count++;
             if ($posUserExtra->is_gold == 1) {
 
                 // $posUserExtra->monoleg_downline += $amount;
@@ -1075,6 +1078,15 @@ function monolegSaving($id, $amount, $username)
                 $trx->details = 'Paid Monoleg Commission from downline '.$username.' : ' . $amount . ' ' . $gnl->cur_text;
                 $trx->save();  
 
+                if ($posUser->position == 1) {
+                    $posUserExtra->strong_leg = 'kiri';
+                    $posUserExtra->monoleg_left = $strong;
+                    $posUserExtra->save();        
+                }else {
+                    $posUserExtra->strong_leg = 'kanan';
+                    $posUserExtra->monoleg_right = $strong;
+                    $posUserExtra->save();
+                }
             }
             $id = $posid;
         } else {
@@ -1084,6 +1096,32 @@ function monolegSaving($id, $amount, $username)
 
 }
 
+function findBottomLeg($nodeId)
+{
+    $bottomLeg = [];
+    $visited = [];
+
+    // Mencari kaki terbawah secara rekursif
+    $findBottomLegRecursive = function ($nodeId) use (&$bottomLeg, &$visited, &$findBottomLegRecursive) {
+        $visited[] = $nodeId;
+        $children = user::where('pos_id', $nodeId)->get();
+
+        // Jika node tidak memiliki anak, itu adalah kaki terbawah
+        if ($children->isEmpty()) {
+            $bottomLeg[] = $nodeId;
+        } else {
+            foreach ($children as $child) {
+                if (!in_array($child->id, $visited)) {
+                    $findBottomLegRecursive($child->id);
+                }
+            }
+        }
+    };
+
+    $findBottomLegRecursive($nodeId);
+
+    return $bottomLeg;
+}
 function countingQ($id)
 {
     $fromUser = User::find($id);
