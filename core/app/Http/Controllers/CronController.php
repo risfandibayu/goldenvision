@@ -317,7 +317,7 @@ class CronController extends Controller
                     if(empty($uex->strong_leg)){
                         if ($strong > 4) {
                             if ($strong > 0 && $strong <= 100) {
-                                $bonus = ($strong*5000)/countingQ($user) ;
+                                $bonus = (($strong)*5000)/countingQ($user) ;
                             }
 
                             $flushOut = '';
@@ -338,7 +338,7 @@ class CronController extends Controller
                             $trx->post_balance = $payment->balance;
                             $trx->remark = 'monoleg_commission';
                             $trx->trx = getTrx();
-                            $trx->details = 'Paid Monoleg Commission First '. $strong .' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                            $trx->details = 'Paid Monoleg Commission First '. ($strong - $uex->monoleg_left) .' feet : ' . $bonus . ' ' . $gnl->cur_text;
                             $trx->save();
 
                             if($strong_text == 'kiri'){
@@ -390,7 +390,7 @@ class CronController extends Controller
                                 $trx->post_balance = $payment->balance;
                                 $trx->remark = 'monoleg_commission';
                                 $trx->trx = getTrx();
-                                $trx->details = $flushOut.' Paid Monoleg Commission '.$strong.' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                                $trx->details = $flushOut.' Paid Monoleg Commission '.($strong - $uex->monoleg_left).' feet : ' . $bonus . ' ' . $gnl->cur_text;
                                 $trx->save();
 
                                 $uex->strong_leg = $strong_text;
@@ -435,7 +435,7 @@ class CronController extends Controller
                                 $trx->post_balance = $payment->balance;
                                 $trx->remark = 'monoleg_commission';
                                 $trx->trx = getTrx();
-                                $trx->details = $flushOut.' Paid Monoleg Commission '.$strong.' feet : ' . $bonus . ' ' . $gnl->cur_text;
+                                $trx->details = $flushOut.' Paid Monoleg Commission '.($strong - $uex->monoleg_right).' feet : ' . $bonus . ' ' . $gnl->cur_text;
                                 $trx->save();
 
                                 $uex->strong_leg = $strong_text;

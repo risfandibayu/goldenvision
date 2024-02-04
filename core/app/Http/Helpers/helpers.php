@@ -1259,7 +1259,7 @@ function userRefaDay($id){
     ->where('user_id', $id)
     ->count();
 
-    return $ref;
+    return $ref ?? 0;
 }
 
 function updatePaidCount3($id, $count)
