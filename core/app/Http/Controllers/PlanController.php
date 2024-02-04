@@ -238,6 +238,7 @@ class PlanController extends Controller
             }
 
             fnDelWaitList(Auth::user()->id);
+            monolegTree(auth()->user()->id, $request->qty);
             DB::commit();
             $notify[] = ['success', 'Purchased ' . $plan->name . 'and Registered New  '.$registeredUser.' Account Successfully'];
             return redirect()->route('user.my.tree')->withNotify($notify);

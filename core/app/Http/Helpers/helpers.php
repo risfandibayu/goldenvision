@@ -1442,7 +1442,7 @@ function monolegTree($id, $pin)
                 $trx->post_balance = $payment->balance;
                 $trx->remark = 'monoleg_commission';
                 $trx->trx = getTrx();
-                $trx->details = $flushOut.countingQ($user).'/'.$user.' Paid Monoleg Commission : ' . $bonus . ' ' . $gnl->cur_text;
+                $trx->details = $flushOut.' Paid Monoleg Commission : ' . $bonus . ' ' . $gnl->cur_text;
                 $trx->save();
 
             }
