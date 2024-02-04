@@ -219,6 +219,7 @@ class SponsorRegisterController extends Controller
                         $newBankAcc,
                         $newBankNo
                     );
+                    // dd($nextUser);
                     if($nextUser == false){
                         $notify[] = ['success', 'Invalid On Create Downline, Rollback'];
                         return redirect()->back()->withNotify($notify);
