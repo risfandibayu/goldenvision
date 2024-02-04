@@ -321,9 +321,11 @@ class CronController extends Controller
                             }
 
                             $flushOut = '';
-                            if (($strong - $uex->monoleg_left) - userRefaDay($uex->user_id) == 0 ) {
-                                $flushOut = '(Flush Out)';
-                                $bonus = 2500000;
+                            if ($bonus > 2500000) {
+                                if (($strong - $uex->monoleg_left) - userRefaDay($uex->user_id) == 0 ) {
+                                    $flushOut = '(Flush Out)';
+                                    $bonus = 2500000;
+                                }
                             }
                             
                             $payment = User::find($uex->user_id);
@@ -371,11 +373,12 @@ class CronController extends Controller
                                     $bonus = (($strong - $uex->monoleg_left)*20000)/countingQ($user) ;
                                 }
 
-
                                 $flushOut = '';
-                                if (($strong - $uex->monoleg_left) - userRefaDay($uex->user_id) == 0 ) {
-                                    $flushOut = '(Flush Out)';
-                                    $bonus = 2500000;
+                                if ($bonus > 2500000) {
+                                    if (($strong - $uex->monoleg_left) - userRefaDay($uex->user_id) == 0 ) {
+                                        $flushOut = '(Flush Out)';
+                                        $bonus = 2500000;
+                                    }
                                 }
                             
                                 $payment = User::find($uex->user_id);
@@ -418,9 +421,11 @@ class CronController extends Controller
                                 }
 
                                 $flushOut = '';
-                                if (($strong - $uex->monoleg_right) - userRefaDay($uex->user_id) == 0 ) {
-                                    $flushOut = '(Flush Out)';
-                                    $bonus = 2500000;
+                                if ($bonus > 2500000) {
+                                    if (($strong - $uex->monoleg_left) - userRefaDay($uex->user_id) == 0 ) {
+                                        $flushOut = '(Flush Out)';
+                                        $bonus = 2500000;
+                                    }
                                 }
 
                                 $payment = User::find($uex->user_id);
