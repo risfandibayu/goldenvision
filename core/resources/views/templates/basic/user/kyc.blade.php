@@ -2,9 +2,35 @@
 
 @section('panel')
     <div class="row mb-none-30">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-30 ">
+            <div class="card">
+                <div class="card-body ">
+
+                    <br>
+                    <div class="img row text-center">
+                        <div class="col-md-6">
+                            <img src="{{ asset('assets/images/favicon-new.png') }}" alt=""
+                                style="max-width: 300px;-webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);">
+                            <h1 style="text-transform: uppercase" style="display-1"><b>masterplan</b></h1>
+                        </div>
+
+                        <div class="col-md-6 mt-4">
+                            <img src="{{ asset('assets/dinaran.png') }}" alt="" style="max-width: 300px;">
+                        </div>
 
 
-        <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-30">
+                    </div>
+                    <div class="card-body d-flex justify-content-center">
+                        <img src="{{ asset('assets/mainten.jpg') }}" style="max-width: 500px" alt="maintenence">
+                    </div>
+                    <h1 class="text-center"><b>UNDER CONSTRUCTION</b></h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-30 d-none">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-50 border-bottom pb-2">{{ auth()->user()->fullname }} @lang('Information')</h5>
@@ -279,7 +305,7 @@
                                     <div class="form-group">
                                         <button type="submit"
                                             class="btn btn--primary btn-block btn-lg">@lang('Save
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Changes')</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Changes')</button>
                                     </div>
                                 </div>
                             </div>
@@ -297,6 +323,8 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 @endsection
 

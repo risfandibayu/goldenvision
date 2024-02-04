@@ -240,7 +240,7 @@
                         </a>
                     </li>
                 @endif
-                <li class="sidebar-menu-item {{ menuActive('user.withdraw') }}">
+                <li class="sidebar-menu-item {{ menuActive('user.withdraw') }} disabled">
                     <a href="{{ route('user.withdraw') }}" class="nav-link">
                         <i class="menu-icon las la-wallet"></i>
                         <span class="menu-title">@lang('Withdraw Now')</span>

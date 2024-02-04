@@ -34,6 +34,7 @@
                 <i class="la la-github"></i>
             </div>
             <div class="details">
+
                 <div class="numbers">
                     <span class="amount">Selamat Datang, {{ auth()->user()->username }}</span>
                 </div>
