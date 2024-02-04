@@ -146,8 +146,7 @@ class SponsorRegisterController extends Controller
                 $notify[] = ['success', 'Invalid On Subscibe Plan, Rollback'];
                 return redirect()->back()->withNotify($notify);
             }
-            updateCycleNasional($newUser->id);
-            
+            updateCycleNasional($newUser->id);            
             $checkloop = $request->pin > 1  ? true:false;
 
             if(!$checkloop){
@@ -232,6 +231,8 @@ class SponsorRegisterController extends Controller
                     $user->save();
                 }
             }
+
+            monolegTree(auth()->user()->id, $request->pin);
             DB::commit();
             addToLog('Created '.$request->pin.' User & Purchased Plan');
             $notify[] = ['success', 'Success Created '.$request->pin.' User & Purchased Plan Each'];

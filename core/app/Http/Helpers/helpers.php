@@ -1125,7 +1125,7 @@ function findBottomLeg($nodeId)
 function countingQ($id)
 {
     $fromUser = User::find($id);
-    $count = 1; 
+    $count = 0; 
     if ($id == 1) {
         return 1;
     }else{
@@ -1384,6 +1384,70 @@ function updateBV($id, $bv, $details)
                 $bvlog->save();
             }
             $id = $posid;
+        } else {
+            break;
+        }
+    }
+
+}
+
+function monolegTree($id, $pin)
+{
+    $fromUser = User::find($id);
+    $gnl = GeneralSetting::first();
+
+
+    while ($id != "" || $id != "0") {
+        if (isUserExists($id)) {
+            $refid = getRefId($id);
+            if ($refid == "0") {
+                break;
+            }
+            $user = $fromUser->id;
+            $uex = UserExtra::where('user_id',$fromUser->id)->first();
+            $strong = $uex->paid_left > $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+            $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+
+            if ($strong > 0 && $strong < 100) {
+                $bonus = (($pin)*5000)/countingQ($user) ;
+            }elseif ($strong > 100 && $strong <= 15000){
+                if ($strong > 100 && $weak > 100){
+                    $bonus = (($pin)*15000)/countingQ($user) ;
+                }else{
+                    $bonus = (($pin)*10000)/countingQ($user) ;
+                }
+            }elseif ($strong > 15000 ){
+                $bonus = (($pin)*20000)/countingQ($user) ;
+            }                                                        
+
+            $posUser = User::find($refid);
+            $posUserExtra = UserExtra::where('user_id',$refid)->first();
+            if ($posUserExtra->is_gold == 1) {
+                # code...
+                $flushOut = '';
+                if ($bonus > 2500000) {
+                    $flushOut = '(Flush Out)';
+                    $bonus = 2500000;
+                }                           
+
+                $payment = User::find($posUserExtra->user_id);
+                $payment->balance += $bonus;
+                $payment->save();
+
+                $trx = new Transaction();
+                $trx->user_id = $payment->id;
+                $trx->amount = $bonus;
+                $trx->charge = 0;
+                $trx->trx_type = '+';
+                $trx->post_balance = $payment->balance;
+                $trx->remark = 'monoleg_commission';
+                $trx->trx = getTrx();
+                $trx->details = $flushOut.countingQ($user).'/'.$user.' Paid Monoleg Commission : ' . $bonus . ' ' . $gnl->cur_text;
+                $trx->save();
+
+            }
+
+            $id = $refid;
         } else {
             break;
         }
