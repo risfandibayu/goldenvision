@@ -1343,6 +1343,7 @@ function monolegTree($sid, $pin , $posisi)
     }else{
         $id = $get['pos_id'];
     }
+    $fromUser2 = User::find($get['pos_id']);
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
@@ -1352,18 +1353,19 @@ function monolegTree($sid, $pin , $posisi)
                 break;
             }
             $user = $fromUser->id;
+            $user2 = $fromUser2->id;
             $uex = UserExtra::where('user_id',$fromUser->id)->first();
                 
                 if ($uex->rank == 1 ) {
-                    $bonus = (($pin)*5000) ;
+                    $bonus = countingQ($user,$posisi) ;
                 }elseif ($uex->rank == 2){
-                    $bonus = (($pin)*10000) ;
+                    $bonus = countingQ($user,$posisi) ;
                 }elseif ($uex->rank == 3 ){
-                    $bonus = (($pin)*15000) ;
+                    $bonus = countingQ($user,$posisi) ;
                 }elseif ($uex->rank == 4 ){
-                    $bonus = (($pin)*20000) ;
+                    $bonus = countingQ($user,$posisi) ;
                 }else{
-                    $bonus = (($pin)*5000) ;
+                    $bonus = countingQ($user2,$posisi) ;
                 }
 
 
