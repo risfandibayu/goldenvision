@@ -1345,7 +1345,7 @@ function monolegTree($sid, $pin, $posisi = null)
                     $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
                 }    
             }else{
-                $bonus = (($pin)*5000)/countingQ($id,$posisi) ;
+                $bonus = 2 ;
             }
 
                 $posUser = User::find($refid);
