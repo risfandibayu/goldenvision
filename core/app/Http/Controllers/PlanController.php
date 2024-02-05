@@ -144,7 +144,7 @@ class PlanController extends Controller
                 return back()->withNotify($notify);
             }
             if($sponsor->id  ==  $user->id){
-                $notify[] = ['error', 'Invalid Sponsor, you cant not reffer your self'];
+                $notify[] = ['error', 'Invalid Sponsor, you cant not reffer yourself'];
                 return back()->withNotify($notify);
             }
 
@@ -274,10 +274,14 @@ class PlanController extends Controller
         try {
             
             $pos = getPosition($ref_user->id, $request->position);
+            
+            if($pos['position'] == 0){
+                return false;
+            }
             $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
             if($wait){
                 return false;
-                sleep(rand(3,6));
+                sleep(rand(1,6));
                 $pos = getPosition($ref_user->id, $request->position);
             }
             $user->no_bro           = generateUniqueNoBro();
