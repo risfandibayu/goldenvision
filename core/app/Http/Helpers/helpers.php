@@ -1369,17 +1369,18 @@ function monolegTree($sid, $pin , $posisi)
     $uexs = UserExtra::where('user_id',$fromUser->id)->first();
     // $strong_n1 = $uexs->left > $uexs->right ? 1 : 2;
     $get = getPosition($sid, $posisi);
-    if ($uexs->is_gold != 1) {
-        $id = $sid;
-    }else{
-        if ($sid == $get['pos_id']) {
-            # code...
-            $id = $get['pos_id'];
-        }else{
-            $id = $sid;
-        }
-    }
+    // if ($uexs->is_gold != 1) {
+    //     $id = $sid;
+    // }else{
+    //     if ($sid == $get['pos_id']) {
+    //         # code...
+    //         $id = $get['pos_id'];
+    //     }else{
+    //         $id = $sid;
+    //     }
+    // }
     $fromUser2 = getQual($get['pos_id'],$posisi);
+    $id = $fromUser2;
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
