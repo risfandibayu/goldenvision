@@ -991,6 +991,17 @@ function updatePaidCount($id)
                 $extra->right += 1;
                 $extra->p_right += 1;
             }
+            $pair = $extra->right > $extra->left ? $extra->right : $extra->left;
+         
+            if($pair >= 4 && $pair <= 100){
+                $extra->rank = 1; //M1
+            }elseif($pair > 100 && $pair <= 10000){
+                 $extra->rank = 2; //M10
+            }elseif($pair > 10000 && $pair <= 15000){
+                $extra->rank = 3; //M15
+            }elseif($pair > 15000){
+                $extra->rank = 4; //MU
+            }
             $extra->save();
             $id = $posid;
         } else {
@@ -1026,6 +1037,7 @@ function updatePaidCount2($id)
                 $extra->p_right += 1;
             }
             $pair = $extra->right > $extra->left ? $extra->right : $extra->left;
+           
             if($pair >= 4 && $pair <= 100){
                 $extra->rank = 1; //M1
             }elseif($pair > 100 && $pair <= 10000){
