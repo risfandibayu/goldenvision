@@ -219,6 +219,10 @@ function fnDelWaitList($userID){
 }
 function fnSingleQualified($sponsorID,$userID){
     $sponsor = User::where('ref_id',$sponsorID)->get();
+    if($sponsor->count() >=4){
+        $ex = UserExtra::where('user_id',$sponsorID)->update(['is_gold'=>1]);
+        return true;
+    }
 
     if($sponsor->count() <= 3){
         return false;
