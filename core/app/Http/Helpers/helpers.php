@@ -1122,15 +1122,16 @@ function findBottomLeg($nodeId)
 
     return $bottomLeg;
 }
-function countingQ($id)
+function countingQ($sid,$posisi)
 {
-    $fromUser = User::find($id);
+    $fromUser = User::find($sid);
+    $get = getPosition($sid, $posisi);
+    $id = $get['pos_id'];
     $count = 0; 
         while ($id != "" || $id != "0") {
             if (isUserExists($id)) {
                 $posid = getPositionId($id);
                     if ($posid == "0") {
-                        $count = 1; 
                         break;
                     }
                     $user = user::where('id',$id)->first();
@@ -1142,91 +1143,9 @@ function countingQ($id)
             } else {
                 break;
             }
-
-        return $count;
     }
+    return $count <= 0 ? 1 : $count ;
 
-}
-
-function bonusMonolegDownline($id)
-{
-    $fromUser = User::find($id);
-    $bonus = 0; 
-    while ($id != "" || $id != "0") {
-        if (isUserExists($id)) {
-            $posid = getRefId($id);
-                if ($posid == "0") {
-                    break;
-                }
-                // $user = user::where('id',$id)->first();
-                $uex = UserExtra::where('user_id',$posid)->first();
-                // $posUser = UserExtra::find($posid);
-                if ($uex->is_gold == 1){
-                    // $count++;\
-
-                    $user = $uex->user_id;
-                    $strong = $uex->paid_left > $uex->paid_right ? $uex->paid_left : $uex->paid_right;
-                    $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
-                    $strong_text = $uex->paid_left > $uex->paid_right ? 'kiri' : 'kanan';
-                    // $pair = intval($strong);
-                    $count = countingQ($user);
-                    if ($count > 0) {
-                        if ($strong > 0) {
-                            if(empty($uex->strong_leg)){
-                                if ($strong > 4) {
-                                    if ($strong > 0 && $strong <= 100) {
-                                        $bonus = ($strong*5000)/countingQ($user);
-                                    }
-                                }
-
-                            }else{
-                                if ($strong_text == 'kiri') {
-                                    if (($strong - $uex->monoleg_left) > 0) {
-                                        if ($strong > 0 && $strong <= 100) {
-                                            $bonus = (($strong - $uex->monoleg_left)*5000)/countingQ($user);
-                                        }elseif ($strong > 100 && $strong <= 15000){
-                                            if ($strong > 100 && $weak > 100){
-                                                $bonus = (($strong - $uex->monoleg_left)*15000)/countingQ($user);
-                                            }else{
-                                                $bonus = (($strong - $uex->monoleg_left)*10000)/countingQ($user);
-                                            }
-                                        }elseif ($strong > 15000 ){
-                                            $bonus = (($strong - $uex->monoleg_left)*20000)/countingQ($user);
-                                        }
-                                        
-                                    }
-                                }else{
-                                    if (($strong - $uex->monoleg_right) > 0) {
-                                        if ($strong > 0 && $strong < 100) {
-                                            $bonus = (($strong - $uex->monoleg_right)*5000)/countingQ($user);
-                                        }elseif ($strong > 100 && $strong <= 15000){
-                                            if ($strong > 100 && $weak > 100){
-                                                $bonus = (($strong - $uex->monoleg_right)*15000)/countingQ($user);
-                                            }else{
-                                                $bonus = (($strong - $uex->monoleg_right)*10000)/countingQ($user);
-                                            }
-                                        }elseif ($strong > 15000 ){
-                                            $bonus = (($strong - $uex->monoleg_right)*20000)/countingQ($user);
-                                        }
-
-                                    }
-
-                                }
-                            }
-                        }
-
-
-                    }
-
-
-
-                }
-                $id = $posid;
-        } else {
-            break;
-        }
-    }
-    return $bonus;    
 }
 
 function monolegBonus($id,$bonus, $strong_text,$strong)
@@ -1387,11 +1306,14 @@ function updateBV($id, $bv, $details)
 
 }
 
-function monolegTree($id, $pin)
+function monolegTree($sid, $pin)
 {
-    $fromUser = User::find($id);
+    $fromUser = User::find($sid);
     $gnl = GeneralSetting::first();
-
+    $uexs = UserExtra::where('user_id',$fromUser->id)->first();
+    $strong_n1 = $uexs->paid_left > $uexs->paid_right ? 1 : 2;
+    $get = getPosition($sid, $strong_n1);
+    $id = $get['pos_id'];
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
@@ -1403,23 +1325,23 @@ function monolegTree($id, $pin)
             $user = $fromUser->id;
             $uex = UserExtra::where('user_id',$fromUser->id)->first();
             $strong = $uex->paid_left > $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+            $strong_n = $uex->paid_left > $uex->paid_right ? 1 : 2;
             $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
 
-            if (countingQ($user) > 0) {
                 if (isset($strong)){
                     if ($strong > 0 && $strong < 100) {
-                        $bonus = (($pin)*5000)/countingQ($user) ;
+                        $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
                     }elseif ($strong > 100 && $strong <= 15000){
                         if ($strong > 100 && $weak > 100){
-                            $bonus = (($pin)*15000)/countingQ($user) ;
+                            $bonus = (($pin)*15000)/countingQ($user,$strong_n) ;
                         }else{
-                            $bonus = (($pin)*10000)/countingQ($user) ;
+                            $bonus = (($pin)*10000)/countingQ($user,$strong_n) ;
                         }
                     }elseif ($strong > 15000 ){
-                        $bonus = (($pin)*20000)/countingQ($user) ;
+                        $bonus = (($pin)*20000)/countingQ($user,$strong_n) ;
                     }
                 }else{
-                    $bonus = (($pin)*5000)/countingQ($user) ;
+                    $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
                 }    
 
                 $posUser = User::find($refid);
@@ -1448,7 +1370,6 @@ function monolegTree($id, $pin)
                     $trx->save();
 
                 }
-            }
 
             $id = $refid;
         } else {
