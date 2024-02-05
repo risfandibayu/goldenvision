@@ -135,6 +135,7 @@ class PlanController extends Controller
                 }
             }else{
                 $ref_user = $sponsor;
+                $request['position'] =  2;          
             }
            
             $user = Auth::user();
@@ -274,7 +275,7 @@ class PlanController extends Controller
         try {
             
             $pos = getPosition($ref_user->id, $request->position);
-            
+
             if($pos['position'] == 0){
                 return false;
             }
