@@ -1364,6 +1364,8 @@ function updateBV($id, $bv, $details)
 
 function monolegTree($sid, $pin , $posisi)
 {
+    return true;
+
     $fromUser = User::find($sid);
     $gnl = GeneralSetting::first();
     $uexs = UserExtra::where('user_id',$fromUser->id)->first();
