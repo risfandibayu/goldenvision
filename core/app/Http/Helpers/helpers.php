@@ -991,15 +991,16 @@ function updatePaidCount($id)
                 $extra->right += 1;
                 $extra->p_right += 1;
             }
-            $pair = $extra->right > $extra->left ? $extra->right : $extra->left;
-         
-            if($pair >= 4 && $pair <= 100 && $extra->is_gold){
+            $strong = $extra->right > $extra->left ? $extra->right : $extra->left;
+            $low = $extra->right < $extra->left ? $extra->right : $extra->left;
+           
+            if($extra->is_gold){
                 $extra->rank = 1; //M1
-            }elseif($pair > 100 && $pair <= 10000 && $extra->is_gold){
+            }elseif(($strong > 100 && $strong <= 10000) && ($low >= 100 )&& $extra->is_gold){
                  $extra->rank = 2; //M10
-            }elseif($pair > 10000 && $pair <= 15000 && $extra->is_gold){
+            }elseif(($strong > 10000 && $strong <= 15000) && ($low >= 100 ) && $extra->is_gold){
                 $extra->rank = 3; //M15
-            }elseif($pair > 15000 && $extra->is_gold){
+            }elseif(($strong > 15000 && $low >= 100 ) && $extra->is_gold){
                 $extra->rank = 4; //MU
             }
             $extra->save();
@@ -1037,15 +1038,15 @@ function updatePaidCount2($id)
                 $extra->p_right += 1;
             }
             $strong = $extra->right > $extra->left ? $extra->right : $extra->left;
-            $low = $extra->right > $extra->left ? $extra->right : $extra->left;
+            $low = $extra->right < $extra->left ? $extra->right : $extra->left;
            
-            if($strong >= 4 && $strong <= 100 && $extra->is_gold){
+            if($extra->is_gold){
                 $extra->rank = 1; //M1
-            }elseif($strong > 100 && $strong <= 10000 && $extra->is_gold){
+            }elseif(($strong > 100 && $strong <= 10000) && ($low >= 100 )&& $extra->is_gold){
                  $extra->rank = 2; //M10
-            }elseif($strong > 10000 && $strong <= 15000 && $extra->is_gold){
+            }elseif(($strong > 10000 && $strong <= 15000) && ($low >= 100 ) && $extra->is_gold){
                 $extra->rank = 3; //M15
-            }elseif($strong > 15000 && $extra->is_gold){
+            }elseif(($strong > 15000 && $low >= 100 ) && $extra->is_gold){
                 $extra->rank = 4; //MU
             }
             $extra->save();
