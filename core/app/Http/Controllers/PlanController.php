@@ -168,7 +168,7 @@ class PlanController extends Controller
             $waitlistUserID[] =  $user->id;
 
             if (!$checkloop) {
-                monolegTree(auth()->user()->id, $request->qty);
+                monolegTree(auth()->user()->id, 1);
                 fnSingleQualified($sponsor->id,$firstUpline->id);
                 fnDelWaitList(Auth::user()->id);
                 
