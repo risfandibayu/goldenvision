@@ -150,8 +150,8 @@ class SponsorRegisterController extends Controller
             $checkloop = $request->pin > 1  ? true:false;
 
             if(!$checkloop){
+                monolegTree(auth()->user()->id, $request->pin);
                 fnsingleQualified($sponsor->id,$newUser->id);
-                monolegTree(auth()->user()->id, 1);
                 DB::commit();
                 addToLog('Created '.$request->pin.' User & Purchased Plan');
                 $notify[] = ['success', 'Created User & Purchased Plan Successfully'];
@@ -160,6 +160,7 @@ class SponsorRegisterController extends Controller
                 $registeredUser = $request->pin;
                 $firstUpline = $newUser;
                 $position = 2;
+                monolegTree(auth()->user()->id, $request->pin);
                 for ($i=1; $i < $registeredUser; $i++) { 
                     if($i <= 4){
                     $sponsor = $firstUpline;
@@ -232,8 +233,7 @@ class SponsorRegisterController extends Controller
                     $user->save();
                 }
             }
-
-            monolegTree(auth()->user()->id, $request->pin);
+            
             DB::commit();
             addToLog('Created '.$request->pin.' User & Purchased Plan');
             $notify[] = ['success', 'Success Created '.$request->pin.' User & Purchased Plan Each'];

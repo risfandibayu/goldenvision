@@ -1324,7 +1324,7 @@ function monolegTree($sid, $pin)
     $fromUser = User::find($sid);
     $gnl = GeneralSetting::first();
     $uexs = UserExtra::where('user_id',$fromUser->id)->first();
-    $strong_n1 = $uexs->paid_left > $uexs->paid_right ? 1 : 2;
+    $strong_n1 = $uexs->left > $uexs->right ? 1 : 2;
     $get = getPosition($sid, $strong_n1);
     $id = $get['pos_id'];
 
@@ -1337,9 +1337,11 @@ function monolegTree($sid, $pin)
             }
             $user = $fromUser->id;
             $uex = UserExtra::where('user_id',$fromUser->id)->first();
-            $strong = $uex->paid_left > $uex->paid_right ? $uex->paid_left : $uex->paid_right;
-            $strong_n = $uex->paid_left > $uex->paid_right ? 1 : 2;
-            $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
+            $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
+            $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
+            $strong_n = $uex->left > $uex->right ? 1 : 2;
+            $weak = $uex->left < $uex->right ? $uex->left : $uex->right;
+
 
                 if (isset($strong)){
                     if ($strong > 0 && $strong < 100) {
