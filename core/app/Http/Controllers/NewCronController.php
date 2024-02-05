@@ -73,12 +73,12 @@ class NewCronController extends Controller
                                 continue; 
                             }
                         }elseif ($us->is_leader == 0 && $us->is_manag == 0) {
-                            if ($uex->limit > 30 && Carbon::parse($uex->last_getcomm)->format('Y-m-d') == Carbon::now()->toDateString()) {
+                            if ($uex->limit > 20 && Carbon::parse($uex->last_getcomm)->format('Y-m-d') == Carbon::now()->toDateString()) {
                                 # code...
                                 continue; 
                             }
                         }else{
-                            if ($uex->limit > 30 && Carbon::parse($uex->last_getcomm)->format('Y-m-d') == Carbon::now()->toDateString()) {
+                            if ($uex->limit > 20 && Carbon::parse($uex->last_getcomm)->format('Y-m-d') == Carbon::now()->toDateString()) {
                                 # code...
                                 continue; 
                             }
