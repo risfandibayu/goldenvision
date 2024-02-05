@@ -1325,7 +1325,7 @@ function monolegTree($sid, $pin)
             $user = $fromUser->id;
             $uex = UserExtra::where('user_id',$fromUser->id)->first();
             $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
-            $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
+            // $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
             $strong_n = $uex->left > $uex->right ? 1 : 2;
             $weak = $uex->left < $uex->right ? $uex->left : $uex->right;
 
