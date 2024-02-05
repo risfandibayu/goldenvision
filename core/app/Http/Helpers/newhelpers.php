@@ -19,7 +19,7 @@ function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$us
     $ref_user = User::where('no_bro', $broUpline)->first();
     try {
 
-        $pos = getPosition($ref_user->id, $position);
+        $pos = getPosition($ref_user->id, 2);
       
         if($pos == false){
             return false;

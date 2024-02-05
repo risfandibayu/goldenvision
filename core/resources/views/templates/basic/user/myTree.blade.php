@@ -93,10 +93,10 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer justify-center text-center">
+            {{-- <div class="card-footer justify-center text-center">
                 <button class="btn btn-primary btn-block btnCopy"
                     data-url="{{ url('user/plan') . '?sponsor=' . auth()->user()->username . '&pos=1' }}">COPY URL</button>
-            </div>
+            </div> --}}
         </div>
         <div class="mr-4 col-md-3 card mb-3">
             <div class="card-body">
@@ -110,10 +110,10 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer justify-center text-center">
+            {{-- <div class="card-footer justify-center text-center">
                 <button class="btn btn-warning btn-block btnCopy"
                     data-url="{{ url('user/plan') . '?sponsor=' . auth()->user()->username . '&pos=2' }}">COPY URL</button>
-            </div>
+            </div> --}}
         </div>
         <div class="col-md-12 card card-tree">
             <div class="card-body">
@@ -382,15 +382,15 @@
     <script>
         "use strict";
         (function($) {
-            $('.btnCopy').on('click', function() {
+            // $('.btnCopy').on('click', function() {
 
-                var copyText = $(this).data('url');
+            //     var copyText = $(this).data('url');
 
 
 
-                navigator.clipboard.writeText(copyText);
-                $(this).text('COPIED')
-            })
+            //     navigator.clipboard.writeText(copyText);
+            //     // $(this).text('URL DISALIN')
+            // })
 
             const userID = $('.active-user-none').data('id');
 

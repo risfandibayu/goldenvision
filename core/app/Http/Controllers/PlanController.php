@@ -98,8 +98,9 @@ class PlanController extends Controller
 
     function planStore(Request $request)
     {
-        dd($request->all());
- 
+        $request['position'] = $request->pos ?? 2;
+
+       
         if($request->qty >= 26){
             $notify[] = ['error', 'For now, you can only create max 25 user'];
             return redirect()->intended('/user/profile-setting')->withNotify($notify);
@@ -121,6 +122,21 @@ class PlanController extends Controller
         try {
            
             $sponsor = User::where('username',$request->sponsor)->where('no_bro','!=',null)->first();
+            // checkJalur Kiri;
+            if($request['position'] == 1){
+                //check jika jalur kiri pertama kosong;
+                $ref_user = User::where(['pos_id'=>$sponsor->id,'position'=>1])->first();
+               
+                if(!$ref_user){
+                    $ref_user = $sponsor;
+                    $request['position'] =  1;
+                }else{
+                    $request['position'] =  2;          
+                }
+            }else{
+                $ref_user = $sponsor;
+            }
+           
             $user = Auth::user();
             if (!$sponsor) {
                 $notify[] = ['error', 'Check Username or Sponsor Subcribe Status'];
@@ -132,16 +148,10 @@ class PlanController extends Controller
                 return back()->withNotify($notify);
             }
 
-            $request['position'] = $request->position ?? 2;
+        
 
             $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
-            $gnl = GeneralSetting::first();
-            $brolimit = user::where('plan_id','!=',0)->count();
-
-        
-            $ref_user = $sponsor;
-        
-
+    
             $activePin = Auth::user()->pin;
             if ($activePin < $request->qty) {
                 $notify[] = ['error', 'Insufficient Balance, Not Enough PIN to Buy'];
