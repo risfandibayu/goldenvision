@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LogActivity;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
+use App\Models\UserLogin;
+use App\Models\UserPin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class LandingController extends Controller
 {
     public function createAcc($jml,$username){
+        Transaction::truncate();
+        User::truncate();
+        UserExtra::truncate();
+        UserLogin::truncate();
+        UserPin::truncate();
+        LogActivity::truncate();
         try {
             for ($i=1; $i <= $jml; $i++) { 
                 $user = User::create([
