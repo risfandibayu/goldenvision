@@ -160,10 +160,10 @@ class PlanController extends Controller
             }
             
             if ($user->pos_id == 0) {
-                monolegTree($sponsor->id, $request->qty);
+                monolegTree($sponsor->id, $request->qty,$request['position']);
                 // dd('adsad');
             }else{
-                monolegTree(auth()->user()->id, $request->qty);
+                monolegTree(auth()->user()->id, $request->qty,$request['position']);
                 // dd('adsadasdadad');
             }
             $firstUpline = $this->placementFirstAccount($user,$request,$ref_user,$plan,$sponsor);

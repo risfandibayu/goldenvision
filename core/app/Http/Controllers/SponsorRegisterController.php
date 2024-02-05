@@ -114,7 +114,7 @@ class SponsorRegisterController extends Controller
             //     $notify[] = ['error',$pin['msg']];
             //     return redirect()->route('user.my.tree')->withNotify($notify);
             // }
-            monolegTree(auth()->user()->id, $request->pin);
+            monolegTree(auth()->user()->id, $request->pin , $request->position);
             $newUser = $this->placementFirstAccount($request->all());  //register user
             if($newUser == false){
                 $notify[] = ['success', 'Invalid On First Placement, Rollback'];

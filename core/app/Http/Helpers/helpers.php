@@ -1331,14 +1331,18 @@ function updateBV($id, $bv, $details)
 
 }
 
-function monolegTree($sid, $pin)
+function monolegTree($sid, $pin , $posisi)
 {
     $fromUser = User::find($sid);
     $gnl = GeneralSetting::first();
     $uexs = UserExtra::where('user_id',$fromUser->id)->first();
-    $strong_n1 = $uexs->left > $uexs->right ? 1 : 2;
-    $get = getPosition($sid, $strong_n1);
-    $id = $get['pos_id'];
+    // $strong_n1 = $uexs->left > $uexs->right ? 1 : 2;
+    $get = getPosition($sid, $posisi);
+    if ($uexs->is_gold != 1) {
+        $id = $sid;
+    }else{
+        $id = $get['pos_id'];
+    }
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
@@ -1349,38 +1353,17 @@ function monolegTree($sid, $pin)
             }
             $user = $fromUser->id;
             $uex = UserExtra::where('user_id',$fromUser->id)->first();
-            $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
-            // $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
-            $strong_n = $uex->left > $uex->right ? 1 : 2;
-            $weak = $uex->left < $uex->right ? $uex->left : $uex->right;
-
-
-                // if (isset($strong)){
-                //     if ($strong > 0 && $strong < 100) {
-                //         $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
-                //     }elseif ($strong > 100 && $strong <= 15000){
-                //         if ($strong > 100 && $weak > 100){
-                //             $bonus = (($pin)*15000)/countingQ($user,$strong_n) ;
-                //         }else{
-                //             $bonus = (($pin)*10000)/countingQ($user,$strong_n) ;
-                //         }
-                //     }elseif ($strong > 15000 ){
-                //         $bonus = (($pin)*20000)/countingQ($user,$strong_n) ;
-                //     }
-                // }else{
-                //     $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
-                // }   
                 
                 if ($uex->rank == 1 ) {
-                    $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
+                    $bonus = (($pin)*5000) ;
                 }elseif ($uex->rank == 2){
-                    $bonus = (($pin)*10000)/countingQ($user,$strong_n) ;
+                    $bonus = (($pin)*10000) ;
                 }elseif ($uex->rank == 3 ){
-                    $bonus = (($pin)*15000)/countingQ($user,$strong_n) ;
+                    $bonus = (($pin)*15000) ;
                 }elseif ($uex->rank == 4 ){
-                    $bonus = (($pin)*20000)/countingQ($user,$strong_n) ;
+                    $bonus = (($pin)*20000) ;
                 }else{
-                    $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
+                    $bonus = (($pin)*5000) ;
                 }
 
 
