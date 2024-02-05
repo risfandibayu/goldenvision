@@ -1306,7 +1306,7 @@ function updateBV($id, $bv, $details)
 
 }
 
-function monolegTree($sid, $pin)
+function monolegTree($sid, $pin, $posisi = null)
 {
     $fromUser = User::find($sid);
     $gnl = GeneralSetting::first();
@@ -1327,7 +1327,8 @@ function monolegTree($sid, $pin)
             $strong = $uex->paid_left > $uex->paid_right ? $uex->paid_left : $uex->paid_right;
             $strong_n = $uex->paid_left > $uex->paid_right ? 1 : 2;
             $weak = $uex->paid_left < $uex->paid_right ? $uex->paid_left : $uex->paid_right;
-
+            
+            if(empty($uex->strong_leg)){
                 if (isset($strong)){
                     if ($strong > 0 && $strong < 100) {
                         $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
@@ -1343,6 +1344,9 @@ function monolegTree($sid, $pin)
                 }else{
                     $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
                 }    
+            }else{
+                $bonus = (($pin)*5000)/countingQ($id,$posisi) ;
+            }
 
                 $posUser = User::find($refid);
                 $posUserExtra = UserExtra::where('user_id',$refid)->first();
