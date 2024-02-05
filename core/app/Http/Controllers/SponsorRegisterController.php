@@ -221,7 +221,7 @@ class SponsorRegisterController extends Controller
                     );
                     // dd($nextUser);
                     if($nextUser == false){
-                        $notify[] = ['success', 'Invalid On Create Downline, Rollback'];
+                        $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
                         return redirect()->back()->withNotify($notify);
                     }
                     

@@ -89,14 +89,17 @@
                             class="form-control {{ $errors->has('pin') ? 'is-invalid' : '' }}">
                             <option>{{ auth()->user()->pin < 1 ? 'You Have No Pin' : 'Select' }}</option>
                             <option value="1" {{ auth()->user()->pin < 1 ? 'disabled' : '' }}
-                                {{ old('pin') == 1 ? 'selected' : '' }}>1 ID</option>
+                                {{ old('pin') == 1 ? 'selected' : '' }} {{ old('pin') == 1 ? 'selected' : '' }}>1 ID
+                            </option>
                             <option value="5"
-                                {{ auth()->user()->pin < 5 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>5
+                                {{ auth()->user()->pin < 5 ? 'disabled' : '' }}{{ old('pin') == 5 ? 'selected' : '' }}>
+                                5
                                 ID (1
                                 Qualified)
                             </option>
                             <option value="25"
-                                {{ auth()->user()->pin < 25 ? 'disabled' : '' }}{{ old('pin') == 1 ? 'selected' : '' }}>25
+                                {{ auth()->user()->pin < 25 ? 'disabled' : '' }}{{ old('pin') == 25 ? 'selected' : '' }}>
+                                25
                                 ID
                                 (5 Qualified)
                             </option>

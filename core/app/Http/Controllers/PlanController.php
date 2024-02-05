@@ -226,6 +226,7 @@ class PlanController extends Controller
                 );
                 if(!$nextUser){
                     $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
+                    $notify[] = $nextUser;
                     return redirect()->back()->withNotify($notify);
                 }
               
