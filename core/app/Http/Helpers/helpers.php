@@ -1147,6 +1147,35 @@ function findBottomLeg($nodeId)
 
     return $bottomLeg;
 }
+function getQual($sid,$posisi)
+{
+    $fromUser = User::find($sid);
+    $get = getPosition($sid, $posisi);
+    $id = $get['pos_id'];
+    $ids = null;
+    $count = 1; 
+        while ($id != "" || $id != "0") {
+            if (isUserExists($id)) {
+                $posid = getPositionId($id);
+                    if ($posid == "0") {
+                        break;
+                    }
+                    $user = user::where('id',$id)->first();
+                    $posUser = UserExtra::where('user_id',$id)->first();;
+                    if ($posUser->is_gold == 1){
+                        // $count++;
+                        $ids = $posUser->user_id;
+                        break;
+                    }
+                    $id = $posid;
+            } else {
+                break;
+            }
+    }
+    return $ids ;
+
+}
+
 function countingQ($sid,$posisi)
 {
     $fromUser = User::find($sid);
@@ -1343,7 +1372,7 @@ function monolegTree($sid, $pin , $posisi)
     }else{
         $id = $get['pos_id'];
     }
-    $fromUser2 = User::find($get['pos_id']);
+    $fromUser2 = getQual($get['pos_id'],$posisi);
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
@@ -1352,20 +1381,18 @@ function monolegTree($sid, $pin , $posisi)
             if ($refid == "0") {
                 break;
             }
-            $user = $fromUser->id;
-            $user2 = $fromUser2->id;
+            $user = $fromUser2;
+            $user2 = $fromUser2;
             $uex = UserExtra::where('user_id',$fromUser->id)->first();
                 
                 if ($uex->rank == 1 ) {
-                    $bonus = (countingQ($user,$posisi)) ;
+                    $bonus = (($pin)*5000)/(countingQ($user,$posisi)) ;
                 }elseif ($uex->rank == 2){
-                    $bonus = (countingQ($user,$posisi)) ;
+                    $bonus = (($pin)*10000)/(countingQ($user,$posisi)) ;
                 }elseif ($uex->rank == 3 ){
-                    $bonus = (countingQ($user,$posisi)) ;
+                    $bonus = (($pin)*15000)/(countingQ($user,$posisi)) ;
                 }elseif ($uex->rank == 4 ){
-                    $bonus = (countingQ($user,$posisi)) ;
-                }else{
-                    $bonus = (countingQ($user2,$posisi)) ;
+                    $bonus = (($pin)*20000)/(countingQ($user,$posisi)) ;
                 }
 
 
