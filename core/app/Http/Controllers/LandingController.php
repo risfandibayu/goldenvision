@@ -2,15 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LogActivity;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserExtra;
+use App\Models\UserLogin;
+use App\Models\UserPin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class LandingController extends Controller
 {
     public function createAcc($jml,$username){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        Transaction::truncate();
+        User::truncate();
+        UserExtra::truncate();
+        UserLogin::truncate();
+        UserPin::truncate();
+        LogActivity::truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         try {
+            $ser1 = User::create([
+                'firstname' => 'master',
+                'no_bro'    => 'BRO000121',
+                'lastname'  => $username,
+                'email'    => 'acc@masterplan.co.id',
+                'password'  => Hash::make('password'),
+                'username'  => $username,
+                'mobile'    => '12345678910',
+                'plan_id'   => 1,
+                'address'   => [
+                    'address' => '',
+                    'state' => '',
+                    'zip' => '',
+                    'country' => 'Indonesia',
+                    'city' => ''
+                ],
+                'pin'       => 25,
+                'status'    => 1,
+                'ev'        => 1,
+                'sv'        => 1,
+                'ts'        => 0,
+                'tv'        => 1,
+                'new_ps'    => 1,
+
+                ]);
+            UserExtra::create([
+                'user_id' => $ser1->id,
+            ]);
+
             for ($i=1; $i <= $jml; $i++) { 
                 $user = User::create([
                 'firstname' => 'master',
