@@ -1126,14 +1126,11 @@ function countingQ($id)
 {
     $fromUser = User::find($id);
     $count = 0; 
-    if ($id == 1) {
-        return 1;
-    }else{
-
         while ($id != "" || $id != "0") {
             if (isUserExists($id)) {
                 $posid = getPositionId($id);
                     if ($posid == "0") {
+                        $count = 1; 
                         break;
                     }
                     $user = user::where('id',$id)->first();
@@ -1145,7 +1142,6 @@ function countingQ($id)
             } else {
                 break;
             }
-        }
 
         return $count;
     }
