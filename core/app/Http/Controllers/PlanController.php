@@ -168,7 +168,7 @@ class PlanController extends Controller
             $waitlistUserID[] =  $user->id;
 
             if (!$checkloop) {
-                monolegTree(auth()->user()->id, 1);
+                monolegTree(auth()->user()->id, $request->qty);
                 fnSingleQualified($sponsor->id,$firstUpline->id);
                 fnDelWaitList(Auth::user()->id);
                 
@@ -183,6 +183,7 @@ class PlanController extends Controller
 
             $firstUsername =  auth()->user()->username;
 
+            monolegTree(auth()->user()->id, $request->qty);
             for ($i=1; $i < $registeredUser; $i++) { 
                 $mark = false;
                 if($i <= 4){
@@ -257,7 +258,6 @@ class PlanController extends Controller
                
             }
 
-            monolegTree(auth()->user()->id, $request->qty);
             fnDelWaitList(Auth::user()->id);
             DB::commit();
             $notify[] = ['success', 'Purchased ' . $plan->name . 'and Registered New  '.$registeredUser.' Account Successfully'];
