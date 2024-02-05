@@ -158,7 +158,14 @@ class PlanController extends Controller
                 $notify[] = ['error', 'Insufficient Balance, Not Enough PIN to Buy'];
                 return back()->withNotify($notify);
             }
-
+            
+            if ($user->pos_id == 0) {
+                monolegTree($sponsor->id, $request->qty);
+                // dd('adsad');
+            }else{
+                monolegTree(auth()->user()->id, $request->qty);
+                // dd('adsadasdadad');
+            }
             $firstUpline = $this->placementFirstAccount($user,$request,$ref_user,$plan,$sponsor);
             
             if($firstUpline == false){
@@ -168,7 +175,6 @@ class PlanController extends Controller
             $waitlistUserID[] =  $user->id;
 
             if (!$checkloop) {
-                monolegTree(auth()->user()->id, 1,$request['position']);
                 fnSingleQualified($sponsor->id,$firstUpline->id);
                 fnDelWaitList(Auth::user()->id);
                 
@@ -183,7 +189,7 @@ class PlanController extends Controller
 
             $firstUsername =  auth()->user()->username;
 
-            monolegTree(auth()->user()->id, $request->qty,$request['position']);
+            // monolegTree(auth()->user()->id, $request->qty);
             for ($i=1; $i < $registeredUser; $i++) { 
                 $mark = false;
                 if($i <= 4){
