@@ -27,6 +27,12 @@ class PlanController extends Controller
 
     function planIndex()
     {
+        $sponsor = $_GET['sponsor'] ?? '';
+        $pos = $_GET['pos'] ?? false;
+        $findUser = User::with('userExtra')->where('username',$sponsor)->first();
+        $data['sponsor'] = $findUser?->userExtra->is_gold?$findUser:false;
+        $data['pos'] = $pos;
+
         $data['page_title'] = "Plans";
         $data['plans'] = Plan::whereStatus(1)->get();
         return view($this->activeTemplate . '.user.plan', $data);
@@ -92,6 +98,7 @@ class PlanController extends Controller
 
     function planStore(Request $request)
     {
+        dd($request->all());
  
         if($request->qty >= 26){
             $notify[] = ['error', 'For now, you can only create max 25 user'];
