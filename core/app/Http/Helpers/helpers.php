@@ -1183,7 +1183,7 @@ function countingQ($sid,$posisi)
     $fromUser = User::find($sid);
     $get = getPosition($sid, $posisi);
     $id = $get['pos_id'];
-    $count = 1; 
+    $count = 0; 
         while ($id != "" || $id != "0") {
             if (isUserExists($id)) {
                 $posid = getPositionId($id);
