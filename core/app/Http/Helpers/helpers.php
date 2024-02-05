@@ -1370,7 +1370,12 @@ function monolegTree($sid, $pin , $posisi)
     if ($uexs->is_gold != 1) {
         $id = $sid;
     }else{
-        $id = $get['pos_id'];
+        if ($sid == $get['pos_id']) {
+            # code...
+            $id = $get['pos_id'];
+        }else{
+            $id = $sid;
+        }
     }
     $fromUser2 = getQual($get['pos_id'],$posisi);
 
