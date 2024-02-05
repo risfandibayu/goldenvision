@@ -1149,12 +1149,41 @@ function findBottomLeg($nodeId)
 
     return $bottomLeg;
 }
+function getQual($sid,$posisi)
+{
+    $fromUser = User::find($sid);
+    $get = getPosition($sid, $posisi);
+    $id = $get['pos_id'];
+    $ids = null;
+    $count = 1; 
+        while ($id != "" || $id != "0") {
+            if (isUserExists($id)) {
+                $posid = getPositionId($id);
+                    if ($posid == "0") {
+                        break;
+                    }
+                    $user = user::where('id',$id)->first();
+                    $posUser = UserExtra::where('user_id',$id)->first();;
+                    if ($posUser->is_gold == 1){
+                        // $count++;
+                        $ids = $posUser->user_id;
+                        break;
+                    }
+                    $id = $posid;
+            } else {
+                break;
+            }
+    }
+    return $ids ;
+
+}
+
 function countingQ($sid,$posisi)
 {
     $fromUser = User::find($sid);
     $get = getPosition($sid, $posisi);
     $id = $get['pos_id'];
-    $count = 0; 
+    $count = 1; 
         while ($id != "" || $id != "0") {
             if (isUserExists($id)) {
                 $posid = getPositionId($id);
@@ -1333,14 +1362,19 @@ function updateBV($id, $bv, $details)
 
 }
 
-function monolegTree($sid, $pin)
+function monolegTree($sid, $pin , $posisi)
 {
     $fromUser = User::find($sid);
     $gnl = GeneralSetting::first();
     $uexs = UserExtra::where('user_id',$fromUser->id)->first();
-    $strong_n1 = $uexs->left > $uexs->right ? 1 : 2;
-    $get = getPosition($sid, $strong_n1);
-    $id = $get['pos_id'];
+    // $strong_n1 = $uexs->left > $uexs->right ? 1 : 2;
+    $get = getPosition($sid, $posisi);
+    if ($uexs->is_gold != 1) {
+        $id = $sid;
+    }else{
+        $id = $get['pos_id'];
+    }
+    $fromUser2 = getQual($get['pos_id'],$posisi);
 
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
@@ -1349,29 +1383,20 @@ function monolegTree($sid, $pin)
             if ($refid == "0") {
                 break;
             }
-            $user = $fromUser->id;
+            $user = $fromUser2;
+            $user2 = $fromUser2;
             $uex = UserExtra::where('user_id',$fromUser->id)->first();
-            $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
-            $strong = $uex->left > $uex->right ? $uex->left : $uex->right;
-            $strong_n = $uex->left > $uex->right ? 1 : 2;
-            $weak = $uex->left < $uex->right ? $uex->left : $uex->right;
+                
+                if ($uex->rank == 1 ) {
+                    $bonus = (($pin)*5000)/(countingQ($user,$posisi)) ;
+                }elseif ($uex->rank == 2){
+                    $bonus = (($pin)*10000)/(countingQ($user,$posisi)) ;
+                }elseif ($uex->rank == 3 ){
+                    $bonus = (($pin)*15000)/(countingQ($user,$posisi)) ;
+                }elseif ($uex->rank == 4 ){
+                    $bonus = (($pin)*20000)/(countingQ($user,$posisi)) ;
+                }
 
-
-                if (isset($strong)){
-                    if ($strong > 0 && $strong < 100) {
-                        $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
-                    }elseif ($strong > 100 && $strong <= 15000){
-                        if ($strong > 100 && $weak > 100){
-                            $bonus = (($pin)*15000)/countingQ($user,$strong_n) ;
-                        }else{
-                            $bonus = (($pin)*10000)/countingQ($user,$strong_n) ;
-                        }
-                    }elseif ($strong > 15000 ){
-                        $bonus = (($pin)*20000)/countingQ($user,$strong_n) ;
-                    }
-                }else{
-                    $bonus = (($pin)*5000)/countingQ($user,$strong_n) ;
-                }    
 
                 $posUser = User::find($refid);
                 $posUserExtra = UserExtra::where('user_id',$refid)->first();

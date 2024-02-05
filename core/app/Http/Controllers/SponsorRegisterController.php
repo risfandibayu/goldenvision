@@ -114,6 +114,7 @@ class SponsorRegisterController extends Controller
             //     $notify[] = ['error',$pin['msg']];
             //     return redirect()->route('user.my.tree')->withNotify($notify);
             // }
+            monolegTree(auth()->user()->id, $request->pin , $request->position);
             $newUser = $this->placementFirstAccount($request->all());  //register user
             if($newUser == false){
                 $notify[] = ['success', 'Invalid On First Placement, Rollback'];
@@ -150,7 +151,6 @@ class SponsorRegisterController extends Controller
             $checkloop = $request->pin > 1  ? true:false;
 
             if(!$checkloop){
-                monolegTree(auth()->user()->id, $request->pin);
                 fnsingleQualified($sponsor->id,$newUser->id);
                 DB::commit();
                 addToLog('Created '.$request->pin.' User & Purchased Plan');
@@ -160,7 +160,7 @@ class SponsorRegisterController extends Controller
                 $registeredUser = $request->pin;
                 $firstUpline = $newUser;
                 $position = 2;
-                monolegTree(auth()->user()->id, $request->pin);
+                // monolegTree(auth()->user()->id, $request->pin);
                 for ($i=1; $i < $registeredUser; $i++) { 
                     if($i <= 4){
                     $sponsor = $firstUpline;
