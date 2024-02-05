@@ -1357,15 +1357,15 @@ function monolegTree($sid, $pin , $posisi)
             $uex = UserExtra::where('user_id',$fromUser->id)->first();
                 
                 if ($uex->rank == 1 ) {
-                    $bonus = (($pin)*5000)/(countingQ($user,$posisi)) ;
+                    $bonus = (countingQ($user,$posisi)) ;
                 }elseif ($uex->rank == 2){
-                    $bonus = (($pin)*10000)/(countingQ($user,$posisi)) ;
+                    $bonus = (countingQ($user,$posisi)) ;
                 }elseif ($uex->rank == 3 ){
-                    $bonus = (($pin)*15000)/(countingQ($user,$posisi)) ;
+                    $bonus = (countingQ($user,$posisi)) ;
                 }elseif ($uex->rank == 4 ){
-                    $bonus = (($pin)*20000)/(countingQ($user,$posisi)) ;
+                    $bonus = (countingQ($user,$posisi)) ;
                 }else{
-                    $bonus = (($pin)*5000)/(countingQ($user2,$posisi)) ;
+                    $bonus = (countingQ($user2,$posisi)) ;
                 }
 
 
