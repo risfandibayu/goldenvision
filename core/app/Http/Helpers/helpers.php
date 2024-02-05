@@ -1403,8 +1403,8 @@ function monolegTree($sid, $pin , $posisi)
                 }
 
 
-                $posUser = User::find($refid);
-                $posUserExtra = UserExtra::where('user_id',$refid)->first();
+                $posUser = User::find($id);
+                $posUserExtra = UserExtra::where('user_id',$id)->first();
                 if ($posUserExtra->is_gold == 1) {
                     # code...
                     $flushOut = '';
