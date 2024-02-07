@@ -452,13 +452,20 @@ class NewCronController extends Controller
     }
 
     public function checkSponsor(){
-       $id = [54,63,70,73,76,627,629,631,99,527];
-       $uex = UserExtra::whereIn('user_id',$id)->get();
-       foreach ($uex as $key => $value) {
-            $value->is_gold = 0;
-            $value->save();
-       }      
-       return true;
+        $sponsor = User::where('comp',0)->get();
+        foreach ($sponsor as $key => $value) {
+          
+            $update = checkQuali($value->id);
+        }
+        return 'success';
+    //    $id = [54,63,70,73,76,627,629,631,99,527];
+    //    $uex = UserExtra::whereIn('user_id',$id)->get();
+    //    foreach ($uex as $key => $value) {
+    //         $value->is_gold = 0;
+    //         $value->save();
+    //    }      
+    //    return true;
+    //    $isGoldUser = User::join 
        $referralCounts = User::groupBy('ref_id')
             ->selectRaw('ref_id, count(*) as count')
             ->where('ref_id','!=',0)

@@ -4,12 +4,14 @@ use App\Models\AdminNotification;
 use App\Models\GeneralSetting;
 use App\Models\Plan;
 use App\Models\rekening;
+use App\Models\Test;
 use App\Models\User;
 use App\Models\UserExtra;
 use App\Models\UserLogin;
 use App\Models\UserPin;
 use App\Models\WaitList;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -266,4 +268,20 @@ function fnSingleQualified($sponsorID,$userID){
 
     return true;
 
+}
+
+function checkQuali($user_id){
+    $sponsor = User::where('ref_id',$user_id)->where('comp',0)->get();
+    $msg = [];
+    if($sponsor->count() >=4){
+        $ex = UserExtra::where('user_id',$user_id)->update(['is_gold'=>1]);
+        $msg[] = 'update to quali id: ' .$user_id;
+       
+    }else{
+        $ex = UserExtra::where('user_id',$user_id)->update(['is_gold'=>0]);
+        $msg[] = 'update to not quali id: ' .$user_id;
+       
+    }
+    Test::create(['test'=>json_encode($msg)]);
+    return true;
 }
