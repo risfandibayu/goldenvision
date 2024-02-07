@@ -272,16 +272,17 @@ function fnSingleQualified($sponsorID,$userID){
 
 function checkQuali($user_id){
     $sponsor = User::where('ref_id',$user_id)->where('comp',0)->get();
-    $msg = [];
+    $msg;
     if($sponsor->count() >=4){
         $ex = UserExtra::where('user_id',$user_id)->update(['is_gold'=>1]);
-        $msg[] = 'update to quali id: ' .$user_id;
+        $msg = 'update to quali id: ' .$user_id;
+        $sts = 1;
        
     }else{
         $ex = UserExtra::where('user_id',$user_id)->update(['is_gold'=>0]);
-        $msg[] = 'update to not quali id: ' .$user_id;
-       
+        $msg = 'update to not quali id: ' .$user_id;
+        $sts = 0;
     }
-    Test::create(['test'=>json_encode($msg)]);
+    Test::create(['test'=>$msg,'user_id'=>$user_id,'status'=>$sts]);
     return true;
 }
