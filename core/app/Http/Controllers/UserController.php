@@ -857,9 +857,9 @@ class UserController extends Controller
 
     function searchUser(Request $request)
     {
-        $trans_user = User::where('username', $request->username)->orWhere('email', $request->username)->count();
-        if ($trans_user == 1) {
-            return response()->json(['success' => true]);
+        $trans_user = User::with('userExtra')->where('username', $request->username)->orWhere('email', $request->username)->first();
+        if ($trans_user) {
+            return response()->json(['success' => true,'data'=>$trans_user->userExtra->is_gold?true:false]);
         } else {
             return response()->json(['success' => false]);
         }

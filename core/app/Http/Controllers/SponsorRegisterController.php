@@ -114,6 +114,7 @@ class SponsorRegisterController extends Controller
             //     $notify[] = ['error',$pin['msg']];
             //     return redirect()->route('user.my.tree')->withNotify($notify);
             // }
+            monolegTree(auth()->user()->id, $request->pin , $request->position);
             $newUser = $this->placementFirstAccount($request->all());  //register user
             if($newUser == false){
                 $notify[] = ['success', 'Invalid On First Placement, Rollback'];
@@ -146,8 +147,7 @@ class SponsorRegisterController extends Controller
                 $notify[] = ['success', 'Invalid On Subscibe Plan, Rollback'];
                 return redirect()->back()->withNotify($notify);
             }
-            updateCycleNasional($newUser->id);
-            
+            updateCycleNasional($newUser->id);            
             $checkloop = $request->pin > 1  ? true:false;
 
             if(!$checkloop){
@@ -160,40 +160,43 @@ class SponsorRegisterController extends Controller
                 $registeredUser = $request->pin;
                 $firstUpline = $newUser;
                 $position = 2;
+                // monolegTree(auth()->user()->id, $request->pin);
                 for ($i=1; $i < $registeredUser; $i++) { 
                     if($i <= 4){
-                        $sponsor = $firstUpline;
-                        $mark = 1;
-                        // 02: 2,3,4,5
+                    $sponsor = $firstUpline;
+                    $mark = true;
+                    // 02: 2,3,4,5
                     }
                     if ($i >= 5 && $i <= 8) {
-                        $sponsor = User::where('username',$newUser->username  . 2)->first();
-                        $mark = 2;
+                        $sponsor = User::where('username',$firstUpline .'_'. 2)->first();
+                    
+                        $mark = true;
                         // 03: 6,7,8,9
                     }
                     if ($i >= 9  && $i <= 12) {
-                        $mark = 3;
-                        $sponsor = User::where('username',$newUser->username  . 3)->first();
+                        $mark = true;
+                        $sponsor = User::where('username',$firstUpline .'_'. 3)->first();
                         // 04: 10,11,12,13,14
                     }
                     if ($i >= 13 && $i <= 16) {
-                        $mark =4;
-                        $sponsor = User::where('username',$newUser->username  . 4)->first();
+                        $mark = true;
+                        $sponsor = User::where('username',$firstUpline .'_'. 4)->first();
                         // 05: 15,16,17,18,19
                     }
                     if ($i >= 17 && $i<= 20) {
-                        $mark = 5;
-                        $sponsor = User::where('username',$newUser->username  . 5)->first();
+                        $mark = true;
+                        $sponsor = User::where('username',$firstUpline .'_'. 5)->first();
                         // 06: 20,21,22,13,24
                     }
                     if ($i >= 21 && $i<= 24) {
-                        $sponsor = User::where('username',$newUser->username  . 6)->first();
+                        $sponsor = User::where('username',$firstUpline .'_'. 6)->first();
+                        $mark = true;
                     }
                     $firstUpline = User::find($firstUpline->id);
                     $bro_upline = $firstUpline->no_bro;
                     $firstnameNewUser = $firstUpline->firstname;
                     $lastnameNewUser = $firstUpline->lastname;
-                    $usernameNewUser = $firstUpline->username . $i+1;
+                    $usernameNewUser = $firstUpline->username .'_'. $i+1;
                     $emailNewUser = $firstUpline->email;
                     $phoneNewUser = $firstUpline->mobile;
                     $pinNewUser = 1;
@@ -217,8 +220,9 @@ class SponsorRegisterController extends Controller
                         $newBankAcc,
                         $newBankNo
                     );
+                    // dd($nextUser);
                     if($nextUser == false){
-                        $notify[] = ['success', 'Invalid On Create Downline, Rollback'];
+                        $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
                         return redirect()->back()->withNotify($notify);
                     }
                     
@@ -229,6 +233,7 @@ class SponsorRegisterController extends Controller
                     $user->save();
                 }
             }
+            
             DB::commit();
             addToLog('Created '.$request->pin.' User & Purchased Plan');
             $notify[] = ['success', 'Success Created '.$request->pin.' User & Purchased Plan Each'];

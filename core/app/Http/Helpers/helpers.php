@@ -991,6 +991,18 @@ function updatePaidCount($id)
                 $extra->right += 1;
                 $extra->p_right += 1;
             }
+            $strong = $extra->right > $extra->left ? $extra->right : $extra->left;
+            $low = $extra->right < $extra->left ? $extra->right : $extra->left;
+           
+            if($extra->is_gold){
+                $extra->rank = 1; //M1
+            }elseif(($strong > 100 && $strong <= 10000) && ($low >= 100 )&& $extra->is_gold){
+                 $extra->rank = 2; //M10
+            }elseif(($strong > 10000 && $strong <= 15000) && ($low >= 100 ) && $extra->is_gold){
+                $extra->rank = 3; //M15
+            }elseif(($strong > 15000 && $low >= 100 ) && $extra->is_gold){
+                $extra->rank = 4; //MU
+            }
             $extra->save();
             $id = $posid;
         } else {
@@ -1016,11 +1028,26 @@ function updatePaidCount2($id)
                 $extra->paid_left += 1;
                 $extra->left += 1;
                 $extra->p_left += 1;
+                // check rank
+                
+               
             } else {
                 // $extra->free_right -= 1;
                 $extra->paid_right += 1;
                 $extra->right += 1;
                 $extra->p_right += 1;
+            }
+            $strong = $extra->right > $extra->left ? $extra->right : $extra->left;
+            $low = $extra->right < $extra->left ? $extra->right : $extra->left;
+           
+            if($extra->is_gold){
+                $extra->rank = 1; //M1
+            }elseif(($strong > 100 && $strong <= 10000) && ($low >= 100 )&& $extra->is_gold){
+                 $extra->rank = 2; //M10
+            }elseif(($strong > 10000 && $strong <= 15000) && ($low >= 100 ) && $extra->is_gold){
+                $extra->rank = 3; //M15
+            }elseif(($strong > 15000 && $low >= 100 ) && $extra->is_gold){
+                $extra->rank = 4; //MU
             }
             $extra->save();
             $id = $posid;
@@ -1041,28 +1068,140 @@ function getRefId($id)
     }
 }
 
-function countingQ($id)
+function monolegSaving($id, $amount, $username, $type)
 {
     $fromUser = User::find($id);
-    $count = 0; 
+    $gnl = GeneralSetting::first();
+    
+
     while ($id != "" || $id != "0") {
         if (isUserExists($id)) {
             $posid = getRefId($id);
-                if ($posid == "0") {
-                    break;
+            if ($posid == "0") {
+                break;
+            }
+
+            // $username = User::where('id',$id)->first();
+            $posUser = User::find($posid);
+            $posUserExtra = UserExtra::find($posid);
+            $strong = $posUserExtra->paid_left > $posUserExtra->paid_right ? $posUserExtra->paid_left : $posUserExtra->paid_right;
+            // $count++;
+            if ($posUserExtra->is_gold == 1) {
+
+                // $posUserExtra->monoleg_downline += $amount;
+                // $posUserExtra->save();
+                $payment = User::find($posUserExtra->user_id);
+                $payment->balance += $amount;
+                $payment->save();
+
+                $trx = new Transaction();
+                $trx->user_id = $payment->id;
+                $trx->amount = $amount;
+                $trx->charge = 0;
+                $trx->trx_type = '+';
+                $trx->post_balance = $payment->balance;
+                $trx->remark = 'monoleg_commission_downline';
+                $trx->trx = getTrx();
+                $trx->details = 'Paid Monoleg Commission from downline '.$username.' : ' . $amount . ' ' . $gnl->cur_text;
+                $trx->save();  
+
+                if ($posUser->position == 1) {
+                    $posUserExtra->strong_leg = 'kiri';
+                    $posUserExtra->monoleg_left = $strong;
+                    $posUserExtra->save();        
+                }else {
+                    $posUserExtra->strong_leg = 'kanan';
+                    $posUserExtra->monoleg_right = $strong;
+                    $posUserExtra->save();
                 }
-                $user = user::where('id',$id)->first();
-                $posUser = UserExtra::find($posid);
-                if ($posUser->is_gold == 1){
-                    $count++;
-                }
-                $id = $posid;
+            }
+            $id = $posid;
         } else {
             break;
         }
     }
 
-    return $count == 0 ? 1 : 1;
+}
+
+function findBottomLeg($nodeId)
+{
+    $bottomLeg = [];
+    $visited = [];
+
+    // Mencari kaki terbawah secara rekursif
+    $findBottomLegRecursive = function ($nodeId) use (&$bottomLeg, &$visited, &$findBottomLegRecursive) {
+        $visited[] = $nodeId;
+        $children = user::where('pos_id', $nodeId)->get();
+
+        // Jika node tidak memiliki anak, itu adalah kaki terbawah
+        if ($children->isEmpty()) {
+            $bottomLeg[] = $nodeId;
+        } else {
+            foreach ($children as $child) {
+                if (!in_array($child->id, $visited)) {
+                    $findBottomLegRecursive($child->id);
+                }
+            }
+        }
+    };
+
+    $findBottomLegRecursive($nodeId);
+
+    return $bottomLeg;
+}
+function getQual($sid,$posisi)
+{
+    $fromUser = User::find($sid);
+    $get = getPosition($sid, $posisi);
+    $id = $get['pos_id'];
+    $ids = null;
+    $count = 1; 
+        while ($id != "" || $id != "0") {
+            if (isUserExists($id)) {
+                $posid = getPositionId($id);
+                    if ($posid == "0") {
+                        break;
+                    }
+                    $user = user::where('id',$id)->first();
+                    $posUser = UserExtra::where('user_id',$id)->first();;
+                    if ($posUser->is_gold == 1){
+                        // $count++;
+                        $ids = $posUser->user_id;
+                        break;
+                    }
+                    $id = $posid;
+            } else {
+                break;
+            }
+    }
+    return $ids ;
+
+}
+
+function countingQ($sid,$posisi)
+{
+    $fromUser = User::find($sid);
+    $get = getPosition($sid, $posisi);
+    $id = $get['pos_id'];
+    $count = 0; 
+        while ($id != "" || $id != "0") {
+            if (isUserExists($id)) {
+                $posid = getPositionId($id);
+                    if ($posid == "0") {
+                        break;
+                    }
+                    $user = user::where('id',$id)->first();
+                    $posUser = UserExtra::where('user_id',$id)->first();;
+                    if ($posUser->is_gold == 1){
+                        $count++;
+                    }
+                    $id = $posid;
+            } else {
+                break;
+            }
+    }
+    return $count <= 0 ? 1 : $count ;
+
 }
 
 function monolegBonus($id,$bonus, $strong_text,$strong)
@@ -1145,7 +1284,7 @@ function userRefaDay($id){
     ->where('user_id', $id)
     ->count();
 
-    return $ref;
+    return $ref ?? 0;
 }
 
 function updatePaidCount3($id, $count)
@@ -1216,6 +1355,85 @@ function updateBV($id, $bv, $details)
                 $bvlog->save();
             }
             $id = $posid;
+        } else {
+            break;
+        }
+    }
+
+}
+
+function monolegTree($sid, $pin , $posisi)
+{
+    return true;
+
+    $fromUser = User::find($sid);
+    $gnl = GeneralSetting::first();
+    $uexs = UserExtra::where('user_id',$fromUser->id)->first();
+    // $strong_n1 = $uexs->left > $uexs->right ? 1 : 2;
+    $get = getPosition($sid, $posisi);
+    // if ($uexs->is_gold != 1) {
+    //     $id = $sid;
+    // }else{
+    //     if ($sid == $get['pos_id']) {
+    //         # code...
+    //         $id = $get['pos_id'];
+    //     }else{
+    //         $id = $sid;
+    //     }
+    // }
+    $fromUser2 = getQual($get['pos_id'],$posisi);
+    $id = $fromUser2;
+
+    while ($id != "" || $id != "0") {
+        if (isUserExists($id)) {
+            // $refid = getRefId($id);
+            $refid = getPositionId($id);
+            if ($refid == "0") {
+                break;
+            }
+            $user = $fromUser2;
+            $user2 = $fromUser2;
+            $uex = UserExtra::where('user_id',$fromUser->id)->first();
+                
+                if ($uex->rank == 1 ) {
+                    $bonus = (($pin)*5000)/(countingQ($user,$posisi)) ;
+                }elseif ($uex->rank == 2){
+                    $bonus = (($pin)*10000)/(countingQ($user,$posisi)) ;
+                }elseif ($uex->rank == 3 ){
+                    $bonus = (($pin)*15000)/(countingQ($user,$posisi)) ;
+                }elseif ($uex->rank == 4 ){
+                    $bonus = (($pin)*20000)/(countingQ($user,$posisi)) ;
+                }
+
+
+                $posUser = User::find($id);
+                $posUserExtra = UserExtra::where('user_id',$id)->first();
+                if ($posUserExtra->is_gold == 1) {
+                    # code...
+                    $flushOut = '';
+                    if ($bonus > 2500000) {
+                        $flushOut = '(Flush Out)';
+                        $bonus = 2500000;
+                    }                           
+
+                    $payment = User::find($posUserExtra->user_id);
+                    $payment->balance += $bonus;
+                    $payment->save();
+
+                    $trx = new Transaction();
+                    $trx->user_id = $payment->id;
+                    $trx->amount = $bonus;
+                    $trx->charge = 0;
+                    $trx->trx_type = '+';
+                    $trx->post_balance = $payment->balance;
+                    $trx->remark = 'monoleg_commission';
+                    $trx->trx = getTrx();
+                    $trx->details = $flushOut.' Paid Monoleg Commission : ' . $bonus . ' ' . $gnl->cur_text;
+                    $trx->save();
+
+                }
+
+            $id = $refid;
         } else {
             break;
         }
@@ -1653,7 +1871,7 @@ function showSingleUserinTree($resp)
     } else {
          if($upline){
              
-             if ($upline == auth()->user()->no_bro && auth()->user()->userExtra->is_gold) {
+             if ($upline == auth()->user()->no_bro && auth()->user()->userExtra->is_gold || $pos == 2) {
                 $img = getImage('assets/images/add2.jpg', null, true);
                 # code...
                 $addList = 'btnUser';
@@ -1782,14 +2000,15 @@ function showSingleUserNoLine($resp)
         // $res .= "<p class=\" user-btn\" style=\"padding-top:0px;\"><a class=\"btn btn-sm\" style=\"background-color:#63bbf3;color:black;\" href=\"$hisTree\" style=\"position: absolute; z-index:-1;\">Explore Tree</a></p>";
 
     } else {
-        if($upline){
-              $img = getImage('assets/images/', null, true);
-            // $img = getImage('assets/images/rm.png', null, true);
-            $addList = 'noUser';
-        }else{
-            $img = getImage('assets/images/', null, true);
-            $addList = 'noUser';
-        }
+            if ($uname != '' &&  $pos == 2) {
+                $img = getImage('assets/images/add2.jpg', null, true);
+                # code...
+                $addList = 'btnUser';
+            }else{
+                $img = getImage('assets/images/', null, true);
+
+                $addList = 'noUser';
+            }
         $res .= '<div class="user '.$addList.' " data-upline="'.$upline.'" data-pos="'.$pos.'" data-up="'.$uname.'" type="button">';
         // $res .= '<div class="user btnUser" type="button">';
         $res .= '<img src="'.$img.'" alt="*"  class="no-user imgUser'.$pos.$upline.'">';

@@ -19,7 +19,7 @@ function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$us
     $ref_user = User::where('no_bro', $broUpline)->first();
     try {
 
-        $pos = getPosition($ref_user->id, $position);
+        $pos = getPosition($ref_user->id, 2);
       
         if($pos == false){
             return false;
@@ -219,6 +219,10 @@ function fnDelWaitList($userID){
 }
 function fnSingleQualified($sponsorID,$userID){
     $sponsor = User::where('ref_id',$sponsorID)->get();
+    if($sponsor->count() >=4){
+        $ex = UserExtra::where('user_id',$sponsorID)->update(['is_gold'=>1]);
+        return true;
+    }
 
     if($sponsor->count() <= 3){
         return false;

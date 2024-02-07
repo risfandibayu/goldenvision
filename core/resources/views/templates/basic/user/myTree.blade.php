@@ -2,14 +2,89 @@
 
 @push('style')
     <link href="{{ asset('assets/admin/css/tree.css') }}" rel="stylesheet">
+    <style>
+        .alert {
+            position: relative;
+            top: 10;
+            left: 0;
+            width: auto;
+            height: auto;
+            padding: 10px;
+            margin: 10px;
+            line-height: 1.8;
+            border-radius: 5px;
+            cursor: hand;
+            cursor: pointer;
+            font-family: sans-serif;
+            font-weight: 400;
+        }
+
+        .alertCheckbox {
+            display: none;
+        }
+
+        :checked+.alert {
+            display: none;
+        }
+
+        .alertText {
+            display: table;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .alertClose {
+            float: right;
+            padding-top: 5px;
+            font-size: 10px;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .info {
+            background-color: #EEE;
+            border: 1px solid #DDD;
+            color: #999;
+        }
+
+        .success {
+            background-color: #EFE;
+            border: 1px solid #DED;
+            color: #9A9;
+        }
+
+        .notice {
+            background-color: #EFF;
+            border: 1px solid #DEE;
+            color: #9AA;
+        }
+
+        .warning {
+            background-color: #FDF7DF;
+            border: 1px solid #FEEC6F;
+            color: #C9971C;
+        }
+
+        .error {
+            background-color: #FEE;
+            border: 1px solid #EDD;
+            color: #A66;
+        }
+    </style>
 @endpush
 
 @section('panel')
     <div class="row d-flex justify-content-center">
+
         <div class="mr-4 col-md-3 card mb-3">
+
             <div class="card-body">
                 <h4 class="text-center">Last Level Left</h4>
             </div>
+
             <div class="card-body">
                 <div class="row text-center justify-content-center">
                     <!-- <div class="col"> -->
@@ -18,6 +93,10 @@
                     </div>
                 </div>
             </div>
+            {{-- <div class="card-footer justify-center text-center">
+                <button class="btn btn-primary btn-block btnCopy"
+                    data-url="{{ url('user/plan') . '?sponsor=' . auth()->user()->username . '&pos=1' }}">COPY URL</button>
+            </div> --}}
         </div>
         <div class="mr-4 col-md-3 card mb-3">
             <div class="card-body">
@@ -31,6 +110,10 @@
                     </div>
                 </div>
             </div>
+            {{-- <div class="card-footer justify-center text-center">
+                <button class="btn btn-warning btn-block btnCopy"
+                    data-url="{{ url('user/plan') . '?sponsor=' . auth()->user()->username . '&pos=2' }}">COPY URL</button>
+            </div> --}}
         </div>
         <div class="col-md-12 card card-tree">
             <div class="card-body">
@@ -299,6 +382,16 @@
     <script>
         "use strict";
         (function($) {
+            // $('.btnCopy').on('click', function() {
+
+            //     var copyText = $(this).data('url');
+
+
+
+            //     navigator.clipboard.writeText(copyText);
+            //     // $(this).text('URL DISALIN')
+            // })
+
             const userID = $('.active-user-none').data('id');
 
             $('.btnSeeUser').on('click', function() {

@@ -27,6 +27,12 @@ class PlanController extends Controller
 
     function planIndex()
     {
+        $sponsor = $_GET['sponsor'] ?? '';
+        $pos = $_GET['pos'] ?? false;
+        $findUser = User::with('userExtra')->where('username',$sponsor)->first();
+        $data['sponsor'] = $findUser?->userExtra->is_gold?$findUser:false;
+        $data['pos'] = $pos;
+
         $data['page_title'] = "Plans";
         $data['plans'] = Plan::whereStatus(1)->get();
         return view($this->activeTemplate . '.user.plan', $data);
@@ -92,7 +98,9 @@ class PlanController extends Controller
 
     function planStore(Request $request)
     {
- 
+        $request['position'] = $request->pos ?? 2;
+
+       
         if($request->qty >= 26){
             $notify[] = ['error', 'For now, you can only create max 25 user'];
             return redirect()->intended('/user/profile-setting')->withNotify($notify);
@@ -114,6 +122,22 @@ class PlanController extends Controller
         try {
            
             $sponsor = User::where('username',$request->sponsor)->where('no_bro','!=',null)->first();
+            // checkJalur Kiri;
+            if($request['position'] == 1){
+                //check jika jalur kiri pertama kosong;
+                $ref_user = User::where(['pos_id'=>$sponsor->id,'position'=>1])->first();
+               
+                if(!$ref_user){
+                    $ref_user = $sponsor;
+                    $request['position'] =  1;
+                }else{
+                    $request['position'] =  2;          
+                }
+            }else{
+                $ref_user = $sponsor;
+                $request['position'] =  2;          
+            }
+           
             $user = Auth::user();
             if (!$sponsor) {
                 $notify[] = ['error', 'Check Username or Sponsor Subcribe Status'];
@@ -121,26 +145,27 @@ class PlanController extends Controller
                 return back()->withNotify($notify);
             }
             if($sponsor->id  ==  $user->id){
-                $notify[] = ['error', 'Invalid Sponsor, you cant not reffer your self'];
+                $notify[] = ['error', 'Invalid Sponsor, you cant not reffer yourself'];
                 return back()->withNotify($notify);
             }
 
-            $request['position'] = $request->position ?? 2;
+        
 
             $plan = Plan::where('id', $request->plan_id)->where('status', 1)->firstOrFail();
-            $gnl = GeneralSetting::first();
-            $brolimit = user::where('plan_id','!=',0)->count();
-
-        
-            $ref_user = $sponsor;
-        
-
+    
             $activePin = Auth::user()->pin;
             if ($activePin < $request->qty) {
                 $notify[] = ['error', 'Insufficient Balance, Not Enough PIN to Buy'];
                 return back()->withNotify($notify);
             }
-
+            
+            if ($user->pos_id == 0) {
+                monolegTree($sponsor->id, $request->qty,$request['position']);
+                // dd('adsad');
+            }else{
+                monolegTree(auth()->user()->id, $request->qty,$request['position']);
+                // dd('adsadasdadad');
+            }
             $firstUpline = $this->placementFirstAccount($user,$request,$ref_user,$plan,$sponsor);
             
             if($firstUpline == false){
@@ -164,6 +189,7 @@ class PlanController extends Controller
 
             $firstUsername =  auth()->user()->username;
 
+            // monolegTree(auth()->user()->id, $request->qty);
             for ($i=1; $i < $registeredUser; $i++) { 
                 $mark = false;
                 if($i <= 4){
@@ -225,6 +251,7 @@ class PlanController extends Controller
                 );
                 if(!$nextUser){
                     $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
+                    $notify[] = $nextUser;
                     return redirect()->back()->withNotify($notify);
                 }
               
@@ -254,10 +281,14 @@ class PlanController extends Controller
         try {
             
             $pos = getPosition($ref_user->id, $request->position);
+
+            if($pos['position'] == 0){
+                return false;
+            }
             $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
             if($wait){
                 return false;
-                sleep(rand(3,6));
+                sleep(rand(1,6));
                 $pos = getPosition($ref_user->id, $request->position);
             }
             $user->no_bro           = generateUniqueNoBro();

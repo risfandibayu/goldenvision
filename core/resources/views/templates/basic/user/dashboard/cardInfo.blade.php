@@ -29,12 +29,18 @@
         </div>
     </div> --}}
     <div class="col-xl-6 col-lg-6 col-sm-12 mb-30 text-center">
+
         <div class="dashboard-w1 h-100 w-100 bg--15 b-radius--10 box-shadow">
+
             <div class="icon">
                 <i class="la la-github"></i>
+                {{-- <h1>M1</h1> --}}
             </div>
-            <div class="details">
+            <div class="details justify-content-end">
                 <div class="numbers">
+                    {{-- <div class="btn btn-danger" style="width: 10px">
+                        M1
+                    </div> --}}
                     <span class="amount">Selamat Datang, {{ auth()->user()->username }}</span>
                 </div>
                 <div class="desciption">
@@ -60,7 +66,8 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{ nb(getAmount(auth()->user()->balance)) }}</span>
+                    <span class="amount">0</span>
+                    {{-- <span class="amount">{{ nb(getAmount(auth()->user()->balance)) }}</span> --}}
                     <span class="currency-sign">{{ $general->cur_text }}</span>
                 </div>
                 <div class="desciption">
@@ -95,7 +102,7 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+    {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--10 b-radius--10 box-shadow">
             <div class="icon">
                 <i class="las la-cloud-download-alt"></i>
@@ -113,7 +120,7 @@
             <a href="{{ route('user.report.withdraw') }}"
                 class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
-    </div>
+    </div> --}}
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--teal b-radius--10 box-shadow">
             <div class="icon">
@@ -143,7 +150,7 @@
                     <span class="amount">{{ $pendingWithdraw }}</span>
                 </div>
                 <div class="desciption">
-                    <span class="text--small">@lang('Pending Withdraw')</span>
+                    <span class="text--small">@lang('Wating Withdraw')</span>
                 </div>
             </div>
             <br>
@@ -152,7 +159,7 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+    {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--danger b-radius--10 box-shadow">
             <div class="icon">
                 <i class="las la-ban"></i>
@@ -169,27 +176,9 @@
             <a href="{{ route('user.report.withdraw') }}?type=reject"
                 class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-        <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
-            <div class="icon">
-                <i class="las la-money-bill-wave"></i>
-            </div>
-            <div class="details">
-                <div class="numbers">
-                    <span class="amount">{{ nb(getAmount(auth()->user()->total_invest)) }}</span>
-                    <span class="currency-sign">{{ $general->cur_text }}</span>
-                </div>
-                <div class="desciption">
-                    <span class="text--small">@lang('Total Invest')</span>
-                </div>
-            </div>
-            <br>
-            <a href="{{ route('user.report.invest') }}"
-                class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
-        </div>
-    </div>
+
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--info b-radius--10 box-shadow">
             <div class="icon">
@@ -197,7 +186,8 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{ nb(getAmount(auth()->user()->total_binary_com)) }}</span>
+                    <span class="amount">0</span>
+                    {{-- <span class="amount">{{ nb(getAmount(auth()->user()->total_binary_com)) }}</span> --}}
                     <span class="currency-sign">{{ $general->cur_text }}</span>
                 </div>
                 <div class="desciption">
@@ -216,7 +206,8 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span class="amount">{{ nb(getAmount(auth()->user()->total_ref_com)) }}</span>
+                    <span class="amount">0</span>
+                    {{-- <span class="amount">{{ nb(getAmount(auth()->user()->total_ref_com)) }}</span> --}}
                     <span class="currency-sign">{{ $general->cur_text }}</span>
                 </div>
                 <div class="desciption">
@@ -234,8 +225,8 @@
             </div>
             <div class="details">
                 <div class="numbers">
-                    <span
-                        class="amount">{{ nb(getAmount(auth()->user()->total_binary_com + auth()->user()->total_ref_com)) }}</span>
+                    <span class="amount">0</span>
+                    {{-- class="amount">{{ nb(getAmount(auth()->user()->total_binary_com + auth()->user()->total_ref_com)) }}</span> --}}
                     <span class="currency-sign">{{ $general->cur_text }}</span>
                 </div>
                 <div class="desciption">
@@ -263,6 +254,44 @@
             </div>
             <br>
             <a href="{{ route('user.my.tree') }}"
+                class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+        <div class="dashboard-w1 bg--gradi-10 b-radius--10 box-shadow">
+            <div class="icon">
+                <i class="las la-users"></i>
+            </div>
+            <div class="details">
+                <div class="numbers">
+                    <span class="amount">{{ $total_ref }}</span>
+                </div>
+                <div class="desciption">
+                    <span class="text--small">@lang('Direct Referral')</span>
+                </div>
+            </div>
+            <br>
+            <a href="{{ route('user.my.referral') }}"
+                class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
+        <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
+            <div class="icon">
+                <i class="las la-money-bill-wave"></i>
+            </div>
+            <div class="details">
+                <div class="numbers">
+                    <span class="amount">{{ nb(getAmount(auth()->user()->total_invest)) }}</span>
+                    <span class="currency-sign">{{ $general->cur_text }}</span>
+                </div>
+                <div class="desciption">
+                    <span class="text--small">@lang('Total Order')</span>
+                </div>
+            </div>
+            <br>
+            <a href="{{ route('user.report.invest') }}"
                 class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
