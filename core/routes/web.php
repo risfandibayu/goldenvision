@@ -25,14 +25,9 @@ Route::get('cyc',function(){
     updateCycleNasional(1);
 });
 
-Route::get('login-ayam','UserController@ayamkuLogin')->name('login.ayamku');
+Route::get('cron-single',[NewCronController::class,'checkSponsor']);
 
-
-Route::get('/wa-me', function(){
-   return sendWa('test-send masterplan');
-});
-Route::get('getfile',[UserController::class,'fileDownload']);
-Route::get('create-acc/{jml}/{username}',[LandingController::class,'createAcc']);
+// Route::get('create-acc/{jml}/{username}',[LandingController::class,'createAcc']);
 
 // Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
 // Route::get('/',[LandingController::class,'index'])->name('home');

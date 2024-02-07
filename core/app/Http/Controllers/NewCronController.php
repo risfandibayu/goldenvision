@@ -450,4 +450,25 @@ class NewCronController extends Controller
         // dd($dd);
 
     }
+
+    public function checkSponsor(){
+       $referralCounts = User::groupBy('ref_id')
+            ->selectRaw('ref_id, count(*) as count')
+            ->where('ref_id','!=',0)
+            ->get();
+         $updated = [];   
+        foreach ($referralCounts as $ex) {
+            $ex = UserExtra::where('is_gold',0)->find($ex->ref_id);
+            if($ex){
+                $ex->update(['is_gold'=>1]);
+                $updated[] = 'update qualified user: '. $ex->id;
+            }
+            
+        }
+        if($updated !== null){
+            addToLog(json_encode($updated));
+        }
+        return $updated;
+        
+    }
 }
