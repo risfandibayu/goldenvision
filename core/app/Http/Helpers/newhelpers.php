@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 
+function allUserPin(){
+    $upin = User::where('pin','!=',0)->sum('pin');
+    return $upin;
+}
+
+
 function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$username,$email,$phone,$pin,$bank_name=null,$kota_cabang=null,$acc_name=null,$acc_number=null){
     
     $ref_user = User::where('no_bro', $broUpline)->first();

@@ -71,6 +71,24 @@
             </div>
         </div>
     </div>
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="dashboard-w1 bg--gradi-13 b-radius--10 box-shadow ">
+            <div class="icon">
+                <i class="la la-product-hunt"></i>
+            </div>
+            <div class="details">
+                <div class="numbers">
+                    <span class="amount">{{ allUserPin() }}</span>
+                </div>
+                <div class="desciption">
+                    <span class="text--small">@lang('PIN In Wallet User')</span>
+                </div>
+                {{-- <a href="{{ route('admin.users.emailVerified') }}"
+                    class="btn btn-sm text--small bg--white text--black box--shadow3 mt-3">@lang('Lihat Semua')</a> --}}
+            </div>
+        </div>
+    </div>
+
 
     {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--red b-radius--10 box-shadow">

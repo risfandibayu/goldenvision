@@ -83,7 +83,7 @@
     </div>
 
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
-        <div class="dashboard-w1 h-100 w-100 bg--primary b-radius--10 box-shadow">
+        <div class="dashboard-w1 h-100 w-100 bg--gradi-13 b-radius--10 box-shadow">
             <div class="icon">
                 <i class="la la-product-hunt"></i>
 
@@ -214,11 +214,13 @@
                 <div class="desciption">
                     <span class="text--small">@lang('Total Bonus Sponsor')</span>
                 </div>
-                <a href="{{ route('user.report.refCom') }}"
-                    class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
             </div>
+            <br>
+            <a href="{{ route('user.report.refCom') }}"
+                class="btn btn-sm text--small bg--white btn-block text--black box--shadow3 mt-3">@lang('View All')</a>
         </div>
     </div>
+
     <div class="col-xl-3 col-lg-4 col-sm-6 mb-30 text-center">
         <div class="dashboard-w1 bg--success b-radius--10 box-shadow">
             <div class="icon">
