@@ -200,10 +200,10 @@ class PlanController extends Controller
                         $position = 1;
                     }
                     if($i == 2){
-                        $position = 2;
+                        $position = 1;
                     }
                     if($i== 3){
-                        $position = 1;
+                        $position = 2;
                     }
                     if($i == 4){
                         $position = 2;
