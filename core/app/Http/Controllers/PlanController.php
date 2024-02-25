@@ -188,17 +188,18 @@ class PlanController extends Controller
             $firstUsername =  auth()->user()->username;
             for ($i=1; $i < $registeredUser; $i++) { 
                 if($registeredUser == 3){
-                    if($i== 0){
+                    if($i== 1){
                         $position = 1;
                     }
-                    if($i == 1){
+                    if($i == 2){
                         $position = 2;
                     }
-                }else if($registeredUser == 3){
-                    if($i== 0){
+                }
+                if($registeredUser == 5){
+                    if($i== 1){
                         $position = 1;
                     }
-                    if($i == 1){
+                    if($i == 2){
                         $position = 2;
                     }
                     if($i== 3){
@@ -216,29 +217,10 @@ class PlanController extends Controller
                     // 02: 2,3,4,5
                 }
                 if ($i >= 5 && $i <= 8) {
-                    $sponsor = User::where('username',$firstUsername .'_'. 2)->first();
+                    $sponsor = User::where('username',$firstUsername .'_'. $i)->first();
                  
                     $mark = true;
                     // 03: 6,7,8,9
-                }
-                if ($i >= 9  && $i <= 12) {
-                    $mark = true;
-                    $sponsor = User::where('username',$firstUsername .'_'. 3)->first();
-                    // 04: 10,11,12,13,14
-                }
-                if ($i >= 13 && $i <= 16) {
-                    $mark = true;
-                    $sponsor = User::where('username',$firstUsername .'_'. 4)->first();
-                    // 05: 15,16,17,18,19
-                }
-                if ($i >= 17 && $i<= 20) {
-                    $mark = true;
-                    $sponsor = User::where('username',$firstUsername .'_'. 5)->first();
-                    // 06: 20,21,22,13,24
-                }
-                if ($i >= 21 && $i<= 24) {
-                    $sponsor = User::where('username',$firstUsername .'_'. 6)->first();
-                    $mark = true;
                 }
                 $bro_upline = $firstUpline->username;
                 $firstnameNewUser = $firstUpline->firstname;

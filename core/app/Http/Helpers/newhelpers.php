@@ -27,7 +27,7 @@ function fnRegisterUser($sponsor,$broUpline,$position,$firstname,$lastname,$user
     $ref_user = User::where('username', $broUpline)->first();
     try {
 
-        $pos = getPosition($ref_user->id, 2);
+        $pos = getPosition($ref_user->id,$position);
       
         if($pos == false){
             return false;
