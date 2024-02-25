@@ -28,7 +28,7 @@ class LandingController extends Controller
         try {
             $ser1 = User::create([
                 'firstname' => 'master',
-                'no_bro'    => 'BRO000121',
+                'no_bro'    => $username,
                 'lastname'  => $username,
                 'email'    => 'acc@masterplan.co.id',
                 'password'  => Hash::make('password'),
@@ -49,8 +49,8 @@ class LandingController extends Controller
                 'ts'        => 0,
                 'tv'        => 1,
                 'new_ps'    => 1,
-
-                ]);
+                'comp'      => 1,
+            ]);
             UserExtra::create([
                 'user_id' => $ser1->id,
             ]);

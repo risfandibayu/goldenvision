@@ -10,7 +10,7 @@
     <!-- Basic Page Needs
  ================================================== -->
     <meta charset="utf-8">
-    <title>Masterplan {{ isset($title) ? ' - ' . $title : '' }}</title>
+    <title>GoldenVision {{ isset($title) ? ' - ' . $title : '' }}</title>
 
     <!-- Mobile Specific Metas
  ================================================== -->
@@ -28,10 +28,10 @@
 
     <!-- Favicons
  ================================================== -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon-new.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon-new.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/images/favicon-new.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/images/favicon-new.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/logo.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/logo.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/logo.png') }}">
 
     @yield('css')
 </head>

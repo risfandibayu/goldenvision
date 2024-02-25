@@ -25,7 +25,7 @@
                                 @csrf
 
                                 <h4 class="mb-4 text-sm-center">
-                                    <img src="{{ asset('assets/images/favicon-new.png') }}" alt=""
+                                    <img src="{{ asset('assets/nav-logo.png') }}" alt=""
                                         style="max-width: 300px;-webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);">
                                     <br>
@@ -125,6 +125,17 @@
                                         @enderror
                                     </div>
 
+                                    <div class="form-group mt-3 col-md-10">
+                                        <label>@lang('Referrals')</label>
+                                        <input type="text"
+                                            class="form-style {{ $errors->has('referrals') ? 'is-invalid' : '' }}"
+                                            placeholder="@lang('Referrals username')" autocomplete="off"
+                                            value="{{ old('referrals') }}" name="referrals">
+                                        @error('username')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
                                     <div class="col-lg-12">
                                         @include($activeTemplate . 'partials.custom-captcha')
                                     </div>
@@ -143,6 +154,7 @@
                                             @enderror
                                         </div>
                                     @endif
+
                                 </div> {{-- end div row --}}
 
 

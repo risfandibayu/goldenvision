@@ -3159,9 +3159,9 @@ function adminLeaderSellPin($inputDate){
                 )
         ->leftJoin('users as u', 'u.id', '=', 'p.pin_by')
         ->where(function ($query) {
-            $query->whereNull('p.pin_by')
-                ->orWhere('p.pin_by', 1)
-                ->orWhere('p.pin_by', 442);
+            $query->whereNull('p.pin_by');
+                // ->orWhere('p.pin_by', 1)
+                // ->orWhere('p.pin_by', 442);
         })
         ->where('p.type', '+')
         ->whereMonth('p.created_at', '=', date('m', strtotime($inputDate)))

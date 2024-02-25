@@ -22,8 +22,8 @@
                                 @csrf
 
                                 <h4 class="mb-4 text-sm-center">
-                                    <img src="{{ asset('assets/images/favicon-new.png') }}" alt=""
-                                        style="max-width: 300px;-webkit-filter: drop-shadow(5px 5px 5px #222);
+                                    <img src="{{ asset('assets/nav-logo.png') }}" alt=""
+                                        style="max-width: 250px;-webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);">
                                     <br>
                                     <br>
@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <input type="text"
                                         class="form-control form-style-with-icon {{ $errors->has('username') ? 'is-invalid' : '' }}"
-                                        placeholder="@lang('Username/E-mail/MP Number')" autocomplete="off" name="username"
+                                        placeholder="@lang('Username/E-mail')" autocomplete="off" name="username"
                                         value="{{ app('request')->input('username') ?? old('username') }}">
                                     <i class="input-icon uil uil-user-circle"></i>
                                     @error('username')

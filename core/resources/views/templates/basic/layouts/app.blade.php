@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/owl.min.css') }}">
 
     <style>
-        .bg-pink{
+        .bg-pink {
             background-color: pink;
         }
     </style>

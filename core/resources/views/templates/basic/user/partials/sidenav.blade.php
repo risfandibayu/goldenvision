@@ -2,10 +2,10 @@
     <button class="res-sidebar-close-btn"><i class="las la-times"></i></button>
     <div class="sidebar__inner">
         <div class="sidebar__logo">
-            <a href="{{ route('user.home') }}" class="sidebar__main-logo"><img
-                    src="{{ asset('assets/images/logo-new.png') }}" alt="@lang('image')"></a>
-            <a href="{{ route('user.home') }}" class="sidebar__logo-shape"><img
-                    src="{{ asset('assets/images/logo-new.png') }}" alt="@lang('image')"></a>
+            <a href="{{ route('user.home') }}" class="sidebar__main-logo"><img src="{{ asset('assets/nav-logo.png') }}"
+                    alt="@lang('image')" style="max-width: 150px"></a>
+            <a href="{{ route('user.home') }}" class="sidebar__logo-shape"><img src="{{ asset('assets/logo.png') }}"
+                    alt="@lang('image')" style="max-width: 150px"></a>
             <button type="button" class="navbar__expand"></button>
         </div>
         <div class="sidebar__menu-wrapper" id="sidebar__menuWrapper">
@@ -52,7 +52,7 @@
                         </ul>
                     </div>
                 </li> --}}
-                @if (auth()->user()->no_bro != null)
+                @if (auth()->user()->plan_id == 1)
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('user.my*', 2) }} my-2">
                             <i class="menu-icon las la-code-branch"

@@ -197,22 +197,21 @@ class RegisterController extends Controller
 
         $gnl = GeneralSetting::first();
 
-        // $userCheck = User::where('username', $data['referral'])->first();
-        // $pos = getPosition($userCheck->id, $data['position']);
-
+        $refferals = $data['referrals'];
+        if (!$refferals) {
+            $ref = User::where('comp',1)->first();
+        }else{
+            $ref = User::where('username',$refferals)->first();
+        }
 
         //User Create
         $user = new User();
-        // $user->ref_id       = $userCheck->id;
-        // $user->no_bro       = generateUniqueNoBro();
-        // $user->pos_id       = $pos['pos_id'];
-        // $user->position     = $pos['position'];
         $user->firstname    = isset($data['firstname']) ? $data['firstname'] : null;
         $user->lastname     = isset($data['lastname']) ? $data['lastname'] : null;
         $user->email        = strtolower(trim($data['email']));
         $user->password     = Hash::make($data['password']);
         $user->username     = trim($data['username']);
-        // $user->ref_id       = $userCheck->id;
+        $user->ref_id       = $ref->id;
         $user->mobile       = $data['country_code'] . $data['mobile'];
         $user->address      = [
             'address' => '',

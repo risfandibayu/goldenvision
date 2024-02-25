@@ -100,11 +100,6 @@ class PlanController extends Controller
     {
         $request['position'] = $request->pos ?? 2;
 
-       
-        if($request->qty >= 26){
-            $notify[] = ['error', 'For now, you can only create max 25 user'];
-            return redirect()->intended('/user/profile-setting')->withNotify($notify);
-        }
         $this->validate($request, [
             'plan_id' => 'required|integer', 
             'qty' => 'required',
@@ -121,7 +116,10 @@ class PlanController extends Controller
         DB::beginTransaction();
         try {
            
-            $sponsor = User::where('username',$request->sponsor)->where('no_bro','!=',null)->first();
+            $sponsor = User::find(Auth::user()->ref_id);
+            if(!$sponsor){
+                $sponsor = User::where('comp',1)->first();
+            }
             // checkJalur Kiri;
             if($request['position'] == 1){
                 //check jika jalur kiri pertama kosong;
@@ -159,13 +157,13 @@ class PlanController extends Controller
                 return back()->withNotify($notify);
             }
             
-            if ($user->pos_id == 0) {
-                monolegTree($sponsor->id, $request->qty,$request['position']);
-                // dd('adsad');
-            }else{
-                monolegTree(auth()->user()->id, $request->qty,$request['position']);
-                // dd('adsadasdadad');
-            }
+            // if ($user->pos_id == 0) {
+            //     monolegTree($sponsor->id, $request->qty,$request['position']);
+            //     // dd('adsad');
+            // }else{
+            //     monolegTree(auth()->user()->id, $request->qty,$request['position']);
+            // }
+
             $firstUpline = $this->placementFirstAccount($user,$request,$ref_user,$plan,$sponsor);
             
             if($firstUpline == false){
@@ -173,7 +171,7 @@ class PlanController extends Controller
                 return redirect()->back()->withNotify($notify);
             }
             $waitlistUserID[] =  $user->id;
-
+            
             if (!$checkloop) {
                 fnSingleQualified($sponsor->id,$firstUpline->id);
                 fnDelWaitList(Auth::user()->id);
@@ -185,12 +183,32 @@ class PlanController extends Controller
 
 
             $registeredUser = $request->qty;
-            $position = 2;
+            
 
             $firstUsername =  auth()->user()->username;
-
-            // monolegTree(auth()->user()->id, $request->qty);
             for ($i=1; $i < $registeredUser; $i++) { 
+                if($registeredUser == 3){
+                    if($i== 0){
+                        $position = 1;
+                    }
+                    if($i == 1){
+                        $position = 2;
+                    }
+                }else if($registeredUser == 3){
+                    if($i== 0){
+                        $position = 1;
+                    }
+                    if($i == 1){
+                        $position = 2;
+                    }
+                    if($i== 3){
+                        $position = 1;
+                    }
+                    if($i == 4){
+                        $position = 2;
+                    }
+                }
+
                 $mark = false;
                 if($i <= 4){
                     $sponsor = $firstUpline;
@@ -222,7 +240,7 @@ class PlanController extends Controller
                     $sponsor = User::where('username',$firstUsername .'_'. 6)->first();
                     $mark = true;
                 }
-                $bro_upline = $firstUpline->no_bro;
+                $bro_upline = $firstUpline->username;
                 $firstnameNewUser = $firstUpline->firstname;
                 $lastnameNewUser = $firstUpline->lastname;
                 $usernameNewUser = $firstUpline->username .'_'. $i+1;
@@ -251,11 +269,11 @@ class PlanController extends Controller
                 );
                 if(!$nextUser){
                     $notify[] = ['error', 'Invalid On Create Downline, Rollback'];
-                    $notify[] = $nextUser;
+                    // $notify[] = ['error',$nextUser];
                     return redirect()->back()->withNotify($notify);
                 }
               
-                $bro_upline = $nextUser->no_bro;
+                $bro_upline = $nextUser->username;
                
                 $user = UserExtra::where('user_id',$sponsor->id)->first();
                 $user->is_gold = 1;
@@ -285,13 +303,12 @@ class PlanController extends Controller
             if($pos['position'] == 0){
                 return false;
             }
-            $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
-            if($wait){
-                return false;
-                sleep(rand(1,6));
-                $pos = getPosition($ref_user->id, $request->position);
-            }
-            $user->no_bro           = generateUniqueNoBro();
+            // $wait = fnWaitingList($user->id,$pos['pos_id'],$pos['position']);
+            // if($wait){
+            //     return false;
+            //     sleep(rand(1,6));
+            //     $pos = getPosition($ref_user->id, $request->position);
+            // }
             $user->ref_id           = $sponsor->id; // ref id = sponsor
             $user->pos_id           = $pos['pos_id']; //pos id = upline
             $user->position         = $pos['position'];

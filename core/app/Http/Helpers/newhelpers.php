@@ -22,9 +22,9 @@ function allUserPin(){
 }
 
 
-function fnRegisterUser($sponsor,$broUpline,$position=2,$firstname,$lastname,$username,$email,$phone,$pin,$bank_name=null,$kota_cabang=null,$acc_name=null,$acc_number=null){
+function fnRegisterUser($sponsor,$broUpline,$position,$firstname,$lastname,$username,$email,$phone,$pin,$bank_name=null,$kota_cabang=null,$acc_name=null,$acc_number=null){
     
-    $ref_user = User::where('no_bro', $broUpline)->first();
+    $ref_user = User::where('username', $broUpline)->first();
     try {
 
         $pos = getPosition($ref_user->id, 2);
@@ -79,11 +79,10 @@ function fnPlanStore(array $data,$user)
     $plan = Plan::where('id', 1)->where('status', 1)->firstOrFail();
     try {
         $user = User::find($user->id);
-        $user->no_bro           = generateUniqueNoBro();
         $user->ref_id           = $data['sponsor']->id; 
         $user->pos_id           = $data['pos']['pos_id']; //pos id = upline
-        $user->position         = 2;
-        $user->position_by_ref  = 2;
+        $user->position         = $data['position'];
+        $user->position_by_ref  = $data['position'];
         $user->plan_id          = $plan->id;
         $user->total_invest     += ($plan->price * 1);
         $user->save();
@@ -138,6 +137,7 @@ function fnCreateNewUser(array $data)
             }
         }
         $user = User::create([
+            'group'     => auth()->user()->id,
             'firstname' => isset($data['firstname']) ? $data['firstname'] : null,
             'lastname'  => isset($data['lastname']) ? $data['lastname'] : null,
             'email'     => strtolower(trim($data['email'])),

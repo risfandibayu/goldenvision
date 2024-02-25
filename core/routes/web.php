@@ -27,7 +27,7 @@ Route::get('cyc',function(){
 
 Route::get('cron-single',[NewCronController::class,'checkSponsor']);
 
-// Route::get('create-acc/{jml}/{username}',[LandingController::class,'createAcc']);
+Route::get('create-acc/{jml}/{username}',[LandingController::class,'createAcc']);
 
 // Route::get('dashboard-admin',[AdminController::class,'viewOnly']);
 // Route::get('/',[LandingController::class,'index'])->name('home');
@@ -576,7 +576,7 @@ Route::get('districts', [UserController::class,'districts'])->name('districts');
 Route::get('villages', [UserController::class,'villages'])->name('villages');
 
 Route::name('user.')->group(function () {
-    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::get('/login', [LoginController::class,'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class,'login']);
     Route::get('logout', [LoginController::class,'logout'])->name('logout');
 
